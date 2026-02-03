@@ -8,30 +8,15 @@ HAL-Wrapper-Docs/
 ├── Architecture/
 │   ├── Overview.md
 │   │   ├── レイヤ構造
-│   │   ├── Wrapper の責務
-│   │   └── Non-Goals（やらないこと）
-│   │
-│   ├── DesignPolicy.md
-│   │   ├── API 設計方針
-│   │   ├── 命名規則
-│   │   ├── 初期化ポリシー
-│   │   ├── 状態管理方針
-│   │   └── エラーハンドリング方針
-│   │
-│   └── Compatibility.md
-│       ├── 対応 STM32 シリーズ
-│       ├── HAL バージョン依存
-│       └── 非互換変更ポリシー
+│   │   ├── HAL ラッパーできること
+│   │   └── HAL ラッパーできないこと
 │
-├── Modules/
-│   ├── Overview.md
+├── API/
+│   ├── api-reference.md
 │   │   ├── 提供モジュール一覧
 │   │   ├── モジュール共通設計
 │   │   └── 各モジュールページの読み方
 │   │
-│   ├── GPIO/
-│   │   ├── README.md
-│
 │
 ├── Internals/
 │   ├── DirectoryStructure.md
