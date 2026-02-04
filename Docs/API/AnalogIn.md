@@ -126,9 +126,6 @@ Modeは `Circular` に設定する
    float voltage = analogInput.read_voltage(0);
    ```
 
-## 依存関係
--STM32 HALライブラリ
-
 ## 注意事項
 - HAL_ADCの初期化とDMA設定が正しく行われている必要があります
 - DMAでチャネル数が誤っていると、不正なメモリアクセスや動作不良の原因となる可能性があります

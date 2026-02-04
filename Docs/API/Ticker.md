@@ -67,12 +67,6 @@ Ticker(TIM_HandleTypeDef* htim, uint32_t max_arr = 65535, uint32_t priority = 0)
 
 ---
 
-## 依存関係
-- STM32 HALライブラリ
-- callbackクラス
-
----
-
 ## 注意事項
 - 使用タイマが16bitまたは32bitに応じた設定を行うこと
 - 割込み停止後もcallbackの管理状況を確認すること

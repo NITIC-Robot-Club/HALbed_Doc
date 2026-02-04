@@ -1,5 +1,7 @@
 # Implementation Rules
 
+書かなくてもいい...?
+
 ## HAL呼び出しルール
 - HAL APIの利用規約・ベストプラクティス
 

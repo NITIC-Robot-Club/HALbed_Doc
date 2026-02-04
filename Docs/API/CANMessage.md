@@ -33,11 +33,6 @@ CANMessage(uint32_t _id, std::array<uint8_t, 8> _data);
 
 ---
 
-## 依存関係
-- STM32 HALライブラリ
-
----
-
 ## 注意事項
 なし
 

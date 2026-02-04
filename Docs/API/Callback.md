@@ -57,10 +57,6 @@ void callback(intptr_t handle, Args... args);
 
 ---
 
-## 依存関係
-- C++17以降
-
----
 
 ## 注意事項
 - 登録するコールバック関数は`std::function`である必要がある

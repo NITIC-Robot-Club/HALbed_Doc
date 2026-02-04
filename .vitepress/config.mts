@@ -2,27 +2,79 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "HALbed-Docs",
-  description: "A HALbed site",
+  title: "HALbed Docs",
+  description: "HALラッパー関数群[HALbed] ドキュメントサイト",
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config
-    nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
-    ],
-
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
+    search: {
+      provider: 'local',
+      options: {
+        locales: {
+          root: {
+            translations: {
+              button: {
+                buttonText: '検索',
+                buttonAriaLabel: '検索'
+              },
+              modal: {
+                noResultsText: '結果が見つかりません',
+                resetButtonTitle: 'リセット',
+                footer: {
+                  selectText: '選択',
+                  navigateText: '移動',
+                  closeText: '閉じる'
+                }
+              }
+            }
+          }
+        }
       }
+    },
+
+    nav: [
+      { text: '概要', link: '/Docs/Introduction/ArchitectureOverview' },
+      { text: 'API', link: '/Docs/API/APIHome' },
+      { text: 'FAQ', link: '/Docs/FAQ' }
     ],
 
+    sidebar: {
+      '/Docs/Introduction/': [
+        {
+          text: 'ガイド',
+          items: [
+            { text: '概要', link: '/Docs/Introduction/ArchitectureOverview' },
+            { text: 'API 一覧', link: '/Docs/Introduction/api-reference' },
+            { text: 'ディレクトリ構造', link: '/Docs/Introduction/DirectoryStructure' },
+            { text: 'FAQ', link: '/Docs/FAQ' }
+          ] 
+        }
+      ],
+      '/Docs/API/': [
+        {
+          text: 'API',
+          items: [
+            { text: 'AnalogIn', link: '/Docs/API/AnalogIn' },
+            { text: 'CAN', link: '/Docs/API/CAN' },
+            { text: 'CANMessage', link: '/Docs/API/CANMessage' },
+            { text: 'Callback', link: '/Docs/API/Callback' },
+            { text: 'CircularBuffer', link: '/Docs/API/CircularBuffer' },
+            { text: 'DMA', link: '/Docs/API/DMA' },
+            { text: 'DigitalIn', link: '/Docs/API/DigitalIn' },
+            { text: 'DigitalOut', link: '/Docs/API/DigitalOut' },
+            { text: 'Encoder', link: '/Docs/API/Encoder' },
+            { text: 'LogManager', link: '/Docs/API/LogManager' },
+            { text: 'PWMOut', link: '/Docs/API/PWMOut' },
+            { text: 'Ticker', link: '/Docs/API/Ticker' },
+            { text: 'TimerManager', link: '/Docs/API/TimerManager' },
+            { text: 'UART', link: '/Docs/API/UART' },
+            { text: 'I2C', link: '/Docs/API/i2c' }
+          ]
+        },
+      ]
+
+    },
+    
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/NITIC-Robot-Club/HALbed' }
     ]
   }
 })

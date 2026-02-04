@@ -64,13 +64,6 @@ TimerManager(TIM_HandleTypeDef* timerHandle);
    tm.setPeriod(new_period);
    tm.updateTimerSettings();
    ```
-
----
-
-## 依存関係
-- STM32 HALライブラリ
-- TimerAPB機能
-
 ---
 
 ## 注意事項
