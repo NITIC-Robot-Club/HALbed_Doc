@@ -1,4 +1,4 @@
-# DigitalOutライブラリ README
+# DigitalOut
 
 ## 概要
 DigitalOutクラスは、GPIOポートとピン番号を用いてデジタル出力を実現します。ピンへの出力操作と読み出しが可能です。

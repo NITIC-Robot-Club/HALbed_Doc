@@ -1,4 +1,4 @@
-# Callback Library README
+# Callback Library
 
 ## 概要
 このライブラリは、コールバック関数を簡単に管理するためのC++ライブラリ

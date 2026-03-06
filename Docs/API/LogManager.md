@@ -1,4 +1,4 @@
-# LogManager README
+# LogManager
 
 ## 概要
 LogManager クラスは、UARTを使ってログを出力するライブラリ。ログレベルやタグフィルタリングを設定でき、ANSIカラーコードを使ってログを色分けする。

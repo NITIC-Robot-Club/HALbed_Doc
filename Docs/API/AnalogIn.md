@@ -1,4 +1,4 @@
-# AnalogIn (ADC)ライブラリ README
+# AnalogIn (ADC)ライブラリ
 
 ## 概要
 AnalogIn クラスは、ADCを用いてアナログ入力を取得し、電圧値に変換します。HALライブラリのADC機能を利用し、DMAを使いCPUに負荷をかけないデータ取得も可能です。

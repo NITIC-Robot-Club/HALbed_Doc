@@ -33,18 +33,20 @@ export default defineConfig({
     nav: [
       { text: '概要', link: '/Docs/Introduction/ArchitectureOverview' },
       { text: 'API', link: '/Docs/API/APIHome' },
-      { text: 'FAQ', link: '/Docs/FAQ' }
+      { text: 'FAQ', link: '/Docs/Introduction/FAQ' }
     ],
 
     sidebar: {
       '/Docs/Introduction/': [
         {
-          text: 'ガイド',
           items: [
             { text: '概要', link: '/Docs/Introduction/ArchitectureOverview' },
-            { text: 'API 一覧', link: '/Docs/Introduction/api-reference' },
+            { text: 'インストールと初期設定', link: '/Docs/Introduction/GettingStarted' },
             { text: 'ディレクトリ構造', link: '/Docs/Introduction/DirectoryStructure' },
-            { text: 'FAQ', link: '/Docs/FAQ' }
+            { text: 'API 一覧', link: '/Docs/Introduction/api-reference' },
+            { text: 'FAQ', link: '/Docs/Introduction/FAQ' },
+            { text: '参考リンク集', link: '/Docs/Introduction/References' },
+            { text: '変更履歴', link: '/Docs/CHANGELOG' }
           ] 
         }
       ],

@@ -1,4 +1,4 @@
-# DigitalInライブラリ README
+# DigitalIn
 
 ## 概要
 DigitalInクラスは、GPIOポートとピン番号からデジタル入力を実現します。入力状態の読み取りと、割込み用のコールバック設定が可能です。

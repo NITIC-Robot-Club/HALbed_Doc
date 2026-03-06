@@ -1,7 +1,8 @@
-# CircularBuffer クラス README
+# CircularBuffer
 
 ## 概要
-CircularBufferクラスは、循環バッファを実装する
+CircularBufferクラスは、循環バッファを実装します。
+固定サイズのバッファで、データを追加すると古いデータが上書きされます。
 
 ---
 

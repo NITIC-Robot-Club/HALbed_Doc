@@ -1,4 +1,4 @@
-# HALbed::CANMessageクラス README
+# HALbed::CANMessage
 
 ## 概要
 CANMessageクラスは、CAN通信のメッセージを定義します。
