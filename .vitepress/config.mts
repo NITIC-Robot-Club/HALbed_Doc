@@ -33,7 +33,7 @@ export default defineConfig({
     nav: [
       { text: '概要', link: '/Docs/Introduction/ArchitectureOverview' },
       { text: 'API', link: '/Docs/API/APIHome' },
-      { text: 'FAQ', link: '/Docs/Introduction/FAQ' }
+      { text: 'FAQ', link: '/Docs/FAQ/FAQHome' }
     ],
 
     sidebar: {
