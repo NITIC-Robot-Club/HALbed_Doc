@@ -4,18 +4,13 @@
 
 ```
 app_project/
-├─ .mxproject                 # CubeMX/IDE 関連のメタ情報（プロジェクト管理）
-├─ HALbed_dev.ioc             # STM32CubeMX 設定（MCU/ピン/クロック等）
-├─ STM32F446RETX_RAM.ld       # リンカスクリプト（RAM実行向け）
 ├─ Core/
 │  ├─ Inc/
 │  │  └─ main.h               # main.c のヘッダ（HAL include, ピン定義など）
-│  ├─ Src/
+│  └─ Src/
 │     ├─ main.c               # HAL_Init→Clock→MX_* 初期化→mainapp() 呼び出し
-│     ├─ mainapp.cpp          # C++ 側エントリ（extern "C" mainapp）
-│     └─ syscalls.c           # newlib 用 syscalls（CubeIDE自動生成系）
-├─  Drivers/
-│  └─ CMSIS/Include/...       # CMSIS ヘッダ（Arm/STM32 標準）
+│     └─ mainapp.cpp          # C++ 側エントリ（extern "C" mainapp）
+├─ Drivers/
 └─ Library/
    └─ HALbed/                 # HALbed ライブラリ本体
       ├─ Inc/
