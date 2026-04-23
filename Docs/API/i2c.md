@@ -128,7 +128,7 @@ I2Cデバイスの準備状態を確認
 > また各アプリケーションノートも参考にしてください。
 
 
-### cppmain.cpp
+### app_main.cpp
 1. `I2C`クラスのインスタンスを作成
    ```cpp
    I2C i2c(&hi2c1);
@@ -184,7 +184,7 @@ extern I2C_HandleTypeDef hi2c1;
 UART pc(&huart2);
 I2C  i2c(&hi2c1);
 
-extern "C" void cppmain(void) {
+extern "C" void app_main(void) {
     pc.enableRxInt();
  	pc.xprintf("\033[1;1HScanning I2C bus:\r\n");
     while (1) {
@@ -220,7 +220,7 @@ extern I2C_HandleTypeDef hi2c1;
 UART pc(&huart2);
 I2C i2c(&hi2c1);
 
-extern "C" void cppmain() {
+extern "C" void app_main() {
     uint8_t deviceAddress = 0x50; // I2Cデバイスのアドレス（例）
     uint16_t memAddress = 0x10;   // レジスタアドレス（例）
     uint8_t writeData[2] = {0x12, 0x34}; // 書き込むデータ
@@ -279,7 +279,7 @@ extern I2C_HandleTypeDef hi2c1;
 UART pc(&huart2);
 I2C i2c(&hi2c1);
 
-extern "C" void cppmain(void) {
+extern "C" void app_main(void) {
     pc.enableRxInt();
  	pc.xprintf("\033[1;1HScanning I2C bus:\r\n");
     uint8_t address;
@@ -316,7 +316,7 @@ extern I2C_HandleTypeDef hi2c1;
 UART pc(&huart2);
 I2C i2c(&hi2c1);
 
-extern "C" void cppmain(void) {
+extern "C" void app_main(void) {
     pc.enableRxInt();
     pc.xprintf("DMA I2C Communication Example\r\n");
 
@@ -374,7 +374,7 @@ void BNO055_SetMode();
 void BNO055_ReadEulerRaw();
 void BNO055_convrtEulerData();
 
-extern "C" void cppmain(void) {
+extern "C" void app_main(void) {
     pc.xprintf("BNO055 Init...\r\n");
     BNO055_Reset();
     BNO055_SetMode();

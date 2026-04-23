@@ -140,7 +140,7 @@ RPS（毎秒回転数）を取得
 
 ---
 
-### cppmain.cpp内
+### app_main.cpp内
 1. `Encoder`クラスのインスタンスを作成します
    ```cpp
    Encoder encoder(&htim1, 4096);
@@ -176,7 +176,7 @@ RPS（毎秒回転数）を取得
 ## サンプルコード
 以下は、このライブラリを使用したサンプルコードです (AMT102 を使用)。
 
-### `cppmain.cpp`
+### `app_main.cpp`
 ```cpp
 #include "main.h"
 #include "../../Library/HALbed/Inc/HALbed.hpp"
@@ -187,7 +187,7 @@ using namespace HALbed;
 UART pc(&huart2);
 Encoder encoder(&htim1, 4096); // 4096パルスのエンコーダーを使用
 
-extern "C" void cppmain(void) {
+extern "C" void app_main(void) {
     encoder.start();
     while (1) {
         pc.xprintf("Pulses: %d\t\t", encoder.getPulses());

@@ -47,7 +47,7 @@ UARTハンドルを設定する。
 ### CubeMXの設定
 1. UARTを設定し、適切なボーレートやピンを指定する。
 
-### cppmain
+### app_main
 1. UARTハンドルを指定して、LogManager インスタンスを生成する。
    ```cpp
    HALbed::LogManager logger(&huart2, HALbed::LogLevel::DEBUG);
@@ -79,16 +79,16 @@ extern UART_HandleTypeDef huart2;
 using namespace HALbed;
 LogManager logger(&huart2);
 
-extern "C" void cppmain(void)
+extern "C" void app_main(void)
 {
     logger.setLogLevel(LogLevel::VERBOSE);
-    LOGI("cppmain", "Starting C++ main function");
-    LOGD("cppmain", "Debugging enabled");
-    LOGW("cppmain", "This is a warning message");
-    LOGE("cppmain", "This is an error message");
-    LOGV("cppmain", "Verbose logging is active");
-    logger.setTagFilter("cppmain");
-    LOGI("cppmain", "Log level set to VERBOSE");
+    LOGI("app_main", "Starting C++ main function");
+    LOGD("app_main", "Debugging enabled");
+    LOGW("app_main", "This is a warning message");
+    LOGE("app_main", "This is an error message");
+    LOGV("app_main", "Verbose logging is active");
+    logger.setTagFilter("app_main");
+    LOGI("app_main", "Log level set to VERBOSE");
     LOGI("debug", "This message should not appear due to tag filter");  // このメッセージは表示されない
     while (true) {
         logger.log(LogLevel::DBG, "Loop", "Heartbeat");

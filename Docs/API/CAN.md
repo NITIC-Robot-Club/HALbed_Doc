@@ -95,7 +95,7 @@ CAN送信が可能かどうかを確認
 > 多くの場合、サンプリングポイントは 75% 以上にすることが推奨されている </br>
 
 
-### cppmain.cpp内 
+### app_main.cpp内 
 1. `CAN`クラスのインスタンスを作成
    ```cpp
    CAN can(&hcan1);
@@ -171,7 +171,7 @@ CAN can(&hcan1);
 
 void canListen_main(const CANMessage &msg);
 
-extern "C" void cppmain(void) {
+extern "C" void app_main(void) {
     pc.enableRxInt();               // 受信割り込みを有効にする
     // コールバック関数を設定
     can.attach([](const CANMessage &msg) { canListen_main(msg); }, 0);

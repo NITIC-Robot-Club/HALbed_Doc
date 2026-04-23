@@ -84,7 +84,7 @@ PWMパルス幅をミリ秒単位で指定
 ![image](images/PWMOut/img_PWMOut_setup_2.PNG)
 
 
-### cppmain.cpp内
+### app_main.cpp内
 1. PWMクラスのインスタンスを生成します
    ```cpp
    PWM pwm(&htim1, TIM_CHANNEL_1, 84e6, true);
@@ -124,7 +124,7 @@ extern TIM_HandleTypeDef htim1;
 uint16_t HZ = 50000; // 目標周波数
 float duty = 0.0f;
 
-extern "C" void cppmain() {
+extern "C" void app_main() {
     PWM pwm1(&htim1, TIM_CHANNEL_1, 84000000, true);
     PWM pwm2(&htim1, TIM_CHANNEL_2, 84000000, true);
 
@@ -254,7 +254,7 @@ PWMOut G(&htim3,TIM_CHANNEL_2,72000000,false);
 PWMOut B(&htim3,TIM_CHANNEL_3,72000000,false);
 PWMOut LED[3] = {R, G, B};
 
-extern "C" void cppmain(void) {
+extern "C" void app_main(void) {
     pc.xprintf("main start!\r\n");
 
     for(int i = 0; i < 3; i++) {

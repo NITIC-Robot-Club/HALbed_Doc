@@ -76,7 +76,7 @@ read()と同等の結果を返す
 > `H` ->`L` になることを検出する場合は `Falling edge` 
 > 必要に応じて適切に設定してください。
 
-### cppmain.cpp内
+### app_main.cpp内
 1. DigitalInクラスのインスタンスを生成します
    ```cpp
    HALbed::DigitalIn btn(GPIOA, GPIO_PIN_0);
@@ -117,7 +117,7 @@ DigitalIn  btn(PC_13);
 // DigitalIn  btn(GPIOA, GPIO_PIN_1);
 bool btn_value=0;
 
-extern "C" void cppmain(void)
+extern "C" void app_main(void)
 {
 	while(true){
 		btn_value = btn.read();

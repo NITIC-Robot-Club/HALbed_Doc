@@ -76,7 +76,7 @@ read()の結果を返す
 対象ピンの設定する。
 ![image](./images/GPIO/img_DigitalOut_setup_1.png)
 
-### cppmain.cpp内
+### app_main.cpp内
 1. DigitalOutクラスのインスタンスを生成します
    ```cpp
    HALbed::DigitalOut LED(GPIOB, GPIO_PIN_2);

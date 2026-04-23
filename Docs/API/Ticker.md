@@ -96,7 +96,7 @@ void tickerCallback() {
 
 
 
-extern "C" void cppmain(void) {
+extern "C" void app_main(void) {
     pc.xprintf("main start\r\r\n");
 
     Ticker ticker(&htim4);

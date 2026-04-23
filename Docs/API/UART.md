@@ -58,7 +58,7 @@ UART(UART_HandleTypeDef* huart);
 ## 使用方法
 ### CubeIDEの設定
 
-### cppmain.cpp内 
+### app_main.cpp内 
 
 1. `UART`クラスのインスタンスを作成します。
    ```cpp
@@ -105,7 +105,49 @@ uart.attach(UARTread, 0);
 ## サンプルコード
 以下は、このライブラリを使用したサンプルコードです。
 
-### `cppmain.cpp`
+### 送信 + ポーリング方式の例
+```cpp
+#include "main.h"
+#include "../../Library/HALbed/Inc/HALbed.hpp"
+using namespace HALbed;
+
+extern UART_HandleTypeDef huart2; // 外部宣言 (STM32CubeMXで生成されたUARTハンドル)
+
+char txData[] = "Hello, UART (polling mode)!\r\n"; // 定期送信メッセージ
+char RxByte[1];
+
+UART uart(&huart2);
+
+extern "C" void app_main(void) {
+    uart.write("UART polling sample start\r\n");
+    // フォーマット付き出力の例
+    uart.xprintf("System Tick: %lu ms\r\n", HAL_GetTick());
+
+    uint32_t lastTxTick = HAL_GetTick();
+    while (1) {
+        // 1秒ごとに送信
+        // 受診の割り込みは使わず、readable()でポーリングして受信するためHAL_Delayは使わない
+        if ((HAL_GetTick() - lastTxTick) >= 1000U) {
+            uart.write(txData);
+            lastTxTick = HAL_GetTick();
+        }
+
+        // 受信データがあれば1バイト読み取りして表示
+        if (uart.readable()) {
+            uart.read(RxByte, sizeof(RxByte));
+            uart.xprintf("RxByte: 0x%02X ('%c')\r\n", (unsigned int)(uint8_t)RxByte[0], RxByte[0]);
+        }
+    }
+}
+
+```
+
+### 受信割り込みを利用した例
+> [!caution]
+> このサンプルコードはG474REの環境で受信割り込みが行われないことを確認しています。
+> 
+> ライブラリの修正を行っております。
+
 ```cpp
 #include "main.h"
 #include "../../Library/HALbed/Inc/HALbed.hpp"
@@ -120,7 +162,7 @@ char RxMsg[1];
 // UARTクラスのインスタンスを作成
 UART uart(&huart2);
 
-extern "C" void cppmain(void) {
+extern "C" void app_main(void) {
     uart.enableRxInt(RxMsg, sizeof(RxMsg)); // 受信割り込みを有効にする
     // 受信割り込みで関数(UARTread();)をattachする
     uart.attach([]() { UARTread(); }, 0);

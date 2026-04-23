@@ -99,7 +99,7 @@ DMAを用いてADC変換を開始
 ![image](./images/GPIO/img_ADC_setup_2.png)
 Modeは `Circular` に設定する
  
-### cppmain.cpp内
+### app_main.cpp内
 1. ADCハンドルとチャネル数を指定して、AnalogIn インスタンスを生成します
    ```cpp
    HALbed::AnalogIn analogInput(&hadc1, numberOfChannels, 3.3f);
@@ -148,7 +148,7 @@ UART pc(&huart2);
 __IO uint32_t ad;
 double v;
 
-extern "C" void cppmain(void)
+extern "C" void app_main(void)
 {
     // DMAで連続取得する場合
     // analogIn.init();

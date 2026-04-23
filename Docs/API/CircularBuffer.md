@@ -76,7 +76,7 @@ extern UART_HandleTypeDef huart2;
 using namespace HALbed;
 UART pc(&huart2);
 
-extern "C" void cppmain(void)
+extern "C" void app_main(void)
 {
     // int 型、サイズ 5 の循環バッファを作成
     CircularBuffer<int, 5> buf;
