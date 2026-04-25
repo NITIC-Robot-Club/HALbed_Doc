@@ -100,6 +100,30 @@ uart.attach(UARTread, 0);
 - 本ライブラリはSTM32環境を前提として設計
 - 割り込み処理内での長時間の処理やブロッキング処理は避ける
 
+### `bool readable()`　の実装について
+UARTの受信割り込みは、RXNE (Receive Not Empty) と RXFNE (Receive FIFO Not Empty) の両方のフラグに依存しています。
+> - `UART_FLAG_RXNE`
+> RX Not Empty
+> 受信データレジスタ（RDR）に1バイトでも入ったら立つ
+> 昔からあるフラグ（F1/F4系など）
+> = 1バイト単位で来たかどうか
+
+> - `UART_FLAG_RXFNE`
+> RX FIFO Not Empty
+> FIFOに1つでもデータがあれば立つ
+> FIFO対応UART（G4 / H7 / L4以降など）
+> =「FIFOバッファにデータがあるか」
+
+| 状態           | RXNE  | RXFNE |
+| ------------ | ----- | ----- |
+| 1バイト受信       | 立つ    | 立つ    |
+| 複数バイトFIFO内   | 微妙(?) | 常に立つ  |
+| FIFOしきい値設定あり | 影響あり  | 影響なし  |
+
+取りこぼしを避けるため、RXFNEフラグで `readable()` を実装しています。
+ただし、F1/F4系などRXFNE非対応のマイコンではRXNEフラグで実装されます。
+
+
 ---
 
 ## サンプルコード

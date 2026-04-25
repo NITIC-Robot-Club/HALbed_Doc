@@ -44,7 +44,6 @@ export default defineConfig({
             { text: 'インストールと初期設定', link: '/Docs/Introduction/GettingStarted' },
             { text: 'ディレクトリ構造', link: '/Docs/Introduction/DirectoryStructure' },
             { text: 'API 一覧', link: '/Docs/Introduction/api-reference' },
-            { text: 'FAQ', link: '/Docs/Introduction/FAQ' },
             { text: '参考リンク集', link: '/Docs/Introduction/References' },
             { text: '変更履歴', link: '/Docs/CHANGELOG' }
           ] 
