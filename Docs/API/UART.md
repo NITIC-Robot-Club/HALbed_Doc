@@ -135,7 +135,7 @@ extern "C" void app_main(void) {
         // 受信データがあれば1バイト読み取りして表示
         if (uart.readable()) {
             uart.read(RxByte, sizeof(RxByte));
-            uart.xprintf("RxByte: 0x%02X ('%c')\r\n", (unsigned int)(uint8_t)RxByte[0], RxByte[0]);
+            uart.xprintf("RxByte: 0x%02X ('%c')\r\n", (uint8_t)RxByte[0], RxByte[0]);
         }
     }
 }
@@ -144,9 +144,8 @@ extern "C" void app_main(void) {
 
 ### 受信割り込みを利用した例
 > [!caution]
-> このサンプルコードはG474REの環境で受信割り込みが行われないことを確認しています。
-> 
-> ライブラリの修正を行っております。
+> UARTの割り込みをUARTクラスで扱うための機能の実装が不完全です。
+> コールバッククラスから登録して実行することはできます。
 
 ```cpp
 #include "main.h"
@@ -155,28 +154,24 @@ using namespace HALbed;
 
 extern UART_HandleTypeDef huart2; // 外部宣言
 
-char txData[] = "Hello, UART!\r\n"; // 定期送信メッセージ
-void UARTread();
-char RxMsg[1];
-
 // UARTクラスのインスタンスを作成
-UART uart(&huart2);
+UART pc(&huart2);
+uint8_t rxByte;
+
+void uart_rx_callback() {
+    // 受信完了時の処理 + 受信したデータを再度割り込みモードで受信するように設定
+    pc.enableRxInt(reinterpret_cast<char *>(&rxByte), 1);
+    pc.xprintf("Received: %c\r\n", rxByte);
+}
 
 extern "C" void app_main(void) {
-    uart.enableRxInt(RxMsg, sizeof(RxMsg)); // 受信割り込みを有効にする
-    // 受信割り込みで関数(UARTread();)をattachする
-    uart.attach([]() { UARTread(); }, 0);
-    uart.xprintf("xprintf >>> Temperature: %d°C, Humidity: %.2f%%\r\n", 25, 60.5);
+    pc.enableRxInt(reinterpret_cast<char *>(&rxByte), 1);
+    // コールバック関数を登録
+    callback::attach<void()>(reinterpret_cast<intptr_t>(&huart2), []() { uart_rx_callback(); }, 0);
     while (1) {
-        uart.write(txData); // 定期送信
-        HAL_Delay(100); // 0.1秒待機
+        pc.xprintf("Hello, HALbed! Time: %lu ms\r\n", HAL_GetTick());
+        HAL_Delay(1000);
     }
 }
 
-void UARTread() {
-    uart.read(RxMsg, sizeof(RxMsg));
-    uart.write("RxMsg: ");
-    uart.write(RxMsg);
-    uart.write("\r\n");
-}
 ```
