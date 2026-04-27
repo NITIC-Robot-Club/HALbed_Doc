@@ -32,6 +32,10 @@ DigitalOut(PinName pin);
 
 ---
 
+##### `void toggle()`
+GPIOピンの状態を反転（HAL_GPIO_TogglePinを利用）
+> - 引数なし
+
 ##### `DigitalOut &operator=(int value)`
 write()と同等の動作を行い、連続代入が可能
 > - `value` : 出力する値
@@ -74,6 +78,7 @@ read()の結果を返す
 ## 使用方法
 ### CubeMXの設定 (PortとPinを指定する場合)
 対象ピンの設定する。
+
 ![image](./images/GPIO/img_DigitalOut_setup_1.png)
 
 ### app_main.cpp内
@@ -106,15 +111,25 @@ read()の結果を返す
 #include "../../Library/HALbed/Inc/HALbed.hpp"
 
 using namespace HALbed;
-DigitalOut LED(GPIOB, GPIO_PIN_2);
+DigitalOut LED(PA_5);
 
-int main(void) {
-    // 初期化処理...
-    LED.write(1); // LEDを点灯
-    if(LED.read()) {
-        // 点灯状態の確認処理
+extern "C" void app_main(void) {
+    while (1)
+    {
+        for (int i = 0; i < 5; i++){
+            LED.toggle();  // 点滅
+            HAL_Delay(500);
+        }
+        for (int i = 0; i < 20; i++){
+            LED = 1;  // 点灯
+            HAL_Delay(100);
+            LED = 0;  // 消灯
+            HAL_Delay(100);
+        }
+        for (int i = 0; i < 40; i++){
+            LED.write(!LED.read());
+            HAL_Delay(50);
+        }
     }
-    LED = 0; // LEDを消灯
-    return 0;
 }
 ```
