@@ -26,6 +26,12 @@ PWM(TIM_HandleTypeDef* htim, uint32_t channel, uint32_t TIMHz, bool useDMA = fal
 - ArrMax: タイマーARRの最大値
 ARRの最大値は16bitの場合は65536、32bitの場合は4294967296
 
+> [!Note] タイマーのクロック周波数
+> タイマーのクロック周波数は、MXの `HCLK` の設定を参照してください。
+> 例えば、HCLKが160MHzの場合、TIMHzは `160e6`を指定します。
+> ![image](images/PWMOut/img_PWMOut_setup_3.PNG)
+
+
 #### 主なメソッド
 
 ##### `void start()`
@@ -119,20 +125,18 @@ PWMパルス幅をミリ秒単位で指定
 
 using namespace HALbed;
 
-extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim2;
 
-uint16_t HZ = 50000; // 目標周波数
-float duty = 0.0f;
+uint16_t HZ = 50e3; // 目標周波数
 
 extern "C" void app_main() {
-    PWM pwm1(&htim1, TIM_CHANNEL_1, 84000000, true);
-    PWM pwm2(&htim1, TIM_CHANNEL_2, 84000000, true);
-
+    
+    PWMOut pwm1(&htim2, TIM_CHANNEL_1, 160e6, false,4294967296);
+    PWMOut pwm2(&htim2, TIM_CHANNEL_2, 160e6, false,4294967296);
     pwm1.start();
     pwm2.start();
 
     while (1) {
-        duty = 0.5f;
         pwm1.setFrequency(HZ);
         pwm2.setFrequency(HZ);
         pwm1.pulsewidth_us(5);
@@ -141,100 +145,44 @@ extern "C" void app_main() {
     }
     // pwm1.stop(); pwm2.stop();
 }
+
 ```
 
 ---
 
-### Sample 2: PWM出力のパルス幅交互変更例 
+### Sample 2: サーボモーターの制御例
 ```cpp
 #include "main.h"
 #include "../../Library/HALbed/Inc/HALbed.hpp"
 
 using namespace HALbed;
+extern TIM_HandleTypeDef htim2;
+PWM pwm(&htim2, TIM_CHANNEL_1, 84e6, true);
 
-extern TIM_HandleTypeDef htim1;
-
-int main() {
-    PWM pwm1(&htim1, TIM_CHANNEL_1, 84000000, true);
-    pwm1.start();
-    
-    // PWM周波数50000Hz、パルス幅を交互に10usと20usに変更
-    while (1) {
-        pwm1.setFrequency(50000);
-        pwm1.pulsewidth_us(10);
-        HAL_Delay(100);
-        pwm1.pulsewidth_us(20);
-        HAL_Delay(100);
-    }
-
-    pwm1.stop();
-    return 0;
+int servoAngleToPulseWidth(float angle) {
+    // 最小パルス 700us, 最大パルス 2300us として、角度をパルス幅に変換
+    return static_cast<uint32_t>(700 + (angle / 180.0f) * (2300 - 700));
 }
-```
 
----
-
-### Sample 3: 複数チャネルでデューティサイクルを入れ替える例
-```cpp
-#include "main.h"
-#include "../../Library/HALbed/Inc/HALbed.hpp"
-
-using namespace HALbed;
-
-extern TIM_HandleTypeDef htim1;
-
-int main() {
-    PWM pwm1(&htim1, TIM_CHANNEL_1, 84000000, true);
-    PWM pwm2(&htim1, TIM_CHANNEL_2, 84000000, true);
-
-    pwm1.start();
-    pwm2.start();
-
-    while (1) {
-        pwm1.setDutyCycle(0.25f);
-        pwm2.setDutyCycle(0.75f);
-        HAL_Delay(500);
-        pwm1.setDutyCycle(0.75f);
-        pwm2.setDutyCycle(0.25f);
-        HAL_Delay(500);
-    }
-
-    pwm1.stop();
-    pwm2.stop();
-    return 0;
-}
-```
-
----
-
-### Sample 4: DMAを使用しないPWM制御例
-```cpp
-#include "main.h"
-#include "../../Library/HALbed/Inc/HALbed.hpp"
-
-using namespace HALbed;
-
-extern TIM_HandleTypeDef htim1;
-
-int main() {
-    // DMA無使用 (useDMA = false) のPWM制御例
-    PWM pwm(&htim1, TIM_CHANNEL_1, 84000000, false);
+extern "C" void app_main() {
     pwm.start();
-    
+
+    float angle = 0.0f;
     while (1) {
-        pwm.setFrequency(50000);
-        pwm.pulsewidth_us(10);
-        HAL_Delay(100);
-        pwm.pulsewidth_us(20);
-        HAL_Delay(100);
+        uint32_t pulseWidth = servoAngleToPulseWidth(angle);
+        pwm.pulsewidth_us(pulseWidth);
+        HAL_Delay(1000); // 1秒待機
+        angle += 30.0f; // 30度ずつ回転
+        if (angle > 180.0f) {
+            angle = 0.0f; // 角度をリセット
+        }
     }
-    
-    pwm.stop();
-    return 0;
 }
 ```
 
-### sample 5 : RGB LEDテープを光らせる
+---
+
+### sample 3 : RGB LEDテープを光らせる
 ```cpp
 #include "main.h"
 #include "../../Library/HALbed/Inc/UART.hpp"
