@@ -1,6 +1,5 @@
 import { defineConfig } from 'vitepress'
 
-// https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "HALbed Docs",
   description: "HALラッパー関数群[HALbed] ドキュメントサイト",
@@ -34,7 +33,7 @@ export default defineConfig({
       { text: '概要', link: '/Docs/Introduction/ArchitectureOverview' },
       { text: 'API', link: '/Docs/API/APIHome' },
       { text: '技術記事', link: '/Docs/Technical_article/article_Home' },
-      { text: 'FAQ', link: '/Docs/FAQ/FAQHome' }
+      { text: 'FAQ', link: '/Docs/FAQ/FAQ_home' }
     ],
 
     sidebar: {
