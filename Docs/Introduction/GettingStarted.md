@@ -4,11 +4,9 @@
 
 ## 必要な環境
 
-- **STM32CubeIDE**（1.10 以降推奨）
-- **STM32CubeMX** で生成済みのプロジェクト（HAL ドライバ有効）
+- **STM32CubeIDE**（1.19 以前推奨）
 
-他に Visual Studio Code の拡張機能を用いている環境でも同様に使えます。
-
+他に Visual Studio Code の拡張機能を用いている環境でも同様に使えますが、ここではIDEの中心に説明します。
 
 ## 1. HALbed の入手
 必要に応じて、`Library`ディレクトリを作成してください。
