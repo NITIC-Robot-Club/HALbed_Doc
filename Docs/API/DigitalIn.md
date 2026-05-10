@@ -111,17 +111,18 @@ read()と同等の結果を返す
 #include "../../Library/HALbed/Inc/HALbed.hpp"
 
 using namespace HALbed;
-DigitalOut LED(PB_2);
+DigitalOut LED(PA_5);
 DigitalIn  btn(PC_13);
-// DigitalOut LED(LED_GPIO_Port, LED_Pin);  //CubeMXで設定した場合
-// DigitalIn  btn(GPIOA, GPIO_PIN_1);
-bool btn_value=0;
 
-extern "C" void app_main(void)
-{
-	while(true){
-		btn_value = btn.read();
-		LED.write(!btn_value);
+
+extern "C" void app_main(void) {
+    while (1)
+    {
+        if(btn.read()){
+            LED.write(1);
+        }else{
+            LED.write(0);
+        }
     }
 }
 ```
