@@ -4,6 +4,7 @@ export default defineConfig({
   title: "HALbed Docs",
   description: "HALラッパー関数群[HALbed] ドキュメントサイト",
   lastUpdated: true,
+  base: '/HALbed_Doc/',
   themeConfig: {
     search: {
       provider: 'local',
@@ -77,6 +78,6 @@ export default defineConfig({
     
     socialLinks: [
       { icon: 'github', link: 'https://github.com/NITIC-Robot-Club/HALbed' }
-    ]
+    ],
   }
 })
