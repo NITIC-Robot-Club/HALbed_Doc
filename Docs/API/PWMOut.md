@@ -29,7 +29,7 @@ ARRの最大値は16bitの場合は65536、32bitの場合は4294967296
 > [!Note] タイマーのクロック周波数
 > タイマーのクロック周波数は、MXの `HCLK` の設定を参照してください。
 > 例えば、HCLKが160MHzの場合、TIMHzは `160e6`を指定します。
-> ![image](images/PWMOut/img_PWMOut_setup_3.PNG)
+> ![image](images/PWMOut/img_PWMOut_setup_3.png)
 
 
 #### 主なメソッド
@@ -85,9 +85,9 @@ PWMパルス幅をミリ秒単位で指定
 1. Clock Source を`Internal Clock`に設定。
 2.  TIM1を展開し,Channel~ の設定を `PWM Generation CH~` に設定。
 (同時にピンが設定されます)
-![image](images/PWMOut/img_PWMOut_setup_1.PNG)
+![image](images/PWMOut/img_PWMOut_setup_1.png)
 3. DMAを使用するチャンネルで設定する (使用しない場合はスキップ)
-![image](images/PWMOut/img_PWMOut_setup_2.PNG)
+![image](images/PWMOut/img_PWMOut_setup_2.png)
 
 
 ### app_main.cpp内

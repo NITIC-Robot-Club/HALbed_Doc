@@ -3,6 +3,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "HALbed Docs",
   description: "HALラッパー関数群[HALbed] ドキュメントサイト",
+  lastUpdated: true,
   themeConfig: {
     search: {
       provider: 'local',

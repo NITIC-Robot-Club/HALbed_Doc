@@ -103,7 +103,7 @@ I2Cデバイスの準備状態を確認
 
     - `Mode` を `I2C` に設定し、ピンを設定する
     - `I2C Speed Mode` を設定し、 `I2C Clock Speed (Hz)` を設定する
-    ![image](./images/i2c/img_I2C_setup_1.PNG)
+    ![image](./images/i2c/img_I2C_setup_1.png)
 
 3. DMAの有効化 (以降、DMA方式で使用するときのみ)
 
@@ -111,12 +111,12 @@ I2Cデバイスの準備状態を確認
     - それぞれ `Mode` をノーマルに設定する
     - Priority を適説に設定する
       - 他のDMAなどと優先順位を付け設定する
-    ![image](./images/i2c/img_I2C_setup_2.PNG)
+    ![image](./images/i2c/img_I2C_setup_2.png)
 
 4. 割り込みの設定
     
     - `NVIC Settings` に移動し `I2C event interrrupt` を有効化する
-    ![image](./images/i2c/img_I2C_setup_3.PNG)
+    ![image](./images/i2c/img_I2C_setup_3.png)
 
 > [!caution]
 > **I2CのDMAでは `circular Mode`の動作は補償されていません。** <br>

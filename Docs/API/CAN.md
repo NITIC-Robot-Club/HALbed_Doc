@@ -77,17 +77,17 @@ CAN送信が可能かどうかを確認
 ### CubeMX の設定
 1. **使用するピンを設定**
    
-    ![image](./images/CAN/img_CAN_setup_1.PNG)
+    ![image](./images/CAN/img_CAN_setup_1.png)
 2. **クロック設定を確認する**
    - CubeMXのClock ConfigurationでCANのクロック源のAPB1の周波数を確認する
-    ![image](./images/CAN/img_CAN_setup_2.PNG)
+    ![image](./images/CAN/img_CAN_setup_2.png)
 3. **CANの転送速度とサンプリングポイントを設定**
    - (2.)で確認したクロック設定と、ボーレート&サンプリングポイントを設定する
 4. **受信割り込みの設定をする**
     - FIFOを有効化し、受信割り込みの設定を行います
     - FIFO0 : `CANx RX0 interrupts`
     - FIFO1 : `CANx RX1 interrupts`  
-    ![image](./images/CAN/img_CAN_setup_3.PNG)
+    ![image](./images/CAN/img_CAN_setup_3.png)
 
 > [!Note]
 > 画像は 'STM23 F446re' を使用し、`1Mbps` ,サンプリングポイント `88.9%` で計算 </br>

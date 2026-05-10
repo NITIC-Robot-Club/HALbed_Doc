@@ -17,6 +17,6 @@ CAN 通信 | [CAN](./CAN.md) |[CAN.hpp](https://github.com/NITIC-Robot-Club/HALb
 I2C 通信 | [I2C](./i2c.md) |[i2c.hpp](https://github.com/NITIC-Robot-Club/HALbed/blob/dev/Inc/i2c.hpp)
 PWM 出力 | [PWMOut](./PWMOut.md) |[PWMOut.hpp](https://github.com/NITIC-Robot-Club/HALbed/blob/dev/Inc/PWMOut.hpp)
 タイマー割り込み管理 | [Ticker](./Ticker.md) |[Ticker.hpp](https://github.com/NITIC-Robot-Club/HALbed/blob/dev/Inc/Ticker.hpp)
-タイマー APB タイプ取得 | [TimerAPB](./TimerAPB.md) |[TimerAPB.hpp](https://github.com/NITIC-Robot-Club/HALbed/blob/dev/Inc/TimerAPB.hpp)
+タイマー APB タイプ取得 |--- |[TimerAPB.hpp](https://github.com/NITIC-Robot-Club/HALbed/blob/dev/Inc/TimerAPB.hpp)
 UART 通信 | [UART](./UART.md) |[UART.hpp](https://github.com/NITIC-Robot-Club/HALbed/blob/dev/Inc/UART.hpp)
 --------------------------------
