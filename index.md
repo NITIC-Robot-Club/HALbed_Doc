@@ -10,7 +10,6 @@ hero:
   actions:
     - theme: brand
       text: はじめる
-      link: /Docs/home
-
+      link: /Docs/Introduction/GettingStarted.md
 ---
 
