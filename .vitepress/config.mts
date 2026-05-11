@@ -5,6 +5,20 @@ export default defineConfig({
   description: "HALラッパー関数群[HALbed] ドキュメントサイト",
   lastUpdated: true,
   base: '/HALbed_Doc/',
+  head: [
+    [
+      'script',
+      { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-5T6M7NQGY5' }
+    ],
+    [
+      'script',
+      {},
+      `window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5T6M7NQGY5');`
+    ]
+  ],
   themeConfig: {
     search: {
       provider: 'local',
@@ -46,7 +60,7 @@ export default defineConfig({
             { text: 'API 一覧', link: '/Docs/Introduction/api-reference' },
             { text: 'ディレクトリ構造', link: '/Docs/Introduction/DirectoryStructure' },
             { text: 'インストールと初期設定', link: '/Docs/Introduction/GettingStarted' },
-            { text: '変更履歴', link: '/Docs/CHANGELOG' },
+            { text: '変更履歴', link: '/Docs/Introduction/CHANGELOG' },
             { text: '参考リンク集', link: '/Docs/Introduction/References' },
           ] 
         }
