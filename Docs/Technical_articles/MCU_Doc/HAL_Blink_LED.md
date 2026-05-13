@@ -1,4 +1,4 @@
-# LチカをHALライブラリで書いてみる
+# LチカをHALとHALbedで書いてみる
 
 HALbedは、STM32の**HAL（Hardware Abstraction Layer）ライブラリ**を  
 さらに抽象化・リネームしたラッパー関数群です。
@@ -55,7 +55,7 @@ STM32CubeIDEでプロジェクトを作成したら、まずは**GPIOの設定**
 使うピンをGPIOの出力モードに設定します。
 LED を繋いだ適当なピンを選んでください。
 
-![image](../API/images/GPIO/img_DigitalOut_setup_1.png)
+![image](../../API/images/GPIO/img_DigitalOut_setup_1.png)
 
 設定したあと、保存してコードを生成します。
 
@@ -161,7 +161,7 @@ extern "C" void app_main(void) {
 
 色々な書き方ができますが、どれも同じようにLEDを点滅させることができます。
 HALbedを使うと、GPIOの操作がより直感的に書けるようになりますね。
-細かい仕様は[DigitalOutクラスのドキュメント](../API/DigitalOut.md) を参照してください。
+細かい仕様は[DigitalOutクラスのドキュメント](/Docs/API/DigitalOut.md) を参照してください。
 
 ## まとめ
 今回はDigitalOutクラスを使って、LEDを点滅させるプログラムを書いてみました。
