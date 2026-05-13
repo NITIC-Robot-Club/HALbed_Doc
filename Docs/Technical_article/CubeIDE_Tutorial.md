@@ -17,7 +17,6 @@
 ![image](./images/CubeIDE_Tutorial/slide11.png)
 ![image](./images/CubeIDE_Tutorial/slide12.png)
 ![image](./images/CubeIDE_Tutorial/slide13.png)
-![image](./images/CubeIDE_Tutorial/slide14.png)
 ![image](./images/CubeIDE_Tutorial/slide15.png)
 ![image](./images/CubeIDE_Tutorial/slide16.png)
 ![image](./images/CubeIDE_Tutorial/slide17.png)
