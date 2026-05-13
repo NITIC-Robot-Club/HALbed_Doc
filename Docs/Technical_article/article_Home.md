@@ -3,7 +3,7 @@
 このページは、解説記事をまとめています。
 
 ## チュートリアル
-- (CubeIDEの使い方) : 準備中
+<!-- - [CubeIDEのプロジェクト作成からビルドまで](./CubeIDE_Tutorial.md) -->
 - [LチカをHALとHALbedで書いてみる](./HAL_Blink_LED.md)
 
 ## 記事一覧

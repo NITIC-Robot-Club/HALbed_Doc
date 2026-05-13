@@ -10,25 +10,21 @@
 > 1.19以降のバージョンでは、CubeMXが分離しており使いづらいため、1.19以前のバージョンを推奨します。
 > 他に Visual Studio Code の拡張機能を用いている環境でも同様に使えますが、ここではIDEの中心に説明します。
 
-## 1. HALbed の入手
+## 1. HALbed のダウンロード
 必要に応じて、`Library`ディレクトリを作成してください。
+
+> [!NOTE]
+> `Library`ディレクトリは、HALbedのような外部ライブラリをまとめて管理するためのディレクトリです。プロジェクトルートに作成することを推奨しますが、プロジェクト内の任意の場所に作成しても構いません。<br>
 
 ```bash
 mkdir Library
 cd Library
+git submodule add https://github.com/NITIC-Robot-Club/HALbed.git
 ```
-
-GitHub リポジトリからクローンまたはダウンロードします。
-```bash
-git clone https://github.com/NITIC-Robot-Club/HALbed.git
-```
-
-または、[GitHub のリリースページ](https://github.com/NITIC-Robot-Club/HALbed/releases) から ZIP をダウンロードして展開してください。
 
 ## 2. プロジェクトへの配置
 
-ダウンロードした HALbed フォルダを、プロジェクト内の `Library/` ディレクトリに配置します。
-
+HALbed をプロジェクト内の次のような場所に配置します。
 ```
 app_project/
 ├─ Core/
