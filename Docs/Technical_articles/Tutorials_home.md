@@ -6,8 +6,9 @@ hero:
 ---
 
 # 記事一覧
-
 [マイコンってなに？](./Tutorials_articles/Intro_to_Microcontrollers.md)
-## チュートリアル一覧
+
+## チュートリアル
+
 - [CubeIDEの使い方](./Tutorials_articles/CubeIDE_Tutorial.md)
 - [DigitalInでユーザーボタンからLEDを光らせる](./Tutorials_articles/DigitalIn_UserButton_LED.md)
