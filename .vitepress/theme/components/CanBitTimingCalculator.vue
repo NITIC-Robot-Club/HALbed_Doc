@@ -26,9 +26,9 @@ const dataSamplePointPercent = ref(75)
 const dataSjw = ref(DEFAULT_SJW)
 
 const modeOptions: Array<{ value: CanTimingMode; label: string; description: string }> = [
-  { value: 'bxcan', label: 'bxCAN', description: '従来の Classic CAN Peripheral' },
-//  { value: 'fdcan-classic', label: 'FDCAN Classic', description: 'FDCAN で Classic mode を使う' },
-//  { value: 'fdcan-fd', label: 'FDCAN FD', description: 'Nominal と Data を両方使う' },
+  { value: 'bxcan', label: 'bxCAN', description: 'Classic CAN Peripheral' },
+  // { value: 'fdcan-classic', label: 'FDCAN Classic', description: 'FDCAN で Classic mode を使う' },
+  // { value: 'fdcan-fd', label: 'FDCAN FD', description: 'Nominal と Data を両方使う' },
 ]
 
 const selectedMode = computed(() =>
@@ -230,7 +230,7 @@ onMounted(() => {
         <div class="can-calculator__summary">
           <p v-if="mode === 'fdcan-fd'">Nominal と Data それぞれ上位 {{ DEFAULT_RESULT_LIMIT }} 件を表示しています。</p>
           <p v-else>上位 {{ nominalCandidates.length }} 件を表示しています。</p>
-          <p v-if="nominalCandidates[0]">最良候補: Prescaler {{ nominalCandidates[0].prescaler }}, TSEG1 {{ nominalCandidates[0].tseg1 }}, TSEG2 {{ nominalCandidates[0].tseg2 }}</p>
+          <p v-if="nominalCandidates[0]">最良候補: Prescaler:[ {{ nominalCandidates[0].prescaler }} ] , TSEG1:[ {{ nominalCandidates[0].tseg1 }} ], TSEG2:[ {{ nominalCandidates[0].tseg2 }} ]</p>
         </div>
 
         <section class="can-calculator__results-section">
@@ -246,8 +246,8 @@ onMounted(() => {
                   <th>TQ(ns)</th>
                   <th>Bitrate</th>
                   <th>Sample Point</th>
-                  <th>Error %</th>
-                  <th>Score</th>
+                  <!-- <th>Error %</th> -->
+                  <!-- <th>Score</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -259,8 +259,8 @@ onMounted(() => {
                   <td>{{ formatTimeQuantum(candidate.timeQuantumNs) }}</td>
                   <td>{{ formatBitrate(candidate.bitrateKbps) }}</td>
                   <td>{{ formatSamplePoint(candidate.samplePointPercent) }}</td>
-                  <td>{{ formatError(candidate.bitrateErrorPercent) }}</td>
-                  <td>{{ formatScore(candidate.score) }}</td>
+                  <!-- <td>{{ formatError(candidate.bitrateErrorPercent) }}</td> -->
+                  <!-- <td>{{ formatScore(candidate.score) }}</td> -->
                 </tr>
               </tbody>
             </table>
