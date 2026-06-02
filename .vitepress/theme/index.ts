@@ -2,6 +2,7 @@
 import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
+import CanBitTimingCalculator from './components/CanBitTimingCalculator.vue'
 import ArticleTags from './components/ArticleTags.vue'
 import ArticleCard from './components/ArticleCard.vue'
 import RelatedArticles from './components/RelatedArticles.vue'
@@ -10,13 +11,14 @@ import TagPage from './components/TagPage.vue'
 import './style.css'
 
 export default {
-  extends: DefaultTheme,
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
       'doc-before': () => h(ArticleTags),
       'doc-after': () => h(RelatedArticles)
     })
   },
+  enhanceApp({ app, router, siteData }) {
+    app.component('CanBitTimingCalculator', CanBitTimingCalculator)
   enhanceApp({ app }) {
     app.component('ArticleCard', ArticleCard)
     app.component('RelatedArticles', RelatedArticles)

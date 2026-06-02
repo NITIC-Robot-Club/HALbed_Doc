@@ -48,7 +48,8 @@ export default defineConfig({
     nav: [
       { text: '概要', link: '/Docs/Introduction/ArchitectureOverview' },
       { text: 'API', link: '/Docs/API/APIHome' },
-      { text: '技術記事', link: '/Docs/Technical_articles/Article_Home.md' },
+      { text: '技術記事', link: '/Docs/Technical_articles/article_Home.md' },
+      { text: 'ツール', link: '/Docs/Tools/Tools_home' },
       { text: 'FAQ', link: '/Docs/FAQ/FAQ_home' }
     ],
 
@@ -86,6 +87,16 @@ export default defineConfig({
             { text: 'I2C', link: '/Docs/API/i2c' }
           ]
         },
+      ]
+      ,
+      '/Docs/Tools/': [
+        {
+          text: 'ツール',
+          items: [
+            { text: 'ツール一覧', link: '/Docs/Tools/Tools_home' },
+            { text: 'CAN Bit Timing Calculator', link: '/Docs/Tools/CAN/BitTimingCalculator' }
+          ]
+        }
       ]
 
     },
