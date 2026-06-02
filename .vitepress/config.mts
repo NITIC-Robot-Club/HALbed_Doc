@@ -48,7 +48,7 @@ export default defineConfig({
     nav: [
       { text: '概要', link: '/Docs/Introduction/ArchitectureOverview' },
       { text: 'API', link: '/Docs/API/APIHome' },
-      { text: '技術記事', link: '/Docs/Technical_articles/article_Home.md' },
+      { text: '技術記事', link: '/Docs/Technical_articles/Article_Home.md' },
       { text: 'FAQ', link: '/Docs/FAQ/FAQ_home' }
     ],
 
