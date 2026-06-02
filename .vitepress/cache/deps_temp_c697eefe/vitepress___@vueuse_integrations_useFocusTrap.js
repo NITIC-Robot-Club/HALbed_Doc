@@ -3,15 +3,15 @@ import {
   toArray,
   tryOnScopeDispose,
   unrefElement
-} from "./chunk-SB244FVQ.js";
+} from "./chunk-SEMG2ZRD.js";
 import {
   computed,
   shallowRef,
   toValue,
   watch
-} from "./chunk-LT66L4YR.js";
+} from "./chunk-A3CDN2KK.js";
 
-// node_modules/tabbable/dist/index.esm.js
+// ../node_modules/tabbable/dist/index.esm.js
 var candidateSelectors = ["input:not([inert]):not([inert] *)", "select:not([inert]):not([inert] *)", "textarea:not([inert]):not([inert] *)", "a[href]:not([inert]):not([inert] *)", "button:not([inert]):not([inert] *)", "[tabindex]:not(slot):not([inert]):not([inert] *)", "audio[controls]:not([inert]):not([inert] *)", "video[controls]:not([inert]):not([inert] *)", '[contenteditable]:not([contenteditable="false"]):not([inert]):not([inert] *)', "details>summary:first-of-type:not([inert]):not([inert] *)", "details:not([inert]):not([inert] *)"];
 var candidateSelector = candidateSelectors.join(",");
 var NoElement = typeof Element === "undefined";
@@ -361,7 +361,7 @@ var isFocusable = function isFocusable2(node, options) {
   return isNodeMatchingSelectorFocusable(options, node);
 };
 
-// node_modules/focus-trap/dist/focus-trap.esm.js
+// ../node_modules/focus-trap/dist/focus-trap.esm.js
 function _arrayLikeToArray(r, a) {
   (null == a || a > r.length) && (a = r.length);
   for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e];
@@ -369,6 +369,29 @@ function _arrayLikeToArray(r, a) {
 }
 function _arrayWithoutHoles(r) {
   if (Array.isArray(r)) return _arrayLikeToArray(r);
+}
+function asyncGeneratorStep(n, t, e, r, o, a, c) {
+  try {
+    var i = n[a](c), u = i.value;
+  } catch (n2) {
+    return void e(n2);
+  }
+  i.done ? t(u) : Promise.resolve(u).then(r, o);
+}
+function _asyncToGenerator(n) {
+  return function() {
+    var t = this, e = arguments;
+    return new Promise(function(r, o) {
+      var a = n.apply(t, e);
+      function _next(n2) {
+        asyncGeneratorStep(a, r, o, _next, _throw, "next", n2);
+      }
+      function _throw(n2) {
+        asyncGeneratorStep(a, r, o, _next, _throw, "throw", n2);
+      }
+      _next(void 0);
+    });
+  };
 }
 function _createForOfIteratorHelper(r, e) {
   var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"];
@@ -450,6 +473,101 @@ function _objectSpread2(e) {
     });
   }
   return e;
+}
+function _regenerator() {
+  var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag";
+  function i(r2, n2, o2, i2) {
+    var c2 = n2 && n2.prototype instanceof Generator ? n2 : Generator, u2 = Object.create(c2.prototype);
+    return _regeneratorDefine(u2, "_invoke", function(r3, n3, o3) {
+      var i3, c3, u3, f2 = 0, p = o3 || [], y = false, G = {
+        p: 0,
+        n: 0,
+        v: e,
+        a: d,
+        f: d.bind(e, 4),
+        d: function(t2, r4) {
+          return i3 = t2, c3 = 0, u3 = e, G.n = r4, a;
+        }
+      };
+      function d(r4, n4) {
+        for (c3 = r4, u3 = n4, t = 0; !y && f2 && !o4 && t < p.length; t++) {
+          var o4, i4 = p[t], d2 = G.p, l = i4[2];
+          r4 > 3 ? (o4 = l === n4) && (u3 = i4[(c3 = i4[4]) ? 5 : (c3 = 3, 3)], i4[4] = i4[5] = e) : i4[0] <= d2 && ((o4 = r4 < 2 && d2 < i4[1]) ? (c3 = 0, G.v = n4, G.n = i4[1]) : d2 < l && (o4 = r4 < 3 || i4[0] > n4 || n4 > l) && (i4[4] = r4, i4[5] = n4, G.n = l, c3 = 0));
+        }
+        if (o4 || r4 > 1) return a;
+        throw y = true, n4;
+      }
+      return function(o4, p2, l) {
+        if (f2 > 1) throw TypeError("Generator is already running");
+        for (y && 1 === p2 && d(p2, l), c3 = p2, u3 = l; (t = c3 < 2 ? e : u3) || !y; ) {
+          i3 || (c3 ? c3 < 3 ? (c3 > 1 && (G.n = -1), d(c3, u3)) : G.n = u3 : G.v = u3);
+          try {
+            if (f2 = 2, i3) {
+              if (c3 || (o4 = "next"), t = i3[o4]) {
+                if (!(t = t.call(i3, u3))) throw TypeError("iterator result is not an object");
+                if (!t.done) return t;
+                u3 = t.value, c3 < 2 && (c3 = 0);
+              } else 1 === c3 && (t = i3.return) && t.call(i3), c3 < 2 && (u3 = TypeError("The iterator does not provide a '" + o4 + "' method"), c3 = 1);
+              i3 = e;
+            } else if ((t = (y = G.n < 0) ? u3 : r3.call(n3, G)) !== a) break;
+          } catch (t2) {
+            i3 = e, c3 = 1, u3 = t2;
+          } finally {
+            f2 = 1;
+          }
+        }
+        return {
+          value: t,
+          done: y
+        };
+      };
+    }(r2, o2, i2), true), u2;
+  }
+  var a = {};
+  function Generator() {
+  }
+  function GeneratorFunction() {
+  }
+  function GeneratorFunctionPrototype() {
+  }
+  t = Object.getPrototypeOf;
+  var c = [][n] ? t(t([][n]())) : (_regeneratorDefine(t = {}, n, function() {
+    return this;
+  }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c);
+  function f(e2) {
+    return Object.setPrototypeOf ? Object.setPrototypeOf(e2, GeneratorFunctionPrototype) : (e2.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine(e2, o, "GeneratorFunction")), e2.prototype = Object.create(u), e2;
+  }
+  return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine(u), _regeneratorDefine(u, o, "Generator"), _regeneratorDefine(u, n, function() {
+    return this;
+  }), _regeneratorDefine(u, "toString", function() {
+    return "[object Generator]";
+  }), (_regenerator = function() {
+    return {
+      w: i,
+      m: f
+    };
+  })();
+}
+function _regeneratorDefine(e, r, n, t) {
+  var i = Object.defineProperty;
+  try {
+    i({}, "", {});
+  } catch (e2) {
+    i = 0;
+  }
+  _regeneratorDefine = function(e2, r2, n2, t2) {
+    function o(r3, n3) {
+      _regeneratorDefine(e2, r3, function(e3) {
+        return this._invoke(r3, n3, e3);
+      });
+    }
+    r2 ? i ? i(e2, r2, {
+      value: n2,
+      enumerable: !t2,
+      configurable: !t2,
+      writable: !t2
+    }) : e2[r2] = n2 : (o("next", 0), o("throw", 1), o("return", 2));
+  }, _regeneratorDefine(e, r, n, t);
 }
 function _toConsumableArray(r) {
   return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread();
@@ -954,12 +1072,21 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
   };
   var addListeners = function addListeners2() {
     if (!state.active) {
-      return;
+      return Promise.resolve();
     }
     activeFocusTraps.activateTrap(trapStack, trap);
-    state.delayInitialFocusTimer = config.delayInitialFocus ? delay(function() {
+    var promise;
+    if (config.delayInitialFocus) {
+      promise = new Promise(function(resolve) {
+        state.delayInitialFocusTimer = delay(function() {
+          _tryFocus(getInitialFocusNode());
+          resolve();
+        });
+      });
+    } else {
+      promise = Promise.resolve();
       _tryFocus(getInitialFocusNode());
-    }) : _tryFocus(getInitialFocusNode());
+    }
     doc.addEventListener("focusin", checkFocusIn, true);
     doc.addEventListener("mousedown", checkPointerDown, {
       capture: true,
@@ -978,7 +1105,7 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
       passive: false
     });
     doc.addEventListener("keydown", checkEscapeKey);
-    return trap;
+    return promise;
   };
   var collectAdjacentElements = function collectAdjacentElements2(containers) {
     if (state.active && !state.paused) {
@@ -1097,17 +1224,29 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
         state.paused = false;
         state.nodeFocusedBeforeActivation = _getActiveElement(doc);
         onActivate === null || onActivate === void 0 || onActivate();
-        var finishActivation = function finishActivation2() {
-          if (checkCanFocusTrap) {
-            updateTabbableNodes();
-          }
-          addListeners();
-          updateObservedNodes();
-          if (config.isolateSubtrees) {
-            trap._setSubtreeIsolation(true);
-          }
-          onPostActivate === null || onPostActivate === void 0 || onPostActivate();
-        };
+        var finishActivation = function() {
+          var _ref6 = _asyncToGenerator(_regenerator().m(function _callee() {
+            return _regenerator().w(function(_context) {
+              while (1) switch (_context.n) {
+                case 0:
+                  if (checkCanFocusTrap) {
+                    updateTabbableNodes();
+                  }
+                  _context.n = 1;
+                  return addListeners();
+                case 1:
+                  trap._setSubtreeIsolation(true);
+                  updateObservedNodes();
+                  onPostActivate === null || onPostActivate === void 0 || onPostActivate();
+                case 2:
+                  return _context.a(2);
+              }
+            }, _callee);
+          }));
+          return function finishActivation2() {
+            return _ref6.apply(this, arguments);
+          };
+        }();
         if (checkCanFocusTrap) {
           checkCanFocusTrap(state.containers.concat()).then(finishActivation, finishActivation);
           return this;
@@ -1189,7 +1328,7 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
       }
       if (state.active) {
         updateTabbableNodes();
-        if (config.isolateSubtrees && !state.paused) {
+        if (!state.paused) {
           trap._setSubtreeIsolation(true);
         }
       }
@@ -1214,18 +1353,35 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
           var onPostPause = getOption(options, "onPostPause");
           onPause === null || onPause === void 0 || onPause();
           removeListeners();
-          updateObservedNodes();
           trap._setSubtreeIsolation(false);
+          updateObservedNodes();
           onPostPause === null || onPostPause === void 0 || onPostPause();
         } else {
           var onUnpause = getOption(options, "onUnpause");
           var onPostUnpause = getOption(options, "onPostUnpause");
           onUnpause === null || onUnpause === void 0 || onUnpause();
-          trap._setSubtreeIsolation(true);
-          updateTabbableNodes();
-          addListeners();
-          updateObservedNodes();
-          onPostUnpause === null || onPostUnpause === void 0 || onPostUnpause();
+          var finishUnpause = function() {
+            var _ref7 = _asyncToGenerator(_regenerator().m(function _callee2() {
+              return _regenerator().w(function(_context2) {
+                while (1) switch (_context2.n) {
+                  case 0:
+                    updateTabbableNodes();
+                    _context2.n = 1;
+                    return addListeners();
+                  case 1:
+                    trap._setSubtreeIsolation(true);
+                    updateObservedNodes();
+                    onPostUnpause === null || onPostUnpause === void 0 || onPostUnpause();
+                  case 2:
+                    return _context2.a(2);
+                }
+              }, _callee2);
+            }));
+            return function finishUnpause2() {
+              return _ref7.apply(this, arguments);
+            };
+          }();
+          finishUnpause();
         }
         return this;
       }
@@ -1272,7 +1428,7 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
   return trap;
 };
 
-// node_modules/@vueuse/integrations/useFocusTrap.mjs
+// ../node_modules/@vueuse/integrations/dist/useFocusTrap-lXZ_YG-8.js
 function useFocusTrap(target, options = {}) {
   let trap;
   const { immediate, ...focusTrapOptions } = options;
@@ -1292,36 +1448,32 @@ function useFocusTrap(target, options = {}) {
       isPaused.value = false;
     }
   };
-  const targets = computed(() => {
-    const _targets = toValue(target);
-    return toArray(_targets).map((el) => {
+  watch(computed(() => {
+    return toArray(toValue(target)).map((el) => {
       const _el = toValue(el);
       return typeof _el === "string" ? _el : unrefElement(_el);
     }).filter(notNullish);
-  });
-  watch(
-    targets,
-    (els) => {
-      if (!els.length)
-        return;
+  }), (els) => {
+    if (!els.length) return;
+    if (!trap) {
       trap = createFocusTrap(els, {
         ...focusTrapOptions,
         onActivate() {
           hasFocus.value = true;
-          if (options.onActivate)
-            options.onActivate();
+          if (options.onActivate) options.onActivate();
         },
         onDeactivate() {
           hasFocus.value = false;
-          if (options.onDeactivate)
-            options.onDeactivate();
+          if (options.onDeactivate) options.onDeactivate();
         }
       });
-      if (immediate)
-        activate();
-    },
-    { flush: "post" }
-  );
+      if (immediate) activate();
+    } else {
+      const isActive = trap === null || trap === void 0 ? void 0 : trap.active;
+      trap === null || trap === void 0 || trap.updateContainerElements(els);
+      if (!isActive && immediate) activate();
+    }
+  }, { flush: "post" });
   tryOnScopeDispose(() => deactivate());
   return {
     hasFocus,
@@ -1345,8 +1497,9 @@ tabbable/dist/index.esm.js:
 
 focus-trap/dist/focus-trap.esm.js:
   (*!
-  * focus-trap 7.8.0
+  * focus-trap 8.0.1
   * @license MIT, https://github.com/focus-trap/focus-trap/blob/master/LICENSE
   *)
+  (*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE *)
 */
 //# sourceMappingURL=vitepress___@vueuse_integrations_useFocusTrap.js.map

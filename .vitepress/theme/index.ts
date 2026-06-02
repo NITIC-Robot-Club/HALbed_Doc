@@ -14,15 +14,34 @@ export default {
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
       'doc-before': () => h(ArticleTags),
-      'doc-after': () => h(RelatedArticles)
+      'doc-after': () => h(RelatedArticles),
     })
   },
-  enhanceApp({ app, router, siteData }) {
-    app.component('CanBitTimingCalculator', CanBitTimingCalculator)
+
   enhanceApp({ app }) {
-    app.component('ArticleCard', ArticleCard)
-    app.component('RelatedArticles', RelatedArticles)
-    app.component('TagExplorer', TagExplorer)
-    app.component('TagPage', TagPage)
-  }
+    app.component(
+      'CanBitTimingCalculator',
+      CanBitTimingCalculator,
+    )
+
+    app.component(
+      'ArticleCard',
+      ArticleCard,
+    )
+
+    app.component(
+      'RelatedArticles',
+      RelatedArticles,
+    )
+
+    app.component(
+      'TagExplorer',
+      TagExplorer,
+    )
+
+    app.component(
+      'TagPage',
+      TagPage,
+    )
+  },
 } satisfies Theme
