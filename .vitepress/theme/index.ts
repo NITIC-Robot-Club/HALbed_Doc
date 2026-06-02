@@ -2,25 +2,12 @@
 import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-
-import CanBitTimingCalculator
-  from './components/CanBitTimingCalculator.vue'
-
-import ArticleTags
-  from './components/ArticleTags.vue'
-
-import ArticleCard
-  from './components/ArticleCard.vue'
-
-import RelatedArticles
-  from './components/RelatedArticles.vue'
-
-import TagExplorer
-  from './components/TagExplorer.vue'
-
-import TagPage
-  from './components/TagPage.vue'
-
+import CanBitTimingCalculator from './components/CanBitTimingCalculator.vue'
+import ArticleTags from './components/ArticleTags.vue'
+import ArticleCard from './components/ArticleCard.vue'
+import RelatedArticles from './components/RelatedArticles.vue'
+import TagExplorer from './components/TagExplorer.vue'
+import TagPage from './components/TagPage.vue'
 import './style.css'
 
 export default {
