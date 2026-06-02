@@ -1,3 +1,9 @@
+---
+tags:
+    - 技術記事
+    - HAL
+---
+
 # LチカをHALとHALbedで書いてみる
 
 HALbedは、STM32の**HAL（Hardware Abstraction Layer）ライブラリ**を  

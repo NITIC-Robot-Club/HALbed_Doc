@@ -17,7 +17,7 @@ features:
   - icon: 🚀
     title: はじめに
     details: HALbedの概要について説明します。
-    link: /Docs/Introduction/Overview.md
+    link: /Docs/Introduction/ArchitectureOverview
   - icon: 🛠️
     title: HALbedの使い方
     details: HALbedのインストール方法や基本的な使い方を解説します。
@@ -26,11 +26,11 @@ features:
   - icon: 📚
     title: APIドキュメント
     details: HALbedの使い方やAPIリファレンスを確認できます。
-    link: /Docs/API/index.md
+    link: /Docs/Introduction/api-reference.md
 
   - icon: 📖
     title: 技術記事
     details: HALbedを使う前後の基礎知識や、STM32開発の流れを分かりやすく整理しています。
-    link: /Docs/Technical_article/article_Home.md
+    link: /Docs/Technical_articles/Article_Home.md
 ---
 
