@@ -1,3 +1,9 @@
+---
+tags:
+    - 技術記事
+    - チュートリアル
+---
+
 # DigitalInでユーザーボタンからLEDを光らせる
 
 今回は、HALbedの`DigitalIn`を使って、
