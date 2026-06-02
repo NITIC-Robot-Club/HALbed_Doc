@@ -27,8 +27,8 @@ const dataSjw = ref(DEFAULT_SJW)
 
 const modeOptions: Array<{ value: CanTimingMode; label: string; description: string }> = [
   { value: 'bxcan', label: 'bxCAN', description: '従来の Classic CAN Peripheral' },
-  { value: 'fdcan-classic', label: 'FDCAN Classic', description: 'FDCAN で Classic mode を使う' },
-  { value: 'fdcan-fd', label: 'FDCAN FD', description: 'Nominal と Data を両方使う' },
+//  { value: 'fdcan-classic', label: 'FDCAN Classic', description: 'FDCAN で Classic mode を使う' },
+//  { value: 'fdcan-fd', label: 'FDCAN FD', description: 'Nominal と Data を両方使う' },
 ]
 
 const selectedMode = computed(() =>
