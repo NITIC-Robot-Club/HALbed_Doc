@@ -1,18 +1,12 @@
 import {
-  BXCAN_PRESCALER_MAX,
-  BXCAN_PRESCALER_MIN,
-  BXCAN_SJW_MAX,
-  BXCAN_SJW_MIN,
-  BXCAN_TSEG1_MAX,
-  BXCAN_TSEG1_MIN,
-  BXCAN_TSEG2_MAX,
-  BXCAN_TSEG2_MIN,
+  bxCanProfile,
   DEFAULT_RESULT_LIMIT,
 } from './constants'
 import type {
   CanBitTimingCandidate,
   CanBitTimingInput,
   CanBitTimingResult,
+  TimingProfile,
 } from './types'
 
 function assertFinitePositive(value: number, name: string): void {
@@ -47,14 +41,15 @@ function compareCandidates(
 export function solveCanBitTiming(
   input: CanBitTimingInput,
   resultLimit: number = DEFAULT_RESULT_LIMIT,
+  profile: TimingProfile = bxCanProfile,
 ): CanBitTimingResult {
   assertFinitePositive(input.clockMHz, 'clockMHz')
   assertFinitePositive(input.bitrateKbps, 'bitrateKbps')
   assertFinitePositive(input.samplePointPercent, 'samplePointPercent')
   assertFinitePositive(input.sjw, 'sjw')
 
-  if (input.sjw < BXCAN_SJW_MIN || input.sjw > BXCAN_SJW_MAX) {
-    throw new Error(`sjw must be between ${BXCAN_SJW_MIN} and ${BXCAN_SJW_MAX}`)
+  if (input.sjw < profile.sjwMin || input.sjw > profile.sjwMax) {
+    throw new Error(`sjw must be between ${profile.sjwMin} and ${profile.sjwMax}`)
   }
 
   if (!Number.isInteger(resultLimit) || resultLimit <= 0) {
@@ -64,12 +59,12 @@ export function solveCanBitTiming(
   const candidates: CanBitTimingCandidate[] = []
 
   for (
-    let prescaler = BXCAN_PRESCALER_MIN;
-    prescaler <= BXCAN_PRESCALER_MAX;
+    let prescaler = profile.prescalerMin;
+    prescaler <= profile.prescalerMax;
     prescaler += 1
   ) {
-    for (let tseg1 = BXCAN_TSEG1_MIN; tseg1 <= BXCAN_TSEG1_MAX; tseg1 += 1) {
-      for (let tseg2 = BXCAN_TSEG2_MIN; tseg2 <= BXCAN_TSEG2_MAX; tseg2 += 1) {
+    for (let tseg1 = profile.tseg1Min; tseg1 <= profile.tseg1Max; tseg1 += 1) {
+      for (let tseg2 = profile.tseg2Min; tseg2 <= profile.tseg2Max; tseg2 += 1) {
         if (input.sjw > tseg2) {
           continue
         }
@@ -77,6 +72,7 @@ export function solveCanBitTiming(
         const timeQuanta = 1 + tseg1 + tseg2
         const bitrateKbps = input.clockMHz * 1000 / (prescaler * timeQuanta)
         const samplePointPercent = ((1 + tseg1) / timeQuanta) * 100
+        const timeQuantumNs = prescaler / input.clockMHz * 1000
         const bitrateErrorPercent =
           Math.abs(input.bitrateKbps - bitrateKbps) / input.bitrateKbps * 100
         const samplePointErrorPercent =
@@ -89,6 +85,7 @@ export function solveCanBitTiming(
           tseg1,
           tseg2,
           sjw: input.sjw,
+          timeQuantumNs,
           bitrateKbps,
           samplePointPercent,
           bitrateErrorPercent,
@@ -114,6 +111,7 @@ export function solveCanBitTiming(
 export function solveCanBitTimingCandidates(
   input: CanBitTimingInput,
   resultLimit: number = DEFAULT_RESULT_LIMIT,
+  profile: TimingProfile = bxCanProfile,
 ): CanBitTimingCandidate[] {
-  return solveCanBitTiming(input, resultLimit).candidates
+  return solveCanBitTiming(input, resultLimit, profile).candidates
 }
