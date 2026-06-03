@@ -160,7 +160,7 @@ onMounted(() => {
   <section class="can-calculator">
     <div class="can-calculator__card">
       <header class="can-calculator__header">
-        <p class="can-calculator__eyebrow">通信モード</p>
+        <p class="can-calculator__eyebrow">CAN 通信</p>
         <h2>CAN Bit Timing 計算</h2>
         <p class="can-calculator__lead">
           {{ selectedMode.description }}

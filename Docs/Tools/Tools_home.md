@@ -2,7 +2,7 @@
 layout: home
 hero:
   name: "Tools"
-  tagline: HALbed ドキュメント内で使える小さな補助ツールをまとめています。
+  tagline: ボーレート設定などで使える小さな補助ツールをまとめています。
 ---
 
 # ツール一覧
