@@ -1,7 +1,7 @@
 ---
 layout: home
 hero:
-  name: "マイコンについて"
+  name: "MCU Articles"
   tagline: HALやFPUなど、実装前に押さえたい基礎知識の入口です。
 ---
 # 記事一覧

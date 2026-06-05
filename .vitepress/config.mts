@@ -61,7 +61,6 @@ export default defineConfig({
             { text: 'API 一覧', link: '/Docs/Introduction/api-reference' },
             { text: 'インストールと初期設定', link: '/Docs/Introduction/GettingStarted' },
             { text: 'ディレクトリ構造', link: '/Docs/Introduction/DirectoryStructure' },
-            { text: '変更履歴', link: '/Docs/Introduction/CHANGELOG' },
             { text: '参考リンク集', link: '/Docs/Introduction/References' },
           ] 
         }
