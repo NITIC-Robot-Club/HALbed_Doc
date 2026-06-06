@@ -26,6 +26,34 @@ const TagPage = defineAsyncComponent(
   () => import('./components/TagPage.vue')
 )
 
+const PidPlayground = defineAsyncComponent(
+  () => import('./components/control/PidPlayground.vue')
+)
+
+const MotorSpeedSimulator = defineAsyncComponent(
+  () => import('./components/control/MotorSpeedSimulator.vue')
+)
+
+const PositionControlSimulator = defineAsyncComponent(
+  () => import('./components/control/PositionControlSimulator.vue')
+)
+
+const CartControlGame = defineAsyncComponent(
+  () => import('./components/control/CartControlGame.vue')
+)
+
+const ResponseGraph = defineAsyncComponent(
+  () => import('./components/control/ResponseGraph.vue')
+)
+
+const CppControlEditor = defineAsyncComponent(
+  () => import('./components/control/CppControlEditor.vue')
+)
+
+const FullscreenToolFrame = defineAsyncComponent(
+  () => import('./components/control/FullscreenToolFrame.vue')
+)
+
 export default {
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
@@ -63,6 +91,41 @@ export default {
     app.component(
       'TagPage',
       TagPage,
+    )
+
+    app.component(
+      'PidPlayground',
+      PidPlayground,
+    )
+
+    app.component(
+      'MotorSpeedSimulator',
+      MotorSpeedSimulator,
+    )
+
+    app.component(
+      'PositionControlSimulator',
+      PositionControlSimulator,
+    )
+
+    app.component(
+      'CartControlGame',
+      CartControlGame,
+    )
+
+    app.component(
+      'ResponseGraph',
+      ResponseGraph,
+    )
+
+    app.component(
+      'CppControlEditor',
+      CppControlEditor,
+    )
+
+    app.component(
+      'FullscreenToolFrame',
+      FullscreenToolFrame,
     )
   },
 } satisfies Theme
