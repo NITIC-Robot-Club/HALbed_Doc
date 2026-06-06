@@ -131,8 +131,8 @@ onMounted(() => {
                   <th>TQ(ns)</th>
                   <th>Bitrate</th>
                   <th>Sample Point</th>
-                  <th>Error %</th>
-                  <th>Score</th>
+                  <!-- <th>Error %</th> -->
+                  <!-- <th>Score</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -144,8 +144,8 @@ onMounted(() => {
                   <td>{{ formatTimeQuantum(candidate.timeQuantumNs) }}</td>
                   <td>{{ formatBitrate(candidate.bitrateKbps) }}</td>
                   <td>{{ formatSamplePoint(candidate.samplePointPercent) }}</td>
-                  <td>{{ formatError(candidate.bitrateErrorPercent) }}</td>
-                  <td>{{ formatScore(candidate.score) }}</td>
+                  <!-- <td>{{ formatError(candidate.bitrateErrorPercent) }}</td> -->
+                  <!-- <td>{{ formatScore(candidate.score) }}</td> -->
                 </tr>
               </tbody>
             </table>

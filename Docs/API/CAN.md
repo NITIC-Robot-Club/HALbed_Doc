@@ -91,8 +91,8 @@ CAN送信が可能かどうかを確認
 
 > [!Note]
 > 画像は 'STM23 F446re' を使用し、`1Mbps` ,サンプリングポイント `88.9%` で計算 </br>
-> 各パラメータは [CAN Bit Time Calculation](http://www.bittiming.can-wiki.info/) などのWEBツールを使用して計算できる </br>
-> 多くの場合、サンプリングポイントは 75% 以上にすることが推奨されている </br>
+> 各パラメータは [CAN Bit Time Calculation](../Tools/CAN/BitTimingCalculator.md) で計算できます。</br>
+> 多くの場合、サンプリングポイントは 75% 以上にすることが推奨されています。 </br>
 
 
 ### app_main.cpp内 
