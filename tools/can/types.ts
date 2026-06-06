@@ -1,5 +1,3 @@
-export type CanTimingMode = 'bxcan' | 'fdcan-classic' | 'fdcan-fd'
-
 export interface TimingProfile {
   prescalerMin: number
   prescalerMax: number
