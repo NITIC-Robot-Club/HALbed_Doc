@@ -243,7 +243,17 @@ const statItems = computed(() => [
   aspect-ratio: 1;
   border-radius: 50%;
   background:
-    conic-gradient(from -135deg, #f97316 0deg, #38bdf8 calc(var(--rpm-ratio) * 270deg), color-mix(in srgb, var(--vp-c-divider) 55%, transparent) 0),
+    conic-gradient(
+      from -135deg,
+      #2563eb 0deg,
+      #38bdf8 55deg,
+      #22c55e 125deg,
+      #a3e635 170deg,
+      #facc15 215deg,
+      #fb923c 245deg,
+      #ef4444 270deg,
+      color-mix(in srgb, var(--vp-c-divider) 55%, transparent) 0
+    ),
     radial-gradient(circle at center, var(--vp-c-bg) 56%, transparent 57%);
   border: 1px solid var(--vp-c-divider);
 }

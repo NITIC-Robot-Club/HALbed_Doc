@@ -54,7 +54,7 @@ export function analyzeResponse(
   const target = samples[samples.length - 1]?.target ?? 0
   const amplitudeBase = Math.max(Math.abs(target), 1)
   const tolerance = amplitudeBase * config.toleranceRatio
-  const settleWindow = Math.max(6, Math.ceil(Math.min(samples.length, 0.5 / Math.max(config.dt, 1e-6))))
+  const settleWindow = Math.max(10, Math.ceil(Math.min(samples.length, 1.2 / Math.max(config.dt, 1e-6))))
 
   let maxValue = -Infinity
   let minValue = Infinity
@@ -65,20 +65,24 @@ export function analyzeResponse(
     peakError = Math.max(peakError, Math.abs(sample.error))
   }
 
-  let settlingTime: number | null = null
-  for (let index = 0; index <= samples.length - settleWindow; index += 1) {
-    const window = samples.slice(index, index + settleWindow)
-    const settled = window.every((sample) => {
-      const withinPosition = Math.abs(sample.value - sample.target) <= tolerance
-      const withinVelocity = !requireLowVelocity || Math.abs(sample.velocity ?? 0) <= 0.12 * amplitudeBase
-      return withinPosition && withinVelocity
-    })
+  function isWithinBand(sample: SimulationSample): boolean {
+    const withinPosition = Math.abs(sample.value - sample.target) <= tolerance
+    const withinVelocity = !requireLowVelocity || Math.abs(sample.velocity ?? 0) <= 0.12 * amplitudeBase
+    return withinPosition && withinVelocity
+  }
 
-    if (settled) {
-      settlingTime = samples[index]?.time ?? null
+  let stableRunLength = 0
+  for (let index = samples.length - 1; index >= 0; index -= 1) {
+    if (!isWithinBand(samples[index])) {
       break
     }
+    stableRunLength += 1
   }
+
+  const settlingTime =
+    stableRunLength >= settleWindow
+      ? samples[samples.length - stableRunLength]?.time ?? null
+      : null
 
   const lastSample = samples[samples.length - 1]
   const overshoot =
@@ -86,8 +90,7 @@ export function analyzeResponse(
       ? Math.max(0, maxValue - target)
       : Math.max(0, target - minValue)
   const converged =
-    Math.abs(lastSample.value - lastSample.target) <= tolerance &&
-    (!requireLowVelocity || Math.abs(lastSample.velocity ?? 0) <= 0.12 * amplitudeBase) &&
+    isWithinBand(lastSample) &&
     settlingTime !== null &&
     samples.length <= config.maxSteps
 

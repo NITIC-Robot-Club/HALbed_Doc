@@ -96,12 +96,12 @@ const statItems = computed(() => [
 </script>
 
 <template>
-  <FullscreenToolFrame title="PID ゲイン体験プレイグラウンド" description="広い表示でグラフを見比べながら、P・I・D の効き方を調整できます。">
+  <FullscreenToolFrame title="PIDシミュレータ" description="広い表示でグラフを見比べながら、P・I・D の効き方を調整できます。">
   <section class="control-tool">
     <header class="control-tool__header">
       <div>
         <p class="control-tool__eyebrow">Step 1</p>
-        <h2>PID ゲイン体験プレイグラウンド</h2>
+        <h2>PIDシミュレータ</h2>
       </div>
       <p class="control-tool__lead">
         まずは P・I・D を動かして、速く追従する代わりに振動しやすくなる感覚や、ずれを消し込む感覚をつかみましょう。
@@ -125,8 +125,8 @@ const statItems = computed(() => [
       </div>
 
       <div class="control-tool__content">
-        <ControlStatGrid :items="statItems" />
         <ResponseGraph :samples="runner.samples.value" />
+        <ControlStatGrid :items="statItems" />
       </div>
     </div>
   </section>

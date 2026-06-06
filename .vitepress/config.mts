@@ -50,7 +50,7 @@ export default defineConfig({
       { text: '概要', link: '/Docs/Introduction/ArchitectureOverview' },
       { text: 'API', link: '/Docs/API/APIHome' },
       { text: '技術記事', link: '/Docs/Technical_articles/Article_Home.md' },
-      { text: '制御工学', link: '/docs/control/pid-basic' },
+      { text: '制御工学', link: '/Docs/Control/pid-basic' },
       { text: 'ツール', link: '/Docs/Tools/Tools_home' },
       { text: 'FAQ', link: '/Docs/FAQ/FAQ_home' }
     ],
@@ -100,14 +100,14 @@ export default defineConfig({
           ]
         }
       ],
-      '/docs/control/': [
+      '/Docs/Control/': [
         {
           text: '制御工学インタラクティブ学習',
           items: [
-            { text: 'PID制御の基本', link: '/docs/control/pid-basic' },
-            { text: 'モーター回転数制御', link: '/docs/control/motor-speed-control' },
-            { text: '位置制御', link: '/docs/control/position-control' },
-            { text: '台車制御ゲーム', link: '/docs/control/cart-control' }
+            { text: 'PID制御の基本', link: '/Docs/Control/pid-basic' },
+            { text: 'モーター回転数制御', link: '/Docs/Control/motor-speed-control' },
+            { text: '位置制御', link: '/Docs/Control/position-control' },
+            { text: '台車制御ゲーム', link: '/Docs/Control/cart-control' }
           ]
         }
       ]
