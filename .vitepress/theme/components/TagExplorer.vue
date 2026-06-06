@@ -271,12 +271,15 @@ onMounted(() => {
 }
 
 .tag-explorer__selected-tag {
+  appearance: none;
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
+  box-sizing: border-box;
   border: 1px solid var(--vp-c-brand-1);
   border-radius: 9999px;
   padding: 0.34rem 0.7rem;
+  cursor: pointer;
   color: var(--vp-c-brand-1);
   background: var(--vp-c-brand-soft);
   font-size: 0.82rem;
@@ -333,14 +336,18 @@ onMounted(() => {
 }
 
 .tag-explorer__filter {
+  appearance: none;
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
+  flex: 0 0 auto;
   gap: 0.7rem;
   min-height: 2.55rem;
+  box-sizing: border-box;
   border: 1px solid var(--vp-c-divider);
   border-radius: 9999px;
   padding: 0.5rem 0.8rem 0.5rem 0.95rem;
+  cursor: pointer;
   color: var(--vp-c-text-1);
   background: var(--vp-c-bg);
   font-size: 0.9rem;
