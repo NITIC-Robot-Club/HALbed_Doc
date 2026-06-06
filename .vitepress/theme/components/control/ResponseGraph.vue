@@ -81,10 +81,12 @@ function buildPath(key: 'target' | 'value' | 'controlInput'): string {
 .response-graph {
   display: grid;
   gap: 0.75rem;
+  min-width: 0;
 }
 
 svg {
   width: 100%;
+  min-height: 240px;
   border-radius: 18px;
   border: 1px solid var(--vp-c-divider);
   background:
@@ -122,6 +124,7 @@ svg {
   gap: 1rem;
   color: var(--vp-c-text-2);
   font-size: 0.92rem;
+  padding-inline: 0.2rem;
 }
 
 .response-graph__legend span {

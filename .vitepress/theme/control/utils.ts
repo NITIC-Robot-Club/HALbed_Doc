@@ -54,7 +54,7 @@ export function analyzeResponse(
   const target = samples[samples.length - 1]?.target ?? 0
   const amplitudeBase = Math.max(Math.abs(target), 1)
   const tolerance = amplitudeBase * config.toleranceRatio
-  const settleWindow = Math.max(8, Math.ceil(Math.min(samples.length, 0.6 / Math.max(config.dt, 1e-6))))
+  const settleWindow = Math.max(6, Math.ceil(Math.min(samples.length, 0.5 / Math.max(config.dt, 1e-6))))
 
   let maxValue = -Infinity
   let minValue = Infinity
@@ -70,7 +70,7 @@ export function analyzeResponse(
     const window = samples.slice(index, index + settleWindow)
     const settled = window.every((sample) => {
       const withinPosition = Math.abs(sample.value - sample.target) <= tolerance
-      const withinVelocity = !requireLowVelocity || Math.abs(sample.velocity ?? 0) <= 0.05 * amplitudeBase
+      const withinVelocity = !requireLowVelocity || Math.abs(sample.velocity ?? 0) <= 0.12 * amplitudeBase
       return withinPosition && withinVelocity
     })
 
@@ -87,9 +87,8 @@ export function analyzeResponse(
       : Math.max(0, target - minValue)
   const converged =
     Math.abs(lastSample.value - lastSample.target) <= tolerance &&
-    (!requireLowVelocity || Math.abs(lastSample.velocity ?? 0) <= 0.05 * amplitudeBase) &&
+    (!requireLowVelocity || Math.abs(lastSample.velocity ?? 0) <= 0.12 * amplitudeBase) &&
     settlingTime !== null &&
-    overshoot <= tolerance * 0.25 &&
     samples.length <= config.maxSteps
 
   return {
@@ -103,4 +102,12 @@ export function analyzeResponse(
 export function makeDisturbance(level: number): number {
   const sign = Math.random() > 0.5 ? 1 : -1
   return sign * level
+}
+
+export function sampleRandomDisturbance(enabled: boolean, amplitude: number): number {
+  if (!enabled) {
+    return 0
+  }
+
+  return (Math.random() * 2 - 1) * amplitude
 }

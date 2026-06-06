@@ -8,9 +8,8 @@ export interface FirstOrderModelOptions {
 }
 
 export interface MotorSpeedModelOptions {
-  torqueGain: number
-  inertia: number
-  friction: number
+  gain: number
+  timeConstant: number
   load: number
   disturbance?: number
 }
@@ -19,6 +18,8 @@ export interface PositionModelOptions {
   driveGain: number
   damping: number
   stiffness: number
+  gravity?: number
+  floor?: number
   disturbance?: number
 }
 
@@ -64,15 +65,14 @@ export function stepMotorSpeedModel(
 ): SimulationResult {
   const u = clamp(controlInput, -1, 1)
   const disturbance = options.disturbance ?? 0
-  const acceleration =
-    (options.torqueGain * u - options.friction * state.position - options.load + disturbance) /
-    Math.max(options.inertia, 0.05)
-  const speed = state.position + acceleration * dt
+  const desiredSpeed = options.gain * u - options.load + disturbance
+  const speedRate = (desiredSpeed - state.position) / Math.max(options.timeConstant, 0.05)
+  const speed = state.position + speedRate * dt
   const nextState: ControlState = {
     ...state,
     position: speed,
-    velocity: acceleration,
-    acceleration: (acceleration - state.velocity) / Math.max(dt, 1e-6),
+    velocity: speedRate,
+    acceleration: (speedRate - state.velocity) / Math.max(dt, 1e-6),
     time: state.time + dt,
     error: state.target - speed,
     integral: state.integral + (state.target - speed) * dt,
@@ -93,13 +93,22 @@ export function stepPositionModel(
 ): SimulationResult {
   const u = clamp(controlInput, -1, 1)
   const disturbance = options.disturbance ?? 0
+  const gravity = options.gravity ?? 0
+  const floor = options.floor ?? -Infinity
   const acceleration =
     options.driveGain * u -
     options.damping * state.velocity -
     options.stiffness * state.position +
+    gravity +
     disturbance
-  const velocity = state.velocity + acceleration * dt
-  const position = state.position + velocity * dt
+  let velocity = state.velocity + acceleration * dt
+  let position = state.position + velocity * dt
+
+  if (position < floor) {
+    position = floor
+    velocity = 0
+  }
+
   const nextState: ControlState = {
     ...state,
     position,

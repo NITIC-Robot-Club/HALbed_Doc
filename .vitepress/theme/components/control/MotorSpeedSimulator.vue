@@ -5,7 +5,7 @@ import { stepMotorSpeedModel } from '../../control/models'
 import { PidController } from '../../control/pid'
 import type { ControllerExecution, ControllerMode, PidBreakdown, PidGains, SimulationConfig } from '../../control/types'
 import { useSimulationRunner } from '../../control/useSimulationRunner'
-import { clamp, createInitialState, makeDisturbance, round } from '../../control/utils'
+import { clamp, createInitialState, round, sampleRandomDisturbance } from '../../control/utils'
 import ControlStatGrid from './ControlStatGrid.vue'
 import CppControlEditor from './CppControlEditor.vue'
 import FullscreenToolFrame from './FullscreenToolFrame.vue'
@@ -13,17 +13,17 @@ import ParameterSlider from './ParameterSlider.vue'
 import ResponseGraph from './ResponseGraph.vue'
 
 const mode = ref<ControllerMode>('pid')
-const gains = reactive<PidGains>({ kp: 0.62, ki: 0.2, kd: 0.16 })
-const config = reactive<SimulationConfig>({ dt: 0.05, maxSteps: 340, toleranceRatio: 0.04 })
-const target = reactive({ value: 1.1 })
-const load = reactive({ value: 0.18 })
+const gains = reactive<PidGains>({ kp: 0.1, ki: 0, kd: 0 })
+const config = reactive<SimulationConfig>({ dt: 0.05, maxSteps: 380, toleranceRatio: 0.05 })
+const target = reactive({ value: 5000 })
+const load = reactive({ value: 900 })
 const code = ref(DEFAULT_CPP_TEMPLATE)
 const pid = new PidController()
 const interpreter = new CppSubsetInterpreter(4000)
 const breakdown = reactive<PidBreakdown>({ proportional: 0, integral: 0, derivative: 0, output: 0 })
 const runtimeError = ref('')
 const runtimeStatus = ref('PID か C++ を切り替えて挙動を比べられます。')
-const disturbance = ref(0)
+const disturbanceEnabled = ref(true)
 
 function executeController(state: ReturnType<typeof createInitialState>): ControllerExecution {
   if (mode.value === 'pid') {
@@ -55,30 +55,35 @@ const runner = useSimulationRunner({
   step: (state) => {
     const controller = executeController(state)
     return stepMotorSpeedModel(state, controller.controlInput, config.dt, {
-      torqueGain: 1.8,
-      inertia: 0.5,
-      friction: 0.32,
+      gain: 6200,
+      timeConstant: 0.58,
       load: load.value,
-      disturbance: disturbance.value,
+      disturbance: sampleRandomDisturbance(disturbanceEnabled.value, 180),
     })
   },
 })
 
 function resetAll(): void {
   pid.reset()
-  disturbance.value = 0
   runtimeError.value = ''
   runner.reset(createInitialState(target.value))
 }
 
-function injectDisturbance(): void {
-  disturbance.value = makeDisturbance(0.3)
+function toggleDisturbance(): void {
+  disturbanceEnabled.value = !disturbanceEnabled.value
 }
 
 function runNow(): void {
   runtimeStatus.value = mode.value === 'pid' ? 'PID で回転数制御を実行中です。' : 'C++ 制御則で回転数制御を実行中です。'
+  resetAll()
   runner.start()
 }
+
+const rpmRatio = computed(() => clamp(Math.abs(runner.state.value.position) / 6000, 0, 1))
+const rpmIndicatorStyle = computed(() => ({
+  '--rpm-ratio': rpmRatio.value.toFixed(3),
+  '--rpm-angle': `${-135 + rpmRatio.value * 270}deg`,
+}))
 
 watch(
   () => [target.value, config.dt, mode.value, load.value],
@@ -86,9 +91,10 @@ watch(
 )
 
 const statItems = computed(() => [
-  { label: '目標回転数', value: round(target.value).toString() },
-  { label: '現在回転数', value: round(runner.state.value.position).toString() },
-  { label: '負荷', value: round(load.value).toString() },
+  { label: '目標回転数', value: `${Math.round(target.value)} rpm` },
+  { label: '現在回転数', value: `${Math.round(runner.state.value.position)} rpm` },
+  { label: '負荷', value: `${Math.round(load.value)} rpm相当` },
+  { label: '外乱', value: disturbanceEnabled.value ? 'ON' : 'OFF', tone: disturbanceEnabled.value ? 'warning' : 'normal' },
   { label: '操作量', value: round(runner.controlInput.value).toString() },
   { label: '偏差', value: round(runner.state.value.error).toString() },
   { label: '整定時間', value: runner.metrics.value.settlingTime === null ? '未整定' : `${round(runner.metrics.value.settlingTime)} s` },
@@ -116,28 +122,38 @@ const statItems = computed(() => [
     <div class="control-lab__layout">
       <div class="control-lab__panel">
         <div class="control-lab__mode">
-          <button type="button" :class="{ active: mode === 'pid' }" @click="mode = 'pid'">PID</button>
-          <button type="button" :class="{ active: mode === 'code' }" @click="mode = 'code'">C++</button>
+          <button type="button" :class="{ 'is-selected': mode === 'pid' }" @click="mode = 'pid'">PID</button>
+          <button type="button" :class="{ 'is-selected': mode === 'code' }" @click="mode = 'code'">C++</button>
         </div>
-        <ParameterSlider v-model="target.value" label="目標回転数" :min="-2" :max="2" :step="0.05" />
-        <ParameterSlider v-model="load.value" label="負荷" :min="0" :max="0.6" :step="0.02" />
+        <ParameterSlider v-model="target.value" label="目標回転数" :min="0" :max="6000" :step="100" />
+        <ParameterSlider v-model="load.value" label="負荷" :min="0" :max="2000" :step="50" />
         <ParameterSlider v-model="config.dt" label="dt" :min="0.02" :max="0.1" :step="0.01" />
 
         <template v-if="mode === 'pid'">
-          <ParameterSlider v-model="gains.kp" label="P ゲイン" :min="0" :max="4" :step="0.05" />
-          <ParameterSlider v-model="gains.ki" label="I ゲイン" :min="0" :max="2.5" :step="0.05" />
-          <ParameterSlider v-model="gains.kd" label="D ゲイン" :min="0" :max="1.2" :step="0.01" />
+          <ParameterSlider v-model="gains.kp" label="P ゲイン" :min="0" :max="6" :step="0.05" />
+          <ParameterSlider v-model="gains.ki" label="I ゲイン" :min="0" :max="4" :step="0.05" />
+          <ParameterSlider v-model="gains.kd" label="D ゲイン" :min="0" :max="2" :step="0.01" />
         </template>
 
         <div class="control-lab__actions">
           <button type="button" @click="runNow">実行</button>
           <button type="button" class="ghost" @click="runner.stop">停止</button>
           <button type="button" class="ghost" @click="resetAll">リセット</button>
-          <button type="button" class="ghost" @click="injectDisturbance">外乱</button>
+          <button type="button" class="ghost" :class="{ 'is-warning': disturbanceEnabled }" @click="toggleDisturbance">外乱 {{ disturbanceEnabled ? 'ON' : 'OFF' }}</button>
         </div>
       </div>
 
       <div class="control-lab__content">
+        <div class="rpm-panel" :style="rpmIndicatorStyle">
+          <div class="rpm-panel__dial">
+            <div class="rpm-panel__needle" />
+            <div class="rpm-panel__center" />
+          </div>
+          <div class="rpm-panel__readout">
+            <strong>{{ Math.round(runner.state.value.position) }} rpm</strong>
+            <span>目標 {{ Math.round(target.value) }} rpm</span>
+          </div>
+        </div>
         <CppControlEditor
           v-if="mode === 'code'"
           v-model:code="code"
@@ -173,6 +189,8 @@ const statItems = computed(() => [
 .control-lab__content {
   display: grid;
   gap: 0.8rem;
+  align-content: start;
+  min-width: 0;
 }
 
 .control-lab__eyebrow,
@@ -202,13 +220,75 @@ const statItems = computed(() => [
 .control-lab__panel {
   padding: 1rem;
   border-radius: 18px;
-  background: color-mix(in srgb, var(--vp-c-bg-soft) 82%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--vp-c-bg) 86%, transparent), color-mix(in srgb, var(--vp-c-bg-soft) 94%, transparent)),
+    color-mix(in srgb, var(--vp-c-bg-soft) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--vp-c-divider) 86%, transparent);
+}
+
+.rpm-panel {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 18px;
+  border: 1px solid var(--vp-c-divider);
+  background: color-mix(in srgb, var(--vp-c-bg-soft) 84%, transparent);
+}
+
+.rpm-panel__dial {
+  position: relative;
+  width: 160px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    conic-gradient(from -135deg, #f97316 0deg, #38bdf8 calc(var(--rpm-ratio) * 270deg), color-mix(in srgb, var(--vp-c-divider) 55%, transparent) 0),
+    radial-gradient(circle at center, var(--vp-c-bg) 56%, transparent 57%);
+  border: 1px solid var(--vp-c-divider);
+}
+
+.rpm-panel__needle {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  width: 4px;
+  height: 58px;
+  border-radius: 999px;
+  background: #0f172a;
+  transform-origin: center bottom;
+  transform: translateX(-50%) rotate(var(--rpm-angle));
+}
+
+.rpm-panel__center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #0f172a;
+  transform: translate(-50%, -50%);
+}
+
+.rpm-panel__readout {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.rpm-panel__readout strong {
+  font-size: 1.6rem;
+}
+
+.rpm-panel__readout span,
+.rpm-panel__readout strong {
+  margin: 0;
 }
 
 .control-lab__mode,
 .control-lab__actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, max-content));
   gap: 0.6rem;
 }
 
@@ -220,9 +300,10 @@ button {
   color: var(--vp-c-text-1);
   font-weight: 700;
   cursor: pointer;
+  min-height: 44px;
 }
 
-.active,
+.is-selected,
 .control-lab__actions button:first-child {
   background: var(--vp-c-brand-3);
   color: var(--vp-c-white);
@@ -233,9 +314,27 @@ button {
   background: var(--vp-c-bg-soft);
 }
 
-@media (max-width: 860px) {
+.is-warning {
+  background: color-mix(in srgb, var(--vp-c-warning-soft) 75%, var(--vp-c-bg));
+  color: var(--vp-c-text-1);
+}
+
+@media (max-width: 1180px) {
   .control-lab__layout {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .rpm-panel {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .control-lab__mode,
+  .control-lab__actions {
+    grid-template-columns: 1fr 1fr;
   }
 }
 </style>

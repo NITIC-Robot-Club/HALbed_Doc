@@ -706,7 +706,12 @@ class Runtime {
         steps: this.steps,
       }
     } catch (error) {
-      const message = error instanceof InterpreterError ? error.message : '実行に失敗しました'
+      const message =
+        error instanceof InterpreterError
+          ? error.line !== undefined && error.column !== undefined
+            ? `${error.message} (${error.line}:${error.column})`
+            : error.message
+          : '実行に失敗しました'
       return { ok: false, error: message, steps: this.steps }
     }
   }
@@ -1140,7 +1145,12 @@ export const DEFAULT_CPP_TEMPLATE = `#include <control.hpp>
 
 float control(State state) {
     float error = state.target - state.position;
-    float u = 2.0f * error - 0.8f * state.velocity;
-    return u;
+    if (error > 0.1f) {
+        return 1.0f;
+    }
+    if (error < -0.1f) {
+        return -1.0f;
+    }
+    return 0.0f;
 }
 `

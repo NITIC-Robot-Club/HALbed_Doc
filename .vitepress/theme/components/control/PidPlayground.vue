@@ -4,26 +4,26 @@ import { stepFirstOrderModel } from '../../control/models'
 import { PidController } from '../../control/pid'
 import type { PidBreakdown, PidGains, SimulationConfig } from '../../control/types'
 import { useSimulationRunner } from '../../control/useSimulationRunner'
-import { createInitialState, makeDisturbance, round } from '../../control/utils'
+import { createInitialState, round, sampleRandomDisturbance } from '../../control/utils'
 import ControlStatGrid from './ControlStatGrid.vue'
 import FullscreenToolFrame from './FullscreenToolFrame.vue'
 import ParameterSlider from './ParameterSlider.vue'
 import ResponseGraph from './ResponseGraph.vue'
 
 const gains = reactive<PidGains>({
-  kp: 1.1,
-  ki: 0.28,
-  kd: 0.42,
+  kp: 0.1,
+  ki: 0,
+  kd: 0,
 })
 
 const config = reactive<SimulationConfig>({
   dt: 0.05,
-  maxSteps: 320,
-  toleranceRatio: 0.04,
+  maxSteps: 360,
+  toleranceRatio: 0.05,
 })
 
-const target = reactive({ value: 1.4 })
-const disturbance = reactive({ value: 0 })
+const target = reactive({ value: 1.8 })
+const disturbanceEnabled = reactive({ value: true })
 const pid = new PidController()
 const breakdown = reactive<PidBreakdown>({
   proportional: 0,
@@ -40,8 +40,8 @@ const runner = useSimulationRunner({
     Object.assign(breakdown, nextBreakdown)
     return stepFirstOrderModel(state, nextBreakdown.output, config.dt, {
       gain: 1.35,
-      timeConstant: 0.45,
-      disturbance: disturbance.value,
+      timeConstant: 0.55,
+      disturbance: sampleRandomDisturbance(disturbanceEnabled.value, 0.22),
     })
   },
 })
@@ -57,8 +57,13 @@ function resetSimulation(): void {
   runner.reset(createInitialState(target.value))
 }
 
-function addDisturbance(): void {
-  disturbance.value = makeDisturbance(0.45)
+function runSimulation(): void {
+  resetSimulation()
+  runner.start()
+}
+
+function toggleDisturbance(): void {
+  disturbanceEnabled.value = !disturbanceEnabled.value
 }
 
 watch(
@@ -76,6 +81,7 @@ const statItems = computed(() => [
   { label: 'P成分', value: round(breakdown.proportional).toString() },
   { label: 'I成分', value: round(breakdown.integral).toString() },
   { label: 'D成分', value: round(breakdown.derivative).toString() },
+  { label: '外乱', value: disturbanceEnabled.value ? 'ON' : 'OFF', tone: disturbanceEnabled.value ? 'warning' : 'normal' },
   { label: 'オーバーシュート', value: round(runner.metrics.value.overshoot).toString() },
   {
     label: '整定時間',
@@ -104,17 +110,17 @@ const statItems = computed(() => [
 
     <div class="control-tool__layout">
       <div class="control-tool__panel">
-        <ParameterSlider v-model="target.value" label="目標値" :min="-3" :max="3" :step="0.1" hint="広いレンジでステップ入力を試せます" />
-        <ParameterSlider v-model="gains.kp" label="P ゲイン" :min="0" :max="6" :step="0.05" />
-        <ParameterSlider v-model="gains.ki" label="I ゲイン" :min="0" :max="3.5" :step="0.05" />
-        <ParameterSlider v-model="gains.kd" label="D ゲイン" :min="0" :max="2.2" :step="0.02" />
+        <ParameterSlider v-model="target.value" label="目標値" :min="-5" :max="5" :step="0.1" hint="規定ステップ内に ±5% へ入るかを見ます" />
+        <ParameterSlider v-model="gains.kp" label="P ゲイン" :min="0" :max="8" :step="0.05" />
+        <ParameterSlider v-model="gains.ki" label="I ゲイン" :min="0" :max="5" :step="0.05" />
+        <ParameterSlider v-model="gains.kd" label="D ゲイン" :min="0" :max="3.5" :step="0.02" />
         <ParameterSlider v-model="config.dt" label="dt" :min="0.02" :max="0.1" :step="0.01" hint="小さいほど細かく計算します" />
 
         <div class="control-tool__actions">
-          <button type="button" @click="runner.start">実行</button>
+          <button type="button" @click="runSimulation">実行</button>
           <button type="button" class="ghost" @click="runner.stop">停止</button>
           <button type="button" class="ghost" @click="resetSimulation">リセット</button>
-          <button type="button" class="ghost" @click="addDisturbance">外乱を加える</button>
+          <button type="button" class="ghost" :class="{ 'is-warning': disturbanceEnabled.value }" @click="toggleDisturbance">外乱 {{ disturbanceEnabled.value ? 'ON' : 'OFF' }}</button>
         </div>
       </div>
 
@@ -172,17 +178,22 @@ const statItems = computed(() => [
 .control-tool__content {
   display: grid;
   gap: 1rem;
+  align-content: start;
+  min-width: 0;
 }
 
 .control-tool__panel {
   padding: 1rem;
   border-radius: 18px;
-  background: color-mix(in srgb, var(--vp-c-bg-soft) 82%, transparent);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--vp-c-bg) 86%, transparent), color-mix(in srgb, var(--vp-c-bg-soft) 94%, transparent)),
+    color-mix(in srgb, var(--vp-c-bg-soft) 82%, transparent);
+  border: 1px solid color-mix(in srgb, var(--vp-c-divider) 86%, transparent);
 }
 
 .control-tool__actions {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, max-content));
   gap: 0.6rem;
 }
 
@@ -194,6 +205,7 @@ button {
   color: var(--vp-c-white);
   font-weight: 700;
   cursor: pointer;
+  min-height: 44px;
 }
 
 .ghost {
@@ -202,9 +214,20 @@ button {
   border: 1px solid var(--vp-c-divider);
 }
 
-@media (max-width: 860px) {
+.is-warning {
+  background: color-mix(in srgb, var(--vp-c-warning-soft) 75%, var(--vp-c-bg));
+  color: var(--vp-c-text-1);
+}
+
+@media (max-width: 1180px) {
   .control-tool__layout {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .control-tool__actions {
+    grid-template-columns: 1fr 1fr;
   }
 }
 </style>

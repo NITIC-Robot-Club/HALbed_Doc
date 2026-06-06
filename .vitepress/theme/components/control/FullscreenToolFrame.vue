@@ -60,6 +60,7 @@ onBeforeUnmount(() => {
 .tool-frame {
   display: grid;
   gap: 1rem;
+  width: 100%;
 }
 
 .tool-frame__header {
@@ -75,12 +76,13 @@ onBeforeUnmount(() => {
 }
 
 .tool-frame__title {
-  font-size: 1.1rem;
+  font-size: clamp(1.05rem, 1rem + 0.4vw, 1.3rem);
 }
 
 .tool-frame__description {
   margin-top: 0.35rem;
   color: var(--vp-c-text-2);
+  max-width: 64ch;
 }
 
 .tool-frame__button {
@@ -96,6 +98,7 @@ onBeforeUnmount(() => {
 
 .tool-frame__body {
   min-height: 0;
+  min-width: 0;
 }
 
 .tool-frame--fullscreen {

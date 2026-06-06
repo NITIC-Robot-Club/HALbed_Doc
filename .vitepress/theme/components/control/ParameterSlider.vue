@@ -13,7 +13,7 @@ defineProps<{
 <template>
   <label class="parameter-slider">
     <div class="parameter-slider__top">
-      <span>{{ label }}</span>
+      <span class="parameter-slider__label">{{ label }}</span>
       <strong>{{ model.toFixed(2) }}</strong>
     </div>
     <input v-model.number="model" :min="min" :max="max" :step="step ?? 0.1" type="range" />
@@ -25,6 +25,10 @@ defineProps<{
 .parameter-slider {
   display: grid;
   gap: 0.45rem;
+  padding: 0.85rem 0.9rem;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--vp-c-divider) 82%, transparent);
+  background: color-mix(in srgb, var(--vp-c-bg) 78%, var(--vp-c-bg-soft));
 }
 
 .parameter-slider__top {
@@ -33,6 +37,15 @@ defineProps<{
   gap: 0.75rem;
   font-size: 0.94rem;
   color: var(--vp-c-text-2);
+}
+
+.parameter-slider__label {
+  min-width: 0;
+}
+
+.parameter-slider__top strong {
+  color: var(--vp-c-text-1);
+  font-variant-numeric: tabular-nums;
 }
 
 input[type='range'] {
