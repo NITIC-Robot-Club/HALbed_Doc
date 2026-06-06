@@ -94,7 +94,8 @@ export default defineConfig({
           text: 'ツール',
           items: [
             { text: 'ツール一覧', link: '/Docs/Tools/Tools_home' },
-            { text: 'CAN Bit Timing Calculator', link: '/Docs/Tools/BitTimingCalculator' }
+            { text: 'CAN Bit Timing Calculator', link: '/Docs/Tools/BitTimingCalculator' },
+            { text: 'PWM CCR Calculator', link: '/Docs/Tools/PwmCcrCalculator' }
           ]
         }
       ]

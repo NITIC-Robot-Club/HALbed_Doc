@@ -10,6 +10,10 @@ const CanBitTimingCalculator = defineAsyncComponent(
   () => import('./components/CanBitTimingCalculator.vue')
 )
 
+const PwmCcrCalculator = defineAsyncComponent(
+  () => import('./components/PwmCcrCalculator.vue')
+)
+
 const RelatedArticles = defineAsyncComponent(
   () => import('./components/RelatedArticles.vue')
 )
@@ -34,6 +38,11 @@ export default {
     app.component(
       'CanBitTimingCalculator',
       CanBitTimingCalculator,
+    )
+
+    app.component(
+      'PwmCcrCalculator',
+      PwmCcrCalculator,
     )
 
     app.component(
