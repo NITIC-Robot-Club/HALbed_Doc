@@ -5,6 +5,7 @@ export default defineConfig({
   description: "HALラッパー関数群[HALbed] ドキュメントサイト",
   lastUpdated: true,
   base: '/HALbed_Doc/',
+  srcExclude: ['AGENTS.md'],
   head: [
     [
       'script',

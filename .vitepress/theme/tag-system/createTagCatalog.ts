@@ -1,5 +1,6 @@
 import type {
-  MarkdownPageModule,
+  MarkdownPageData,
+  MarkdownPageSource,
   TagCatalogOptions,
   TaggedArticle,
   TagSummary
@@ -36,27 +37,39 @@ function normalizeDate(value: unknown): string {
   return typeof value === 'string' ? value : ''
 }
 
-function getFrontmatter(module: MarkdownPageModule) {
-  return module.__pageData?.frontmatter ?? module.frontmatter ?? {}
+function getPageData(source: MarkdownPageSource): MarkdownPageData | undefined {
+  if ('__pageData' in source) {
+    return source.__pageData
+  }
+
+  return source
+}
+
+function getFrontmatter(source: MarkdownPageSource) {
+  if ('__pageData' in source) {
+    return source.__pageData?.frontmatter ?? source.frontmatter ?? {}
+  }
+
+  return source.frontmatter ?? {}
 }
 
 function toArticle(
   relativePath: string,
-  module: MarkdownPageModule,
+  source: MarkdownPageSource,
   includePath: (relativePath: string) => boolean
 ): TaggedArticle | null {
   if (!includePath(relativePath)) {
     return null
   }
 
-  const frontmatter = getFrontmatter(module)
+  const frontmatter = getFrontmatter(source)
   const tags = normalizeTags(frontmatter.tags)
 
   if (!tags.length) {
     return null
   }
 
-  const pageData = module.__pageData
+  const pageData = getPageData(source)
   const resolvedRelativePath = pageData?.relativePath ?? relativePath.slice(1)
 
   return {
@@ -70,7 +83,7 @@ function toArticle(
 }
 
 export function createTagCatalog(
-  markdownPages: Record<string, MarkdownPageModule>,
+  markdownPages: Record<string, MarkdownPageSource>,
   options: TagCatalogOptions = {}
 ) {
   const includePath = options.includePath ?? (() => true)

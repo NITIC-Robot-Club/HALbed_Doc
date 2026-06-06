@@ -20,15 +20,19 @@ export interface FrontmatterRecord {
   layout?: string
 }
 
-export interface MarkdownPageModule {
-  __pageData?: {
-    title?: string
-    description?: string
-    relativePath?: string
-    frontmatter?: FrontmatterRecord
-  }
+export interface MarkdownPageData {
+  title?: string
+  description?: string
+  relativePath?: string
   frontmatter?: FrontmatterRecord
 }
+
+export interface MarkdownPageModule {
+  __pageData?: MarkdownPageData
+  frontmatter?: FrontmatterRecord
+}
+
+export type MarkdownPageSource = MarkdownPageModule | MarkdownPageData
 
 export interface TagCatalogOptions {
   includePath?: (relativePath: string) => boolean
