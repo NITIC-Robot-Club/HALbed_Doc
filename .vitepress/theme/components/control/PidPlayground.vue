@@ -1,20 +1,17 @@
 <script setup lang="ts">
 import { computed, reactive, watch } from 'vue'
+import { fritTuneFirstOrder } from '../../control/frit'
 import { stepFirstOrderModel } from '../../control/models'
 import { PidController } from '../../control/pid'
+import { getPlaygroundReferenceGains } from '../../control/referenceGains'
 import type { PidBreakdown, PidGains, SimulationConfig } from '../../control/types'
 import { useSimulationRunner } from '../../control/useSimulationRunner'
 import { createInitialState, round, sampleRandomDisturbance } from '../../control/utils'
 import ControlStatGrid from './ControlStatGrid.vue'
 import FullscreenToolFrame from './FullscreenToolFrame.vue'
+import ParameterStepper from './ParameterStepper.vue'
 import ParameterSlider from './ParameterSlider.vue'
 import ResponseGraph from './ResponseGraph.vue'
-
-const gains = reactive<PidGains>({
-  kp: 0.1,
-  ki: 0,
-  kd: 0,
-})
 
 const config = reactive<SimulationConfig>({
   dt: 0.05,
@@ -24,11 +21,15 @@ const config = reactive<SimulationConfig>({
 
 const target = reactive({ value: 1.8 })
 const disturbanceEnabled = reactive({ value: true })
+const referencePreset = computed(() => getPlaygroundReferenceGains(target.value))
+const gains = reactive<PidGains>({ ...referencePreset.value.gains })
 const pid = new PidController()
+const tuningMessage = reactive({ value: 'FRIT で自動調整できます。' })
 const breakdown = reactive<PidBreakdown>({
   proportional: 0,
   integral: 0,
   derivative: 0,
+  rawOutput: 0,
   output: 0,
 })
 
@@ -52,6 +53,7 @@ function resetSimulation(): void {
     proportional: 0,
     integral: 0,
     derivative: 0,
+    rawOutput: 0,
     output: 0,
   })
   runner.reset(createInitialState(target.value))
@@ -60,6 +62,23 @@ function resetSimulation(): void {
 function runSimulation(): void {
   resetSimulation()
   runner.start()
+}
+
+function applyReferenceGains(): void {
+  Object.assign(gains, referencePreset.value.gains)
+  resetSimulation()
+}
+
+function autoTuneWithFrit(): void {
+  const result = fritTuneFirstOrder({
+    target: target.value,
+    plant: { gain: 1.35, timeConstant: 0.55 },
+    config,
+    currentGains: gains,
+  })
+  Object.assign(gains, result.gains)
+  tuningMessage.value = `${result.explanation} loss=${result.loss.toFixed(2)}`
+  resetSimulation()
 }
 
 function toggleDisturbance(): void {
@@ -81,6 +100,7 @@ const statItems = computed(() => [
   { label: 'P成分', value: round(breakdown.proportional).toString() },
   { label: 'I成分', value: round(breakdown.integral).toString() },
   { label: 'D成分', value: round(breakdown.derivative).toString() },
+  { label: 'PID出力', value: round(breakdown.rawOutput).toString() },
   { label: '外乱', value: disturbanceEnabled.value ? 'ON' : 'OFF', tone: disturbanceEnabled.value ? 'warning' : 'normal' },
   { label: 'オーバーシュート', value: round(runner.metrics.value.overshoot).toString() },
   {
@@ -110,17 +130,33 @@ const statItems = computed(() => [
 
     <div class="control-tool__layout">
       <div class="control-tool__panel">
-        <ParameterSlider v-model="target.value" label="目標値" :min="-5" :max="5" :step="0.1" hint="規定ステップ内に ±5% へ入るかを見ます" />
-        <ParameterSlider v-model="gains.kp" label="P ゲイン" :min="0" :max="8" :step="0.05" />
-        <ParameterSlider v-model="gains.ki" label="I ゲイン" :min="0" :max="5" :step="0.05" />
-        <ParameterSlider v-model="gains.kd" label="D ゲイン" :min="0" :max="3.5" :step="0.02" />
-        <ParameterSlider v-model="config.dt" label="dt" :min="0.02" :max="0.1" :step="0.01" hint="小さいほど細かく計算します" />
+        <div class="control-tool__actions" aria-label="シミュレーション操作">
+          <button type="button" class="control-tool__button control-tool__button--primary" @click="runSimulation">実行</button>
+          <button type="button" class="control-tool__button" @click="runner.stop">停止</button>
+          <button type="button" class="control-tool__button" @click="resetSimulation">リセット</button>
+          <button type="button" class="control-tool__button" :class="{ 'is-warning': disturbanceEnabled.value }" @click="toggleDisturbance">外乱 {{ disturbanceEnabled.value ? 'ON' : 'OFF' }}</button>
+        </div>
 
-        <div class="control-tool__actions">
-          <button type="button" @click="runSimulation">実行</button>
-          <button type="button" class="ghost" @click="runner.stop">停止</button>
-          <button type="button" class="ghost" @click="resetSimulation">リセット</button>
-          <button type="button" class="ghost" :class="{ 'is-warning': disturbanceEnabled.value }" @click="toggleDisturbance">外乱 {{ disturbanceEnabled.value ? 'ON' : 'OFF' }}</button>
+        <ParameterSlider v-model="target.value" label="目標値" :min="-5" :max="5" :step="0.1" hint="規定ステップ内に ±5% へ入るかを見ます" />
+        <div class="control-tool__stepper-grid">
+          <ParameterStepper v-model="gains.kp" label="P ゲイン" :min="0" :max="999" :step="0.001" :button-step="0.05" :precision="3" />
+          <ParameterStepper v-model="gains.ki" label="I ゲイン" :min="0" :max="999" :step="0.001" :button-step="0.05" :precision="3" />
+          <ParameterStepper v-model="gains.kd" label="D ゲイン" :min="0" :max="999" :step="0.001" :button-step="0.02" :precision="3" />
+          <ParameterStepper v-model="config.dt" label="dt" :min="0.02" :max="0.1" :step="0.01" />
+        </div>
+        <div class="control-tool__reference">
+          <div>
+            <strong>模範ゲイン</strong>
+            <p>{{ referencePreset.explanation }}</p>
+          </div>
+          <button type="button" class="control-tool__button" @click="applyReferenceGains">反映</button>
+        </div>
+        <div class="control-tool__reference control-tool__reference--frit">
+          <div>
+            <strong>FRIT 自動調整</strong>
+            <p>{{ tuningMessage.value }}</p>
+          </div>
+          <button type="button" class="control-tool__button" @click="autoTuneWithFrit">実行</button>
         </div>
       </div>
 
@@ -191,27 +227,63 @@ const statItems = computed(() => [
   border: 1px solid color-mix(in srgb, var(--vp-c-divider) 86%, transparent);
 }
 
+.control-tool__stepper-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.control-tool__reference {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.8rem 0.85rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--vp-c-brand-2) 18%, var(--vp-c-divider));
+  background: color-mix(in srgb, var(--vp-c-brand-soft) 18%, var(--vp-c-bg));
+}
+
+.control-tool__reference strong,
+.control-tool__reference p {
+  margin: 0;
+}
+
+.control-tool__reference strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.9rem;
+}
+
+.control-tool__reference p {
+  color: var(--vp-c-text-2);
+  font-size: 0.84rem;
+  line-height: 1.45;
+}
+
 .control-tool__actions {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, max-content));
-  gap: 0.6rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--vp-c-divider) 72%, transparent);
 }
 
-button {
-  border: 0;
-  border-radius: 999px;
-  padding: 0.75rem 1rem;
-  background: var(--vp-c-brand-3);
-  color: var(--vp-c-white);
+.control-tool__button {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  padding: 0.48rem 0.65rem;
+  background: color-mix(in srgb, var(--vp-c-bg) 88%, transparent);
+  color: var(--vp-c-text-1);
+  font-size: 0.84rem;
   font-weight: 700;
   cursor: pointer;
-  min-height: 44px;
+  min-height: 34px;
 }
 
-.ghost {
-  background: var(--vp-c-bg);
-  color: var(--vp-c-text-1);
-  border: 1px solid var(--vp-c-divider);
+.control-tool__button--primary {
+  background: var(--vp-c-brand-3);
+  color: var(--vp-c-white);
+  border-color: transparent;
 }
 
 .is-warning {

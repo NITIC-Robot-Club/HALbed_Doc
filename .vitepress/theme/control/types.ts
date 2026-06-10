@@ -48,6 +48,7 @@ export interface PidBreakdown {
   proportional: number
   integral: number
   derivative: number
+  rawOutput: number
   output: number
 }
 

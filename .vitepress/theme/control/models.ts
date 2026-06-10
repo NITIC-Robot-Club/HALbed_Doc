@@ -36,7 +36,7 @@ export function stepFirstOrderModel(
   dt: number,
   options: FirstOrderModelOptions,
 ): SimulationResult {
-  const u = clamp(controlInput, -1, 1)
+  const u = clamp(controlInput, -10, 10)
   const disturbance = options.disturbance ?? 0
   const valueRate = (options.gain * u + disturbance - state.position) / Math.max(options.timeConstant, 0.01)
   const position = state.position + valueRate * dt
@@ -63,7 +63,7 @@ export function stepMotorSpeedModel(
   dt: number,
   options: MotorSpeedModelOptions,
 ): SimulationResult {
-  const u = clamp(controlInput, -1, 1)
+  const u = clamp(controlInput, -10, 10)
   const disturbance = options.disturbance ?? 0
   const desiredSpeed = options.gain * u - options.load + disturbance
   const speedRate = (desiredSpeed - state.position) / Math.max(options.timeConstant, 0.05)
@@ -91,7 +91,7 @@ export function stepPositionModel(
   dt: number,
   options: PositionModelOptions,
 ): SimulationResult {
-  const u = clamp(controlInput, -1, 1)
+  const u = clamp(controlInput, -10, 10)
   const disturbance = options.disturbance ?? 0
   const gravity = options.gravity ?? 0
   const floor = options.floor ?? -Infinity
@@ -132,7 +132,7 @@ export function stepCartModel(
   dt: number,
   options: CartModelOptions,
 ): SimulationResult {
-  const u = clamp(controlInput, -1, 1)
+  const u = clamp(controlInput, -10, 10)
   const disturbance = options.disturbance ?? 0
   const frictionForce = Math.sign(state.velocity) * options.friction
   const acceleration = options.motorGain * u - options.damping * state.velocity - frictionForce + disturbance

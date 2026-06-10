@@ -1,6 +1,10 @@
+---
+title: 台車制御ゲーム 実行環境
+---
+
 <CartControlGame />
 
-::: note `#include <control.hpp>` とは
+::: tip `#include <control.hpp>` とは
 この include は、学習用ランタイムが用意している疑似ヘッダです。
 
 - `State` 構造体を使えるようにします。

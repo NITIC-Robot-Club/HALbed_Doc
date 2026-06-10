@@ -3,12 +3,14 @@ import { computed, reactive, ref, watch } from 'vue'
 import { CppSubsetInterpreter, DEFAULT_CPP_TEMPLATE } from '../../control/CppSubsetInterpreter'
 import { stepMotorSpeedModel } from '../../control/models'
 import { PidController } from '../../control/pid'
+import { getMotorSpeedReferenceGains } from '../../control/referenceGains'
 import type { ControllerExecution, ControllerMode, PidBreakdown, PidGains, SimulationConfig } from '../../control/types'
 import { useSimulationRunner } from '../../control/useSimulationRunner'
 import { clamp, createInitialState, round, sampleRandomDisturbance } from '../../control/utils'
 import ControlStatGrid from './ControlStatGrid.vue'
 import CppControlEditor from './CppControlEditor.vue'
 import FullscreenToolFrame from './FullscreenToolFrame.vue'
+import ParameterStepper from './ParameterStepper.vue'
 import ParameterSlider from './ParameterSlider.vue'
 import ResponseGraph from './ResponseGraph.vue'
 
@@ -20,10 +22,16 @@ const load = reactive({ value: 900 })
 const code = ref(DEFAULT_CPP_TEMPLATE)
 const pid = new PidController()
 const interpreter = new CppSubsetInterpreter(4000)
-const breakdown = reactive<PidBreakdown>({ proportional: 0, integral: 0, derivative: 0, output: 0 })
+const breakdown = reactive<PidBreakdown>({ proportional: 0, integral: 0, derivative: 0, rawOutput: 0, output: 0 })
 const runtimeError = ref('')
 const runtimeStatus = ref('PID か C++ を切り替えて挙動を比べられます。')
 const disturbanceEnabled = ref(true)
+const referencePreset = computed(() => getMotorSpeedReferenceGains(target.value, load.value))
+
+function applyReferenceGains(): void {
+  Object.assign(gains, referencePreset.value.gains)
+  resetAll()
+}
 
 function executeController(state: ReturnType<typeof createInitialState>): ControllerExecution {
   if (mode.value === 'pid') {
@@ -44,9 +52,10 @@ function executeController(state: ReturnType<typeof createInitialState>): Contro
     proportional: 0,
     integral: state.integral,
     derivative: 0,
+    rawOutput: result.value,
     output: result.value,
   })
-  return { ok: true, controlInput: clamp(result.value, -1, 1) }
+  return { ok: true, controlInput: result.value }
 }
 
 const runner = useSimulationRunner({
@@ -91,11 +100,12 @@ watch(
 )
 
 const statItems = computed(() => [
-  { label: '目標回転数', value: `${Math.round(target.value)} rpm` },
-  { label: '現在回転数', value: `${Math.round(runner.state.value.position)} rpm` },
-  { label: '負荷', value: `${Math.round(load.value)} rpm相当` },
+  { label: '目標回転数', value: `${round(target.value, 0)} rpm` },
+  { label: '現在回転数', value: `${round(runner.state.value.position, 0)} rpm` },
+  { label: '負荷', value: `${round(load.value, 0)} rpm相当` },
   { label: '外乱', value: disturbanceEnabled.value ? 'ON' : 'OFF', tone: disturbanceEnabled.value ? 'warning' : 'normal' },
   { label: '操作量', value: round(runner.controlInput.value).toString() },
+  { label: 'PID出力', value: mode.value === 'pid' ? round(breakdown.rawOutput).toString() : '-' },
   { label: '偏差', value: round(runner.state.value.error).toString() },
   { label: '整定時間', value: runner.metrics.value.settlingTime === null ? '未整定' : `${round(runner.metrics.value.settlingTime)} s` },
   {
@@ -121,25 +131,31 @@ const statItems = computed(() => [
 
     <div class="control-lab__layout">
       <div class="control-lab__panel">
+        <div class="control-lab__actions" aria-label="シミュレーション操作">
+          <button type="button" class="control-lab__button control-lab__button--primary" @click="runNow">実行</button>
+          <button type="button" class="control-lab__button" @click="runner.stop">停止</button>
+          <button type="button" class="control-lab__button" @click="resetAll">リセット</button>
+          <button type="button" class="control-lab__button" :class="{ 'is-warning': disturbanceEnabled }" @click="toggleDisturbance">外乱 {{ disturbanceEnabled ? 'ON' : 'OFF' }}</button>
+        </div>
         <div class="control-lab__mode">
           <button type="button" :class="{ 'is-selected': mode === 'pid' }" @click="mode = 'pid'">PID</button>
           <button type="button" :class="{ 'is-selected': mode === 'code' }" @click="mode = 'code'">C++</button>
         </div>
         <ParameterSlider v-model="target.value" label="目標回転数" :min="0" :max="6000" :step="100" />
         <ParameterSlider v-model="load.value" label="負荷" :min="0" :max="2000" :step="50" />
-        <ParameterSlider v-model="config.dt" label="dt" :min="0.02" :max="0.1" :step="0.01" />
+        <ParameterStepper v-model="config.dt" label="dt" :min="0.02" :max="0.1" :step="0.01" />
 
-        <template v-if="mode === 'pid'">
-          <ParameterSlider v-model="gains.kp" label="P ゲイン" :min="0" :max="6" :step="0.05" />
-          <ParameterSlider v-model="gains.ki" label="I ゲイン" :min="0" :max="4" :step="0.05" />
-          <ParameterSlider v-model="gains.kd" label="D ゲイン" :min="0" :max="2" :step="0.01" />
-        </template>
-
-        <div class="control-lab__actions">
-          <button type="button" @click="runNow">実行</button>
-          <button type="button" class="ghost" @click="runner.stop">停止</button>
-          <button type="button" class="ghost" @click="resetAll">リセット</button>
-          <button type="button" class="ghost" :class="{ 'is-warning': disturbanceEnabled }" @click="toggleDisturbance">外乱 {{ disturbanceEnabled ? 'ON' : 'OFF' }}</button>
+        <div v-if="mode === 'pid'" class="control-lab__stepper-grid">
+          <ParameterStepper v-model="gains.kp" label="P ゲイン" :min="0" :max="999" :step="0.001" :button-step="0.05" :precision="3" />
+          <ParameterStepper v-model="gains.ki" label="I ゲイン" :min="0" :max="999" :step="0.001" :button-step="0.05" :precision="3" />
+          <ParameterStepper v-model="gains.kd" label="D ゲイン" :min="0" :max="999" :step="0.001" :button-step="0.01" :precision="3" />
+        </div>
+        <div v-if="mode === 'pid'" class="control-lab__reference">
+          <div>
+            <strong>模範ゲイン</strong>
+            <p>{{ referencePreset.explanation }}</p>
+          </div>
+          <button type="button" class="control-lab__button" @click="applyReferenceGains">反映</button>
         </div>
       </div>
 
@@ -150,10 +166,11 @@ const statItems = computed(() => [
             <div class="rpm-panel__center" />
           </div>
           <div class="rpm-panel__readout">
-            <strong>{{ Math.round(runner.state.value.position) }} rpm</strong>
-            <span>目標 {{ Math.round(target.value) }} rpm</span>
+            <strong>{{ round(runner.state.value.position, 0) }} rpm</strong>
+            <span>目標 {{ round(target.value, 0) }} rpm</span>
           </div>
         </div>
+        <ResponseGraph :samples="runner.samples.value" />
         <CppControlEditor
           v-if="mode === 'code'"
           v-model:code="code"
@@ -165,7 +182,6 @@ const statItems = computed(() => [
           @reset-template="code = DEFAULT_CPP_TEMPLATE"
         />
         <ControlStatGrid :items="statItems" />
-        <ResponseGraph :samples="runner.samples.value" />
       </div>
     </div>
   </section>
@@ -224,6 +240,39 @@ const statItems = computed(() => [
     linear-gradient(180deg, color-mix(in srgb, var(--vp-c-bg) 86%, transparent), color-mix(in srgb, var(--vp-c-bg-soft) 94%, transparent)),
     color-mix(in srgb, var(--vp-c-bg-soft) 82%, transparent);
   border: 1px solid color-mix(in srgb, var(--vp-c-divider) 86%, transparent);
+}
+
+.control-lab__stepper-grid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.control-lab__reference {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.8rem 0.85rem;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--vp-c-brand-2) 18%, var(--vp-c-divider));
+  background: color-mix(in srgb, var(--vp-c-brand-soft) 18%, var(--vp-c-bg));
+}
+
+.control-lab__reference strong,
+.control-lab__reference p {
+  margin: 0;
+}
+
+.control-lab__reference strong {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.9rem;
+}
+
+.control-lab__reference p {
+  color: var(--vp-c-text-2);
+  font-size: 0.84rem;
+  line-height: 1.45;
 }
 
 .rpm-panel {
@@ -298,30 +347,32 @@ const statItems = computed(() => [
 .control-lab__mode,
 .control-lab__actions {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, max-content));
-  gap: 0.6rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
+}
+
+.control-lab__actions {
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--vp-c-divider) 72%, transparent);
 }
 
 button {
   border: 1px solid var(--vp-c-divider);
-  border-radius: 999px;
-  padding: 0.72rem 1rem;
-  background: var(--vp-c-bg);
+  border-radius: 10px;
+  padding: 0.48rem 0.65rem;
+  background: color-mix(in srgb, var(--vp-c-bg) 88%, transparent);
   color: var(--vp-c-text-1);
+  font-size: 0.84rem;
   font-weight: 700;
   cursor: pointer;
-  min-height: 44px;
+  min-height: 34px;
 }
 
 .is-selected,
-.control-lab__actions button:first-child {
+.control-lab__button--primary {
   background: var(--vp-c-brand-3);
   color: var(--vp-c-white);
   border-color: transparent;
-}
-
-.ghost {
-  background: var(--vp-c-bg-soft);
 }
 
 .is-warning {

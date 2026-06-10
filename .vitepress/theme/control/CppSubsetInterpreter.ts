@@ -178,6 +178,14 @@ class ReturnSignal {
   constructor(readonly value: RuntimeValue) {}
 }
 
+function formatInterpreterError(error: InterpreterError): string {
+  if (error.line !== undefined && error.column !== undefined) {
+    return `${error.message} (${error.line}行${error.column}列)`
+  }
+
+  return error.message
+}
+
 class Tokenizer {
   private index = 0
 
@@ -702,16 +710,12 @@ class Runtime {
       const result = this.invokeFunction(controlFunction, [struct])
       return {
         ok: true,
-        value: clamp(this.toNumber(result), -1, 1),
+        value: clamp(this.toNumber(result), -10, 10),
         steps: this.steps,
       }
     } catch (error) {
       const message =
-        error instanceof InterpreterError
-          ? error.line !== undefined && error.column !== undefined
-            ? `${error.message} (${error.line}:${error.column})`
-            : error.message
-          : '実行に失敗しました'
+        error instanceof InterpreterError ? formatInterpreterError(error) : '実行に失敗しました'
       return { ok: false, error: message, steps: this.steps }
     }
   }
@@ -1107,13 +1111,17 @@ function normalizeSource(source: string): string {
     throw new InterpreterError('`#include <control.hpp>` を先頭に書いてください')
   }
 
-  for (const line of includeLines) {
+  for (const [index, line] of lines.entries()) {
+    if (!line.trim().startsWith('#include')) {
+      continue
+    }
+
     if (line.trim() !== '#include <control.hpp>') {
-      throw new InterpreterError('使用できる include は `<control.hpp>` のみです')
+      throw new InterpreterError('使用できる include は `<control.hpp>` のみです', index + 1, 1)
     }
   }
 
-  return lines.filter((line) => !line.trim().startsWith('#include')).join('\n')
+  return lines.map((line) => (line.trim().startsWith('#include') ? '' : line)).join('\n')
 }
 
 export class CppSubsetInterpreter {
@@ -1129,10 +1137,7 @@ export class CppSubsetInterpreter {
       if (error instanceof InterpreterError) {
         return {
           ok: false,
-          error:
-            error.line !== undefined && error.column !== undefined
-              ? `${error.message} (${error.line}:${error.column})`
-              : error.message,
+          error: formatInterpreterError(error),
           steps: 0,
         }
       }

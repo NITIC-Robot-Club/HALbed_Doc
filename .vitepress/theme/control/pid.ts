@@ -20,12 +20,14 @@ export class PidController {
     const proportional = gains.kp * error
     const integral = gains.ki * this.integral
     const differential = gains.kd * derivative
-    const output = clamp(proportional + integral + differential, -1, 1)
+    const rawOutput = proportional + integral + differential
+    const output = clamp(rawOutput, -10, 10)
 
     return {
       proportional,
       integral,
       derivative: differential,
+      rawOutput,
       output,
     }
   }

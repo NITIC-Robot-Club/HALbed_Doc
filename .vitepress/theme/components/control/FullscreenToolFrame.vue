@@ -87,12 +87,14 @@ onBeforeUnmount(() => {
 
 .tool-frame__button {
   border: 1px solid var(--vp-c-divider);
-  border-radius: 999px;
-  padding: 0.72rem 1rem;
-  background: var(--vp-c-bg);
+  border-radius: 10px;
+  padding: 0.46rem 0.72rem;
+  background: color-mix(in srgb, var(--vp-c-bg) 88%, transparent);
   color: var(--vp-c-text-1);
+  font-size: 0.84rem;
   font-weight: 700;
   cursor: pointer;
+  min-height: 34px;
   white-space: nowrap;
 }
 

@@ -198,11 +198,11 @@ onBeforeUnmount(() => {
 <style scoped>
 .cpp-editor {
   display: grid;
-  gap: 0.9rem;
+  gap: 0.75rem;
   align-content: start;
   min-width: 0;
-  padding: 1rem;
-  border-radius: 22px;
+  padding: 0.85rem;
+  border-radius: 16px;
   border: 1px solid var(--vp-c-divider);
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--vp-c-bg) 88%, transparent), color-mix(in srgb, var(--vp-c-bg-soft) 94%, transparent)),
@@ -213,7 +213,7 @@ onBeforeUnmount(() => {
 .cpp-editor__header {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem;
   align-items: flex-start;
   flex-wrap: wrap;
 }
@@ -239,20 +239,23 @@ onBeforeUnmount(() => {
 .cpp-editor__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.55rem;
+  gap: 0.4rem;
   justify-content: flex-end;
   flex: 1 1 320px;
 }
 
 .cpp-editor__button {
   border: 1px solid transparent;
-  border-radius: 999px;
-  padding: 0.7rem 1rem;
+  border-radius: 10px;
+  padding: 0.46rem 0.68rem;
   background: var(--vp-c-brand-3);
   color: var(--vp-c-white);
+  font-size: 0.84rem;
   font-weight: 700;
   cursor: pointer;
-  min-height: 44px;
+  min-height: 34px;
+  min-width: 5.2rem;
+  white-space: nowrap;
 }
 
 .cpp-editor__button--ghost {
@@ -316,8 +319,9 @@ onBeforeUnmount(() => {
 .cpp-editor__status,
 .cpp-editor__error {
   margin: 0;
-  padding: 0.85rem 1rem;
-  border-radius: 14px;
+  padding: 0.65rem 0.8rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
 }
 
 .cpp-editor__status {
@@ -340,7 +344,26 @@ onBeforeUnmount(() => {
   }
 
   .cpp-editor {
-    padding: 0.9rem;
+    padding: 0.8rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .cpp-editor__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    flex: 1 1 auto;
+  }
+
+  .cpp-editor__button {
+    min-width: 0;
+    width: 100%;
+    padding-inline: 0.6rem;
+  }
+
+  .cpp-editor__button:last-child {
+    grid-column: 1 / -1;
   }
 }
 </style>

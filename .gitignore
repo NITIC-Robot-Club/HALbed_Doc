@@ -2,4 +2,5 @@
 .vitepress/cache/
 .vitepress/.temp/
 node_modules/
+.playwright-mcp
 AGENTS.md

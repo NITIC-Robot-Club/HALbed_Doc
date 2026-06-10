@@ -59,7 +59,7 @@ const runner = useSimulationRunner({
     }
 
     runtimeError.value = ''
-    return stepCartModel(state, clamp(result.value, -1, 1), config.dt, {
+    return stepCartModel(state, result.value, config.dt, {
       motorGain: activeScenario.value.motorGain,
       damping: activeScenario.value.damping,
       friction: activeScenario.value.friction,
@@ -312,7 +312,7 @@ const statItems = computed(() => [
 .cart-game__controls {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.85rem;
+  gap: 0.65rem;
 }
 
 .cart-game__controls label {
@@ -326,19 +326,21 @@ const statItems = computed(() => [
 }
 
 .cart-game__controls input {
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid var(--vp-c-divider);
   background: var(--vp-c-bg-soft);
   color: var(--vp-c-text-1);
-  padding: 0.65rem 0.8rem;
+  padding: 0.5rem 0.65rem;
+  min-height: 34px;
 }
 
 .cart-game__controls select {
-  border-radius: 10px;
+  border-radius: 8px;
   border: 1px solid var(--vp-c-divider);
   background: var(--vp-c-bg-soft);
   color: var(--vp-c-text-1);
-  padding: 0.65rem 0.8rem;
+  padding: 0.5rem 0.65rem;
+  min-height: 34px;
 }
 
 .cart-game__visuals {
@@ -349,13 +351,14 @@ const statItems = computed(() => [
 
 .cart-game__button {
   border: 1px solid var(--vp-c-divider);
-  border-radius: 999px;
-  padding: 0.72rem 1rem;
-  background: var(--vp-c-bg);
+  border-radius: 10px;
+  padding: 0.48rem 0.65rem;
+  background: color-mix(in srgb, var(--vp-c-bg) 88%, transparent);
   color: var(--vp-c-text-1);
+  font-size: 0.84rem;
   font-weight: 700;
   cursor: pointer;
-  min-height: 44px;
+  min-height: 34px;
 }
 
 .cart-game__button.is-warning {
