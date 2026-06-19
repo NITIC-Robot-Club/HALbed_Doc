@@ -22,11 +22,6 @@ const timeUnitMultipliers: Record<TimeUnit, number> = {
   ms: 1e-3,
 }
 
-const WS2812B_ZERO_HIGH_S = 0.35e-6
-const WS2812B_ONE_HIGH_S = 0.70e-6
-const WS2812B_BIT_PERIOD_S = 1.25e-6
-const WS2812B_RESET_S = 50e-6
-
 const timerClockValue = ref(72)
 const timerClockUnit = ref<ClockUnit>('MHz')
 const psc = ref(0)
@@ -130,31 +125,6 @@ const derivedWarnings = computed<Notice[]>(() => {
 
 const notices = computed(() => [...baseErrors.value, ...derivedWarnings.value])
 
-const ws2812bHelper = computed(() => {
-  const result = core.value
-  if (!result) {
-    return null
-  }
-
-  const zeroCcr = WS2812B_ZERO_HIGH_S * result.countFreq
-  const oneCcr = WS2812B_ONE_HIGH_S * result.countFreq
-  const resetPulses = Math.ceil(WS2812B_RESET_S / result.pwmPeriod)
-  const bitPeriodDiff = result.pwmPeriod - WS2812B_BIT_PERIOD_S
-
-  if (![zeroCcr, oneCcr, resetPulses, bitPeriodDiff].every(Number.isFinite)) {
-    return null
-  }
-
-  return {
-    zeroCcr,
-    zeroCcrRounded: Math.round(zeroCcr),
-    oneCcr,
-    oneCcrRounded: Math.round(oneCcr),
-    resetPulses,
-    bitPeriodDiff,
-  }
-})
-
 function toHertz(value: number, unit: ClockUnit): number {
   if (!isFiniteNumber(value)) {
     return 0
@@ -209,11 +179,6 @@ function formatNumber(value: number, digits: number): string {
 
   const rounded = Number(value.toFixed(digits))
   return Number.isInteger(rounded) ? rounded.toString() : rounded.toString()
-}
-
-function applyWs2812Preset(kind: 'zero' | 'one'): void {
-  highTimeUnit.value = 'us'
-  highTimeValue.value = kind === 'zero' ? 0.35 : 0.7
 }
 </script>
 
@@ -270,16 +235,6 @@ function applyWs2812Preset(kind: 'zero' | 'one'): void {
           <p class="pwm-ccr-calculator__field-note">
             実際の分周比は <code>PSC + 1</code> です。
           </p>
-
-          <div class="pwm-ccr-calculator__preset-row">
-            <span>WS2812Bプリセット</span>
-            <button type="button" class="pwm-ccr-calculator__preset-button" @click="applyWs2812Preset('zero')">
-              0bit High 0.35us
-            </button>
-            <button type="button" class="pwm-ccr-calculator__preset-button" @click="applyWs2812Preset('one')">
-              1bit High 0.70us
-            </button>
-          </div>
 
           <div v-if="notices.length > 0" class="pwm-ccr-calculator__notice-list">
             <p
@@ -338,30 +293,6 @@ function applyWs2812Preset(kind: 'zero' | 'one'): void {
           </p>
         </section>
 
-        <section class="pwm-ccr-calculator__card pwm-ccr-calculator__card--wide">
-          <h3>WS2812B補助</h3>
-          <div v-if="ws2812bHelper && core" class="pwm-ccr-calculator__results pwm-ccr-calculator__results--ws">
-            <div class="pwm-ccr-calculator__result">
-              <span>0bit用CCR</span>
-              <strong>{{ formatCount(ws2812bHelper.zeroCcr) }} / {{ ws2812bHelper.zeroCcrRounded }}</strong>
-            </div>
-            <div class="pwm-ccr-calculator__result">
-              <span>1bit用CCR</span>
-              <strong>{{ formatCount(ws2812bHelper.oneCcr) }} / {{ ws2812bHelper.oneCcrRounded }}</strong>
-            </div>
-            <div class="pwm-ccr-calculator__result">
-              <span>Resetに必要なPWM周期数</span>
-              <strong>{{ ws2812bHelper.resetPulses }}</strong>
-            </div>
-            <div class="pwm-ccr-calculator__result">
-              <span>現在のPWM周期と 1.25us の差</span>
-              <strong>{{ formatSeconds(ws2812bHelper.bitPeriodDiff) }}</strong>
-            </div>
-          </div>
-          <p class="pwm-ccr-calculator__hint">
-            表示形式は「小数CCR / 四捨五入CCR」です。Reset時間は 50us を基準に計算しています。
-          </p>
-        </section>
       </div>
     </div>
   </section>
@@ -478,37 +409,6 @@ function applyWs2812Preset(kind: 'zero' | 'one'): void {
   appearance: none;
 }
 
-.pwm-ccr-calculator__preset-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  align-items: center;
-  margin-top: 1rem;
-}
-
-.pwm-ccr-calculator__preset-row span {
-  font-weight: 600;
-  color: var(--vp-c-text-2);
-}
-
-.pwm-ccr-calculator__preset-button {
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 10px;
-  padding: 0.5rem 0.75rem;
-  background: var(--vp-c-default-soft);
-  color: var(--vp-c-text-2);
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
-}
-
-.pwm-ccr-calculator__preset-button:hover {
-  background: var(--vp-c-bg);
-  border-color: var(--vp-c-default-2);
-  color: var(--vp-c-text-1);
-}
-
 .pwm-ccr-calculator__notice-list {
   display: grid;
   gap: 0.65rem;
@@ -534,10 +434,6 @@ function applyWs2812Preset(kind: 'zero' | 'one'): void {
 .pwm-ccr-calculator__results {
   display: grid;
   gap: 0.75rem;
-}
-
-.pwm-ccr-calculator__results--ws {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .pwm-ccr-calculator__result {
