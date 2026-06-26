@@ -71,7 +71,7 @@ UARTでは主に以下の2本を使用します。
 
 通信相手のTXとRXを交差接続します。
 
-![uart_connection](../images/uart_connection.png)
+![uart_connection](./images/Wired_Communication/uart_connection.png)
 
 GNDも共通にする必要があります。
 
