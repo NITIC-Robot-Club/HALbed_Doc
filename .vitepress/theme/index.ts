@@ -26,6 +26,10 @@ const TagPage = defineAsyncComponent(
   () => import('./components/TagPage.vue')
 )
 
+const ArticleIndexSections = defineAsyncComponent(
+  () => import('./components/ArticleIndexSections.vue')
+)
+
 export default {
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
@@ -63,6 +67,11 @@ export default {
     app.component(
       'TagPage',
       TagPage,
+    )
+
+    app.component(
+      'ArticleIndexSections',
+      ArticleIndexSections,
     )
   },
 } satisfies Theme
