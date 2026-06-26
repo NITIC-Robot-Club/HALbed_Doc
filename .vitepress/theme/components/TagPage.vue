@@ -19,7 +19,7 @@ const articles = computed(() => getArticlesByTags(selectedTags.value.length ? se
 const tagCount = computed(() => articles.value.length)
 
 function getBackHref(): string {
-  return withBase('/tags/')
+  return withBase('/Docs/Technical_articles/Article_Home')
 }
 </script>
 
@@ -29,7 +29,7 @@ function getBackHref(): string {
       <p class="tag-page__eyebrow">Tag</p>
       <h1>{{ tagName }} タグの記事一覧</h1>
       <p class="tag-page__lead">{{ tagCount > 0 ? `${tagCount} 件の記事があります。` : 'このタグの記事はまだありません。' }}</p>
-      <a class="tag-page__back" :href="getBackHref()">タグ一覧に戻る</a>
+      <a class="tag-page__back" :href="getBackHref()">記事一覧に戻る</a>
     </div>
 
     <div v-if="articles.length" class="tag-page__grid">

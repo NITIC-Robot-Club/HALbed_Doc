@@ -26,6 +26,10 @@ const TagPage = defineAsyncComponent(
   () => import('./components/TagPage.vue')
 )
 
+const TagIndex = defineAsyncComponent(
+  () => import('./components/TagIndex.vue')
+)
+
 const ArticleIndexSections = defineAsyncComponent(
   () => import('./components/ArticleIndexSections.vue')
 )
@@ -67,6 +71,11 @@ export default {
     app.component(
       'TagPage',
       TagPage,
+    )
+
+    app.component(
+      'TagIndex',
+      TagIndex,
     )
 
     app.component(
