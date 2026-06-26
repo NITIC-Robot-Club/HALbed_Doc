@@ -5,6 +5,7 @@ export default defineConfig({
   description: "HALラッパー関数群[HALbed] ドキュメントサイト",
   lastUpdated: true,
   base: '/HALbed_Doc/',
+  srcExclude: ['AGENTS.md'],
   head: [
     [
       'script',
@@ -93,7 +94,8 @@ export default defineConfig({
           text: 'ツール',
           items: [
             { text: 'ツール一覧', link: '/Docs/Tools/Tools_home' },
-            { text: 'CAN Bit Timing Calculator', link: '/Docs/Tools/CAN/BitTimingCalculator' }
+            { text: 'CAN Bit Timing Calculator', link: '/Docs/Tools/BitTimingCalculator' },
+            { text: 'PWM CCR Calculator', link: '/Docs/Tools/PwmCcrCalculator' }
           ]
         }
       ]

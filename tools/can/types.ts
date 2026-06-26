@@ -1,5 +1,3 @@
-export type CanTimingMode = 'bxcan' | 'fdcan-classic' | 'fdcan-fd'
-
 export interface TimingProfile {
   prescalerMin: number
   prescalerMax: number
@@ -11,8 +9,16 @@ export interface TimingProfile {
   sjwMax: number
 }
 
+export type CanBitTimingMode = 'normal' | 'fd'
+
 export interface CanBitTimingInput {
   clockMHz: number
+  bitrateKbps: number
+  samplePointPercent: number
+  sjw: number
+}
+
+export interface CanBitTimingPhaseInput {
   bitrateKbps: number
   samplePointPercent: number
   sjw: number

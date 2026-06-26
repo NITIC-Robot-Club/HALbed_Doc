@@ -15,4 +15,4 @@ hero:
 
 ## ツール
 
-- [CAN Bit Timing Calculator](../Tools/CAN/BitTimingCalculator.md)
+- [CAN Bit Timing Calculator](../Tools/BitTimingCalculator.md)

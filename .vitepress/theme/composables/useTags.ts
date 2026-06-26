@@ -1,19 +1,8 @@
-import { createTagCatalog, normalizeTags } from '../tag-system'
-
-const markdownPages = import.meta.glob('/**/*.md', { eager: true })
-
-const catalog = createTagCatalog(markdownPages, {
-  includePath(relativePath) {
-    return (
-      relativePath.startsWith('/Docs/') ||
-      relativePath === '/index.md' ||
-      relativePath.startsWith('/articles/')
-    )
-  }
-})
+import { normalizeTags } from '../tag-system'
+import { tagCatalog } from './tagCatalogStore'
 
 export function useTags() {
-  return catalog
+  return tagCatalog
 }
 
 export { normalizeTags }

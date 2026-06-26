@@ -1,14 +1,30 @@
 // https://vitepress.dev/guide/custom-theme
-import { h } from 'vue'
+import { defineAsyncComponent, h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
-import CanBitTimingCalculator from './components/CanBitTimingCalculator.vue'
 import ArticleTags from './components/ArticleTags.vue'
 import ArticleCard from './components/ArticleCard.vue'
-import RelatedArticles from './components/RelatedArticles.vue'
-import TagExplorer from './components/TagExplorer.vue'
-import TagPage from './components/TagPage.vue'
 import './style.css'
+
+const CanBitTimingCalculator = defineAsyncComponent(
+  () => import('./components/CanBitTimingCalculator.vue')
+)
+
+const PwmCcrCalculator = defineAsyncComponent(
+  () => import('./components/PwmCcrCalculator.vue')
+)
+
+const RelatedArticles = defineAsyncComponent(
+  () => import('./components/RelatedArticles.vue')
+)
+
+const TagExplorer = defineAsyncComponent(
+  () => import('./components/TagExplorer.vue')
+)
+
+const TagPage = defineAsyncComponent(
+  () => import('./components/TagPage.vue')
+)
 
 export default {
   Layout: () => {
@@ -22,6 +38,11 @@ export default {
     app.component(
       'CanBitTimingCalculator',
       CanBitTimingCalculator,
+    )
+
+    app.component(
+      'PwmCcrCalculator',
+      PwmCcrCalculator,
     )
 
     app.component(
