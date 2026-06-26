@@ -13,11 +13,15 @@ function getTagHref(tag: string): string {
 
 <template>
   <article class="article-card">
+    <a
+      class="article-card__stretched-link"
+      :href="withBase(props.article.link)"
+      :aria-label="`${props.article.title} を開く`"
+    />
+
     <div class="article-card__body">
       <h3 class="article-card__title">
-        <a class="article-card__link" :href="withBase(props.article.link)">
-          {{ props.article.title }}
-        </a>
+        {{ props.article.title }}
       </h3>
 
       <p v-if="props.article.description" class="article-card__description">
@@ -46,6 +50,7 @@ function getTagHref(tag: string): string {
 
 <style scoped>
 .article-card {
+  position: relative;
   border: 1px solid var(--vp-c-divider);
   border-radius: 1rem;
   background: var(--vp-c-bg);
@@ -63,7 +68,25 @@ function getTagHref(tag: string): string {
   }
 }
 
+.article-card:focus-within {
+  border-color: var(--vp-c-brand-1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--vp-c-brand-1) 16%, transparent);
+}
+
+.article-card__stretched-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+
+.article-card__stretched-link:focus-visible {
+  outline: none;
+}
+
 .article-card__body {
+  position: relative;
+  z-index: 0;
   display: grid;
   gap: 0.75rem;
   padding: 1rem 1rem 1.1rem;
@@ -73,11 +96,6 @@ function getTagHref(tag: string): string {
   margin: 0;
   line-height: 1.4;
   font-size: 1rem;
-}
-
-.article-card__link {
-  color: var(--vp-c-text-1);
-  text-decoration: none;
 }
 
 .article-card__description {
@@ -99,6 +117,8 @@ function getTagHref(tag: string): string {
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+  position: relative;
+  z-index: 2;
 }
 
 .article-card__tag {
@@ -112,6 +132,8 @@ function getTagHref(tag: string): string {
   font-size: 0.72rem;
   line-height: 1.2;
   text-decoration: none;
+  position: relative;
+  z-index: 2;
   transition:
     color 0.15s ease,
     border-color 0.15s ease,
