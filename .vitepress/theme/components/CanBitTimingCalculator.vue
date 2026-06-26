@@ -356,6 +356,10 @@ onBeforeUnmount(() => {
 
       <Transition name="can-fade" mode="out-in">
         <div v-if="!errorMessage" :key="mode" class="can-calculator__results">
+          <div class="can-calculator__results-heading">
+            <p class="can-calculator__results-eyebrow">計算結果</p>
+          </div>
+
           <div class="can-calculator__summary-wrap">
             <table class="can-calculator__summary-table">
               <thead>
@@ -734,6 +738,21 @@ onBeforeUnmount(() => {
 .can-calculator__results {
   display: grid;
   gap: 1rem;
+}
+
+.can-calculator__results-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.can-calculator__results-eyebrow {
+  margin: 0;
+  color: var(--vp-c-brand-1);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .can-calculator__results-header {
