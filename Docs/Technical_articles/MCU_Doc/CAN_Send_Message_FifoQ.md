@@ -1,3 +1,9 @@
+---
+tags:
+    - CAN
+    - CANFD
+---
+
 # CANの送信関数について
 
 `HAL_FDCAN_AddMessageToTxFifoQ()` は、FDCANでメッセージを送信するときによく使う関数です。
