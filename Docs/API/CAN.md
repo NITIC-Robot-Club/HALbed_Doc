@@ -88,6 +88,10 @@ CAN送信が可能かどうかを確認
     - FIFO0 : `CANx RX0 interrupts`
     - FIFO1 : `CANx RX1 interrupts`  
     ![image](./images/CAN/img_CAN_setup_3.png)
+5. **Auto Retransmissionの設定を確認する**
+   - CubeMXのCAN設定で、Auto RetransmissionがEnableにします。
+   - この設定は、必要に応じてDisableにすることもできますが、Disableにすると、送信に失敗したメッセージが自動で再送されません。(詳細は [STM32 CAN の Auto Retransmission 設定に注意](../Technical_articles/MCU_Doc/CAN_Retransmission.md) を参照してください)
+   (画像では赤枠で囲っていませんが、下の方にあります)
 
 > [!Note]
 > 画像は 'STM23 F446re' を使用し、`1Mbps` ,サンプリングポイント `88.9%` で計算 </br>
