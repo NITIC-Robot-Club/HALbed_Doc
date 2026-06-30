@@ -103,3 +103,8 @@ STM32 の CAN / FDCAN では、`.ioc` 作成時に **Auto Retransmission が Dis
 
 設定で、Enbale になっていても、送信が必ず成功するわけではありません。
 必要に応じて、送信失敗時のリトライや、タイムアウト処理を行うことを推奨します。
+
+## 参考資料
+- [STM32G4 Series MCU RM0440 Reference Manual](https://www.st.com/resource/ja/reference_manual/rm0440-stm32g4-series-advanced-armbased-32bit-mcus-stmicroelectronics.pdf) : P.1918 参照
+
+他のシリーズでも、同様の設定はありますが、詳細は各マイコンのリファレンスマニュアルを確認してください。
