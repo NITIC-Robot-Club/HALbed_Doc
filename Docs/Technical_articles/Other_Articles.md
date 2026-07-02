@@ -3,6 +3,9 @@ layout: home
 hero:
   name: "Technical Articles"
   tagline: マイコン回りのセンサーや通信に関する記事をまとめています。
+tags:
+  - 技術記事
+  - 有線通信
 thumbnail:
   targets:
     - article-home

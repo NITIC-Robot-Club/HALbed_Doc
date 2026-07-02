@@ -3,6 +3,10 @@ layout: home
 hero:
   name: "チュートリアル"
   tagline: CubeIDEやGPIOの基本操作を、手順に沿って学ぶための入口です。
+tags:
+  - 技術記事
+  - チュートリアル
+  - 入門
 thumbnail:
   targets:
     - article-home

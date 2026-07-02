@@ -3,6 +3,9 @@ layout: home
 hero:
   name: "MCU Articles"
   tagline: HALやFPUなど、実装前に押さえておきたい基礎知識の入口です。
+tags:
+  - 技術記事
+  - MCU
 thumbnail:
   targets:
     - article-home
