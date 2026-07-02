@@ -4,6 +4,11 @@ tags:
   - チュートリアル
   - CubeIDE
   - 開発環境
+thumbnail:
+  targets:
+    - tutorials-home
+  description: 'プロジェクト作成から HALbed の追加までを段階的に説明します。'
+  order: 20
 ---
 
 # Cube IDE の使い方
