@@ -22,6 +22,13 @@ const sections: ArticleIndexSection[] = [
         relativePath: 'Docs/Technical_articles/Other_Articles/Wired_communication/Wired_Communication.md',
         tags: ['有線通信', '入門'],
       },
+      {
+        title: 'S.BUS入門',
+        description: '受信機の信号をマイコンで読むための S.BUS の基礎を整理した記事です。',
+        link: '/Docs/Technical_articles/Other_Articles/Wired_communication/Sbus',
+        relativePath: 'Docs/Technical_articles/Other_Articles/Wired_communication/Sbus.md',
+        tags: ['有線通信', '入門'],
+      },
     ],
   },
 ]

@@ -39,8 +39,6 @@ const sections: ArticleIndexSection[] = [
 ]
 </script>
 
-## 記事の入口
-
 <ArticleIndexSections :sections="sections" />
 
 <TagExplorer />

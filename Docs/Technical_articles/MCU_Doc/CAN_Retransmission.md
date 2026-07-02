@@ -1,5 +1,7 @@
 ---
 tags:
+  - 技術記事
+  - MCU
   - CAN
   - CANFD
 ---

@@ -151,12 +151,14 @@ onMounted(() => {
 <style scoped>
 .tag-explorer {
   display: grid;
-  gap: 1.25rem;
+  gap: 1.75rem;
+  padding-bottom: 3rem;
 }
 
 .tag-explorer__hero {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.5rem;
+  max-width: 48rem;
 }
 
 .tag-explorer__hero h1,
@@ -185,9 +187,9 @@ onMounted(() => {
   align-items: end;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 1rem;
+  padding: 1.15rem;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   background: var(--vp-c-bg);
 }
 
@@ -306,11 +308,14 @@ onMounted(() => {
 
 .tag-explorer__filters-panel {
   display: grid;
-  gap: 0.75rem;
-  padding: 1rem;
+  gap: 0.9rem;
+  padding: 1.15rem;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 1rem;
-  background: linear-gradient(180deg, var(--vp-c-bg) 0%, var(--vp-c-bg-soft) 100%);
+  border-radius: 1.25rem;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--vp-c-brand-1) 2%, transparent), transparent 38%),
+    var(--vp-c-bg);
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--vp-c-text-1) 4%, transparent);
 }
 
 .tag-explorer__filters-heading {
@@ -400,18 +405,13 @@ onMounted(() => {
 
 .tag-explorer__grid {
   display: grid;
-  gap: 1rem;
+  gap: 0.85rem;
 }
 
-@media (min-width: 768px) {
-  .tag-explorer__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1100px) {
-  .tag-explorer__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+@media (min-width: 960px) {
+  .tag-explorer__searchbar,
+  .tag-explorer__filters-panel {
+    padding: 1.2rem;
   }
 }
 </style>

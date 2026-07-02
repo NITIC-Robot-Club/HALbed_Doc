@@ -42,6 +42,8 @@ function toTaggedArticle(article: ArticleIndexItem): TaggedArticle {
             {{ section.description }}
           </p>
         </div>
+
+        <span class="article-index__section-count">{{ section.articles.length }} 件</span>
       </div>
 
       <div v-if="section.articles.length" class="article-index__grid">
@@ -60,7 +62,8 @@ function toTaggedArticle(article: ArticleIndexItem): TaggedArticle {
 <style scoped>
 .article-index {
   display: grid;
-  gap: 1.25rem;
+  gap: 1.75rem;
+  padding-bottom: 2rem;
 }
 
 .article-index__meta {
@@ -73,24 +76,28 @@ function toTaggedArticle(article: ArticleIndexItem): TaggedArticle {
 
 .article-index__section {
   display: grid;
-  gap: 0.9rem;
-  padding: 1rem;
+  gap: 1rem;
+  padding: 1.15rem 1.1rem 1.05rem;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 1rem;
-  background: linear-gradient(180deg, var(--vp-c-bg) 0%, var(--vp-c-bg-soft) 100%);
+  border-radius: 1.15rem;
+  background: var(--vp-c-bg);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--vp-c-text-1) 4%, transparent);
 }
 
 .article-index__section-header {
   display: flex;
   flex-wrap: wrap;
-  align-items: end;
+  align-items: start;
   justify-content: space-between;
-  gap: 0.75rem;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--vp-c-divider) 75%, transparent);
 }
 
 .article-index__section-title {
   margin: 0;
-  font-size: 1.05rem;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
 }
 
 .article-index__section-description {
@@ -100,9 +107,23 @@ function toTaggedArticle(article: ArticleIndexItem): TaggedArticle {
   font-size: 0.92rem;
 }
 
+.article-index__section-count {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 9999px;
+  padding: 0.35rem 0.7rem;
+  color: var(--vp-c-text-2);
+  background: var(--vp-c-bg-soft);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .article-index__grid {
   display: grid;
-  gap: 1rem;
+  gap: 0.85rem;
 }
 
 .article-index__empty {
@@ -111,15 +132,9 @@ function toTaggedArticle(article: ArticleIndexItem): TaggedArticle {
   font-size: 0.92rem;
 }
 
-@media (min-width: 768px) {
-  .article-index__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1100px) {
-  .article-index__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+@media (min-width: 960px) {
+  .article-index__section {
+    padding: 1.2rem 1.2rem 1.1rem;
   }
 }
 </style>

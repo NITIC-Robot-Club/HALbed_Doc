@@ -44,6 +44,33 @@ const sections: ArticleIndexSection[] = [
       },
     ],
   },
+  {
+    title: 'CAN / FDCAN',
+    description: 'CAN 周辺の設定や送受信で、つまずきやすいポイントを整理しています。',
+    articles: [
+      {
+        title: 'CAN/CANFD Filters Nbr',
+        description: 'Filters Nbr の意味を押さえて、受信フィルタ設定の理解を助ける記事です。',
+        link: '/Docs/Technical_articles/MCU_Doc/CAN_Filters_Nbr',
+        relativePath: 'Docs/Technical_articles/MCU_Doc/CAN_Filters_Nbr.md',
+        tags: ['CAN', 'CANFD', '用語解説'],
+      },
+      {
+        title: 'STM32 CAN の Auto Retransmission 設定に注意',
+        description: '送信失敗時の再送設定で見落としやすい点をまとめています。',
+        link: '/Docs/Technical_articles/MCU_Doc/CAN_Retransmission',
+        relativePath: 'Docs/Technical_articles/MCU_Doc/CAN_Retransmission.md',
+        tags: ['CAN', 'CANFD'],
+      },
+      {
+        title: 'CANの送信関数について',
+        description: 'FDCAN の送信 API を整理し、Tx FIFO / Buffer の違いを掴みやすくします。',
+        link: '/Docs/Technical_articles/MCU_Doc/CAN_Send_Message_FifoQ',
+        relativePath: 'Docs/Technical_articles/MCU_Doc/CAN_Send_Message_FifoQ.md',
+        tags: ['CAN', 'CANFD'],
+      },
+    ],
+  },
 ]
 </script>
 

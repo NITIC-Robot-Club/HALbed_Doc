@@ -1,7 +1,9 @@
 ---
 tags:
-    - CAN
-    - CANFD
+  - 技術記事
+  - MCU
+  - CAN
+  - CANFD
 ---
 
 # CANの送信関数について
