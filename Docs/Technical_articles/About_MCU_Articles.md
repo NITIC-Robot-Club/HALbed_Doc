@@ -13,7 +13,7 @@ import type { ArticleIndexSection } from '../../.vitepress/theme/components/arti
 const sections: ArticleIndexSection[] = [
   {
     title: 'マイコンについて',
-    description: 'マイコンの基礎と、数値計算で気をつけたいポイントをまとめています。',
+    description: 'マイコンの基礎と、プログラムを書く上で気をつけたいポイントをまとめています。',
     articles: [
       {
         title: 'マイコンってなに？',
@@ -24,7 +24,7 @@ const sections: ArticleIndexSection[] = [
       },
       {
         title: '小数の計算に注意！FPUとfloat型の関係',
-        description: 'FPU と float / double の違いを、マイコン視点で解説しています。',
+        description: '「小数は精度のいいdouble型一択！」それは大きな落とし穴です。',
         link: '/Docs/Technical_articles/MCU_Doc/Floating_Point_Caution',
         relativePath: 'Docs/Technical_articles/MCU_Doc/Floating_Point_Caution.md',
         tags: ['技術記事', 'MCU'],
@@ -37,7 +37,7 @@ const sections: ArticleIndexSection[] = [
     articles: [
       {
         title: 'LチカをHALとHALbedで書いてみる',
-        description: 'LED 点滅を通して、HAL と HALbed の関係を確認できます。',
+        description: 'LED 点滅を通して、HAL と HALbed の違いを感じてみましょう',
         link: '/Docs/Technical_articles/MCU_Doc/HAL_Blink_LED',
         relativePath: 'Docs/Technical_articles/MCU_Doc/HAL_Blink_LED.md',
         tags: ['技術記事', 'HAL'],
@@ -50,27 +50,60 @@ const sections: ArticleIndexSection[] = [
     articles: [
       {
         title: 'CAN/CANFD Filters Nbr',
-        description: 'Filters Nbr の意味を押さえて、受信フィルタ設定の理解を助ける記事です。',
+        description: 'CubeMXで設定するときに出てくる"Filters Nbr" その意味と設定について解説',
         link: '/Docs/Technical_articles/MCU_Doc/CAN_Filters_Nbr',
         relativePath: 'Docs/Technical_articles/MCU_Doc/CAN_Filters_Nbr.md',
         tags: ['CAN', 'CANFD', '用語解説'],
       },
       {
         title: 'STM32 CAN の Auto Retransmission 設定に注意',
-        description: '送信失敗時の再送設定で見落としやすい点をまとめています。',
+        description: 'デフォルトではOffにされている大事な設定。CANを使う前に必ず確認しましょう！',
         link: '/Docs/Technical_articles/MCU_Doc/CAN_Retransmission',
         relativePath: 'Docs/Technical_articles/MCU_Doc/CAN_Retransmission.md',
         tags: ['CAN', 'CANFD'],
       },
       {
         title: 'CANの送信関数について',
-        description: 'FDCAN の送信 API を整理し、Tx FIFO / Buffer の違いを掴みやすくします。',
+        description: 'FDCAN の送信 HAL API を整理し、Tx FIFO / Buffer の違いを掴みやすくします。',
         link: '/Docs/Technical_articles/MCU_Doc/CAN_Send_Message_FifoQ',
         relativePath: 'Docs/Technical_articles/MCU_Doc/CAN_Send_Message_FifoQ.md',
         tags: ['CAN', 'CANFD'],
       },
     ],
   },
+  {
+    title: 'CubeIDE/MX の設定',
+    description: 'CubeIDE/MXの設定について特に気を付けてほしいところをまとめています。',
+    articles: [
+      {
+        title: 'STM32 CAN の Auto Retransmission 設定に注意',
+        description: 'デフォルトではOffにされている大事な設定。CANを使う前に必ず確認しましょう！',
+        link: '/Docs/Technical_articles/MCU_Doc/CAN_Retransmission',
+        relativePath: 'Docs/Technical_articles/MCU_Doc/CAN_Retransmission.md',
+        tags: ['CAN', 'CANFD', '設定'],
+      },
+      {
+        title: 'Nucleoボードでピンが設定できない - BSPと競合している場合の対処法',
+        description: 'Nucleo で何故か設定できないとき、"BSP"と競合しているかもしれません。',
+        link: 'Docs/Technical_articles/MCU_Doc/BSP_Setting',
+        relativePath: 'Docs/Technical_articles/MCU_Doc/BSP_Setting.md',
+        tags: [`設定`,`CubeMX`],
+      },
+    ],
+  },
+  // {
+  //   title: '',
+  //   description: '',
+  //   articles: [
+  //     {
+  //       title: '',
+  //       description: '',
+  //       link: '',
+  //       relativePath: 'Docs/Technical_articles/MCU_Doc/',
+  //       tags: [],
+  //     },
+  //   ],
+  // },
 ]
 </script>
 

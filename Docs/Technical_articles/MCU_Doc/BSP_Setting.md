@@ -1,7 +1,6 @@
 ---
 tags:
   - Nucleo
-  - BSP
   - CubeMX
   - 設定
 ---
