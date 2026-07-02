@@ -1,8 +1,13 @@
 ---
 tags:
-  - Nucleo
-  - CubeMX
-  - 設定
+    - Nucleo
+    - CubeMX
+    - 設定
+thumbnail:
+  targets:
+    - mcu-home
+  description: 'Nucleo で何故か設定できないとき、"BSP"と競合しているかもしれません。'
+  order: 60
 ---
 # Nucleoボードでピンが設定できない - BSPと競合している場合の対処法
 

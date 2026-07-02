@@ -2,6 +2,11 @@
 tags:
   - 技術記事
   - MCU
+thumbnail:
+  targets:
+    - mcu-home
+  description: '「小数は精度のいいdouble型一択！」それは大きな落とし穴です。'
+  order: 10
 ---
 
 # 小数の計算に注意！FPUとfloat型の関係

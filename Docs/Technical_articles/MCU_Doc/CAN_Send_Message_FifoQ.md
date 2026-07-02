@@ -4,6 +4,11 @@ tags:
   - MCU
   - CAN
   - CANFD
+thumbnail:
+  targets:
+    - mcu-home
+  description: 'HALでCAN送信するときの関数とモードについてまとめています。'
+  order: 50
 ---
 
 # CANの送信関数について

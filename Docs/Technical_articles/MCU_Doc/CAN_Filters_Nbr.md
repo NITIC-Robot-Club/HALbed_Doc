@@ -5,6 +5,11 @@ tags:
   - CAN
   - CANFD
   - 用語解説
+thumbnail:
+  targets:
+    - mcu-home
+  description: 'CubeMXで設定するときに出てくる"Filters Nbr" その意味と設定について解説'
+  order: 30
 ---
 
 # CAN/CANFD Filters Nbr 

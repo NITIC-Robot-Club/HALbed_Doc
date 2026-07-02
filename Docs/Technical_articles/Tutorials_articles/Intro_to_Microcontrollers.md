@@ -3,6 +3,11 @@ tags:
     - 技術記事
     - チュートリアル
     - 入門
+thumbnail:
+  targets:
+    - tutorials-home
+  description: 'マイコンの役割や内部構造の基本を、初学者向けに整理した記事です。'
+  order: 10
 ---
 
 # マイコンってなに？

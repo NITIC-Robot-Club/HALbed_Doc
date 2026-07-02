@@ -2,6 +2,11 @@
 tags:
     - 有線通信
     - 入門
+home:
+  targets:
+    - other-home
+  description: '有線通信の違いをざっくり掴める入門記事です。'
+  order: 10
 ---
 
 # 有線通信の基本

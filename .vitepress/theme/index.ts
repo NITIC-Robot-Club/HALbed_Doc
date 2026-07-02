@@ -34,6 +34,10 @@ const ArticleIndexSections = defineAsyncComponent(
   () => import('./components/ArticleIndexSections.vue')
 )
 
+const HomeThumbnailSections = defineAsyncComponent(
+  () => import('./components/HomeThumbnailSections.vue')
+)
+
 export default {
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
@@ -81,6 +85,11 @@ export default {
     app.component(
       'ArticleIndexSections',
       ArticleIndexSections,
+    )
+
+    app.component(
+      'HomeThumbnailSections',
+      HomeThumbnailSections,
     )
   },
 } satisfies Theme

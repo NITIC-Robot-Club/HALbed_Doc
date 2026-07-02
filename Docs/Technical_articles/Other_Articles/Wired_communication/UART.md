@@ -2,6 +2,11 @@
 tags:
     - MCU
     - 用語解説
+home:
+    targets:
+        - mcu-home
+    description: 'UART / USART / LPUART の違いを整理しています。'
+    order: 70
 ---
 
 # UART / USART / LPUARTの違いについて

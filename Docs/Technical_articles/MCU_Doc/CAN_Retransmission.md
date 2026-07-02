@@ -4,6 +4,11 @@ tags:
   - MCU
   - CAN
   - CANFD
+thumbnail:
+  targets:
+    - mcu-home
+  description: 'デフォルトではOffにされている大事な設定。CANを使う前に必ず確認しましょう！'
+  order: 40
 ---
 
 # STM32 CAN の Auto Retransmission 設定に注意

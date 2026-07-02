@@ -3,6 +3,11 @@ tags:
     - 技術記事
     - 有線通信
     - 入門
+home:
+  targets:
+    - other-home
+  description: '受信機の信号をマイコンで読むための S.BUS の基礎を整理した記事です。'
+  order: 20
 ---
 
 # S.BUS入門
