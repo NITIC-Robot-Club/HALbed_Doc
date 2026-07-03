@@ -14,6 +14,30 @@ const PwmCcrCalculator = defineAsyncComponent(
   () => import('./components/PwmCcrCalculator.vue')
 )
 
+const TorqueRpmCalculator = defineAsyncComponent(
+  () => import('./components/TorqueRpmCalculator.vue')
+)
+
+const TorqueUnitConverter = defineAsyncComponent(
+  () => import('./components/TorqueUnitConverter.vue')
+)
+
+const SpeedUnitConverter = defineAsyncComponent(
+  () => import('./components/SpeedUnitConverter.vue')
+)
+
+const TorqueCalculator = defineAsyncComponent(
+  () => import('./components/TorqueCalculator.vue')
+)
+
+const PowerCalculator = defineAsyncComponent(
+  () => import('./components/PowerCalculator.vue')
+)
+
+const TorqueToolsHome = defineAsyncComponent(
+  () => import('./components/TorqueToolsHome.vue')
+)
+
 const RelatedArticles = defineAsyncComponent(
   () => import('./components/RelatedArticles.vue')
 )
@@ -55,6 +79,36 @@ export default {
     app.component(
       'PwmCcrCalculator',
       PwmCcrCalculator,
+    )
+
+    app.component(
+      'TorqueRpmCalculator',
+      TorqueRpmCalculator,
+    )
+
+    app.component(
+      'TorqueUnitConverter',
+      TorqueUnitConverter,
+    )
+
+    app.component(
+      'SpeedUnitConverter',
+      SpeedUnitConverter,
+    )
+
+    app.component(
+      'TorqueCalculator',
+      TorqueCalculator,
+    )
+
+    app.component(
+      'PowerCalculator',
+      PowerCalculator,
+    )
+
+    app.component(
+      'TorqueToolsHome',
+      TorqueToolsHome,
     )
 
     app.component(
