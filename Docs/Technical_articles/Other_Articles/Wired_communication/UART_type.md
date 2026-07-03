@@ -5,6 +5,7 @@ tags:
 home:
     targets:
         - mcu-home
+        - other-home
     description: 'UART / USART / LPUART の違いを整理しています。'
     order: 70
 ---
