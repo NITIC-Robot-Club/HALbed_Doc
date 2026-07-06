@@ -3,12 +3,6 @@ layout: home
 hero:
   name: "その他の記事"
   tagline: 通信や周辺技術など、実装で役立つ記事をまとめています。
-thumbnail:
-  targets:
-    - article-home
-  title: "その他"
-  description: "通信や周辺技術など、実装で役立つ記事をまとめています。"
-  order: 30
 ---
 
 # 記事一覧

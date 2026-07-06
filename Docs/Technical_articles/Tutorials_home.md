@@ -3,12 +3,6 @@ layout: home
 hero:
   name: "チュートリアル"
   tagline: CubeIDE と GPIO の基本操作を、手順に沿って学べます。
-thumbnail:
-  targets:
-    - article-home
-  title: "チュートリアル"
-  description: "マイコンの基礎から CubeIDE、Lチカまでを順番に学べます。"
-  order: 10
 ---
 
 # 記事一覧

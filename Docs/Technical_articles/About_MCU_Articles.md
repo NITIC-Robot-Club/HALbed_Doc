@@ -3,12 +3,6 @@ layout: home
 hero:
   name: "マイコン基礎"
   tagline: HAL や FPU など、実装前に押さえたい前提知識をまとめています。
-thumbnail:
-  targets:
-    - article-home
-  title: "マイコンについて"
-  description: "HAL や FPU など、実装前に押さえたい基礎知識の記事一覧です。"
-  order: 20
 ---
 
 # 記事一覧
