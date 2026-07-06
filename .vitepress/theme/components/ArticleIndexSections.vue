@@ -8,10 +8,6 @@ const props = defineProps<{
   sections: ArticleIndexSection[]
 }>()
 
-const articleCount = computed(() =>
-  props.sections.reduce((count, section) => count + section.articles.length, 0)
-)
-
 function toTaggedArticle(article: ArticleIndexItem): TaggedArticle {
   return {
     title: article.title,
@@ -26,10 +22,6 @@ function toTaggedArticle(article: ArticleIndexItem): TaggedArticle {
 
 <template>
   <section class="article-index">
-    <div class="article-index__meta">
-      <span>{{ articleCount }} 件の記事</span>
-    </div>
-
     <section
       v-for="section in props.sections"
       :key="section.title"
@@ -43,7 +35,6 @@ function toTaggedArticle(article: ArticleIndexItem): TaggedArticle {
           </p>
         </div>
 
-        <span class="article-index__section-count">{{ section.articles.length }} 件</span>
       </div>
 
       <div v-if="section.articles.length" class="article-index__grid">
@@ -64,14 +55,6 @@ function toTaggedArticle(article: ArticleIndexItem): TaggedArticle {
   display: grid;
   gap: 1.75rem;
   padding-bottom: 2rem;
-}
-
-.article-index__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  color: var(--vp-c-text-2);
-  font-size: 0.9rem;
 }
 
 .article-index__section {
@@ -107,23 +90,10 @@ function toTaggedArticle(article: ArticleIndexItem): TaggedArticle {
   font-size: 0.92rem;
 }
 
-.article-index__section-count {
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 9999px;
-  padding: 0.35rem 0.7rem;
-  color: var(--vp-c-text-2);
-  background: var(--vp-c-bg-soft);
-  font-size: 0.8rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
 .article-index__grid {
   display: grid;
   gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .article-index__empty {

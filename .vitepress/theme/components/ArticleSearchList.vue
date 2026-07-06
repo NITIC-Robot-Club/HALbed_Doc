@@ -2,9 +2,12 @@
 import { computed, ref } from 'vue'
 import { withBase } from 'vitepress'
 import ArticleCard from './ArticleCard.vue'
+import ArticleDisplayModeToggle from './ArticleDisplayModeToggle.vue'
 import { useTags } from '../composables/useTags'
+import { useArticleDisplayMode } from '../composables/useArticleDisplayMode'
 
 const { articles } = useTags()
+const { mode, isDetailMode } = useArticleDisplayMode()
 
 const query = ref('')
 
@@ -37,7 +40,10 @@ const filteredArticles = computed(() => {
         <p>タイトル、説明、タグから記事を探せます。</p>
       </div>
 
-      <a class="article-search-list__tags-link" :href="withBase('/tags/')">タグ一覧へ</a>
+      <div class="article-search-list__header-actions">
+        <ArticleDisplayModeToggle v-model="mode" />
+        <a class="article-search-list__tags-link" :href="withBase('/tags/')">タグ一覧へ</a>
+      </div>
     </div>
 
     <div class="article-search-list__bar">
@@ -52,11 +58,12 @@ const filteredArticles = computed(() => {
       </div>
     </div>
 
-    <div v-if="filteredArticles.length" class="article-search-list__grid">
+    <div v-if="filteredArticles.length" class="article-search-list__grid" :class="{ 'is-detail': isDetailMode }">
       <ArticleCard
         v-for="article in filteredArticles"
         :key="article.relativePath"
         :article="article"
+        :displayMode="mode"
       />
     </div>
 
@@ -84,6 +91,14 @@ const filteredArticles = computed(() => {
 .article-search-list__header h2,
 .article-search-list__header p {
   margin: 0;
+}
+
+.article-search-list__header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
 }
 
 .article-search-list__header p {
@@ -153,22 +168,15 @@ const filteredArticles = computed(() => {
 .article-search-list__grid {
   display: grid;
   gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.article-search-list__grid.is-detail {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .article-search-list__empty {
   margin: 0;
   color: var(--vp-c-text-2);
-}
-
-@media (min-width: 768px) {
-  .article-search-list__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1100px) {
-  .article-search-list__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
 }
 </style>

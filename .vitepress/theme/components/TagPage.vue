@@ -2,10 +2,13 @@
 import { computed } from 'vue'
 import { useData, withBase } from 'vitepress'
 import ArticleCard from './ArticleCard.vue'
+import ArticleDisplayModeToggle from './ArticleDisplayModeToggle.vue'
 import { normalizeTags, useTags } from '../composables/useTags'
+import { useArticleDisplayMode } from '../composables/useArticleDisplayMode'
 
 const { params } = useData<{ tag?: string }>()
 const { getArticlesByTags } = useTags()
+const { mode, isDetailMode } = useArticleDisplayMode()
 
 const tagName = computed(() => decodeURIComponent(params.value.tag ?? ''))
 const selectedTags = computed(() =>
@@ -29,11 +32,19 @@ function getBackHref(): string {
       <p class="tag-page__eyebrow">タグ記事</p>
       <h1>{{ tagName }} の記事</h1>
       <p class="tag-page__lead">{{ tagCount > 0 ? `${tagCount} 件の記事があります。` : 'このタグの記事はまだありません。' }}</p>
-      <a class="tag-page__back" :href="getBackHref()">タグ一覧に戻る</a>
+      <div class="tag-page__actions">
+        <ArticleDisplayModeToggle v-model="mode" />
+        <a class="tag-page__back" :href="getBackHref()">タグ一覧に戻る</a>
+      </div>
     </div>
 
-    <div v-if="articles.length" class="tag-page__grid">
-      <ArticleCard v-for="article in articles" :key="article.relativePath" :article="article" />
+    <div v-if="articles.length" class="tag-page__grid" :class="{ 'is-detail': isDetailMode }">
+      <ArticleCard
+        v-for="article in articles"
+        :key="article.relativePath"
+        :article="article"
+        :displayMode="mode"
+      />
     </div>
   </section>
 </template>
@@ -66,6 +77,13 @@ function getBackHref(): string {
   color: var(--vp-c-text-2);
 }
 
+.tag-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+}
+
 .tag-page__back {
   width: fit-content;
   color: var(--vp-c-brand-1);
@@ -82,5 +100,10 @@ function getBackHref(): string {
 .tag-page__grid {
   display: grid;
   gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.tag-page__grid.is-detail {
+  grid-template-columns: minmax(0, 1fr);
 }
 </style>

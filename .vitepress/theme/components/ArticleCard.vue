@@ -4,6 +4,7 @@ import type { TaggedArticle } from '../composables/useTags'
 
 const props = defineProps<{
   article: TaggedArticle
+  displayMode?: 'grid' | 'detail'
 }>()
 
 function getTagHref(tag: string): string {
@@ -12,7 +13,7 @@ function getTagHref(tag: string): string {
 </script>
 
 <template>
-  <article class="article-card">
+  <article class="article-card" :class="{ 'is-detail': props.displayMode === 'detail' }">
     <a
       class="article-card__stretched-link"
       :href="withBase(props.article.link)"
@@ -37,7 +38,7 @@ function getTagHref(tag: string): string {
           {{ props.article.title }}
         </h3>
 
-        <p v-if="props.article.description" class="article-card__description">
+        <p v-if="props.displayMode === 'detail' && props.article.description" class="article-card__description">
           {{ props.article.description }}
         </p>
 
@@ -125,6 +126,10 @@ function getTagHref(tag: string): string {
   gap: 0.75rem;
 }
 
+.article-card:not(.is-detail) .article-card__content {
+  gap: 0.45rem;
+}
+
 .article-card__title {
   margin: 0;
   line-height: 1.45;
@@ -137,6 +142,10 @@ function getTagHref(tag: string): string {
   color: var(--vp-c-text-2);
   line-height: 1.7;
   font-size: 0.96rem;
+}
+
+.article-card.is-detail .article-card__description {
+  max-width: 68ch;
 }
 
 .article-card__footer {
@@ -182,6 +191,10 @@ function getTagHref(tag: string): string {
 @media (min-width: 768px) {
   .article-card__body {
     padding: 1.05rem 1.15rem 1rem 1.1rem;
+  }
+
+  .article-card.is-detail .article-card__body {
+    padding: 1.15rem 1.2rem 1.1rem 1.2rem;
   }
 }
 </style>
