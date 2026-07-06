@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import ToolShell from './ToolShell.vue'
+
 const sections = [
   {
     title: 'トルク単位変換',
@@ -28,23 +30,15 @@ const sections = [
 </script>
 
 <template>
-  <section class="torque-tools-home">
-    <div class="torque-tools-home__shell">
-      <header class="torque-tools-home__header">
-        <p class="torque-tools-home__eyebrow">Torque / RPM</p>
-        <h2>トルク・回転数ツール</h2>
-        <p class="torque-tools-home__lead">使いたい画面だけを開けるように、用途別に分けています。</p>
-      </header>
-
-      <div class="torque-tools-home__grid">
-        <a v-for="section in sections" :key="section.title" class="torque-tools-home__card" :href="section.link">
-          <p class="torque-tools-home__card-eyebrow">{{ section.eyebrow }}</p>
-          <h3>{{ section.title }}</h3>
-          <p>{{ section.description }}</p>
-        </a>
-      </div>
+  <ToolShell eyebrow="Torque / RPM" title="トルク・回転数ツール" lead="使いたい画面だけを開けるように、用途別に分けています。" maxWidth="880px">
+    <div class="torque-tools-home__grid">
+      <a v-for="section in sections" :key="section.title" class="torque-tools-home__card" :href="section.link">
+        <p class="torque-tools-home__card-eyebrow">{{ section.eyebrow }}</p>
+        <h3>{{ section.title }}</h3>
+        <p>{{ section.description }}</p>
+      </a>
     </div>
-  </section>
+  </ToolShell>
 </template>
 
 <style scoped>

@@ -137,3 +137,220 @@
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
 
+/**
+ * Component: Tool Shell
+ * -------------------------------------------------------------------------- */
+
+.tool-shell {
+  display: flex;
+  justify-content: center;
+  margin: 1.25rem 0;
+}
+
+.tool-shell__frame {
+  width: min(100%, var(--tool-shell-max-width, 880px));
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 18px;
+  background: var(--vp-c-bg);
+  box-shadow: 0 12px 36px color-mix(in srgb, var(--vp-c-text-1) 6%, transparent);
+  padding: 1.15rem;
+}
+
+.tool-shell__header {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.tool-shell__eyebrow {
+  margin: 0;
+  color: var(--vp-c-brand-1);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tool-shell__title {
+  margin: 0;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.tool-shell__lead {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  line-height: 1.7;
+}
+
+.tool-shell__body {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.tool-shell :where(input, select, textarea) {
+  min-width: 0;
+  box-sizing: border-box;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  padding: 0.35rem 0.7rem;
+  background: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  font: inherit;
+}
+
+.tool-shell :where(input, select, textarea):focus {
+  outline: none;
+  border-color: var(--vp-c-brand-1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--vp-c-brand-1) 16%, transparent);
+}
+
+.tool-shell__field {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.tool-shell__field-label {
+  color: var(--vp-c-text-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.tool-shell__inline-grid {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.tool-shell__inline-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.tool-shell__inline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.45rem;
+}
+
+.tool-shell__compound {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.45rem;
+}
+
+.tool-shell__result-card,
+.tool-shell__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 12px;
+  background: var(--vp-c-bg-soft);
+}
+
+.tool-shell__result-label,
+.tool-shell__row-label {
+  color: var(--vp-c-text-2);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.tool-shell__primary,
+.tool-shell__value {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45rem;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--vp-c-text-1);
+  font: inherit;
+  font-weight: 700;
+  text-align: right;
+  cursor: copy;
+}
+
+.tool-shell__primary {
+  color: var(--vp-c-brand-1);
+}
+
+.tool-shell__primary small,
+.tool-shell__value small {
+  color: var(--vp-c-text-2);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.tool-shell__results,
+.tool-shell__notice-list {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.tool-shell__notice {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 10px;
+  line-height: 1.6;
+  background: var(--vp-c-bg-soft);
+}
+
+.tool-shell__notice--warning {
+  border-color: color-mix(in srgb, var(--vp-c-warning-1) 35%, var(--vp-c-divider));
+}
+
+.tool-shell__notice--error {
+  border-color: color-mix(in srgb, var(--vp-c-danger-1) 35%, var(--vp-c-divider));
+}
+
+.tool-shell__copied {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 0.82rem;
+}
+
+@media (max-width: 720px) {
+  .tool-shell__inline,
+  .tool-shell__compound,
+  .tool-shell__inline-grid,
+  .tool-shell__inline-grid--two {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-shell__result-card,
+  .tool-shell__row {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .tool-shell__primary,
+  .tool-shell__value {
+    text-align: left;
+  }
+}
+
+/**
+ * Content readability
+ * -------------------------------------------------------------------------- */
+
+:where(.vp-doc table) {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+:where(.vp-doc pre) {
+  overflow-x: auto;
+}
+
+:where(.vp-doc code) {
+  word-break: break-word;
+}
+
+html.dark {
+  --vp-c-divider: color-mix(in srgb, var(--vp-c-white) 16%, transparent);
+  --vp-shadow-2: 0 12px 32px rgb(0 0 0 / 0.35);
+}

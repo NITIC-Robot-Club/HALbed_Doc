@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import ToolShell from './ToolShell.vue'
 import { formatNumber, toTorqueNm, torqueUnitMultipliers, type TorqueUnit, useCopyLabel } from './torqueTools'
 
 const value = ref(1)
@@ -16,41 +17,34 @@ const rows = computed(() => [
 </script>
 
 <template>
-  <section class="torque-tool">
-    <div class="torque-tool__shell">
-      <header class="torque-tool__header">
-        <p class="torque-tool__eyebrow">Converter</p>
-        <h2>トルク単位変換</h2>
-      </header>
-
-      <div class="torque-tool__panel">
-        <label class="torque-tool__field">
-          <span>入力</span>
-          <div class="torque-tool__inline">
-            <input v-model.number="value" type="number" step="0.01" />
-            <select v-model="unit" class="torque-tool__select">
-              <option value="N·m">N·m</option>
-              <option value="kgf·cm">kgf·cm</option>
-              <option value="kgf·m">kgf·m</option>
-              <option value="lbf·ft">lbf·ft</option>
-            </select>
-          </div>
-        </label>
-
-        <div class="torque-tool__results">
-          <div v-for="row in rows" :key="row.label" class="torque-tool__row">
-            <span>{{ row.label }}</span>
-            <button class="torque-tool__value" type="button" @click="copy(row.value, row.label)">
-              <span>{{ row.value }}</span>
-              <small>{{ row.unit }}</small>
-            </button>
-          </div>
+  <ToolShell eyebrow="Converter" title="トルク単位変換" lead="トルクの単位だけを変換します。" maxWidth="720px">
+    <div class="torque-tool__panel">
+      <label class="torque-tool__field">
+        <span>入力</span>
+        <div class="torque-tool__inline">
+          <input v-model.number="value" type="number" step="0.01" />
+          <select v-model="unit" class="torque-tool__select">
+            <option value="N·m">N·m</option>
+            <option value="kgf·cm">kgf·cm</option>
+            <option value="kgf·m">kgf·m</option>
+            <option value="lbf·ft">lbf·ft</option>
+          </select>
         </div>
+      </label>
 
-        <p v-if="copied" class="torque-tool__copied">{{ copied }} をコピーしました</p>
+      <div class="torque-tool__results">
+        <div v-for="row in rows" :key="row.label" class="torque-tool__row">
+          <span>{{ row.label }}</span>
+          <button class="torque-tool__value" type="button" @click="copy(row.value, row.label)">
+            <span>{{ row.value }}</span>
+            <small>{{ row.unit }}</small>
+          </button>
+        </div>
       </div>
+
+      <p v-if="copied" class="torque-tool__copied">{{ copied }} をコピーしました</p>
     </div>
-  </section>
+  </ToolShell>
 </template>
 
 <style scoped>

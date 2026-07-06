@@ -12,7 +12,7 @@ const { getRelatedArticles } = useTags()
 
 const currentTags = computed(() => normalizeTags(frontmatter.value.tags))
 const relatedArticles = computed(() =>
-  getRelatedArticles(page.value.relativePath, currentTags.value, 5)
+  getRelatedArticles(page.value.relativePath, currentTags.value, 3)
 )
 
 function getTagHref(tag: string): string {

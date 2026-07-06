@@ -75,10 +75,10 @@ onMounted(() => {
 <template>
   <section class="tag-explorer">
     <div class="tag-explorer__hero">
-      <p class="tag-explorer__eyebrow">Tag Explorer</p>
-      <h1>タグでページを絞り込む</h1>
+      <p class="tag-explorer__eyebrow">タグ</p>
+      <h1>タグから記事を探す</h1>
       <p>
-        タグを追加して複数条件で絞り込みます。再クリックで解除できます。
+        タグを選んで記事を絞り込みます。もう一度押すと解除できます。
       </p>
     </div>
 
@@ -89,7 +89,7 @@ onMounted(() => {
           v-model="searchQuery"
           class="tag-explorer__search-input"
           type="search"
-          placeholder="タグ名で絞り込む"
+          placeholder="タグ名で探す"
         />
       </label>
 

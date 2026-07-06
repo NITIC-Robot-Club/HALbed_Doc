@@ -4,6 +4,7 @@ import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import ArticleTags from './components/ArticleTags.vue'
 import ArticleCard from './components/ArticleCard.vue'
+import ArticleTagList from './components/ArticleTagList.vue'
 import './style.css'
 
 const CanBitTimingCalculator = defineAsyncComponent(
@@ -62,6 +63,10 @@ const HomeThumbnailSections = defineAsyncComponent(
   () => import('./components/HomeThumbnailSections.vue')
 )
 
+const ArticleSearchList = defineAsyncComponent(
+  () => import('./components/ArticleSearchList.vue')
+)
+
 export default {
   Layout: () => {
     return h(DefaultTheme.Layout, null, {
@@ -117,6 +122,11 @@ export default {
     )
 
     app.component(
+      'ArticleTagList',
+      ArticleTagList,
+    )
+
+    app.component(
       'RelatedArticles',
       RelatedArticles,
     )
@@ -144,6 +154,11 @@ export default {
     app.component(
       'HomeThumbnailSections',
       HomeThumbnailSections,
+    )
+
+    app.component(
+      'ArticleSearchList',
+      ArticleSearchList,
     )
   },
 } satisfies Theme

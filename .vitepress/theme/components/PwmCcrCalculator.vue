@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import ToolShell from './ToolShell.vue'
 
 type ClockUnit = 'Hz' | 'kHz' | 'MHz'
 type TimeUnit = 'ns' | 'us' | 'ms'
@@ -183,16 +184,7 @@ function formatNumber(value: number, digits: number): string {
 </script>
 
 <template>
-  <section class="pwm-ccr-calculator">
-    <div class="pwm-ccr-calculator__shell">
-      <header class="pwm-ccr-calculator__header">
-        <p class="pwm-ccr-calculator__eyebrow">PWM / STM32</p>
-        <h2>PWM CCR 計算ツール</h2>
-        <p class="pwm-ccr-calculator__lead">
-          タイマ設定値と目標High時間から、CCR値と実際の出力時間を計算します。
-        </p>
-      </header>
-
+  <ToolShell eyebrow="PWM / STM32" title="PWM CCR 計算ツール" lead="タイマ設定値と目標High時間から、CCR値と実際の出力時間を計算します。" maxWidth="920px">
       <div class="pwm-ccr-calculator__layout">
         <section class="pwm-ccr-calculator__card">
           <h3>入力</h3>
@@ -294,8 +286,7 @@ function formatNumber(value: number, digits: number): string {
         </section>
 
       </div>
-    </div>
-  </section>
+  </ToolShell>
 </template>
 
 <style scoped>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import ToolShell from './ToolShell.vue'
 import { formatNumber, speedUnitMultipliers, toRadPerSec, toTorqueNm, type SpeedUnit, type TorqueUnit, useCopyLabel } from './torqueTools'
 
 const torqueValue = ref(1)
@@ -19,81 +20,73 @@ const rows = computed(() => [
 </script>
 
 <template>
-  <section class="torque-tool">
-    <div class="torque-tool__shell">
-      <header class="torque-tool__header">
-        <p class="torque-tool__eyebrow">Calculator</p>
-        <h2>出力計算</h2>
-        <p class="torque-tool__lead">トルクと回転数から出力を計算します。</p>
-      </header>
+  <ToolShell eyebrow="Calculator" title="出力計算" lead="トルクと回転数から出力を計算します。" maxWidth="720px">
+    <div class="torque-tool__panel">
+      <div class="torque-tool__inline-grid">
+        <label class="torque-tool__field">
+          <span>トルク</span>
+          <div class="torque-tool__inline">
+            <input v-model.number="torqueValue" type="number" step="0.01" />
+            <select v-model="torqueUnit" class="torque-tool__select">
+              <option value="N·m">N·m</option>
+              <option value="kgf·cm">kgf·cm</option>
+              <option value="kgf·m">kgf·m</option>
+              <option value="lbf·ft">lbf·ft</option>
+            </select>
+          </div>
+        </label>
 
-      <div class="torque-tool__panel">
-        <div class="torque-tool__inline-grid">
-          <label class="torque-tool__field">
-            <span>トルク</span>
-            <div class="torque-tool__inline">
-              <input v-model.number="torqueValue" type="number" step="0.01" />
-              <select v-model="torqueUnit" class="torque-tool__select">
-                <option value="N·m">N·m</option>
-                <option value="kgf·cm">kgf·cm</option>
-                <option value="kgf·m">kgf·m</option>
-                <option value="lbf·ft">lbf·ft</option>
-              </select>
-            </div>
-          </label>
+        <label class="torque-tool__field">
+          <span>回転数</span>
+          <div class="torque-tool__inline">
+            <input v-model.number="speedValue" type="number" step="0.01" />
+            <select v-model="speedUnit" class="torque-tool__select">
+              <option value="rpm">rpm</option>
+              <option value="rps">rps</option>
+              <option value="rad/s">rad/s</option>
+            </select>
+          </div>
+        </label>
+      </div>
 
-          <label class="torque-tool__field">
-            <span>回転数</span>
-            <div class="torque-tool__inline">
-              <input v-model.number="speedValue" type="number" step="0.01" />
-              <select v-model="speedUnit" class="torque-tool__select">
-                <option value="rpm">rpm</option>
-                <option value="rps">rps</option>
-                <option value="rad/s">rad/s</option>
-              </select>
-            </div>
-          </label>
-        </div>
+      <div class="torque-tool__result-card">
+        <span>出力</span>
+        <button class="torque-tool__primary" type="button" @click="copy(formatNumber(powerW, 6), '出力')">
+          {{ formatNumber(powerW, 6) }} <small>W</small>
+        </button>
+      </div>
 
-        <div class="torque-tool__result-card">
-          <span>出力</span>
-          <button class="torque-tool__primary" type="button" @click="copy(formatNumber(powerW, 6), '出力')">
-            {{ formatNumber(powerW, 6) }} <small>W</small>
+      <div class="torque-tool__results">
+        <div class="torque-tool__row">
+          <span>トルク</span>
+          <button class="torque-tool__value" type="button" @click="copy(formatNumber(torqueNm, 6), 'トルク')">
+            <span>{{ formatNumber(torqueNm, 6) }}</span>
+            <small>N·m</small>
           </button>
         </div>
-
-        <div class="torque-tool__results">
-          <div class="torque-tool__row">
-            <span>トルク</span>
-            <button class="torque-tool__value" type="button" @click="copy(formatNumber(torqueNm, 6), 'トルク')">
-              <span>{{ formatNumber(torqueNm, 6) }}</span>
-              <small>N·m</small>
-            </button>
-          </div>
-          <div class="torque-tool__row">
-            <span>回転数</span>
-            <button
-              class="torque-tool__value"
-              type="button"
-              @click="copy(formatNumber(speedRadPerSec / speedUnitMultipliers.rpm, 6), '回転数')"
-            >
-              <span>{{ formatNumber(speedRadPerSec / speedUnitMultipliers.rpm, 6) }}</span>
-              <small>rpm</small>
-            </button>
-          </div>
-          <div v-for="row in rows" :key="row.label" class="torque-tool__row">
-            <span>{{ row.label }}</span>
-            <button class="torque-tool__value" type="button" @click="copy(row.value, row.label)">
-              <span>{{ row.value }}</span>
-              <small>{{ row.unit }}</small>
-            </button>
-          </div>
+        <div class="torque-tool__row">
+          <span>回転数</span>
+          <button
+            class="torque-tool__value"
+            type="button"
+            @click="copy(formatNumber(speedRadPerSec / speedUnitMultipliers.rpm, 6), '回転数')"
+          >
+            <span>{{ formatNumber(speedRadPerSec / speedUnitMultipliers.rpm, 6) }}</span>
+            <small>rpm</small>
+          </button>
         </div>
-
-        <p v-if="copied" class="torque-tool__copied">{{ copied }} をコピーしました</p>
+        <div v-for="row in rows" :key="row.label" class="torque-tool__row">
+          <span>{{ row.label }}</span>
+          <button class="torque-tool__value" type="button" @click="copy(row.value, row.label)">
+            <span>{{ row.value }}</span>
+            <small>{{ row.unit }}</small>
+          </button>
+        </div>
       </div>
+
+      <p v-if="copied" class="torque-tool__copied">{{ copied }} をコピーしました</p>
     </div>
-  </section>
+  </ToolShell>
 </template>
 
 <style scoped>

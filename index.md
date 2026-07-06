@@ -3,34 +3,30 @@ layout: home
 
 hero:
   name: "HALbed Docs"
-  text: |
-    CubeIDE × STM32
-    HALをもっと使いやすく
-  tagline: STM32 HAL のラッパーライブラリで、組み込み開発をシンプルに。
+  tagline: API、記事、ツールをまとめて探せます。
   actions:
     - theme: brand
       text: はじめる
       link: /Docs/Introduction/GettingStarted.html#_1-halbed-のダウンロード
-
+    - theme: alt
+      text: タグ一覧
+      link: /tags/
 
 features:
-  - icon: 🚀
-    title: はじめに
-    details: HALbedの概要について説明します。
-    link: /Docs/Introduction/ArchitectureOverview
-  - icon: 🛠️
-    title: HALbedの使い方
-    details: HALbedのインストール方法や基本的な使い方を解説します。
-    link: /Docs/Introduction/GettingStarted.html#_2-halbed-のインストール
-
   - icon: 📚
-    title: APIドキュメント
-    details: HALbedの使い方やAPIリファレンスを確認できます。
-    link: /Docs/Introduction/api-reference.md
-
-  - icon: 📖
+    title: API
+    details: 使い方を機能ごとに確認できます。
+    link: /Docs/API/APIHome
+  - icon: 📝
     title: 技術記事
-    details: HALbedを使う前後の基礎知識や、STM32開発の流れを分かりやすく整理しています。
-    link: /Docs/Technical_articles/Article_Home.md
+    details: 入門、チュートリアル、MCU の記事を目的別に開けます。
+    link: /Docs/Technical_articles/Article_Home
+  - icon: 🛠️
+    title: ツール
+    details: CAN、PWM、トルク回転数の補助ツールがあります。
+    link: /Docs/Tools/Tools_home
+  - icon: 🏷️
+    title: タグ一覧
+    details: 関連する記事をタグからたどれます。
+    link: /tags/
 ---
-
