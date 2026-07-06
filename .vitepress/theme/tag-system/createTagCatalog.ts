@@ -37,6 +37,16 @@ function normalizeDate(value: unknown): string {
   return typeof value === 'string' ? value : ''
 }
 
+function firstNonEmpty(...values: Array<string | undefined>): string {
+  for (const value of values) {
+    if (typeof value === 'string' && value.trim().length > 0) {
+      return value
+    }
+  }
+
+  return ''
+}
+
 function getPageData(source: MarkdownPageSource): MarkdownPageData | undefined {
   if ('__pageData' in source) {
     return source.__pageData
@@ -71,10 +81,11 @@ function toArticle(
 
   const pageData = getPageData(source)
   const resolvedRelativePath = pageData?.relativePath ?? relativePath.slice(1)
+  const thumbnailDescription = frontmatter.thumbnail?.description ?? ''
 
   return {
     title: pageData?.title ?? frontmatter.title ?? resolvedRelativePath.replace(/\.md$/, ''),
-    description: pageData?.description ?? frontmatter.description ?? '',
+    description: firstNonEmpty(pageData?.description, thumbnailDescription, frontmatter.description),
     date: normalizeDate(frontmatter.date),
     tags,
     relativePath: resolvedRelativePath,

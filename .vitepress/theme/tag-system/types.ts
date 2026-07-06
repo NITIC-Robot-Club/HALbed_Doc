@@ -18,6 +18,9 @@ export interface FrontmatterRecord {
   date?: string
   tags?: string[] | string
   layout?: string
+  thumbnail?: {
+    description?: string
+  }
 }
 
 export interface MarkdownPageData {
