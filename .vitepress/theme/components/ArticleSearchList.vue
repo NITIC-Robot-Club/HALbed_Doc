@@ -10,6 +10,7 @@ const { articles } = useTags()
 const { mode, isDetailMode } = useArticleDisplayMode()
 
 const query = ref('')
+const sortOrder = ref<'updated-desc' | 'title-asc'>('updated-desc')
 
 const normalizedQuery = computed(() => query.value.trim().toLowerCase())
 
@@ -30,6 +31,34 @@ const filteredArticles = computed(() => {
     return haystack.includes(normalizedQuery.value)
   })
 })
+
+function getDateValue(articleDate: string): number {
+  if (!articleDate) {
+    return 0
+  }
+
+  const value = Date.parse(articleDate)
+  return Number.isNaN(value) ? 0 : value
+}
+
+const sortedArticles = computed(() => {
+  const result = [...filteredArticles.value]
+
+  if (sortOrder.value === 'title-asc') {
+    return result.sort((left, right) => left.title.localeCompare(right.title, 'ja'))
+  }
+
+  return result.sort((left, right) => {
+    const leftDate = getDateValue(left.date)
+    const rightDate = getDateValue(right.date)
+
+    if (leftDate !== rightDate) {
+      return rightDate - leftDate
+    }
+
+    return left.title.localeCompare(right.title, 'ja')
+  })
+})
 </script>
 
 <template>
@@ -37,7 +66,7 @@ const filteredArticles = computed(() => {
     <div class="article-search-list__header">
       <div>
         <h2>記事の検索</h2>
-        <p>タイトル、説明、タグから記事を探せます。</p>
+        <p>タイトル、説明、タグから記事を探せます。更新日順やタイトル順でも並び替えできます。</p>
       </div>
 
       <div class="article-search-list__header-actions">
@@ -52,15 +81,23 @@ const filteredArticles = computed(() => {
         <input v-model="query" type="search" placeholder="キーワードで探す" />
       </label>
 
+      <label class="article-search-list__field article-search-list__field--compact">
+        <span>並び替え</span>
+        <select v-model="sortOrder">
+          <option value="updated-desc">新しい順</option>
+          <option value="title-asc">タイトル順</option>
+        </select>
+      </label>
+
       <div class="article-search-list__meta">
-        <span>{{ filteredArticles.length }} 件</span>
+        <span>{{ sortedArticles.length }} 件</span>
         <span>検索結果</span>
       </div>
     </div>
 
-    <div v-if="filteredArticles.length" class="article-search-list__grid" :class="{ 'is-detail': isDetailMode }">
+    <div v-if="sortedArticles.length" class="article-search-list__grid" :class="{ 'is-detail': isDetailMode }">
       <ArticleCard
-        v-for="article in filteredArticles"
+        v-for="article in sortedArticles"
         :key="article.relativePath"
         :article="article"
         :displayMode="mode"
@@ -136,13 +173,20 @@ const filteredArticles = computed(() => {
   flex: 1 1 360px;
 }
 
+.article-search-list__field--compact {
+  flex: 0 0 auto;
+  align-content: start;
+  gap: 0.25rem;
+}
+
 .article-search-list__field span {
   color: var(--vp-c-text-2);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
-.article-search-list__field input {
+.article-search-list__field input,
+.article-search-list__field select {
   width: 100%;
   border: 1px solid var(--vp-c-divider);
   border-radius: 0.85rem;
@@ -151,7 +195,28 @@ const filteredArticles = computed(() => {
   background: var(--vp-c-bg);
 }
 
-.article-search-list__field input:focus {
+.article-search-list__field--compact select {
+  min-width: 8.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.84rem;
+  line-height: 1.2;
+  border-radius: 0.7rem;
+}
+
+.article-search-list__field--compact select {
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--vp-c-text-2) 50%),
+    linear-gradient(135deg, var(--vp-c-text-2) 50%, transparent 50%);
+  background-position:
+    calc(100% - 16px) calc(50% - 2px),
+    calc(100% - 11px) calc(50% - 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 2rem;
+}
+
+.article-search-list__field input:focus,
+.article-search-list__field select:focus {
   outline: none;
   border-color: var(--vp-c-brand-1);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--vp-c-brand-1) 16%, transparent);
