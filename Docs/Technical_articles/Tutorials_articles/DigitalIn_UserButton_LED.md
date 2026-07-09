@@ -4,6 +4,7 @@ tags:
     - チュートリアル
 thumbnail:
   targets:
+    - article-home
     - tutorials-home
   description: '入力に応じて出力を変える、基本の制御パターンを確認できます。'
   order: 30

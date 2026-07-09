@@ -10,25 +10,31 @@ import type { HomeThumbnailSection } from '../../.vitepress/theme/home-thumbnail
 
 const sections: HomeThumbnailSection[] = [
   {
-    title: 'まず読む',
-    description: '入門とチュートリアルから、最初に読む記事を開けます。',
+    title: '入門・チュートリアル',
+    description: '最初に触る手順系の記事をまとめています。',
     filters: [
-      { includeTags: ['技術記事', 'チュートリアル', '入門'] },
-      { includeTags: ['技術記事', 'HAL'] },
+      { includeTags: ['技術記事', 'チュートリアル'] },
     ],
   },
   {
-    title: 'マイコンと設定',
-    description: 'HAL、CAN、設定まわりの記事をまとめています。',
+    title: 'マイコンと HAL',
+    description: 'HAL やマイコンの前提知識、設定でつまずきやすい記事をまとめています。',
     filters: [
       { includeTags: ['技術記事', 'MCU'] },
-      { includeTags: ['技術記事', 'CAN'] },
+      { includeTags: ['技術記事', 'HAL'] },
       { includeTags: ['技術記事', '設定'] },
     ],
   },
   {
-    title: '通信を知る',
-    description: '有線通信の基礎をざっと確認できます。',
+    title: 'CAN / FDCAN',
+    description: 'CAN の送受信やフィルタ、再送設定を整理しています。',
+    filters: [
+      { includeTags: ['技術記事', 'CAN'] },
+    ],
+  },
+  {
+    title: '有線通信',
+    description: 'UART や S.BUS など、基板間通信の基礎を確認できます。',
     filters: [
       { includeTags: ['技術記事', '有線通信'] },
     ],

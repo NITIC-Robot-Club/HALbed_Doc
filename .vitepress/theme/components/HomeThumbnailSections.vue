@@ -23,6 +23,7 @@ function toTaggedArticle(article: {
   title: string
   description: string
   date: string
+  order?: number
   tags: string[]
   relativePath: string
   link: string
@@ -31,6 +32,7 @@ function toTaggedArticle(article: {
     title: article.title,
     description: article.description,
     date: article.date,
+    order: article.order ?? 0,
     tags: article.tags,
     relativePath: article.relativePath,
     link: article.link,

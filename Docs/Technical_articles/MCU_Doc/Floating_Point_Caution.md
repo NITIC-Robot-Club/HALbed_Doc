@@ -4,6 +4,7 @@ tags:
   - MCU
 thumbnail:
   targets:
+    - article-home
     - mcu-home
   description: '「小数は精度のいいdouble型一択！」それは大きな落とし穴です。'
   order: 10

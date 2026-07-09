@@ -4,6 +4,7 @@ tags:
     - HAL
 thumbnail:
   targets:
+    - article-home
     - mcu-home
   description: 'LED 点滅を通して、HAL と HALbed の違いを感じてみましょう'
   order: 20

@@ -13,6 +13,7 @@ function toTaggedArticle(article: ArticleIndexItem): TaggedArticle {
     title: article.title,
     description: article.description ?? '',
     date: article.date ?? '',
+    order: 0,
     tags: article.tags ?? [],
     relativePath: article.relativePath ?? article.link.replace(/^\//, ''),
     link: article.link,

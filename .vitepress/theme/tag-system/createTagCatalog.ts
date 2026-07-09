@@ -37,6 +37,19 @@ function normalizeDate(value: unknown): string {
   return typeof value === 'string' ? value : ''
 }
 
+function normalizeOrder(value: unknown): number {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value
+  }
+
+  if (typeof value === 'string' && value.trim().length > 0) {
+    const parsed = Number(value)
+    return Number.isFinite(parsed) ? parsed : Number.POSITIVE_INFINITY
+  }
+
+  return Number.POSITIVE_INFINITY
+}
+
 function firstNonEmpty(...values: Array<string | undefined>): string {
   for (const value of values) {
     if (typeof value === 'string' && value.trim().length > 0) {
@@ -87,6 +100,7 @@ function toArticle(
     title: pageData?.title ?? frontmatter.title ?? resolvedRelativePath.replace(/\.md$/, ''),
     description: firstNonEmpty(pageData?.description, thumbnailDescription, frontmatter.description),
     date: normalizeDate(frontmatter.date),
+    order: normalizeOrder(frontmatter.order),
     tags,
     relativePath: resolvedRelativePath,
     link: normalizeLink(resolvedRelativePath)

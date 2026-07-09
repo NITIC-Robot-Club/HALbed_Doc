@@ -10,7 +10,7 @@ const { articles } = useTags()
 const { mode, isDetailMode } = useArticleDisplayMode()
 
 const query = ref('')
-const sortOrder = ref<'updated-desc' | 'title-asc'>('updated-desc')
+const sortOrder = ref<'updated-desc' | 'order-asc' | 'title-asc'>('updated-desc')
 
 const normalizedQuery = computed(() => query.value.trim().toLowerCase())
 
@@ -48,6 +48,24 @@ const sortedArticles = computed(() => {
     return result.sort((left, right) => left.title.localeCompare(right.title, 'ja'))
   }
 
+  if (sortOrder.value === 'order-asc') {
+    return result.sort((left, right) => {
+      if (left.order !== right.order) {
+        return left.order - right.order
+      }
+
+      if (left.date !== right.date) {
+        const leftDate = getDateValue(left.date)
+        const rightDate = getDateValue(right.date)
+        if (leftDate !== rightDate) {
+          return rightDate - leftDate
+        }
+      }
+
+      return left.title.localeCompare(right.title, 'ja')
+    })
+  }
+
   return result.sort((left, right) => {
     const leftDate = getDateValue(left.date)
     const rightDate = getDateValue(right.date)
@@ -66,7 +84,7 @@ const sortedArticles = computed(() => {
     <div class="article-search-list__header">
       <div>
         <h2>記事の検索</h2>
-        <p>タイトル、説明、タグから記事を探せます。更新日順やタイトル順でも並び替えできます。</p>
+        <p>タイトル、説明、タグから記事を探せます。更新日順、order順、タイトル順で並び替えできます。</p>
       </div>
 
       <div class="article-search-list__header-actions">
@@ -85,6 +103,7 @@ const sortedArticles = computed(() => {
         <span>並び替え</span>
         <select v-model="sortOrder">
           <option value="updated-desc">新しい順</option>
+          <option value="order-asc">order順</option>
           <option value="title-asc">タイトル順</option>
         </select>
       </label>
@@ -175,6 +194,7 @@ const sortedArticles = computed(() => {
 
 .article-search-list__field--compact {
   flex: 0 0 auto;
+  min-width: 0;
   align-content: start;
   gap: 0.25rem;
 }
@@ -200,10 +220,10 @@ const sortedArticles = computed(() => {
   padding: 0.5rem 0.75rem;
   font-size: 0.84rem;
   line-height: 1.2;
-  border-radius: 0.7rem;
-}
-
-.article-search-list__field--compact select {
+  border-radius: 0.85rem;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   background-image:
     linear-gradient(45deg, transparent 50%, var(--vp-c-text-2) 50%),
     linear-gradient(135deg, var(--vp-c-text-2) 50%, transparent 50%);
