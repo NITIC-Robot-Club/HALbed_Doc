@@ -1,11 +1,11 @@
 ---
 tags:
-    - MCU
+    - 技術記事
+    - 有線通信
     - 用語解説
-home:
+thumbnail:
     targets:
-        - mcu-home
-        - other-home
+        - article-home
     description: 'UART / USART / LPUART の違いを整理しています。'
     order: 70
 ---

@@ -1,10 +1,12 @@
 ---
 tags:
+    - 技術記事
     - Nucleo
     - CubeMX
     - 設定
 thumbnail:
   targets:
+    - article-home
     - mcu-home
   description: 'Nucleo で何故か設定できないとき、"BSP"と競合しているかもしれません。'
   order: 60

@@ -6,6 +6,7 @@ tags:
   - CANFD
 thumbnail:
   targets:
+    - article-home
     - mcu-home
   description: 'HALでCAN送信するときの関数とモードについてまとめています。'
   order: 50

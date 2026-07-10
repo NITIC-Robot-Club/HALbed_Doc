@@ -6,6 +6,7 @@ tags:
   - 開発環境
 thumbnail:
   targets:
+    - article-home
     - tutorials-home
   description: 'プロジェクト作成から HALbed の追加までを段階的に説明します。'
   order: 20

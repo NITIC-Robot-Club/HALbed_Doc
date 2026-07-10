@@ -1,9 +1,11 @@
 ---
 tags:
+    - 技術記事
     - 有線通信
     - 入門
-home:
+thumbnail:
   targets:
+    - article-home
     - other-home
   description: '有線通信の違いをざっくり掴める入門記事です。'
   order: 10

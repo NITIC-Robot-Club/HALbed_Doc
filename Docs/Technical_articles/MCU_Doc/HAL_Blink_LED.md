@@ -4,6 +4,7 @@ tags:
     - HAL
 thumbnail:
   targets:
+    - article-home
     - mcu-home
   description: 'LED 点滅を通して、HAL と HALbed の違いを感じてみましょう'
   order: 20
@@ -16,6 +17,12 @@ HALbedは、STM32の**HAL（Hardware Abstraction Layer）ライブラリ**を
 
 ただし、mbedのように「すべてを隠してくれる」わけではなく、  
 **中身はそのままHAL** なので、仕組みを理解していないと意図通りに動かないことがあります。
+
+## このページで分かること
+
+- GPIO を使った L チカの流れ
+- HAL と HALbed の書き方の違い
+- 最初に確認すべき設定
 
 そこでまずは基本中の基本である  
 **LEDを点滅させる（Lチカ）** をHALで直接書いてみましょう。

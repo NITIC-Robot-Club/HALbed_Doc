@@ -2,6 +2,7 @@ export interface TaggedArticle {
   title: string
   description: string
   date: string
+  order: number
   tags: string[]
   relativePath: string
   link: string
@@ -16,8 +17,12 @@ export interface FrontmatterRecord {
   title?: string
   description?: string
   date?: string
+  order?: number | string
   tags?: string[] | string
   layout?: string
+  thumbnail?: {
+    description?: string
+  }
 }
 
 export interface MarkdownPageData {

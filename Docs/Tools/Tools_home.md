@@ -2,14 +2,19 @@
 layout: home
 hero:
   name: "Tools"
-  tagline: HALbed ドキュメント内で使える小さな補助ツールをまとめています。
+  tagline: HALbed ドキュメント内で使える補助ツールを用途別にまとめています。
 
 features:
-  - title: CAN Bit Timing Calculator
-    details: CAN の設定で必要なビットタイミングの計算を行うツールです。
+  - title: CAN
+    details: CAN のビットタイミングを確認できます。
     link: Docs/Tools/BitTimingCalculator.md
-  - title: PWM CCR Calculator
-    details: STM32のPWM設定値と目標High時間から、CCR値とDuty比を計算するツールです。
+  - title: PWM
+    details: STM32 の PWM 設定値と CCR を計算できます。
     link: Docs/Tools/PwmCcrCalculator.md
-
+  - title: トルク・回転数
+    details: トルクと回転数の計算と変換をまとめています。
+    link: Docs/Tools/TorqueRpmCalculator.md
+  - title: 単位変換
+    details: トルクと回転数の単位をすばやく変換できます。
+    link: Docs/Tools/TorqueUnitConverter.md
 ---
