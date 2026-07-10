@@ -149,10 +149,6 @@
 
 .tool-shell__frame {
   width: min(100%, var(--tool-shell-max-width, 880px));
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 8px;
-  background: var(--vp-c-bg);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--vp-c-text-1) 5%, transparent);
   padding: clamp(1rem, 3vw, 1.5rem);
 }
 
