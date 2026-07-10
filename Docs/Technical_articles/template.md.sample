@@ -1,6 +1,11 @@
 ---
 tags:
     - 
+thumbnail:
+  targets:
+    - 
+  description: ''
+  order:
 ---
 # タイトル
 
