@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import ArticleCard from './ArticleCard.vue'
+import ArticleDisplayModeToggle from './ArticleDisplayModeToggle.vue'
 import { useTags } from '../composables/useTags'
+import { useArticleDisplayMode } from '../composables/useArticleDisplayMode'
 
 const { articles, tagSummaries, getArticlesByTags } = useTags()
+const { mode, isDetailMode } = useArticleDisplayMode()
 
 const searchQuery = ref('')
 const selectedTags = ref<string[]>([])
@@ -75,10 +78,10 @@ onMounted(() => {
 <template>
   <section class="tag-explorer">
     <div class="tag-explorer__hero">
-      <p class="tag-explorer__eyebrow">Tag Explorer</p>
-      <h1>タグでページを絞り込む</h1>
+      <p class="tag-explorer__eyebrow">タグ</p>
+      <h1>タグから記事を探す</h1>
       <p>
-        タグを追加して複数条件で絞り込みます。再クリックで解除できます。
+        タグを選んで記事を絞り込みます。もう一度押すと解除できます。
       </p>
     </div>
 
@@ -89,7 +92,7 @@ onMounted(() => {
           v-model="searchQuery"
           class="tag-explorer__search-input"
           type="search"
-          placeholder="タグ名で絞り込む"
+          placeholder="タグ名で探す"
         />
       </label>
 
@@ -116,6 +119,7 @@ onMounted(() => {
       <span v-if="selectedTags.length">
         {{ selectedTags.join(' + ') }} で絞り込み中
       </span>
+      <ArticleDisplayModeToggle v-model="mode" />
     </div>
 
     <div class="tag-explorer__filters-panel">
@@ -142,8 +146,13 @@ onMounted(() => {
       </div>
     </div>
 
-    <div class="tag-explorer__grid">
-      <ArticleCard v-for="page in filteredPages" :key="page.relativePath" :article="page" />
+    <div class="tag-explorer__grid" :class="{ 'is-detail': isDetailMode }">
+      <ArticleCard
+        v-for="page in filteredPages"
+        :key="page.relativePath"
+        :article="page"
+        :displayMode="mode"
+      />
     </div>
   </section>
 </template>
@@ -301,6 +310,7 @@ onMounted(() => {
 .tag-explorer__meta {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 0.75rem;
   color: var(--vp-c-text-2);
   font-size: 0.9rem;
@@ -406,6 +416,11 @@ onMounted(() => {
 .tag-explorer__grid {
   display: grid;
   gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.tag-explorer__grid.is-detail {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 @media (min-width: 960px) {

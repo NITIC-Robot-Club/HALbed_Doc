@@ -21,6 +21,16 @@ function normalizeDate(value: unknown): string {
   return typeof value === 'string' ? value : ''
 }
 
+function firstNonEmpty(...values: Array<string | undefined>): string {
+  for (const value of values) {
+    if (typeof value === 'string' && value.trim().length > 0) {
+      return value
+    }
+  }
+
+  return ''
+}
+
 function getPageData(source: HomeThumbnailPageSource) {
   if ('__pageData' in source) {
     return source.__pageData
@@ -76,7 +86,7 @@ function toArticle(
 
   return {
     title: thumbnail.title ?? pageData?.title ?? frontmatter.title ?? resolvedRelativePath.replace(/\.md$/, ''),
-    description: thumbnail.description ?? pageData?.description ?? frontmatter.description ?? '',
+    description: firstNonEmpty(thumbnail.description, pageData?.description, frontmatter.description),
     date: normalizeDate(frontmatter.date),
     tags,
     targets,

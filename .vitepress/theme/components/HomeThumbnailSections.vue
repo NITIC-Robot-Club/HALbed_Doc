@@ -19,14 +19,11 @@ const sectionArticles = computed(() =>
   }))
 )
 
-const articleCount = computed(() =>
-  sectionArticles.value.reduce((count, item) => count + item.articles.length, 0)
-)
-
 function toTaggedArticle(article: {
   title: string
   description: string
   date: string
+  order?: number
   tags: string[]
   relativePath: string
   link: string
@@ -35,6 +32,7 @@ function toTaggedArticle(article: {
     title: article.title,
     description: article.description,
     date: article.date,
+    order: article.order ?? 0,
     tags: article.tags,
     relativePath: article.relativePath,
     link: article.link,
@@ -44,10 +42,6 @@ function toTaggedArticle(article: {
 
 <template>
   <section class="article-index">
-    <div class="article-index__meta">
-      <span>{{ articleCount }} 件の記事</span>
-    </div>
-
     <section
       v-for="item in sectionArticles"
       :key="item.section.title"
@@ -61,9 +55,6 @@ function toTaggedArticle(article: {
           </p>
         </div>
 
-        <span class="article-index__section-count">
-          {{ item.articles.length }} 件
-        </span>
       </div>
 
       <div v-if="item.articles.length" class="article-index__grid">
@@ -84,14 +75,6 @@ function toTaggedArticle(article: {
   display: grid;
   gap: 1.75rem;
   padding-bottom: 2rem;
-}
-
-.article-index__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  color: var(--vp-c-text-2);
-  font-size: 0.9rem;
 }
 
 .article-index__section {
@@ -127,23 +110,10 @@ function toTaggedArticle(article: {
   font-size: 0.92rem;
 }
 
-.article-index__section-count {
-  display: inline-flex;
-  align-items: center;
-  align-self: flex-start;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 9999px;
-  padding: 0.35rem 0.7rem;
-  color: var(--vp-c-text-2);
-  background: var(--vp-c-bg-soft);
-  font-size: 0.8rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
 .article-index__grid {
   display: grid;
   gap: 0.85rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .article-index__empty {

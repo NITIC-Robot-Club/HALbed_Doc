@@ -6,6 +6,7 @@ tags:
   - CANFD
 thumbnail:
   targets:
+    - article-home
     - mcu-home
   description: 'デフォルトではOffにされている大事な設定。CANを使う前に必ず確認しましょう！'
   order: 40

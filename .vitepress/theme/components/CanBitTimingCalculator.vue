@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import ToolShell from './ToolShell.vue'
 import {
   bxCanProfile,
   DEFAULT_BITRATE_KBPS,
@@ -223,7 +224,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section class="can-calculator">
+  <ToolShell eyebrow="CAN" title="CAN Bit Timing 計算" :lead="description" maxWidth="1100px">
     <div class="can-calculator__card">
       <header class="can-calculator__header">
         <div class="can-calculator__header-copy">
@@ -490,7 +491,7 @@ onBeforeUnmount(() => {
         </div>
       </Transition>
     </div>
-  </section>
+  </ToolShell>
 </template>
 
 <style scoped>
