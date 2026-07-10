@@ -225,17 +225,7 @@ onBeforeUnmount(() => {
 
 <template>
   <ToolShell eyebrow="CAN" title="CAN Bit Timing 計算" :lead="description" maxWidth="1100px">
-    <div class="can-calculator__card">
-      <header class="can-calculator__header">
-        <div class="can-calculator__header-copy">
-          <p class="can-calculator__eyebrow">CAN</p>
-          <h2>CAN Bit Timing 計算</h2>
-          <p class="can-calculator__lead">
-            {{ description }}
-          </p>
-        </div>
-
-        <div class="can-calculator__header-actions">
+    <template #header-actions>
           <div
             ref="modeSwitchRef"
             class="can-calculator__mode-switch"
@@ -268,8 +258,9 @@ onBeforeUnmount(() => {
               <small>CAN FD</small>
             </button>
           </div>
-        </div>
-      </header>
+    </template>
+
+    <div class="can-calculator__card">
 
       <form class="can-calculator__form" @submit.prevent="calculate">
         <div class="can-calculator__settings-grid">
@@ -502,22 +493,23 @@ onBeforeUnmount(() => {
 }
 
 .can-calculator__card {
-  width: min(100%, 980px);
+  width: 100%;
+  box-sizing: border-box;
   background:
     radial-gradient(circle at top right, color-mix(in srgb, var(--vp-c-brand-soft) 38%, transparent), transparent 34%),
     linear-gradient(180deg, color-mix(in srgb, var(--vp-c-bg) 94%, var(--vp-c-brand-soft)), var(--vp-c-bg));
   border: 1px solid var(--vp-c-divider);
-  border-radius: 20px;
-  box-shadow: 0 12px 42px rgba(15, 23, 42, 0.08);
+  border-radius: 6px;
+  box-shadow: none;
   padding: 1.5rem;
 }
 
 .can-calculator__header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: flex-start;
   gap: 1rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .can-calculator__header-copy {

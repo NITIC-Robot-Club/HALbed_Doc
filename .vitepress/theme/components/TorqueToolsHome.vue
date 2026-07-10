@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { withBase } from 'vitepress'
 import ToolShell from './ToolShell.vue'
 
 const sections = [
@@ -32,7 +33,7 @@ const sections = [
 <template>
   <ToolShell eyebrow="Torque / RPM" title="トルク・回転数ツール" lead="使いたい画面だけを開けるように、用途別に分けています。" maxWidth="880px">
     <div class="torque-tools-home__grid">
-      <a v-for="section in sections" :key="section.title" class="torque-tools-home__card" :href="section.link">
+      <a v-for="section in sections" :key="section.title" class="torque-tools-home__card" :href="withBase(section.link)">
         <p class="torque-tools-home__card-eyebrow">{{ section.eyebrow }}</p>
         <h3>{{ section.title }}</h3>
         <p>{{ section.description }}</p>
