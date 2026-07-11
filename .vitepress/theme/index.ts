@@ -1,10 +1,12 @@
 // https://vitepress.dev/guide/custom-theme
-import { defineAsyncComponent, h } from 'vue'
+import { defineAsyncComponent, defineComponent, h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import ArticleTags from './components/ArticleTags.vue'
 import ArticleCard from './components/ArticleCard.vue'
 import ArticleTagList from './components/ArticleTagList.vue'
+import HomeLanding from './components/HomeLanding.vue'
+import ApiDirectory from './components/ApiDirectory.vue'
 import './style.css'
 
 const CanBitTimingCalculator = defineAsyncComponent(
@@ -72,12 +74,14 @@ const ArticleSearchList = defineAsyncComponent(
 )
 
 export default {
-  Layout: () => {
-    return h(DefaultTheme.Layout, null, {
-      'doc-before': () => h(ArticleTags),
-      'doc-after': () => h(RelatedArticles),
-    })
-  },
+  Layout: defineComponent({
+    setup() {
+      return () => h(DefaultTheme.Layout, null, {
+        'doc-before': () => h(ArticleTags),
+        'doc-after': () => h(RelatedArticles),
+      })
+    },
+  }),
 
   enhanceApp({ app }) {
     app.component(
@@ -164,6 +168,10 @@ export default {
       'HomeThumbnailSections',
       HomeThumbnailSections,
     )
+
+    app.component('HomeLanding', HomeLanding)
+
+    app.component('ApiDirectory', ApiDirectory)
 
     app.component(
       'ArticleSearchList',
