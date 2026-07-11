@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { withBase } from 'vitepress'
 import ArticleCard from './ArticleCard.vue'
 import type { TaggedArticle } from '../composables/useTags'
 import { useHomeThumbnails } from '../composables/useHomeThumbnails'
@@ -15,7 +16,10 @@ const { getArticlesByTargetAndFilters } = useHomeThumbnails()
 const sectionArticles = computed(() =>
   props.sections.map((section) => ({
     section,
-    articles: getArticlesByTargetAndFilters(props.target, section.filters),
+    articles: (() => {
+      const articles = getArticlesByTargetAndFilters(props.target, section.filters)
+      return typeof section.maxItems === 'number' ? articles.slice(0, section.maxItems) : articles
+    })(),
   }))
 )
 
@@ -55,6 +59,13 @@ function toTaggedArticle(article: {
           </p>
         </div>
 
+        <a
+          v-if="item.section.link"
+          class="article-index__section-more"
+          :href="withBase(item.section.link)"
+        >
+          さらに見る
+        </a>
       </div>
 
       <div v-if="item.articles.length" class="article-index__grid">
@@ -120,6 +131,22 @@ function toTaggedArticle(article: {
   margin: 0;
   color: var(--vp-c-text-2);
   font-size: 0.92rem;
+}
+
+.article-index__section-more {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  color: var(--vp-c-brand-1);
+  text-decoration: none;
+  font-weight: 600;
+  align-self: start;
+}
+
+@media (hover: hover) {
+  .article-index__section-more:hover {
+    text-decoration: underline;
+  }
 }
 
 @media (min-width: 960px) {

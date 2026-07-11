@@ -39,6 +39,10 @@ const TorqueToolsHome = defineAsyncComponent(
   () => import('./components/TorqueToolsHome.vue')
 )
 
+const ToolsDirectory = defineAsyncComponent(
+  () => import('./components/ToolsDirectory.vue')
+)
+
 const RelatedArticles = defineAsyncComponent(
   () => import('./components/RelatedArticles.vue')
 )
@@ -114,6 +118,11 @@ export default {
     app.component(
       'TorqueToolsHome',
       TorqueToolsHome,
+    )
+
+    app.component(
+      'ToolsDirectory',
+      ToolsDirectory,
     )
 
     app.component(

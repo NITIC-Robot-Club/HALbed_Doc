@@ -336,7 +336,7 @@ function formatNumber(value: number, digits: number): string {
 .pwm-ccr-calculator__card {
   background: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-divider);
-  border-radius: 16px;
+  border-radius: 6px;
   padding: 1.25rem;
 }
 
@@ -388,7 +388,7 @@ function formatNumber(value: number, digits: number): string {
   box-sizing: border-box;
   height: 48px;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 0.75rem 0.85rem;
   background: var(--vp-c-bg);
   color: var(--vp-c-text-1);
@@ -408,7 +408,7 @@ function formatNumber(value: number, digits: number): string {
 
 .pwm-ccr-calculator__notice {
   margin: 0;
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 0.8rem 0.95rem;
 }
 
@@ -424,16 +424,16 @@ function formatNumber(value: number, digits: number): string {
 
 .pwm-ccr-calculator__results {
   display: grid;
-  gap: 0.75rem;
+  border-top: 1px solid var(--vp-c-divider);
 }
 
 .pwm-ccr-calculator__result {
-  display: grid;
-  gap: 0.25rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 14px;
-  padding: 0.9rem 1rem;
-  background: var(--vp-c-bg);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+  padding: 0.75rem 0.25rem;
 }
 
 .pwm-ccr-calculator__result span {
@@ -443,11 +443,15 @@ function formatNumber(value: number, digits: number): string {
 
 .pwm-ccr-calculator__result strong {
   font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
 }
 
 .pwm-ccr-calculator__result--accent {
-  border-color: var(--vp-c-brand-1);
-  background: linear-gradient(135deg, var(--vp-c-brand-soft), transparent);
+  margin: 0.3rem 0;
+  border-left: 3px solid var(--vp-c-brand-1);
+  padding-left: 0.75rem;
+  background: var(--vp-c-brand-soft);
 }
 
 .pwm-ccr-calculator__result--accent strong {
@@ -465,6 +469,22 @@ function formatNumber(value: number, digits: number): string {
   .pwm-ccr-calculator__grid,
   .pwm-ccr-calculator__results--ws {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .pwm-ccr-calculator__card {
+    padding: 1rem;
+  }
+
+  .pwm-ccr-calculator__result {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .pwm-ccr-calculator__result strong {
+    text-align: left;
   }
 }
 </style>

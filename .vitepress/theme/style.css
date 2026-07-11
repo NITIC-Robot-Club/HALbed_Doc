@@ -149,17 +149,32 @@
 
 .tool-shell__frame {
   width: min(100%, var(--tool-shell-max-width, 880px));
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 18px;
-  background: var(--vp-c-bg);
-  box-shadow: 0 12px 36px color-mix(in srgb, var(--vp-c-text-1) 6%, transparent);
-  padding: 1.15rem;
+  padding: clamp(1rem, 3vw, 1.5rem);
 }
 
 .tool-shell__header {
   display: grid;
   gap: 0.35rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.tool-shell__header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.tool-shell__header-copy {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.tool-shell__header-actions {
+  flex: 0 0 auto;
 }
 
 .tool-shell__eyebrow {
@@ -192,14 +207,15 @@
   min-width: 0;
   box-sizing: border-box;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 10px;
-  padding: 0.35rem 0.7rem;
+  min-height: 42px;
+  border-radius: 6px;
+  padding: 0.5rem 0.7rem;
   background: var(--vp-c-bg);
   color: var(--vp-c-text-1);
   font: inherit;
 }
 
-.tool-shell :where(input, select, textarea):focus {
+.tool-shell :where(input, select, textarea):focus-visible {
   outline: none;
   border-color: var(--vp-c-brand-1);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--vp-c-brand-1) 16%, transparent);
@@ -245,7 +261,7 @@
   gap: 0.75rem;
   padding: 0.55rem 0.7rem;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
+  border-radius: 6px;
   background: var(--vp-c-bg-soft);
 }
 
@@ -267,6 +283,7 @@
   color: var(--vp-c-text-1);
   font: inherit;
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
   text-align: right;
   cursor: copy;
 }
@@ -292,7 +309,7 @@
   margin: 0;
   padding: 0.65rem 0.75rem;
   border: 1px solid var(--vp-c-divider);
-  border-radius: 10px;
+  border-radius: 6px;
   line-height: 1.6;
   background: var(--vp-c-bg-soft);
 }
@@ -311,7 +328,168 @@
   font-size: 0.82rem;
 }
 
+/** Shared layout for torque and RPM calculators */
+.tool-shell .torque-tool__panel { display: grid; gap: 1rem; }
+
+.tool-shell .torque-tool__inline-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.tool-shell .torque-tool__field { display: grid; gap: 0.4rem; }
+
+.tool-shell .torque-tool__field > span,
+.tool-shell .torque-tool__result-card > span {
+  color: var(--vp-c-text-2);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.tool-shell .torque-tool__inline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.6rem;
+}
+
+.tool-shell .torque-tool__field input,
+.tool-shell .torque-tool__select {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  box-sizing: border-box;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 6px;
+  padding: 0.7rem 0.85rem;
+  background-color: var(--vp-c-bg);
+  color: var(--vp-c-text-1);
+  font: inherit;
+}
+
+.tool-shell .torque-tool__select {
+  width: 104px;
+  padding-right: 2rem;
+  background-position: calc(100% - 16px) 20px, calc(100% - 11px) 20px;
+}
+
+.tool-shell .torque-tool__field input:focus-visible,
+.tool-shell .torque-tool__select:focus-visible {
+  outline: none;
+  border-color: var(--vp-c-brand-1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--vp-c-brand-1) 16%, transparent);
+}
+
+.tool-shell .torque-tool__result-card {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--vp-c-brand-1) 42%, var(--vp-c-divider));
+  border-left: 3px solid var(--vp-c-brand-1);
+  border-radius: 6px;
+  background: var(--vp-c-brand-soft);
+}
+
+.tool-shell .torque-tool__primary {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  color: var(--vp-c-brand-1);
+  font-size: 1.25rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.tool-shell .torque-tool__results {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.tool-shell .torque-tool__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0.25rem;
+  border: 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+  border-radius: 0;
+  background: transparent;
+}
+
+.tool-shell .torque-tool__value {
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.tool-shell .torque-tool__value:focus-visible,
+.tool-shell .torque-tool__primary:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.tool-shell .torque-tool__copied {
+  min-height: 1.25rem;
+  color: var(--vp-c-brand-1);
+}
+
+.tool-shell .torque-tools-home__grid {
+  gap: 0;
+  border-top: 1px solid var(--vp-c-divider);
+}
+
+.tool-shell .torque-tools-home__card {
+  position: relative;
+  padding: 1rem 2.5rem 1rem 0.25rem;
+  border: 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+  border-radius: 0;
+  background: transparent;
+  transition: color 160ms ease, padding-left 160ms ease;
+}
+
+.tool-shell .torque-tools-home__card::after {
+  position: absolute;
+  right: 0.4rem;
+  top: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+  content: '';
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.tool-shell .torque-tools-home__card:hover {
+  padding-left: 0.55rem;
+  color: var(--vp-c-brand-1);
+}
+
+.tool-shell .torque-tools-home__card:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 3px;
+}
+
+.tools-index-page .VPPage { padding-bottom: 0; }
+.tools-index-page .VPContent { padding: 0; }
+.tools-index-page .VPDoc .container,
+.tools-index-page .VPDoc .content,
+.tools-index-page .VPDoc .content-container { max-width: none; }
+.tools-index-page .VPDoc { padding: 0; }
+
 @media (max-width: 720px) {
+  .tool-shell__header-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .tool-shell__header-actions {
+    width: 100%;
+  }
+
   .tool-shell__inline,
   .tool-shell__compound,
   .tool-shell__inline-grid,
@@ -329,6 +507,20 @@
   .tool-shell__value {
     text-align: left;
   }
+
+  .tool-shell .torque-tool__inline-grid,
+  .tool-shell .torque-tools-home__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-shell .torque-tool__result-card,
+  .tool-shell .torque-tool__row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .tool-shell .torque-tool__primary { text-align: left; }
 }
 
 /**

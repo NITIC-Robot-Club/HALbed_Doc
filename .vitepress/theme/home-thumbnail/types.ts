@@ -47,5 +47,7 @@ export interface HomeThumbnailItem {
 export interface HomeThumbnailSection {
   title: string
   description?: string
+  link?: string
+  maxItems?: number
   filters: HomeThumbnailFilter[]
 }
