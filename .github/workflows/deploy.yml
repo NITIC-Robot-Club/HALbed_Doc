@@ -30,11 +30,11 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
       - name: Install dependencies
         run: npm ci
       - name: Restore VitePress build cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             .vitepress/cache
@@ -45,7 +45,7 @@ jobs:
       - name: Build with VitePress
         run: npm run docs:build
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: .vitepress/dist
 
@@ -60,5 +60,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
