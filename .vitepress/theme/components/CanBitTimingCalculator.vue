@@ -495,9 +495,7 @@ onBeforeUnmount(() => {
 .can-calculator__card {
   width: 100%;
   box-sizing: border-box;
-  background:
-    radial-gradient(circle at top right, color-mix(in srgb, var(--vp-c-brand-soft) 38%, transparent), transparent 34%),
-    linear-gradient(180deg, color-mix(in srgb, var(--vp-c-bg) 94%, var(--vp-c-brand-soft)), var(--vp-c-bg));
+  background: var(--vp-c-bg);
   border: 1px solid var(--vp-c-divider);
   border-radius: 6px;
   box-shadow: none;
@@ -566,11 +564,7 @@ onBeforeUnmount(() => {
   inset: var(--switch-pad) auto var(--switch-pad) var(--switch-pad);
   width: calc((100% - (var(--switch-pad) * 2) - var(--switch-gap)) / 2);
   border-radius: 999px;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--vp-c-brand-2) 88%, white), var(--vp-c-brand-3));
-  box-shadow:
-    0 10px 22px color-mix(in srgb, var(--vp-c-brand-3) 28%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  background: var(--vp-c-brand-3);
   transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 0;
 }
@@ -669,10 +663,7 @@ onBeforeUnmount(() => {
   padding: 1rem;
   border: 1px solid var(--vp-c-divider);
   border-radius: 16px;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--vp-c-bg-soft) 88%, white), var(--vp-c-bg-soft)),
-    color-mix(in srgb, var(--vp-c-bg-soft) 82%, var(--vp-c-brand-soft));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  background: var(--vp-c-bg-soft);
 }
 
 .can-calculator__phase-header {

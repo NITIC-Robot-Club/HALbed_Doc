@@ -4,7 +4,7 @@ import { withBase } from 'vitepress'
 const groups = [
   {
     label: 'マイコン設定',
-    description: 'レジスタや通信設定に必要な値を求める',
+    description: 'CubeMXでの設定に必要な値を求める',
     tools: [
       {
         title: 'CAN のビットタイミングを決める',
