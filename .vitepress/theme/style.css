@@ -139,6 +139,21 @@
 }
 
 /**
+ * Page: Technical articles home
+ * Keep a readable outer margin while making better use of wide screens.
+ * -------------------------------------------------------------------------- */
+
+@media (min-width: 960px) {
+  .Layout.technical-articles-wide .VPDoc:not(.has-sidebar) .container {
+    max-width: 1408px;
+  }
+
+  .Layout.technical-articles-wide .VPDoc:not(.has-sidebar) .content {
+    max-width: 1312px;
+  }
+}
+
+/**
  * Component: Tool Shell
  * -------------------------------------------------------------------------- */
 

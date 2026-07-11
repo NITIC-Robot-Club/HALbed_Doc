@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: "HALbed Docs"
-  text: "STM32 開発を、もっと扱いやすく。"
+  text: "HALを、<br>もっと扱いやすく。"
   tagline: "HALbed は、STM32 HAL を使いやすい形に整え、開発のはじめの一歩を支えるライブラリです。"
   actions:
     - theme: brand

@@ -15,7 +15,7 @@ const documentLinks = [
     <section class="home-landing__intro" aria-labelledby="home-position-title">
       <p class="home-landing__eyebrow">A practical layer for STM32 development</p>
       <div class="home-landing__intro-copy">
-        <h2 id="home-position-title">HAL を活かしながら、<br>扱いやすい開発体験へ。</h2>
+        <h2 id="home-position-title">HAL を活かしながら、<br>使いやすく。</h2>
         <p>
           HALbed は STM32 HAL を抽象化し、初期化や基本的な操作を分かりやすく整えるライブラリです。
           すべてを置き換えるのではなく、必要な場面では HAL を直接使える余地を残します。
