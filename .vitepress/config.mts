@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { generateContentCatalog } from '../tools/generate-content-catalog.mjs'
 
 export default defineConfig({
   title: "HALbed Docs",
@@ -6,6 +7,21 @@ export default defineConfig({
   lastUpdated: true,
   base: '/HALbed_Doc/',
   srcExclude: ['AGENTS.md'],
+  vite: {
+    plugins: [
+      {
+        name: 'content-catalog-reload',
+        configureServer(server) {
+          server.watcher.on('change', (file) => {
+            if (file.endsWith('.md') && file.includes('/Docs/')) {
+              generateContentCatalog()
+              server.ws.send({ type: 'full-reload' })
+            }
+          })
+        }
+      }
+    ]
+  },
   head: [
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
     ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
@@ -52,7 +68,7 @@ export default defineConfig({
     nav: [
       { text: 'はじめに', link: '/Docs/Introduction/ArchitectureOverview' },
       { text: 'API', link: '/Docs/API/APIHome' },
-      { text: '技術記事', link: '/Docs/Technical_articles/Article_Home' },
+      { text: '開発資料', link: '/Docs/Technical_articles/Article_Home' },
       { text: 'ツール', link: '/Docs/Tools/Tools_home' },
       { text: 'FAQ', link: '/Docs/FAQ/FAQ_home' }
     ],

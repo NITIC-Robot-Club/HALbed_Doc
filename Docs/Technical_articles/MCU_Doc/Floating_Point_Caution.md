@@ -1,6 +1,6 @@
 ---
 tags:
-  - 技術記事
+  - 開発資料
   - MCU
 thumbnail:
   targets:

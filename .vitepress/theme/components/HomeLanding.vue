@@ -4,7 +4,7 @@ import { withBase } from 'vitepress'
 const documentLinks = [
   { title: 'はじめに', detail: '導入とプロジェクト設定を確認する', link: '/Docs/Introduction/GettingStarted' },
   { title: 'API リファレンス', detail: 'HALbed の API を機能別に探す', link: '/Docs/API/APIHome' },
-  { title: '技術記事', detail: 'STM32・HAL・通信の知識を深める', link: '/Docs/Technical_articles/Article_Home' },
+  { title: '開発資料', detail: 'STM32・HAL・通信の知識を深める', link: '/Docs/Technical_articles/Article_Home' },
   { title: '計算ツール', detail: '設定値や単位をブラウザで確認する', link: '/Docs/Tools/Tools_home' },
   { title: 'FAQ', detail: 'よくある疑問と解決方法を確認する', link: '/Docs/FAQ/FAQ_home' },
 ]

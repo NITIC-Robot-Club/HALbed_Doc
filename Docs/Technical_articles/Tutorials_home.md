@@ -15,14 +15,14 @@ const sections: HomeThumbnailSection[] = [
     title: '入門',
     description: '最初に読むと全体像をつかみやすい記事を集めています。',
     filters: [
-      { includeTags: ['技術記事', 'チュートリアル', '入門'] },
+      { includeTags: ['開発資料', 'チュートリアル', '入門'] },
     ],
   },
   {
     title: 'チュートリアル',
     description: '実際の開発手順に沿って、CubeIDE や GPIO の扱いを学べます。',
     filters: [
-      { includeTags: ['技術記事', 'チュートリアル'], excludeTags: ['入門'] },
+      { includeTags: ['開発資料', 'チュートリアル'], excludeTags: ['入門'] },
     ],
   },
 ]

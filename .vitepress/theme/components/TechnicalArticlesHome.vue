@@ -9,7 +9,7 @@ const sections: HomeThumbnailSection[] = [
     link: '/Docs/Technical_articles/Tutorials_home',
     maxItems: 4,
     filters: [
-      { includeTags: ['技術記事', 'チュートリアル'] },
+      { includeTags: ['開発資料', 'チュートリアル'] },
     ],
   },
   {
@@ -18,9 +18,9 @@ const sections: HomeThumbnailSection[] = [
     link: '/Docs/Technical_articles/About_MCU_Articles',
     maxItems: 4,
     filters: [
-      { includeTags: ['技術記事', 'MCU'] },
-      { includeTags: ['技術記事', 'HAL'] },
-      { includeTags: ['技術記事', '設定'] },
+      { includeTags: ['開発資料', 'MCU'] },
+      { includeTags: ['開発資料', 'HAL'] },
+      { includeTags: ['開発資料', '設定'] },
     ],
   },
   {
@@ -29,7 +29,7 @@ const sections: HomeThumbnailSection[] = [
     link: '/Docs/Technical_articles/About_MCU_Articles',
     maxItems: 4,
     filters: [
-      { includeTags: ['技術記事', 'CAN'] },
+      { includeTags: ['開発資料', 'CAN'] },
     ],
   },
   {
@@ -38,7 +38,7 @@ const sections: HomeThumbnailSection[] = [
     link: '/Docs/Technical_articles/Other_Articles',
     maxItems: 4,
     filters: [
-      { includeTags: ['技術記事', '有線通信'] },
+      { includeTags: ['開発資料', '有線通信'] },
     ],
   },
 ]
@@ -48,7 +48,7 @@ const sections: HomeThumbnailSection[] = [
   <main class="technical-articles-home">
     <header class="technical-articles-home__hero">
       <p class="technical-articles-home__eyebrow">Technical Articles</p>
-      <h1>目的から技術記事を探す</h1>
+      <h1>目的から開発資料を探す</h1>
       <p>HALbed と STM32 を使った開発に役立つ記事を、目的別にまとめています。</p>
       <a class="technical-articles-home__tags" :href="withBase('/tags/')">
         タグから記事を探す

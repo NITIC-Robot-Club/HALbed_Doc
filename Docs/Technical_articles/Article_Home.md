@@ -1,5 +1,5 @@
 ---
-title: 技術記事
+title: 開発資料
 aside: false
 pageClass: technical-articles-wide
 ---
