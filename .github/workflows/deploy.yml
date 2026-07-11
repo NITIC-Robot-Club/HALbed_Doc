@@ -27,10 +27,21 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Install dependencies
         run: npm ci
+      - name: Restore VitePress build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .vitepress/cache
+            node_modules/.vite
+          key: vitepress-${{ runner.os }}-${{ hashFiles('package-lock.json', '.vitepress/config.mts') }}
+          restore-keys: |
+            vitepress-${{ runner.os }}-
       - name: Build with VitePress
         run: npm run docs:build
       - name: Upload artifact
