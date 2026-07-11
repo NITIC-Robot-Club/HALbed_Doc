@@ -44,6 +44,7 @@
  * -------------------------------------------------------------------------- */
 
 :root {
+  --vp-font-family-base: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --vp-c-default-1: var(--vp-c-gray-1);
   --vp-c-default-2: var(--vp-c-gray-2);
   --vp-c-default-3: var(--vp-c-gray-3);
@@ -135,6 +136,21 @@
 
 .DocSearch {
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
+}
+
+/**
+ * Page: Technical articles home
+ * Keep a readable outer margin while making better use of wide screens.
+ * -------------------------------------------------------------------------- */
+
+@media (min-width: 960px) {
+  .Layout.technical-articles-wide .VPDoc:not(.has-sidebar) .container {
+    max-width: 1408px;
+  }
+
+  .Layout.technical-articles-wide .VPDoc:not(.has-sidebar) .content {
+    max-width: 1312px;
+  }
 }
 
 /**
