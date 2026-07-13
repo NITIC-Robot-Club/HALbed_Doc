@@ -1,11 +1,8 @@
 ---
-layout: home
-hero:
-  name: "マイコン基礎"
-  tagline: HAL や FPU など、実装前に押さえたい前提知識をまとめています。
+title: マイコン基礎
+aside: false
+pageClass: technical-articles-wide
 ---
-
-# 記事一覧
 
 <script setup lang="ts">
 import type { HomeThumbnailSection } from '../../.vitepress/theme/home-thumbnail'
@@ -45,4 +42,10 @@ const sections: HomeThumbnailSection[] = [
 ]
 </script>
 
-<HomeThumbnailSections target="mcu-home" :sections="sections" />
+<TechnicalArticleCategory
+  title="マイコン基礎"
+  description="HAL や FPU など、実装前に押さえたい前提知識をまとめています。"
+  target="mcu-home"
+  back-link="/Docs/Technical_articles/Article_Home"
+  :sections="sections"
+/>

@@ -1,11 +1,8 @@
 ---
-layout: home
-hero:
-  name: "その他の記事"
-  tagline: 通信や周辺技術など、実装で役立つ記事をまとめています。
+title: その他の記事
+aside: false
+pageClass: technical-articles-wide
 ---
-
-# 記事一覧
 
 <script setup lang="ts">
 import type { HomeThumbnailSection } from '../../.vitepress/theme/home-thumbnail'
@@ -21,4 +18,10 @@ const sections: HomeThumbnailSection[] = [
 ]
 </script>
 
-<HomeThumbnailSections target="other-home" :sections="sections" />
+<TechnicalArticleCategory
+  title="その他の記事"
+  description="通信や周辺技術など、実装で役立つ記事をまとめています。"
+  target="other-home"
+  back-link="/Docs/Technical_articles/Article_Home"
+  :sections="sections"
+/>

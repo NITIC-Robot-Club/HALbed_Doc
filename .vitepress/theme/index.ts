@@ -8,6 +8,7 @@ import ArticleTagList from './components/ArticleTagList.vue'
 import HomeLanding from './components/HomeLanding.vue'
 import ApiDirectory from './components/ApiDirectory.vue'
 import TechnicalArticlesHome from './components/TechnicalArticlesHome.vue'
+import TechnicalArticleCategory from './components/TechnicalArticleCategory.vue'
 import './style.css'
 
 const CanBitTimingCalculator = defineAsyncComponent(
@@ -175,6 +176,8 @@ export default {
     app.component('ApiDirectory', ApiDirectory)
 
     app.component('TechnicalArticlesHome', TechnicalArticlesHome)
+
+    app.component('TechnicalArticleCategory', TechnicalArticleCategory)
 
     app.component(
       'ArticleSearchList',

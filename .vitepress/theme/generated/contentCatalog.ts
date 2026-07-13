@@ -136,11 +136,13 @@ export default {
     "frontmatter": {}
   },
   "/Docs/Technical_articles/About_MCU_Articles.md": {
-    "title": "記事一覧",
+    "title": "マイコン基礎",
     "description": "",
     "relativePath": "Docs/Technical_articles/About_MCU_Articles.md",
     "frontmatter": {
-      "layout": "home"
+      "title": "マイコン基礎",
+      "aside": "false",
+      "pageClass": "technical-articles-wide"
     }
   },
   "/Docs/Technical_articles/Article_Home.md": {
@@ -277,11 +279,13 @@ export default {
     }
   },
   "/Docs/Technical_articles/Other_Articles.md": {
-    "title": "記事一覧",
+    "title": "その他の記事",
     "description": "",
     "relativePath": "Docs/Technical_articles/Other_Articles.md",
     "frontmatter": {
-      "layout": "home"
+      "title": "その他の記事",
+      "aside": "false",
+      "pageClass": "technical-articles-wide"
     }
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/Sbus.md": {
@@ -423,11 +427,13 @@ export default {
     }
   },
   "/Docs/Technical_articles/Tutorials_home.md": {
-    "title": "記事一覧",
+    "title": "チュートリアル",
     "description": "",
     "relativePath": "Docs/Technical_articles/Tutorials_home.md",
     "frontmatter": {
-      "layout": "home"
+      "title": "チュートリアル",
+      "aside": "false",
+      "pageClass": "technical-articles-wide"
     }
   },
   "/Docs/Tools/BitTimingCalculator.md": {

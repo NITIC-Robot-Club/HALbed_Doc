@@ -1,11 +1,8 @@
 ---
-layout: home
-hero:
-  name: "チュートリアル"
-  tagline: CubeIDE と GPIO の基本操作を、手順に沿って学べます。
+title: チュートリアル
+aside: false
+pageClass: technical-articles-wide
 ---
-
-# 記事一覧
 
 <script setup lang="ts">
 import type { HomeThumbnailSection } from '../../.vitepress/theme/home-thumbnail'
@@ -28,4 +25,10 @@ const sections: HomeThumbnailSection[] = [
 ]
 </script>
 
-<HomeThumbnailSections target="tutorials-home" :sections="sections" />
+<TechnicalArticleCategory
+  title="チュートリアル"
+  description="CubeIDE と GPIO の基本操作を、手順に沿って学べます。"
+  target="tutorials-home"
+  back-link="/Docs/Technical_articles/Article_Home"
+  :sections="sections"
+/>
