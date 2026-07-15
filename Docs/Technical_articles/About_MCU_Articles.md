@@ -24,6 +24,13 @@ const sections: HomeThumbnailSection[] = [
     ],
   },
   {
+    title: 'HALbed の機能',
+    description: 'Callback、CircularBuffer、LogManagerなど、HALbedの機能を実装例とともに紹介します。',
+    filters: [
+      { includeTags: ['技術記事', 'HALbed'] },
+    ],
+  },
+  {
     title: 'CAN / FDCAN',
     description: 'CAN 周辺の設定や送受信で、つまずきやすいポイントを整理しています。',
     filters: [
