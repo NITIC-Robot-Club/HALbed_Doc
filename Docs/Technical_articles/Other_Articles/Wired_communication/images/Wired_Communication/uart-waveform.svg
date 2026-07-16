@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="390" viewBox="0 0 1200 390" role="img" aria-labelledby="title desc">
+  <title id="title">UART のフレームと信号波形</title>
+  <desc id="desc">アイドル状態、スタートビット、8個のデータビット、ストップビットを示すUART信号波形</desc>
+  <style>
+    .bg{fill:#fff}.panel{fill:#f8fafc;stroke:#cbd5e1;stroke-width:2}.grid{stroke:#cbd5e1;stroke-width:1;stroke-dasharray:5 5}.signal{fill:none;stroke:#2563eb;stroke-width:6;stroke-linejoin:round}.label{fill:#0f172a;font:600 22px 'Noto Sans JP',sans-serif}.small{fill:#475569;font:400 18px 'Noto Sans JP',sans-serif}.bit{fill:#1e3a8a;font:700 19px 'Noto Sans JP',sans-serif}
+  </style>
+  <rect class="bg" width="1200" height="390" rx="20"/>
+  <rect class="panel" x="32" y="30" width="1136" height="328" rx="16"/>
+  <text class="label" x="72" y="78">UART の代表的な 8N1 フレーム（LSB first の例）</text>
+  <text class="small" x="72" y="112">通信していないときは High。受信側はスタートビットの立ち下がりを基準に各ビットを読み取ります。</text>
+  <line class="grid" x1="190" y1="142" x2="190" y2="300"/><line class="grid" x1="290" y1="142" x2="290" y2="300"/><line class="grid" x1="390" y1="142" x2="390" y2="300"/><line class="grid" x1="490" y1="142" x2="490" y2="300"/><line class="grid" x1="590" y1="142" x2="590" y2="300"/><line class="grid" x1="690" y1="142" x2="690" y2="300"/><line class="grid" x1="790" y1="142" x2="790" y2="300"/><line class="grid" x1="890" y1="142" x2="890" y2="300"/><line class="grid" x1="990" y1="142" x2="990" y2="300"/>
+  <text class="small" x="74" y="177">High</text><text class="small" x="80" y="277">Low</text>
+  <path class="signal" d="M115 164H190V274H290V164H390V274H490V274H590V164H690V274H790V164H890V274H990V164H1085"/>
+  <text class="bit" x="206" y="326">Start</text><text class="bit" x="316" y="326">0</text><text class="bit" x="416" y="326">1</text><text class="bit" x="516" y="326">0</text><text class="bit" x="616" y="326">0</text><text class="bit" x="716" y="326">1</text><text class="bit" x="816" y="326">0</text><text class="bit" x="916" y="326">1</text><text class="bit" x="1012" y="326">Stop</text>
+  <text class="small" x="120" y="216">Idle</text><text class="small" x="1035" y="216">Idle</text>
+</svg>

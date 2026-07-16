@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="490" viewBox="0 0 1200 490" role="img" aria-labelledby="title desc">
+  <title id="title">通常UARTとS.BUSの論理反転</title><desc id="desc">通常のUARTと、論理が反転したS.BUSの代表的な信号波形を比較する図</desc>
+  <style>.bg{fill:#fff}.panel{fill:#f8fafc;stroke:#cbd5e1;stroke-width:2}.grid{stroke:#cbd5e1;stroke-width:1;stroke-dasharray:5 5}.normal{fill:none;stroke:#2563eb;stroke-width:6;stroke-linejoin:round}.invert{fill:none;stroke:#dc2626;stroke-width:6;stroke-linejoin:round}.label{fill:#0f172a;font:600 21px 'Noto Sans JP',sans-serif}.small{fill:#475569;font:400 17px 'Noto Sans JP',sans-serif}.tag{fill:#1e3a8a;font:700 18px 'Noto Sans JP',sans-serif}</style>
+  <rect class="bg" width="1200" height="490" rx="20"/><rect class="panel" x="30" y="28" width="1140" height="430" rx="16"/><text class="label" x="68" y="74">S.BUS は UART に似ているが、論理が反転している</text>
+  <text class="tag" x="68" y="124">通常の UART（Idle = High）</text><path class="normal" d="M200 153H300V222H400V153H500V222H600V222H700V153H800V222H900V153H1040"/><text class="small" x="74" y="167">High</text><text class="small" x="82" y="226">Low</text><text class="small" x="295" y="255">Start</text><text class="small" x="426" y="255">データビット</text><text class="small" x="915" y="255">Stop</text>
+  <line x1="68" y1="290" x2="1132" y2="290" stroke="#cbd5e1" stroke-width="2"/>
+  <text class="tag" x="68" y="337">S.BUS の信号（Idle = Low、上の波形を反転）</text><path class="invert" d="M200 435H300V366H400V435H500V366H600V366H700V435H800V366H900V435H1040"/><text class="small" x="74" y="378">High</text><text class="small" x="82" y="440">Low</text><text class="small" x="730" y="418">100 kbps / 8E2 / 25 byte</text>
+</svg>
