@@ -82,6 +82,7 @@ export default defineConfig({
             { text: 'インストールと初期設定', link: '/Docs/Introduction/GettingStarted' },
             { text: 'ディレクトリ構造', link: '/Docs/Introduction/DirectoryStructure' },
             { text: '参考リンク集', link: '/Docs/Introduction/References' },
+            { text: '商標・免責事項', link: '/Docs/Introduction/Trademark_Disclaimer' },
           ] 
         }
       ],

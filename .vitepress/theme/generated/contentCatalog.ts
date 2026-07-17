@@ -129,6 +129,12 @@ export default {
     "relativePath": "Docs/Introduction/References.md",
     "frontmatter": {}
   },
+  "/Docs/Introduction/Trademark_Disclaimer.md": {
+    "title": "商標・免責事項",
+    "description": "このサイトは、HALbed の使い方や関連する技術情報を共有するための非公式ドキュメントです。以下に記載する会社名、製品名、サービス名およびロゴなどの権利は、それぞれの権利者に帰属します。",
+    "relativePath": "Docs/Introduction/Trademark_Disclaimer.md",
+    "frontmatter": {}
+  },
   "/Docs/Introduction/api-reference.md": {
     "title": "APIリファレンス",
     "description": "このページでは、HALbedライブラリで提供されているAPIを機能別に紹介します。",
@@ -275,6 +281,69 @@ export default {
         ],
         "description": "LED 点滅を通して、HAL と HALbed の違いを感じてみましょう",
         "order": 20
+      }
+    }
+  },
+  "/Docs/Technical_articles/MCU_Doc/Interrupt_Basics.md": {
+    "title": "割り込みとは何か",
+    "description": "イベントへ素早く反応する割り込みの仕組みと、安全な使い方を整理します。",
+    "relativePath": "Docs/Technical_articles/MCU_Doc/Interrupt_Basics.md",
+    "frontmatter": {
+      "tags": [
+        "技術記事",
+        "MCU",
+        "入門",
+        "割り込み"
+      ],
+      "thumbnail": {
+        "targets": [
+          "article-home",
+          "mcu-home"
+        ],
+        "description": "イベントへ素早く反応する割り込みの仕組みと、安全な使い方を整理します。",
+        "order": 90
+      }
+    }
+  },
+  "/Docs/Technical_articles/MCU_Doc/Timer_Counter_Basics.md": {
+    "title": "タイマーとカウンターの基本",
+    "description": "PSC、CNT、ARR、CCRから、タイマーが時間を数える仕組みを学びます。",
+    "relativePath": "Docs/Technical_articles/MCU_Doc/Timer_Counter_Basics.md",
+    "frontmatter": {
+      "tags": [
+        "技術記事",
+        "MCU",
+        "入門",
+        "タイマー"
+      ],
+      "thumbnail": {
+        "targets": [
+          "article-home",
+          "mcu-home"
+        ],
+        "description": "PSC、CNT、ARR、CCRから、タイマーが時間を数える仕組みを学びます。",
+        "order": 80
+      }
+    }
+  },
+  "/Docs/Technical_articles/MCU_Doc/Why_Use_DMA.md": {
+    "title": "DMAを使う理由",
+    "description": "データ転送をDMAへ任せ、CPUの負担を減らす理由と注意点を説明します。",
+    "relativePath": "Docs/Technical_articles/MCU_Doc/Why_Use_DMA.md",
+    "frontmatter": {
+      "tags": [
+        "技術記事",
+        "MCU",
+        "入門",
+        "DMA"
+      ],
+      "thumbnail": {
+        "targets": [
+          "article-home",
+          "mcu-home"
+        ],
+        "description": "データ転送をDMAへ任せ、CPUの負担を減らす理由と注意点を説明します。",
+        "order": 110
       }
     }
   },
