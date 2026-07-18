@@ -235,7 +235,7 @@ extern "C" void app_main(void)
 > [!TIP]
 > 詳細はSTM のコニュニティーフォーラムやデータシートを参照してください。
 > 
-> [デュアル レギュラー + 差動モードで ADC を読み取るにはどうすればよいでしょうか? - STM32 Community](https://community.st.com/t5/stm32cubemx-mcus/how-to-read-adc-with-dual-regular-differential-mode/td-p/317205)
+> ST Community の関連情報は、[ST公式ホームページ](https://www.st.com/ja/) から「How to read ADC with dual regular differential mode」を検索してください。
 
 ### まとめ
 | 設定名 | 入力タイプ | 入力ピン数 | 測定対象 | 主な用途 |

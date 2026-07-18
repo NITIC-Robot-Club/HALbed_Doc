@@ -132,6 +132,6 @@ Tx Bufferを使う場合は、`HAL_FDCAN_AddMessageToTxBuffer()` でデータを
 基本的には、Tx FIFOを使うことをおすすめします。
 
 ## 参考
-- [STM32G4 Series MCU RM0440 Reference Manual](https://www.st.com/resource/ja/reference_manual/rm0440-stm32g4-series-advanced-armbased-32bit-mcus-stmicroelectronics.pdf) : P.1927 ~ P.1928 あたり参照
+- STM32G4 Series MCU RM0440 Reference Manual（[ST公式ホームページ](https://www.st.com/ja/) から「RM0440」を検索）: P.1927 ~ P.1928 あたり参照
 
 G4シリーズ以外のマイコンにも、同様の関数が用意されていますが、詳細は各マイコンのリファレンスマニュアルを確認してください。
