@@ -40,7 +40,6 @@ const groups = [
       { title: 'CircularBuffer', detail: 'リングバッファを扱う', link: '/Docs/API/CircularBuffer' },
       { title: 'DMA', detail: 'DMA 転送を利用する', link: '/Docs/API/DMA' },
       { title: 'LogManager', detail: 'ログを出力・管理する', link: '/Docs/API/LogManager' },
-      { title: 'check', detail: '状態を確認する', link: '/Docs/API/check' },
     ],
   },
 ]
