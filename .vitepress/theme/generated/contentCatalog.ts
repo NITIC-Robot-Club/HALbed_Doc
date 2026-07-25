@@ -416,6 +416,12 @@ export default {
       }
     }
   },
+  "/Docs/Technical_articles/Other_Articles/Wired_communication/images/communication_diagram_plan.md": {
+    "title": "有線通信図の作成計画",
+    "description": "このページは、Wiredcommunication/images にある通信図を作り直すときの設計メモです。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/images/communication_diagram_plan.md",
+    "frontmatter": {}
+  },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/t10j_SIF_Port.md": {
     "title": "T10J S.I/Fポートを使ってスイッチ状態を読み出したかった話",
     "description": "T10J背面のS.I/Fポートからスイッチ状態を読み出せるか試したしたメモ",
