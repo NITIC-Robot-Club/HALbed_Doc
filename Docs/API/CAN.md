@@ -70,9 +70,21 @@ CAN送信が可能かどうかを確認
 > - `priority` : コールバックの優先度
 > - `fifo` : FIFO番号 (0 または 1)
 
+#### `HALBED_MANUAL_CAN_CB` を使う場合
+
+通常はHALbedがFIFO 0/1の受信HALコールバックを提供します。アプリケーション側で受信処理を一元管理したい場合は、`halbed` ターゲットに `HALBED_MANUAL_CAN_CB` を定義し、使用するFIFOに対応するHALコールバックをアプリケーション側で実装します。その中から、対象CANハンドルに対応する `HALbed::callback::callback()` を呼び出してください。
+
+このマクロを定義した場合、`CAN::attach()` の登録処理自体は残りますが、HALbedが自動的にユーザー関数を呼び出す処理は無効になります。FIFO番号と `attach()` の `fifo` 引数を一致させることが重要です。
+
 ---
 
 ## 使用方法
+
+## 受信割り込みの仕組み
+
+CANの受信は、IRQHandlerから `HAL_CAN_RxFifo0MsgPendingCallback()` または `HAL_CAN_RxFifo1MsgPendingCallback()` を経由して、`attach()` で登録した関数へ通知されます。`attach()` の `fifo` 引数は、CubeMXで有効にした受信FIFOと一致させてください。通常はHALbedがHALコールバックを実装するため、アプリケーション側で同名の関数を定義する必要はありません。
+
+アプリケーション側でHALコールバックを一元管理する場合は、`HALBED_MANUAL_CAN_CB` を `halbed` ターゲットに定義し、HALbedの自動実装を無効にします。その場合は、アプリケーション側のFIFO 0/1用HALコールバックから、対応するハンドルを使って `HALbed::callback::callback()` を呼び出してください。両方で同じHALコールバックを定義すると、リンク時に多重定義になります。
 
 ### CubeMX の設定
 1. **使用するピンを設定**
@@ -138,6 +150,8 @@ CAN送信が可能かどうかを確認
 
 ## 注意事項
 - 割り込み処理内での長時間の処理やブロッキング処理は避ける
+- 受信したメッセージをコールバック内で処理するか、必要な情報を別のバッファへ退避して次の受信に備える
+- `attach()` の `fifo` 引数と、HALコールバックで処理するFIFO番号を一致させる
 
 ---
 

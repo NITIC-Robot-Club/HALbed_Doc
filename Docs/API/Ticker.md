@@ -46,9 +46,27 @@ Ticker(TIM_HandleTypeDef* htim, uint32_t max_arr = 65535, uint32_t priority = 0)
 ##### `void detach()`
 登録中の割込みを停止（登録解除はcallbackクラス側で管理）
 
+#### `HALBED_MANUAL_TIM_CB` を使う場合
+
+通常はHALbedが `HAL_TIM_PeriodElapsedCallback()` を提供します。アプリケーション側でタイマー割り込みをまとめて扱う場合は、アプリケーションターゲットに `HALBED_MANUAL_TIM_CB` を定義してください。対象タイマのHALハンドルを使って、登録済みコールバックを呼び出します。
+
+```cpp
+extern "C" void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    HALbed::callback::callback<void()>(
+        reinterpret_cast<intptr_t>(htim));
+}
+```
+
 ---
 
 ## 使用方法
+
+## タイマー割り込みの仕組み
+
+`attach()`、`attach_ms()`、`attach_us()` は指定したタイマーを更新割り込みで動作させ、`HAL_TIM_PeriodElapsedCallback()` を経由して登録関数を呼び出します。通常はHALbedがこのHALコールバックを実装するため、アプリケーション側で同名の関数を定義する必要はありません。
+
+CubeMXで対象タイマーの更新割り込みとIRQHandlerを有効にしてください。アプリケーション側でHALコールバックを管理する場合は、`HALBED_MANUAL_TIM_CB` をアプリケーションターゲットに定義し、`HAL_TIM_PeriodElapsedCallback()` から `HALbed::callback::callback<void()>(reinterpret_cast<intptr_t>(htim))` を呼び出します。
 
 1. Tickerクラスのインスタンス作成
    ```cpp
@@ -70,6 +88,8 @@ Ticker(TIM_HandleTypeDef* htim, uint32_t max_arr = 65535, uint32_t priority = 0)
 ## 注意事項
 - 使用タイマが16bitまたは32bitに応じた設定を行うこと
 - 割込み停止後もcallbackの管理状況を確認すること
+- 割り込みコンテキストで実行されるため、登録関数では長時間の待ち処理やブロッキング処理を避ける
+- 割り込みとメインループで共有する変数には、必要に応じて `volatile` や排他処理を使用する
 
 ---
 

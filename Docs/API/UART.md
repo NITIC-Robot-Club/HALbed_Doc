@@ -55,6 +55,20 @@ UART(UART_HandleTypeDef* huart);
 > - `fn` : コールバック関数
 > - `priority` : コールバックの優先度
 
+#### `HALBED_MANUAL_UART_CB` を使う場合
+
+通常はHALbedが `HAL_UART_RxCpltCallback()` を提供します。アプリケーション側でこのHALコールバックを管理したい場合だけ、`halbed` ターゲットに `HALBED_MANUAL_UART_CB` を定義してください。HALbed側の自動実装が無効になるため、アプリケーション側のコールバックから次の処理を呼び出します。
+
+```cpp
+extern "C" void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+    HALbed::callback::callback<void()>(
+        reinterpret_cast<intptr_t>(huart));
+}
+```
+
+この定義を使う場合、アプリケーション側とHALbed側の両方で `HAL_UART_RxCpltCallback()` を定義しないでください。多重定義となり、リンクに失敗します。
+
 ## 使用方法
 ### CubeIDEの設定
 
@@ -87,14 +101,17 @@ UART(UART_HandleTypeDef* huart);
    ```
 
 ## コールバック関数の設定
-このライブラリでは、HALの割り込みを利用して非同期処理が可能です。
-受信割り込みのハンドラに関数を登録するには、以下のように記述します。
+UARTの受信割り込みは、STM32のIRQHandlerからHALの受信完了コールバックを経由して、`attach()` で登録した関数へ通知されます。通常はHALbedが `HAL_UART_RxCpltCallback()` を実装するため、アプリケーション側で同名の関数を定義する必要はありません。
+
+受信割り込みを使う場合は、受信バッファを指定して `enableRxInt()` を呼び出したあと、受信完了時の処理を `attach()` に登録します。
 
 ```cpp
 uart.attach(UARTread, 0);
 ```
 
 登録したコールバック関数は、データ受信時に自動で呼び出されます。
+
+受信完了後は、コールバック内で必要な処理を行い、次の受信に備えて再度 `enableRxInt()` を呼び出してください。アプリケーション側でHALコールバックを管理する構成にする場合は、`HALBED_MANUAL_UART_CB` を定義し、`HAL_UART_RxCpltCallback()` から `HALbed::callback::callback<void()>(reinterpret_cast<intptr_t>(huart))` を呼び出します。
 
 ## 注意事項
 - 本ライブラリはSTM32環境を前提として設計
