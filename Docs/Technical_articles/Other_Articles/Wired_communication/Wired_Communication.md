@@ -55,6 +55,21 @@ thumbnail:
 
 ---
 
+## 詳細記事
+
+図付きの詳細解説は、次の記事から参照できます。
+
+- [I2Cのプルアップ抵抗の役割と値の決め方](./pullup-resistor)
+- [CANコントローラとCANトランシーバの違い](./01-controller-and-transceiver)
+- [CANの終端抵抗の役割](./02-termination-resistor)
+- [CAN / CAN FD入門 第1編：ネットワークの基本](./03-network-basics)
+- [CAN / CAN FD入門 第2編：差動信号と配線](./04-differential-signaling)
+- [CAN / CAN FD入門 第3編：フレーム形式](./05-frame-format)
+- [CAN / CAN FD入門 第4編：調停とエラー](./06-arbitration-and-errors)
+- [CAN / CAN FD入門 第5編：CAN FDの概要](./07-can-fd-overview)
+- [CAN / CAN FD入門 第6編：デバッグ手順](./08-can-debugging)
+- [CAN / CAN FD入門 第7編：CAN FDフレーム](./09-can-fd-frame)
+
 ## UART
 
 ### 概要
