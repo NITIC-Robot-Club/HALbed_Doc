@@ -98,10 +98,12 @@ const rows = computed(() => [
 
 .torque-tool__shell {
   width: min(100%, 720px);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 14px;
-  background: var(--vp-c-bg);
-  padding: 1rem;
+  border: 0;
+  border-top: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid var(--vp-c-divider);
+  border-radius: 0;
+  background: transparent;
+  padding: 1.25rem 0;
 }
 
 .torque-tool__header {
@@ -162,10 +164,11 @@ const rows = computed(() => [
   min-width: 0;
   box-sizing: border-box;
   height: 36px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 10px;
-  padding: 0.35rem 0.7rem;
-  background: var(--vp-c-bg);
+  border: 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--vp-c-text-1) 24%, transparent);
+  border-radius: 0;
+  padding: 0.55rem 0.1rem;
+  background: color-mix(in srgb, var(--vp-c-text-1) 4%, transparent);
   color: var(--vp-c-text-1);
   font-size: 0.92rem;
 }
@@ -185,10 +188,11 @@ const rows = computed(() => [
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.55rem 0.7rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 10px;
-  background: var(--vp-c-bg-soft);
+  padding: 0.75rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+  border-radius: 0;
+  background: transparent;
 }
 
 .torque-tool__primary {
@@ -216,10 +220,11 @@ const rows = computed(() => [
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.5rem 0.7rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 10px;
-  background: var(--vp-c-bg-soft);
+  padding: 0.75rem 0;
+  border: 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+  border-radius: 0;
+  background: transparent;
 }
 
 .torque-tool__row span {

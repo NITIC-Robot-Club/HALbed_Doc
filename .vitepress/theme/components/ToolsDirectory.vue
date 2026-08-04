@@ -166,7 +166,7 @@ const groups = [
 }
 
 .tools-directory__item:first-child { border-top: 0; }
-.tools-directory__item:hover { color: var(--vp-c-brand-1); padding-left: 0.35rem; }
+.tools-directory__item:hover { color: var(--vp-c-brand-1); padding-left: 0.35rem; background: color-mix(in srgb, var(--vp-c-brand-soft) 32%, transparent); }
 .tools-directory__item:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 4px; }
 
 .tools-directory__item-body { display: grid; gap: 0.2rem; }

@@ -495,9 +495,10 @@ onBeforeUnmount(() => {
 .can-calculator__card {
   width: 100%;
   box-sizing: border-box;
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 6px;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid var(--vp-c-divider);
   box-shadow: none;
   padding: 1.5rem;
 }
@@ -530,6 +531,8 @@ onBeforeUnmount(() => {
 
 .can-calculator__header h2 {
   margin: 0;
+  font-size: 1.18rem;
+  line-height: 1.35;
 }
 
 .can-calculator__lead {
@@ -548,11 +551,11 @@ onBeforeUnmount(() => {
   display: inline-flex;
   --switch-pad: 0.3rem;
   --switch-gap: 0.26rem;
-  gap: var(--switch-gap);
-  padding: var(--switch-pad);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 999px;
-  background: var(--vp-c-bg-soft);
+  gap: 0.9rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
   width: fit-content;
   isolation: isolate;
   touch-action: none;
@@ -560,13 +563,7 @@ onBeforeUnmount(() => {
 }
 
 .can-calculator__mode-thumb {
-  position: absolute;
-  inset: var(--switch-pad) auto var(--switch-pad) var(--switch-pad);
-  width: calc((100% - (var(--switch-pad) * 2) - var(--switch-gap)) / 2);
-  border-radius: 999px;
-  background: var(--vp-c-brand-3);
-  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: 0;
+  display: none;
 }
 
 .can-calculator__mode-thumb.is-fd {
@@ -575,13 +572,12 @@ onBeforeUnmount(() => {
 
 .can-calculator__mode-button {
   position: relative;
-  z-index: 1;
   display: grid;
   gap: 0.14rem;
   border: 0;
-  border-radius: 999px;
-  padding: 0.58rem 0.95rem;
-  min-width: 118px;
+  border-radius: 0;
+  padding: 0.2rem 0 0.45rem;
+  min-width: 92px;
   background: transparent;
   color: var(--vp-c-text-2);
   text-align: left;
@@ -607,11 +603,17 @@ onBeforeUnmount(() => {
 }
 
 .can-calculator__mode-button:hover {
-  transform: translateY(-1px);
+  color: var(--vp-c-text-1);
+}
+
+.can-calculator__mode-button + .can-calculator__mode-button {
+  border-left: 1px solid var(--vp-c-divider);
+  padding-left: 1rem;
 }
 
 .can-calculator__mode-button.is-active {
-  color: var(--vp-c-white);
+  color: var(--vp-c-brand-1);
+  border-bottom: 2px solid var(--vp-c-brand-1);
 }
 
 .can-calculator__mode-button.is-active small {
@@ -652,18 +654,19 @@ onBeforeUnmount(() => {
 
 .can-calculator__field input {
   width: 100%;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 12px;
-  padding: 0.78rem 0.9rem;
-  background: var(--vp-c-bg-soft);
+  border: 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+  border-radius: 0;
+  padding: 0.78rem 0.55rem;
+  background: color-mix(in srgb, var(--vp-c-text-1) 5%, transparent);
   color: var(--vp-c-text-1);
 }
 
 .can-calculator__phase-card {
-  padding: 1rem;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 16px;
-  background: var(--vp-c-bg-soft);
+  padding: 1rem 0;
+  border: 0;
+  border-top: 1px solid var(--vp-c-divider);
+  background: transparent;
 }
 
 .can-calculator__phase-header {
@@ -693,28 +696,33 @@ onBeforeUnmount(() => {
 
 .can-calculator__actions {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
 }
 
 .can-calculator__button {
   border: 0;
-  border-radius: 12px;
-  padding: 0.9rem 1.15rem;
-  background: var(--vp-c-brand-3);
-  color: var(--vp-c-white);
+  border-bottom: 2px solid var(--vp-c-brand-1);
+  border-radius: 0;
+  width: min(100%, 220px);
+  padding: 0.8rem 1.25rem;
+  background: transparent;
+  color: var(--vp-c-brand-1);
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  text-align: center;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .can-calculator__button:hover {
-  background: var(--vp-c-brand-2);
+  background: color-mix(in srgb, var(--vp-c-brand-1) 10%, transparent);
+  color: var(--vp-c-brand-2);
 }
 
 .can-calculator__error {
   margin: 0;
   padding: 0.85rem 1rem;
-  border-radius: 12px;
+  border-left: 3px solid var(--vp-c-danger-1);
+  border-radius: 0;
   background: var(--vp-c-danger-soft);
   color: var(--vp-c-danger-1);
 }
