@@ -353,6 +353,44 @@ export default {
       }
     }
   },
+  "/Docs/Technical_articles/MCU_Doc/dc-motor-slow-start.md": {
+    "title": "DCモーターのスロースタート",
+    "description": "DCモーターに、停止状態からいきなり最大出力を与える。",
+    "relativePath": "Docs/Technical_articles/MCU_Doc/dc-motor-slow-start.md",
+    "frontmatter": {
+      "tags": [
+        "モーター制御",
+        "DCモーター",
+        "用語解説"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/MCU_Doc/pullup-and-pulldown.md": {
+    "title": "正しいプルアップとプルダウン",
+    "description": "スイッチをGPIO入力へ接続したのに、押していないときの値がHighになったりLowになったりする。",
+    "relativePath": "Docs/Technical_articles/MCU_Doc/pullup-and-pulldown.md",
+    "frontmatter": {
+      "tags": [
+        "GPIO",
+        "プルアップ",
+        "プルダウン",
+        "電子回路",
+        "入門"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/MCU_Doc/register-access.md": {
+    "title": "レジスタを叩くとは？",
+    "description": "「レジスタを叩く」という表現は、マイコン開発でよく使われる俗語です。",
+    "relativePath": "Docs/Technical_articles/MCU_Doc/register-access.md",
+    "frontmatter": {
+      "tags": [
+        "MCU",
+        "レジスタ",
+        "入門"
+      ]
+    }
+  },
   "/Docs/Technical_articles/Other_Articles.md": {
     "title": "その他の記事",
     "description": "",
@@ -361,6 +399,123 @@ export default {
       "title": "その他の記事",
       "aside": "false",
       "pageClass": "technical-articles-wide"
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wired_communication/01-controller-and-transceiver.md": {
+    "title": "CANコントローラとCANトランシーバの違い",
+    "description": "CAN通信を始めたばかりのころは、「CAN対応マイコンなのに、なぜ別のICが必要なのだろう」と疑問に思うことがあります。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/01-controller-and-transceiver.md",
+    "frontmatter": {
+      "tags": [
+        "有線通信",
+        "CAN",
+        "入門"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wired_communication/02-termination-resistor.md": {
+    "title": "CANの終端抵抗の役割",
+    "description": "CAN通信では、CANH と CANL の2本の線を使って信号を送ります。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/02-termination-resistor.md",
+    "frontmatter": {
+      "tags": [
+        "有線通信",
+        "CAN",
+        "入門"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wired_communication/03-network-basics.md": {
+    "title": "CAN / CAN FD入門 第1編",
+    "description": "複数のマイコンに、同じセンサー値を届けたい。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/03-network-basics.md",
+    "frontmatter": {
+      "tags": [
+        "CAN",
+        "CAN FD",
+        "通信",
+        "入門"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wired_communication/04-differential-signaling.md": {
+    "title": "CAN / CAN FD入門 第2編",
+    "description": "CANの論理値は、1本の線の電圧だけでは決まりません。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/04-differential-signaling.md",
+    "frontmatter": {
+      "tags": [
+        "CAN",
+        "物理層",
+        "差動信号",
+        "終端抵抗"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wired_communication/05-frame-format.md": {
+    "title": "CAN / CAN FD入門 第3編",
+    "description": "オシロスコープでCANバスを見ると、0と1が連続しているだけに見えます。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/05-frame-format.md",
+    "frontmatter": {
+      "tags": [
+        "CAN",
+        "CANフレーム",
+        "CRC",
+        "ACK",
+        "ビットスタッフィング"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wired_communication/06-arbitration-and-errors.md": {
+    "title": "CAN / CAN FD入門 第4編",
+    "description": "CANでは、複数ノードが同じ瞬間に送信を始めても構いません。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/06-arbitration-and-errors.md",
+    "frontmatter": {
+      "tags": [
+        "CAN",
+        "調停",
+        "エラー処理",
+        "バスオフ"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wired_communication/07-can-fd-overview.md": {
+    "title": "CAN / CAN FD入門 第5編",
+    "description": "Classical CANは信頼性の高い通信ですが、一つのフレームで送れるデータは最大8 byteです。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/07-can-fd-overview.md",
+    "frontmatter": {
+      "tags": [
+        "CAN FD",
+        "CAN",
+        "BRS",
+        "DLC"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wired_communication/08-can-debugging.md": {
+    "title": "CAN / CAN FD入門 第6編",
+    "description": "CANが動かないとき、原因はソフトウェアとは限りません。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/08-can-debugging.md",
+    "frontmatter": {
+      "tags": [
+        "CAN",
+        "CAN FD",
+        "設計",
+        "デバッグ"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wired_communication/09-can-fd-frame.md": {
+    "title": "CAN / CAN FD入門 第7編",
+    "description": "CAN FDは「データを64 byteまで増やしたCAN」と説明されることがあります。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/09-can-fd-frame.md",
+    "frontmatter": {
+      "tags": [
+        "CAN FD",
+        "CANフレーム",
+        "BRS",
+        "DLC",
+        "CRC"
+      ]
     }
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/Sbus.md": {
@@ -420,6 +575,18 @@ export default {
         "description": "有線通信の違いをざっくり掴める入門記事です。",
         "order": 10
       }
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wired_communication/pullup-resistor.md": {
+    "title": "I2Cのプルアップ抵抗の役割と値の決め方",
+    "description": "I2Cを初めて使うとき、「SCLとSDAに抵抗を付けるのはなぜ？」と思うことがあります。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/pullup-resistor.md",
+    "frontmatter": {
+      "tags": [
+        "有線通信",
+        "I2C",
+        "入門"
+      ]
     }
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/t10j_SIF_Port.md": {

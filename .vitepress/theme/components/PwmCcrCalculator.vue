@@ -298,11 +298,12 @@ function formatNumber(value: number, digits: number): string {
 
 .pwm-ccr-calculator__shell {
   width: min(100%, 920px);
-  background: var(--vp-c-bg);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 18px;
-  box-shadow: 0 10px 40px rgba(15, 23, 42, 0.06);
-  padding: 1.5rem;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--vp-c-divider);
+  border-bottom: 1px solid var(--vp-c-divider);
+  box-shadow: none;
+  padding: 1.5rem 0;
 }
 
 .pwm-ccr-calculator__header {
@@ -334,10 +335,11 @@ function formatNumber(value: number, digits: number): string {
 }
 
 .pwm-ccr-calculator__card {
-  background: var(--vp-c-bg-soft);
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 6px;
-  padding: 1.25rem;
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--vp-c-divider);
+  border-radius: 0;
+  padding: 1.25rem 0;
 }
 
 .pwm-ccr-calculator__card h3 {
@@ -387,8 +389,9 @@ function formatNumber(value: number, digits: number): string {
   min-width: 0;
   box-sizing: border-box;
   height: 48px;
-  border: 1px solid var(--vp-c-divider);
-  border-radius: 6px;
+  border: 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+  border-radius: 0;
   padding: 0.75rem 0.85rem;
   background: var(--vp-c-bg);
   color: var(--vp-c-text-1);
@@ -408,7 +411,8 @@ function formatNumber(value: number, digits: number): string {
 
 .pwm-ccr-calculator__notice {
   margin: 0;
-  border-radius: 4px;
+  border-left: 3px solid currentColor;
+  border-radius: 0;
   padding: 0.8rem 0.95rem;
 }
 

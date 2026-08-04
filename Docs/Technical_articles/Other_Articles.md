@@ -25,3 +25,10 @@ const sections: HomeThumbnailSection[] = [
   back-link="/Docs/Technical_articles/Article_Home"
   :sections="sections"
 />
+
+## 低レイヤー通信・制御の詳細記事
+
+今回追加した図付き記事は、既存の分類へ配置しています。
+
+- [有線通信の基本](/Docs/Technical_articles/Other_Articles/Wired_communication/Wired_Communication)
+- [DCモーターのスロースタート](/Docs/Technical_articles/MCU_Doc/dc-motor-slow-start)
