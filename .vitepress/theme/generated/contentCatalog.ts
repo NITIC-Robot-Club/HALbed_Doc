@@ -21,6 +21,12 @@ export default {
     "relativePath": "Docs/API/CAN.md",
     "frontmatter": {}
   },
+  "/Docs/API/CANFD.md": {
+    "title": "CAN FD",
+    "description": "このライブラリは、STM32 HAL の FDCAN 機能を利用した CAN FD 通信クラスを提供する。",
+    "relativePath": "Docs/API/CANFD.md",
+    "frontmatter": {}
+  },
   "/Docs/API/CANMessage.md": {
     "title": "HALbed::CANMessage",
     "description": "CANMessageクラスは、CAN通信のメッセージを定義します。",
@@ -29,7 +35,7 @@ export default {
   },
   "/Docs/API/Callback.md": {
     "title": "Callback Library",
-    "description": "このライブラリは、コールバック関数を簡単に管理するためのC++ライブラリ",
+    "description": "Callback は、HALbed の各APIが割り込みで発生したイベントをユーザー関数へ橋渡しするための内部ライブラリです。UARTハンドルやCANハンドル、タイマハンドルなどを識別子としてコールバックを登録し、HALのコールバックから対応する関数を呼び出します。",
     "relativePath": "Docs/API/Callback.md",
     "frontmatter": {}
   },
@@ -415,12 +421,6 @@ export default {
         "order": 10
       }
     }
-  },
-  "/Docs/Technical_articles/Other_Articles/Wired_communication/images/communication_diagram_plan.md": {
-    "title": "有線通信図の作成計画",
-    "description": "このページは、Wiredcommunication/images にある通信図を作り直すときの設計メモです。",
-    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/images/communication_diagram_plan.md",
-    "frontmatter": {}
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/t10j_SIF_Port.md": {
     "title": "T10J S.I/Fポートを使ってスイッチ状態を読み出したかった話",
