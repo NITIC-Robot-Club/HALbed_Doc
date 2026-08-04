@@ -32,4 +32,4 @@ const sections: HomeThumbnailSection[] = [
 
 - [有線通信の基本](/Docs/Technical_articles/Other_Articles/Wired_communication/Wired_Communication)
 - [DCモーターのスロースタート](/Docs/Technical_articles/MCU_Doc/dc-motor-slow-start)
-- [DC/DCコンバータの役割](/Docs/Technical_articles/MCU_Doc/dc-dc-converter)
+- [LiPoバッテリーの定格電圧](/Docs/Technical_articles/Other_Articles/lipo-battery-voltage)

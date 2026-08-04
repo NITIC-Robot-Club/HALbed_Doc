@@ -347,20 +347,6 @@ export default {
       }
     }
   },
-  "/Docs/Technical_articles/MCU_Doc/dc-dc-converter.md": {
-    "title": "DC/DCコンバータの役割",
-    "description": "12 Vのバッテリーから、5 Vのセンサーと3.3 Vのマイコンを動かしたい。",
-    "relativePath": "Docs/Technical_articles/MCU_Doc/dc-dc-converter.md",
-    "frontmatter": {
-      "tags": [
-        "DC/DC",
-        "電源回路",
-        "降圧",
-        "昇圧",
-        "スイッチング電源"
-      ]
-    }
-  },
   "/Docs/Technical_articles/MCU_Doc/dc-motor-slow-start.md": {
     "title": "DCモーターのスロースタート",
     "description": "DCモーターに、停止状態からいきなり最大出力を与える。",
@@ -615,6 +601,20 @@ export default {
         "description": "T10J背面のS.I/Fポートからスイッチ状態を読み出せるか試したしたメモ",
         "order": 1
       }
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/lipo-battery-voltage.md": {
+    "title": "LiPoバッテリーの定格電圧",
+    "description": "ロボットで使用するLiPoバッテリーは、セルを直列に接続した「○S」という表記で呼ばれます。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/lipo-battery-voltage.md",
+    "frontmatter": {
+      "tags": [
+        "電源",
+        "バッテリー",
+        "LiPo",
+        "ロボット",
+        "入門"
+      ]
     }
   },
   "/Docs/Technical_articles/Tutorials_articles/CubeIDE_Tutorial.md": {
