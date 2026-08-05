@@ -411,6 +411,67 @@ export default {
       "pageClass": "technical-articles-wide"
     }
   },
+  "/Docs/Technical_articles/Other_Articles/Control_Libraries/Control_Libraries.md": {
+    "title": "制御ライブラリ",
+    "description": "コントローラーや受信機の入力をSTM32から扱うためのライブラリをまとめています。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Control_Libraries/Control_Libraries.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "制御ライブラリ"
+      ],
+      "thumbnail": {
+        "targets": [
+          "article-home",
+          "other-home"
+        ],
+        "description": "コントローラーや受信機の入力をSTM32から扱うためのライブラリをまとめています。",
+        "order": 30
+      }
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Control_Libraries/PS3_sbdbt_cube_lib.md": {
+    "title": "PS3-S.B.D.B.T.受信ライブラリ",
+    "description": "PS3-S.B.D.B.T.の受信データをSTM32Cube/HALプロジェクトで扱う方法を説明します。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Control_Libraries/PS3_sbdbt_cube_lib.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "制御ライブラリ",
+        "コントローラー",
+        "UART"
+      ],
+      "thumbnail": {
+        "targets": [
+          "article-home",
+          "other-home"
+        ],
+        "description": "PS3-S.B.D.B.T.の受信データをSTM32Cube/HALプロジェクトで扱う方法を説明します。",
+        "order": 31
+      }
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Control_Libraries/T10J_SBUS_cube_lib.md": {
+    "title": "T10J S.BUS受信ライブラリ",
+    "description": "Futaba T10JのS.BUS入力を16チャンネルの操作値として扱う方法を説明します。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Control_Libraries/T10J_SBUS_cube_lib.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "制御ライブラリ",
+        "コントローラー",
+        "有線通信"
+      ],
+      "thumbnail": {
+        "targets": [
+          "article-home",
+          "other-home"
+        ],
+        "description": "Futaba T10JのS.BUS入力を16チャンネルの操作値として扱う方法を説明します。",
+        "order": 32
+      }
+    }
+  },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/01-controller-and-transceiver.md": {
     "title": "CANコントローラとCANトランシーバの違い",
     "description": "CAN通信を始めたばかりのころは、「CAN対応マイコンなのに、なぜ別のICが必要なのだろう」と疑問に思うことがあります。",
