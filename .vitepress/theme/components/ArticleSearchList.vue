@@ -258,6 +258,7 @@ const sortedArticles = computed(() => {
 .article-search-list__grid {
   display: grid;
   gap: 0.85rem;
+  padding-top: 1rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   border-top: 1px solid var(--vp-c-divider);
 }
