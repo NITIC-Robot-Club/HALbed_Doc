@@ -111,7 +111,7 @@ function openSearch(): void {
 
     <section class="article-discovery__archive-cta" aria-labelledby="archive-title">
       <div>
-        <p class="article-discovery__eyebrow">記事が決まっている場合</p>
+        <p class="article-discovery__eyebrow">記事一覧</p>
         <h2 id="archive-title">29記事を一覧から探す</h2>
         <p>キーワード検索、並び替え、詳細表示に対応しています。</p>
       </div>
@@ -124,7 +124,7 @@ function openSearch(): void {
 .article-discovery { width: min(100%, 1240px); margin: 0 auto; padding: 0 0 4rem; color: var(--vp-c-text-1); }
 .article-discovery__hero { padding: clamp(1.6rem, 4vw, 3.1rem) 0 2rem; border-bottom: 1px solid var(--vp-c-divider); }
 .article-discovery__hero-copy { max-width: 43rem; }
-.article-discovery__eyebrow { margin: 0 0 .55rem; color: var(--vp-c-brand-1); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.article-discovery__eyebrow { margin: 0 0 .55rem; color: var(--vp-c-brand-1); font-size: .82rem; font-weight: 700; letter-spacing: .08em; }
 .article-discovery h1, .article-discovery h2 { margin: 0; letter-spacing: -.035em; }
 .article-discovery h1 { font-size: clamp(2rem, 5vw, 3.35rem); line-height: 1.12; }
 .article-discovery__lead { max-width: 44rem; margin: 1rem 0 0; color: var(--vp-c-text-2); font-size: 1rem; line-height: 1.8; }
@@ -136,15 +136,15 @@ function openSearch(): void {
 .article-discovery__search button { flex: 0 0 auto; border: 0; border-radius: .3rem; padding: .6rem .95rem; color: #fff; background: var(--vp-c-brand-3); cursor: pointer; font: inherit; font-size: .85rem; font-weight: 700; }
 .article-discovery__search button:hover { background: var(--vp-c-brand-2); }
 .article-discovery__hero-links { display: flex; flex-wrap: wrap; gap: 1.15rem; margin-top: 1rem; }
-.article-discovery__hero-links a, .article-discovery__section-heading a { color: var(--vp-c-brand-1); font-size: .84rem; text-decoration: none; }
+.article-discovery__hero-links a, .article-discovery__section-heading a { color: var(--vp-c-brand-1); font-size: .92rem; text-decoration: none; }
 .article-discovery__hero-links a:hover, .article-discovery__section-heading a:hover { text-decoration: underline; }
 .article-discovery__hero-links span, .article-discovery__section-heading span { margin-left: .15rem; }
 .article-discovery__overview { display: flex; align-items: center; gap: 1.3rem; padding: 1.1rem 0 2rem; border-bottom: 1px solid var(--vp-c-divider); }
 .article-discovery__overview div { display: inline-flex; align-items: baseline; gap: .35rem; padding-right: 1.3rem; border-right: 1px solid var(--vp-c-divider); }
 .article-discovery__overview div:nth-child(3) { border-right: 0; }
 .article-discovery__overview strong { color: var(--vp-c-text-1); font-size: 1.25rem; line-height: 1; }
-.article-discovery__overview span { color: var(--vp-c-text-2); font-size: .8rem; }
-.article-discovery__overview p { margin: 0 0 0 auto; color: var(--vp-c-text-2); font-size: .86rem; }
+.article-discovery__overview span { color: var(--vp-c-text-2); font-size: .9rem; }
+.article-discovery__overview p { margin: 0 0 0 auto; color: var(--vp-c-text-2); font-size: .94rem; }
 .article-discovery__topics { padding: 2.35rem 0 2.4rem; }
 .article-discovery__section-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: .8rem; }
 .article-discovery__section-heading a { font-weight: 600; }
@@ -152,21 +152,21 @@ function openSearch(): void {
 .article-discovery__topic-grid { border-top: 1px solid var(--vp-c-divider); }
 .article-discovery__topic { display: grid; grid-template-columns: 2.5rem minmax(9rem, .8fr) minmax(12rem, 1.5fr) auto; align-items: center; gap: 1rem; padding: 1rem .15rem; border-bottom: 1px solid var(--vp-c-divider); color: var(--vp-c-text-1); text-decoration: none; }
 .article-discovery__topic:hover { padding-left: .45rem; color: var(--vp-c-brand-1); background: var(--vp-c-bg-soft); }
-.article-discovery__topic-label { color: var(--vp-c-text-3); font-size: .78rem; font-variant-numeric: tabular-nums; }
+.article-discovery__topic-label { color: var(--vp-c-text-3); font-size: .86rem; font-variant-numeric: tabular-nums; }
 .article-discovery__topic strong { font-size: 1rem; }
-.article-discovery__topic small { color: var(--vp-c-text-2); line-height: 1.5; }
-.article-discovery__topic-count { color: var(--vp-c-text-2); font-size: .8rem; white-space: nowrap; }
+.article-discovery__topic small { color: var(--vp-c-text-2); font-size: .95rem; line-height: 1.5; }
+.article-discovery__topic-count { color: var(--vp-c-text-2); font-size: .9rem; white-space: nowrap; }
 .article-discovery__topic-count b { margin-left: .25rem; color: var(--vp-c-brand-1); font-size: 1rem; }
 .article-discovery__tag-row { display: grid; grid-template-columns: 12rem 1fr; gap: 1.5rem; align-items: start; padding: 1.2rem 0 2.25rem; border-top: 1px solid var(--vp-c-divider); }
 .article-discovery__tag-row h2 { font-size: 1.05rem; }
 .article-discovery__tags { display: flex; flex-wrap: wrap; gap: .35rem .85rem; }
-.article-discovery__tags a { color: var(--vp-c-brand-1); font-size: .84rem; text-decoration: none; }
+.article-discovery__tags a { color: var(--vp-c-brand-1); font-size: .92rem; text-decoration: none; }
 .article-discovery__tags a:hover { text-decoration: underline; }
-.article-discovery__tags span { margin-left: .2rem; color: var(--vp-c-text-3); font-size: .72rem; }
+.article-discovery__tags span { margin-left: .2rem; color: var(--vp-c-text-3); font-size: .82rem; }
 .article-discovery__tags .article-discovery__all-tags { font-weight: 600; }
 .article-discovery__archive-cta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.35rem 0; border-top: 1px solid var(--vp-c-divider); border-bottom: 1px solid var(--vp-c-divider); }
 .article-discovery__archive-cta h2 { font-size: 1.25rem; }
-.article-discovery__archive-cta p:last-child { margin: .4rem 0 0; color: var(--vp-c-text-2); font-size: .86rem; }
+.article-discovery__archive-cta p:last-child { margin: .4rem 0 0; color: var(--vp-c-text-2); font-size: .94rem; }
 .article-discovery__archive-button { flex: 0 0 auto; color: var(--vp-c-brand-1); font-size: .88rem; font-weight: 700; text-decoration: none; }
 .article-discovery__archive-button:hover { text-decoration: underline; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
