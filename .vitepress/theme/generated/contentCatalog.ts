@@ -603,20 +603,6 @@ export default {
       }
     }
   },
-  "/Docs/Technical_articles/Other_Articles/lipo-battery-voltage.md": {
-    "title": "LiPoバッテリーの定格電圧",
-    "description": "ロボットで使用するLiPoバッテリーは、セルを直列に接続した「○S」という表記で呼ばれます。",
-    "relativePath": "Docs/Technical_articles/Other_Articles/lipo-battery-voltage.md",
-    "frontmatter": {
-      "tags": [
-        "電源",
-        "バッテリー",
-        "LiPo",
-        "ロボット",
-        "入門"
-      ]
-    }
-  },
   "/Docs/Technical_articles/Tutorials_articles/CubeIDE_Tutorial.md": {
     "title": "Cube IDE の使い方",
     "description": "プロジェクト作成から HALbed の追加までを段階的に説明します。",
