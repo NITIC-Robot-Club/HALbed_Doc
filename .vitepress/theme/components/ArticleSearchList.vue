@@ -257,7 +257,7 @@ const sortedArticles = computed(() => {
 .article-search-list__grid {
   display: grid;
   gap: 0.85rem;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   border-top: 1px solid var(--vp-c-divider);
 }
 
@@ -290,6 +290,28 @@ const sortedArticles = computed(() => {
   border-radius: 0;
   padding: 0.12rem 0;
   background: transparent;
+}
+
+.article-search-list__grid:not(.is-detail) :deep(.article-card) {
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 0.45rem;
+  background: var(--vp-c-bg);
+}
+
+.article-search-list__grid:not(.is-detail) :deep(.article-card__body) {
+  padding: 1rem;
+}
+
+@media (min-width: 1100px) {
+  .article-search-list__grid:not(.is-detail) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .article-search-list__grid:not(.is-detail) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .article-search-list__empty {

@@ -412,12 +412,24 @@ onMounted(() => {
 .tag-explorer__grid {
   display: grid;
   gap: 0.85rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .tag-explorer__grid :deep(.article-card) {
   border-radius: 0.45rem;
   box-shadow: none;
+}
+
+@media (min-width: 1100px) {
+  .tag-explorer__grid:not(.is-detail) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .tag-explorer__grid:not(.is-detail) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .tag-explorer__grid.is-detail {
