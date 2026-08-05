@@ -10,10 +10,10 @@ const developmentArticles = computed(() =>
 )
 
 const topics = [
-  { id: 'start', label: '01', title: '入門・チュートリアル', description: '環境構築から、最初のLED制御まで。', tag: 'チュートリアル' },
-  { id: 'mcu', label: '02', title: 'マイコンと HAL', description: 'STM32の基礎とHALの考え方を整理。', tag: 'MCU' },
-  { id: 'can', label: '03', title: 'CAN / CAN FD', description: 'フレーム、調停、エラー処理を順番に。', tag: 'CAN' },
-  { id: 'wired', label: '04', title: '有線通信', description: 'UART、I2C、S.BUSの違いと配線。', tag: '有線通信' },
+  { id: 'start', label: '01', title: '入門・チュートリアル', description: '環境構築とLED制御に関する記事', tag: 'チュートリアル' },
+  { id: 'mcu', label: '02', title: 'マイコンと HAL', description: 'STM32とHALの基礎に関する記事', tag: 'MCU' },
+  { id: 'can', label: '03', title: 'CAN / CAN FD', description: 'CAN / CAN FDに関する記事', tag: 'CAN' },
+  { id: 'wired', label: '04', title: '有線通信', description: 'UART、I2C、S.BUSに関する記事', tag: '有線通信' },
 ] as const
 
 const searchQuery = ref('')
@@ -69,7 +69,7 @@ function openSearch(): void {
       <div><strong>{{ developmentArticles.length }}</strong><span>記事</span></div>
       <div><strong>{{ topics.length }}</strong><span>カテゴリ</span></div>
       <div><strong>{{ tagCount }}</strong><span>タグ</span></div>
-      <p>調べたいことが決まっていない場合は、目的から選べます。</p>
+      <p>カテゴリを選択すると、該当する記事を表示します。</p>
     </section>
 
     <section class="article-discovery__topics" aria-labelledby="topic-title">
@@ -99,7 +99,7 @@ function openSearch(): void {
     <section class="article-discovery__tag-row" aria-labelledby="tag-title">
       <div>
         <p class="article-discovery__eyebrow">タグから探す</p>
-        <h2 id="tag-title">よく使われるタグ</h2>
+        <h2 id="tag-title">主要タグ</h2>
       </div>
       <div class="article-discovery__tags">
         <a v-for="item in popularTags" :key="item.tag" :href="withBase(`/tags/${encodeURIComponent(item.tag)}`)">
@@ -112,8 +112,8 @@ function openSearch(): void {
     <section class="article-discovery__archive-cta" aria-labelledby="archive-title">
       <div>
         <p class="article-discovery__eyebrow">記事一覧</p>
-        <h2 id="archive-title">29記事を一覧から探す</h2>
-        <p>キーワード検索、並び替え、詳細表示に対応しています。</p>
+        <h2 id="archive-title">記事一覧</h2>
+        <p>キーワード検索、並び替え、詳細表示を利用できます。</p>
       </div>
       <a class="article-discovery__archive-button" :href="getArchiveHref()">記事一覧を開く <span>→</span></a>
     </section>
