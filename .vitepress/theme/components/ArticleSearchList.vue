@@ -136,7 +136,7 @@ const sortedArticles = computed(() => {
 <style scoped>
 .article-search-list {
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
   margin-top: 1.5rem;
 }
 
@@ -183,7 +183,8 @@ const sortedArticles = computed(() => {
   flex-wrap: wrap;
   align-items: end;
   justify-content: space-between;
-  gap: 0.75rem;
+  column-gap: 1.5rem;
+  row-gap: 0.85rem;
   padding: 1rem;
   border: 1px solid var(--vp-c-divider);
   border-radius: 1rem;
