@@ -100,10 +100,22 @@ function getBackHref(): string {
 .tag-page__grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .tag-page__grid.is-detail {
   grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 1100px) {
+  .tag-page__grid:not(.is-detail) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .tag-page__grid:not(.is-detail) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 </style>

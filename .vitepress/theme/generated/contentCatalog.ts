@@ -21,6 +21,12 @@ export default {
     "relativePath": "Docs/API/CAN.md",
     "frontmatter": {}
   },
+  "/Docs/API/CANFD.md": {
+    "title": "CAN FD",
+    "description": "このライブラリは、STM32 HAL の FDCAN 機能を利用した CAN FD 通信クラスを提供する。",
+    "relativePath": "Docs/API/CANFD.md",
+    "frontmatter": {}
+  },
   "/Docs/API/CANMessage.md": {
     "title": "HALbed::CANMessage",
     "description": "CANMessageクラスは、CAN通信のメッセージを定義します。",
@@ -29,7 +35,7 @@ export default {
   },
   "/Docs/API/Callback.md": {
     "title": "Callback Library",
-    "description": "このライブラリは、コールバック関数を簡単に管理するためのC++ライブラリ",
+    "description": "Callback は、HALbed の各APIが割り込みで発生したイベントをユーザー関数へ橋渡しするための内部ライブラリです。UARTハンドルやCANハンドル、タイマハンドルなどを識別子としてコールバックを登録し、HALのコールバックから対応する関数を呼び出します。",
     "relativePath": "Docs/API/Callback.md",
     "frontmatter": {}
   },
@@ -147,6 +153,16 @@ export default {
     "relativePath": "Docs/Technical_articles/About_MCU_Articles.md",
     "frontmatter": {
       "title": "マイコン基礎",
+      "aside": "false",
+      "pageClass": "technical-articles-wide"
+    }
+  },
+  "/Docs/Technical_articles/All_articles.md": {
+    "title": "開発資料の記事一覧",
+    "description": "",
+    "relativePath": "Docs/Technical_articles/All_articles.md",
+    "frontmatter": {
+      "title": "開発資料の記事一覧",
       "aside": "false",
       "pageClass": "technical-articles-wide"
     }
@@ -601,20 +617,6 @@ export default {
         "description": "T10J背面のS.I/Fポートからスイッチ状態を読み出せるか試したしたメモ",
         "order": 1
       }
-    }
-  },
-  "/Docs/Technical_articles/Other_Articles/lipo-battery-voltage.md": {
-    "title": "LiPoバッテリーの定格電圧",
-    "description": "ロボットで使用するLiPoバッテリーは、セルを直列に接続した「○S」という表記で呼ばれます。",
-    "relativePath": "Docs/Technical_articles/Other_Articles/lipo-battery-voltage.md",
-    "frontmatter": {
-      "tags": [
-        "電源",
-        "バッテリー",
-        "LiPo",
-        "ロボット",
-        "入門"
-      ]
     }
   },
   "/Docs/Technical_articles/Tutorials_articles/CubeIDE_Tutorial.md": {
