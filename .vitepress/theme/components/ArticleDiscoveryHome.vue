@@ -68,7 +68,6 @@ function openSearch(): void {
       <div><strong>{{ developmentArticles.length }}</strong><span>記事</span></div>
       <div><strong>{{ topics.length }}</strong><span>カテゴリ</span></div>
       <div><strong>{{ tagCount }}</strong><span>タグ</span></div>
-      <p>カテゴリを選択すると、該当する記事を表示します。</p>
     </section>
 
     <section class="article-discovery__topics" aria-labelledby="topic-title">
