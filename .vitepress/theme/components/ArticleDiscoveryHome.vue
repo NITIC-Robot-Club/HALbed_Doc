@@ -95,15 +95,16 @@ function openSearch(): void {
     </section>
 
     <section class="article-discovery__tag-row" aria-labelledby="tag-title">
-      <div>
+      <div class="article-discovery__tag-heading">
         <p class="article-discovery__eyebrow">タグから探す</p>
         <h2 id="tag-title">主要タグ</h2>
+        <a :href="withBase('/tags/')">すべてのタグを見る →</a>
       </div>
       <div class="article-discovery__tags">
         <a v-for="item in popularTags" :key="item.tag" :href="withBase(`/tags/${encodeURIComponent(item.tag)}`)">
-          {{ item.tag }} <span>{{ item.count }}</span>
+          <span>{{ item.tag }}</span>
+          <span class="article-discovery__tag-count">{{ item.count }}件</span>
         </a>
-        <a class="article-discovery__all-tags" :href="withBase('/tags/')">すべて見る →</a>
       </div>
     </section>
 
@@ -156,18 +157,21 @@ function openSearch(): void {
 .article-discovery__topic-count { color: var(--vp-c-text-2); font-size: .9rem; white-space: nowrap; }
 .article-discovery__topic-count b { margin-left: .25rem; color: var(--vp-c-brand-1); font-size: 1rem; }
 .article-discovery__tag-row { display: grid; grid-template-columns: 12rem 1fr; gap: 1.5rem; align-items: start; padding: 1.2rem 0 2.25rem; border-top: 1px solid var(--vp-c-divider); }
+.article-discovery__tag-heading { display: grid; align-content: start; gap: .45rem; }
 .article-discovery__tag-row h2 { font-size: 1.05rem; }
-.article-discovery__tags { display: flex; flex-wrap: wrap; gap: .35rem .85rem; }
-.article-discovery__tags a { color: var(--vp-c-brand-1); font-size: .92rem; text-decoration: none; }
-.article-discovery__tags a:hover { text-decoration: underline; }
-.article-discovery__tags span { margin-left: .2rem; color: var(--vp-c-text-3); font-size: .82rem; }
-.article-discovery__tags .article-discovery__all-tags { font-weight: 600; }
+.article-discovery__tag-heading > a { color: var(--vp-c-brand-1); font-size: .88rem; text-decoration: none; }
+.article-discovery__tag-heading > a:hover { text-decoration: underline; }
+.article-discovery__tags { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--vp-c-divider); }
+.article-discovery__tags a { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .7rem .35rem; border-bottom: 1px solid var(--vp-c-divider); color: var(--vp-c-text-1); font-size: .92rem; text-decoration: none; }
+.article-discovery__tags a:hover { color: var(--vp-c-brand-1); background: var(--vp-c-bg-soft); }
+.article-discovery__tag-count { color: var(--vp-c-text-2); font-size: .84rem; white-space: nowrap; }
 .article-discovery__archive-cta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.35rem 0; border-top: 1px solid var(--vp-c-divider); border-bottom: 1px solid var(--vp-c-divider); }
 .article-discovery__archive-cta h2 { font-size: 1.25rem; }
 .article-discovery__archive-cta p:last-child { margin: .4rem 0 0; color: var(--vp-c-text-2); font-size: .94rem; }
 .article-discovery__archive-button { flex: 0 0 auto; color: var(--vp-c-brand-1); font-size: .88rem; font-weight: 700; text-decoration: none; }
 .article-discovery__archive-button:hover { text-decoration: underline; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-@media (max-width: 640px) { .article-discovery { padding-bottom: 2rem; } .article-discovery__overview { align-items: start; flex-wrap: wrap; } .article-discovery__overview p { flex-basis: 100%; margin: .25rem 0 0; } .article-discovery__section-heading, .article-discovery__archive-cta { align-items: start; flex-direction: column; } .article-discovery__topic { grid-template-columns: 2rem minmax(0, 1fr) auto; gap: .65rem; } .article-discovery__topic small { grid-column: 2 / -1; } .article-discovery__topic-count { grid-column: 2 / -1; } .article-discovery__tag-row { grid-template-columns: 1fr; gap: .75rem; } }
+@media (min-width: 1100px) { .article-discovery__tags { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .article-discovery { padding-bottom: 2rem; } .article-discovery__overview { align-items: start; flex-wrap: wrap; } .article-discovery__overview p { flex-basis: 100%; margin: .25rem 0 0; } .article-discovery__section-heading, .article-discovery__archive-cta { align-items: start; flex-direction: column; } .article-discovery__topic { grid-template-columns: 2rem minmax(0, 1fr) auto; gap: .65rem; } .article-discovery__topic small { grid-column: 2 / -1; } .article-discovery__topic-count { grid-column: 2 / -1; } .article-discovery__tag-row { grid-template-columns: 1fr; gap: .75rem; } .article-discovery__tags { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .article-discovery__topic { transition: none; } }
 </style>
