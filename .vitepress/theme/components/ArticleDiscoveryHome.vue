@@ -47,8 +47,8 @@ function openSearch(): void {
     <section class="article-discovery__hero" aria-labelledby="discovery-title">
       <div class="article-discovery__hero-copy">
         <p class="article-discovery__eyebrow">開発資料</p>
-        <h1 id="discovery-title">必要な情報を、<br><span>迷わず探す。</span></h1>
-        <p class="article-discovery__lead">HALbed と STM32 の開発資料を、キーワード・目的・タグから探せます。</p>
+        <h1 id="discovery-title">開発資料を探す</h1>
+        <p class="article-discovery__lead">HALbed と STM32 の開発資料を、キーワード・目的・タグから検索できます。</p>
       </div>
 
       <form class="article-discovery__search" role="search" @submit.prevent="openSearch">
@@ -127,7 +127,6 @@ function openSearch(): void {
 .article-discovery__eyebrow { margin: 0 0 .55rem; color: var(--vp-c-brand-1); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .article-discovery h1, .article-discovery h2 { margin: 0; letter-spacing: -.035em; }
 .article-discovery h1 { font-size: clamp(2rem, 5vw, 3.35rem); line-height: 1.12; }
-.article-discovery h1 span { color: var(--vp-c-text-2); }
 .article-discovery__lead { max-width: 44rem; margin: 1rem 0 0; color: var(--vp-c-text-2); font-size: 1rem; line-height: 1.8; }
 .article-discovery__search { display: flex; align-items: center; gap: .65rem; max-width: 47rem; margin-top: 1.6rem; padding: .35rem .35rem .35rem .8rem; border: 1px solid var(--vp-c-divider); border-radius: .45rem; background: var(--vp-c-bg); }
 .article-discovery__search:focus-within { border-color: var(--vp-c-brand-1); box-shadow: 0 0 0 3px color-mix(in srgb, var(--vp-c-brand-1) 14%, transparent); }
