@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { withBase } from 'vitepress'
 import ArticleCard from './ArticleCard.vue'
 import ArticleDisplayModeToggle from './ArticleDisplayModeToggle.vue'
@@ -11,6 +11,10 @@ const { mode, isDetailMode } = useArticleDisplayMode()
 
 const query = ref('')
 const sortOrder = ref<'updated-desc' | 'order-asc' | 'title-asc'>('updated-desc')
+
+onMounted(() => {
+  query.value = new URLSearchParams(window.location.search).get('q') ?? ''
+})
 
 const normalizedQuery = computed(() => query.value.trim().toLowerCase())
 
@@ -253,11 +257,39 @@ const sortedArticles = computed(() => {
 .article-search-list__grid {
   display: grid;
   gap: 0.85rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: minmax(0, 1fr);
+  border-top: 1px solid var(--vp-c-divider);
 }
 
 .article-search-list__grid.is-detail {
   grid-template-columns: minmax(0, 1fr);
+}
+
+.article-search-list__grid :deep(.article-card) {
+  border: 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+}
+
+.article-search-list__grid :deep(.article-card:hover) {
+  border-color: var(--vp-c-divider);
+  box-shadow: none;
+  transform: none;
+  background: var(--vp-c-bg-soft);
+}
+
+.article-search-list__grid :deep(.article-card__body) {
+  padding: 1rem 0;
+}
+
+.article-search-list__grid :deep(.article-card__tag) {
+  border: 0;
+  border-bottom: 1px solid var(--vp-c-divider);
+  border-radius: 0;
+  padding: 0.12rem 0;
+  background: transparent;
 }
 
 .article-search-list__empty {
