@@ -12,8 +12,7 @@ const developmentArticles = computed(() =>
 const topics = [
   { id: 'start', label: '01', title: '入門・チュートリアル', description: '環境構築とLED制御に関する記事', tag: 'チュートリアル' },
   { id: 'mcu', label: '02', title: 'マイコンと HAL', description: 'STM32とHALの基礎に関する記事', tag: 'MCU' },
-  { id: 'can', label: '03', title: 'CAN / CAN FD', description: 'CAN / CAN FDに関する記事', tag: 'CAN' },
-  { id: 'wired', label: '04', title: '有線通信', description: 'UART、I2C、S.BUSに関する記事', tag: '有線通信' },
+  { id: 'wired', label: '03', title: '有線通信', description: 'UART、I2C、S.BUSに関する記事', tag: '有線通信' },
 ] as const
 
 const searchQuery = ref('')
