@@ -25,6 +25,11 @@ const visibleTags = computed(() => {
 
 const filteredPages = computed(() => getArticlesByTags(selectedTags.value))
 
+function getAvailableTagCount(tag: string): number {
+  const tagsWithoutCurrent = selectedTags.value.filter((selectedTag) => selectedTag !== tag)
+  return getArticlesByTags([...tagsWithoutCurrent, tag]).length
+}
+
 const hasSelection = computed(() => selectedTags.value.length > 0)
 
 function syncUrl(): void {
@@ -87,12 +92,12 @@ onMounted(() => {
 
     <div class="tag-explorer__searchbar">
       <label class="tag-explorer__search">
-        <span class="tag-explorer__search-label">タグ検索</span>
+        <span class="tag-explorer__search-label">タグを検索</span>
         <input
           v-model="searchQuery"
           class="tag-explorer__search-input"
           type="search"
-          placeholder="タグ名で探す"
+          placeholder="例：CAN、入門、通信"
         />
       </label>
 
@@ -115,7 +120,8 @@ onMounted(() => {
     </div>
 
     <div class="tag-explorer__meta">
-      <span>{{ filteredPages.length }} 記事</span>
+      <strong>{{ filteredPages.length }} 件</strong>
+      <span>の記事が見つかりました</span>
       <span v-if="selectedTags.length">
         {{ selectedTags.join(' + ') }} で絞り込み中
       </span>
@@ -141,7 +147,7 @@ onMounted(() => {
           @click="toggleTag(item.tag)"
         >
           <span class="tag-explorer__filter-name">{{ item.tag }}</span>
-          <span class="tag-explorer__filter-count">{{ item.count }}</span>
+          <span class="tag-explorer__filter-count">{{ getAvailableTagCount(item.tag) }}</span>
         </button>
       </div>
     </div>
@@ -153,6 +159,12 @@ onMounted(() => {
         :article="page"
         :displayMode="mode"
       />
+    </div>
+
+    <div v-if="!filteredPages.length" class="tag-explorer__empty">
+      <strong>条件に一致する記事がありません</strong>
+      <p>タグを減らすか、検索条件を変えてみてください。</p>
+      <button type="button" @click="clearTags">選択をリセット</button>
     </div>
   </section>
 </template>
@@ -316,6 +328,11 @@ onMounted(() => {
   font-size: 0.9rem;
 }
 
+.tag-explorer__meta strong {
+  color: var(--vp-c-text-1);
+  font-size: 1.05rem;
+}
+
 .tag-explorer__filters-panel {
   display: grid;
   gap: 0.9rem;
@@ -411,6 +428,36 @@ onMounted(() => {
 .tag-explorer__filter.is-active .tag-explorer__filter-count {
   color: var(--vp-c-brand-1);
   background: color-mix(in srgb, var(--vp-c-brand-1) 12%, transparent);
+}
+
+.tag-explorer__empty {
+  display: grid;
+  justify-items: start;
+  gap: 0.45rem;
+  padding: 2.25rem 1.25rem;
+  border: 1px dashed var(--vp-c-divider);
+  border-radius: 1rem;
+  background: var(--vp-c-bg-soft);
+}
+
+.tag-explorer__empty p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+}
+
+.tag-explorer__empty button {
+  margin-top: 0.35rem;
+  border: 0;
+  padding: 0;
+  color: var(--vp-c-brand-1);
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tag-explorer__empty button:hover {
+  text-decoration: underline;
 }
 
 .tag-explorer__grid {

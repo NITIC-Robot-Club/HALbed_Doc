@@ -1,9 +1,8 @@
 ---
 tags:
-  - 技術記事
+  - 開発資料
   - MCU
   - 入門
-  - タイマー
 thumbnail:
   targets:
     - article-home

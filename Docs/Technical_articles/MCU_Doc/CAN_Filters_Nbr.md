@@ -3,7 +3,7 @@ tags:
   - 開発資料
   - MCU
   - CAN
-  - CANFD
+  - CAN FD
   - 用語解説
 thumbnail:
   targets:
@@ -13,7 +13,7 @@ thumbnail:
   order: 30
 ---
 
-# CAN/CANFD Filters Nbr 
+# CAN/CAN FD Filters Nbr
 
 ## 概要
 

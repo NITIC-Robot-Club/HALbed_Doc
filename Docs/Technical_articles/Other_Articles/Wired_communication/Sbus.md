@@ -2,6 +2,7 @@
 tags:
     - 開発資料
     - 有線通信
+    - S.BUS
     - 入門
 thumbnail:
   targets:

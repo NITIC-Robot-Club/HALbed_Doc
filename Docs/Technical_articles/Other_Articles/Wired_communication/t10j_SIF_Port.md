@@ -1,9 +1,7 @@
 ---
 tags:
-  - Futaba
-  - T10J
   - S.BUS
-  - メモ
+  - 有線通信
 thumbnail:
   targets:
     - other-home

@@ -12,7 +12,7 @@ const sections: HomeThumbnailSection[] = [
     title: '有線通信',
     description: 'ロボット製作でよく使う通信方式の基礎をまとめています。',
     filters: [
-      { includeTags: ['有線通信', '入門'] },
+      { includeTags: ['開発資料', '有線通信', '入門'] },
     ],
   },
 ]

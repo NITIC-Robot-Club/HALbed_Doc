@@ -1,7 +1,8 @@
 ---
 tags:
     - 開発資料
-    - HAL
+    - MCU
+    - HALbed
 thumbnail:
   targets:
     - article-home

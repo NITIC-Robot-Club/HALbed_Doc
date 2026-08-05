@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { withBase } from 'vitepress'
 import type { HomeThumbnailSection } from '../home-thumbnail'
+import { useTags } from '../composables/useTags'
 
 const props = defineProps<{
   eyebrow?: string
@@ -9,7 +10,10 @@ const props = defineProps<{
   target: string
   sections: HomeThumbnailSection[]
   backLink?: string
+  showStats?: boolean
 }>()
+
+const { articles, tagSummaries } = useTags()
 </script>
 
 <template>
@@ -18,6 +22,21 @@ const props = defineProps<{
       <p class="technical-article-category__eyebrow">{{ props.eyebrow ?? 'Technical Articles' }}</p>
       <h1>{{ props.title }}</h1>
       <p class="technical-article-category__lead">{{ props.description }}</p>
+
+      <div v-if="props.showStats" class="technical-article-category__stats" aria-label="開発資料の概要">
+        <div>
+          <strong>{{ articles.length }}</strong>
+          <span>記事</span>
+        </div>
+        <div>
+          <strong>{{ tagSummaries.length }}</strong>
+          <span>タグ</span>
+        </div>
+        <div>
+          <strong>4</strong>
+          <span>カテゴリ</span>
+        </div>
+      </div>
 
       <nav class="technical-article-category__links" aria-label="開発資料の関連リンク">
         <a v-if="props.backLink" :href="withBase(props.backLink)">
@@ -97,6 +116,37 @@ const props = defineProps<{
 
 .technical-article-category__links a:hover {
   text-decoration: underline;
+}
+
+.technical-article-category__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.35rem;
+  margin-top: 1.55rem;
+}
+
+.technical-article-category__stats div {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding-right: 1.35rem;
+  border-right: 1px solid var(--vp-c-divider);
+}
+
+.technical-article-category__stats div:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.technical-article-category__stats strong {
+  color: var(--vp-c-brand-1);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.technical-article-category__stats span {
+  color: var(--vp-c-text-2);
+  font-size: 0.82rem;
 }
 
 .technical-article-category__links a:focus-visible {

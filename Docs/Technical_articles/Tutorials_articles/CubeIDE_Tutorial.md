@@ -2,8 +2,7 @@
 tags:
   - 開発資料
   - チュートリアル
-  - CubeIDE
-  - 開発環境
+  - STM32
 thumbnail:
   targets:
     - article-home

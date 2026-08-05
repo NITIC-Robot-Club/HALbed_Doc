@@ -1,9 +1,9 @@
 ---
 tags:
+    - 開発資料
+    - 有線通信
     - CAN FD
     - CAN
-    - BRS
-    - DLC
 ---
 
 # CAN / CAN FD入門 第5編

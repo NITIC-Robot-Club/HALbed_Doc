@@ -18,8 +18,8 @@ const sections: HomeThumbnailSection[] = [
     maxItems: 4,
     filters: [
       { includeTags: ['開発資料', 'MCU'] },
-      { includeTags: ['開発資料', 'HAL'] },
-      { includeTags: ['開発資料', '設定'] },
+      { includeTags: ['開発資料', 'HALbed'] },
+      { includeTags: ['開発資料', 'STM32'] },
     ],
   },
   {
@@ -49,5 +49,6 @@ const sections: HomeThumbnailSection[] = [
     description="HALbed と STM32 を使った開発に役立つ記事を、目的別にまとめています。"
     target="article-home"
     :sections="sections"
+    :show-stats="true"
   />
 </template>

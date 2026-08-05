@@ -20,30 +20,30 @@ const sections: HomeThumbnailSection[] = [
     title: 'HAL',
     description: 'HAL を使った最初の動作確認に役立つ記事を集めています。',
     filters: [
-      { includeTags: ['開発資料', 'HAL'] },
+      { includeTags: ['開発資料', 'HALbed'] },
     ],
   },
   {
     title: 'HALbed の機能',
     description: 'Callback、CircularBuffer、LogManagerなど、HALbedの機能を実装例とともに紹介します。',
     filters: [
-      { includeTags: ['技術記事', 'HALbed'] },
+      { includeTags: ['開発資料', 'HALbed'] },
     ],
   },
   {
     title: 'CAN / FDCAN',
     description: 'CAN 周辺の設定や送受信で、つまずきやすいポイントを整理しています。',
     filters: [
-      { includeTags: ['開発資料', 'MCU', 'CAN', 'CANFD', '用語解説'] },
-      { includeTags: ['開発資料', 'MCU', 'CAN', 'CANFD'] },
+      { includeTags: ['開発資料', 'MCU', 'CAN', 'CAN FD', '用語解説'] },
+      { includeTags: ['開発資料', 'MCU', 'CAN', 'CAN FD'] },
     ],
   },
   {
     title: 'CubeIDE / MX の設定',
     description: 'CubeIDE / MX の設定で、特に気をつけたい点をまとめています。',
     filters: [
-      { includeTags: ['開発資料', 'MCU', 'CAN', 'CANFD', '設定'] },
-      { includeTags: ['Nucleo', 'CubeMX', '設定'] },
+      { includeTags: ['開発資料', 'MCU', 'STM32'] },
+      { includeTags: ['開発資料', 'STM32'] },
     ],
   },
 ]

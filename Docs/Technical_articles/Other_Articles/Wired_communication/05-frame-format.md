@@ -1,10 +1,11 @@
 ---
 tags:
+    - 開発資料
+    - 有線通信
     - CAN
+    - CAN FD
     - CANフレーム
     - CRC
-    - ACK
-    - ビットスタッフィング
 ---
 
 # CAN / CAN FD入門 第3編

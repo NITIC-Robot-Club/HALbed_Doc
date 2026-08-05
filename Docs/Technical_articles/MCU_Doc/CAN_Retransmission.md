@@ -3,7 +3,7 @@ tags:
   - 開発資料
   - MCU
   - CAN
-  - CANFD
+  - CAN FD
 thumbnail:
   targets:
     - article-home

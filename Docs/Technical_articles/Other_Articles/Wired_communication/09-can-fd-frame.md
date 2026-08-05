@@ -1,9 +1,9 @@
 ---
 tags:
+    - 開発資料
+    - 有線通信
     - CAN FD
     - CANフレーム
-    - BRS
-    - DLC
     - CRC
 ---
 

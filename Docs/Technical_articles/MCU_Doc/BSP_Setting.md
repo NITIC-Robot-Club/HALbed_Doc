@@ -1,9 +1,8 @@
 ---
 tags:
     - 開発資料
-    - Nucleo
-    - CubeMX
-    - 設定
+    - MCU
+    - STM32
 thumbnail:
   targets:
     - article-home

@@ -2,6 +2,9 @@
 tags:
     - 開発資料
     - チュートリアル
+    - MCU
+    - GPIO
+    - HALbed
 thumbnail:
   targets:
     - article-home

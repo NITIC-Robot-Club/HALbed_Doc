@@ -3,6 +3,7 @@ tags:
     - 開発資料
     - チュートリアル
     - 入門
+    - MCU
 thumbnail:
   targets:
     - article-home
