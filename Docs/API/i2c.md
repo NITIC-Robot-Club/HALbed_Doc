@@ -9,6 +9,21 @@
 ### `I2C`
 I2Cクラスは、I2C通信を行うための機能を提供します。
 
+#### I2Cアドレスの扱い
+アドレスを受け取る通常のメソッドでは、データシートに記載されている
+**7ビットアドレス**を指定します。指定されたアドレスは内部で左に1ビットシフトしてから
+HALへ渡されます。
+
+HALへ渡す形式に変換済みのアドレスを直接指定したい場合は、
+`writeShiftedAddress()` を使用してください。
+
+| メソッド | アドレス形式 | 例 |
+| --- | --- | --- |
+| `write()` | 7ビット。内部で `<< 1` | `0x28` |
+| `writeShiftedAddress()` | シフト済み。内部では変換しない | `0x50` |
+
+`writeShiftedAddress()` に指定するアドレスには、I2CのR/Wビットを含めません。
+
 #### コンストラクタ
 ```cpp
 I2C(I2C_HandleTypeDef *hi2c);
@@ -18,10 +33,29 @@ I2C(I2C_HandleTypeDef *hi2c);
 #### メソッド
 
 ##### `int write(uint8_t address, const uint8_t *data, uint16_t length)`
-I2Cスレーブへデータを書き込む
+7ビットアドレスを使用してI2Cスレーブへデータを書き込む。
+アドレスは内部で左に1ビットシフトされます。
 > - `address` : スレーブデバイスの7ビットアドレス
 > - `data` : 送信データ
 > - `length` : 送信データの長さ
+
+---
+
+##### `int writeShiftedAddress(uint16_t address, const uint8_t *data, uint16_t length)`
+シフト済みのアドレスを使用してI2Cスレーブへデータを書き込む。
+アドレスは内部で変換されず、そのままHALへ渡されます。
+>
+> - `address` : シフト済みアドレス（R/Wビットは含めない）
+> - `data` : 送信データ
+> - `length` : 送信データの長さ
+
+例：7ビットアドレス `0x28` に相当するシフト済みアドレスは `0x50` です。
+
+```cpp
+uint8_t data[] = {0x01, 0x02};
+i2c.write(0x28, data, sizeof(data));
+i2c.writeShiftedAddress(0x50, data, sizeof(data));
+```
 
 ---
 
@@ -138,6 +172,9 @@ I2Cデバイスの準備状態を確認
    ```cpp
    uint8_t data[] = {0x01, 0x02};
    i2c.write(0x50, data, sizeof(data));
+
+   // シフト済みアドレスを直接指定する場合
+   i2c.writeShiftedAddress(0xA0, data, sizeof(data));
    ```
 
 3. メモリの書き込む (読み込む)
@@ -186,24 +223,68 @@ I2C  i2c(&hi2c1);
 
 extern "C" void app_main(void) {
     pc.enableRxInt();
- 	pc.xprintf("\033[1;1HScanning I2C bus:\r\n");
+    pc.xprintf("\033[1;1HI2C communication:\r\n");
     while (1) {
-        uint8_t data[2];
-        int result;
-        addr = 0x123;
-        result = i2c.isDeviceReady(addr, 1, 10);
+        const uint8_t addr = 0x28; // 7bitアドレス
+        uint8_t txData = 0x00;
+        uint8_t rxData = 0x00;
+        int result = i2c.isDeviceReady(addr, 1, 10);
         if (result == HAL_OK) {
-            uint8_t txData = 0x00; // Data to send
-            uint8_t rxData;
             i2c.write(addr, &txData, 1);
-            i2c.read (addr, &rxData, 1);
-            pc.xprintf("0x%02X, 0x%x ", addr,rxData);
+            i2c.read(addr, &rxData, 1);
+            pc.xprintf("0x%02X, 0x%02X ", addr, rxData);
         } else {
-            pc.xprintf("failure send\n\r");
+            pc.xprintf("failure send\r\n");
         }
         pc.xprintf("\r\n");
 
         HAL_Delay(1000); // Wait for 1 second before scanning again
+    }
+}
+```
+
+### モータードライバを正転・逆転させる例
+複数のモータードライバ (黒MD) へ同じ指令値を送信し、
+正転、停止、逆転、停止の順番で動作させます。
+
+```cpp
+#include "main.h"
+#include "../../../Library/HALbed/Inc/UART.hpp"
+#include "../../../Library/HALbed/Inc/i2c.hpp"
+#include <cstdint>
+using namespace HALbed;
+
+extern UART_HandleTypeDef huart2;
+extern I2C_HandleTypeDef hi2c1;
+
+UART pc(&huart2);
+I2C  i2c(&hi2c1);
+
+bool sendMDData(uint8_t add, uint8_t duty) {
+    return i2c.writeShiftedAddress(add, &duty, sizeof(duty)) == HAL_OK;
+}
+
+uint8_t md_adds[4] = { 0x00, 0x06, 0x10, 0x14 };
+
+void sendToAllMotorDrivers(uint8_t duty) {
+    for (int i = 0; i < 4; i++) {
+        sendMDData(md_adds[i], duty);
+    }
+}
+
+extern "C" void app_main(void) {
+    while (1) {
+        sendToAllMotorDrivers(0xff); // 正転
+        HAL_Delay(1000);
+
+        sendToAllMotorDrivers(0x80); // 停止
+        HAL_Delay(1000);
+
+        sendToAllMotorDrivers(0x00); // 逆転
+        HAL_Delay(1000);
+
+        sendToAllMotorDrivers(0x80); // 停止
+        HAL_Delay(1000);
     }
 }
 ```
@@ -361,7 +442,7 @@ extern I2C_HandleTypeDef hi2c1;
 UART pc(&huart2);
 I2C i2c(&hi2c1);
 
-#define BNO055_I2C_ADDR  0x28       // 7bitアドレスを左シフト
+#define BNO055_I2C_ADDR  0x28       // 7bitアドレス（DMAメソッドが内部で左シフト）
 #define BNO055_RESET_REG 0x3F       // リセットレジスタ
 #define BNO055_MODE_REG  0x3D       // モードレジスタ
 #define BNO055_EULER_H_LSB 0x1A     // yawのレジスタ
