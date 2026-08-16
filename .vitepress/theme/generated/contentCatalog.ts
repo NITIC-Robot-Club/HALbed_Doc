@@ -69,6 +69,12 @@ export default {
     "relativePath": "Docs/API/Encoder.md",
     "frontmatter": {}
   },
+  "/Docs/API/I2C.md": {
+    "title": "I2C",
+    "description": "このライブラリは、I2C通信を簡単に行うためのクラスを提供します。",
+    "relativePath": "Docs/API/I2C.md",
+    "frontmatter": {}
+  },
   "/Docs/API/LogManager.md": {
     "title": "LogManager",
     "description": "LogManager クラスは、UARTを使ってログを出力するライブラリ。ログレベルやタグフィルタリングを設定でき、ANSIカラーコードを使ってログを色分けする。",
@@ -97,12 +103,6 @@ export default {
     "title": "UART",
     "description": "このライブラリは、UART通信を簡単に扱うためのC++クラスです。",
     "relativePath": "Docs/API/UART.md",
-    "frontmatter": {}
-  },
-  "/Docs/API/i2c.md": {
-    "title": "I2C",
-    "description": "このライブラリは、I2C通信を簡単に行うためのクラスを提供します。",
-    "relativePath": "Docs/API/i2c.md",
     "frontmatter": {}
   },
   "/Docs/FAQ/FAQ_home.md": {
@@ -298,6 +298,19 @@ export default {
         "description": "LED 点滅を通して、HAL と HALbed の違いを感じてみましょう",
         "order": 20
       }
+    }
+  },
+  "/Docs/Technical_articles/MCU_Doc/I2C_address.md": {
+    "title": "STM32 HALに渡すI²Cアドレス",
+    "description": "I²C機器のデータシートのアドレスと、HALに渡すアドレスは違うこともある。",
+    "relativePath": "Docs/Technical_articles/MCU_Doc/I2C_address.md",
+    "frontmatter": {
+      "tags": [
+        "STM32",
+        "I2C",
+        "HAL",
+        "通信"
+      ]
     }
   },
   "/Docs/Technical_articles/MCU_Doc/Interrupt_Basics.md": {
