@@ -825,15 +825,6 @@ export default {
       "title": "トルク計算"
     }
   },
-  "/Docs/Tools/TorqueRpmCalculator.md": {
-    "title": "トルク・回転数 ツール",
-    "description": "",
-    "relativePath": "Docs/Tools/TorqueRpmCalculator.md",
-    "frontmatter": {
-      "layout": "page",
-      "title": "トルク・回転数 ツール"
-    }
-  },
   "/Docs/Tools/TorqueUnitConverter.md": {
     "title": "トルク単位変換",
     "description": "",

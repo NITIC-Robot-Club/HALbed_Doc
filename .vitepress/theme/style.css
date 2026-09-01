@@ -477,43 +477,6 @@
   color: var(--vp-c-brand-1);
 }
 
-.tool-shell .torque-tools-home__grid {
-  gap: 0;
-  border-top: 1px solid var(--vp-c-divider);
-}
-
-.tool-shell .torque-tools-home__card {
-  position: relative;
-  padding: 1rem 2.5rem 1rem 0.25rem;
-  border: 0;
-  border-bottom: 1px solid var(--vp-c-divider);
-  border-radius: 0;
-  background: transparent;
-  transition: color 160ms ease, padding-left 160ms ease;
-}
-
-.tool-shell .torque-tools-home__card::after {
-  position: absolute;
-  right: 0.4rem;
-  top: 50%;
-  width: 0.5rem;
-  height: 0.5rem;
-  border-top: 1.5px solid currentColor;
-  border-right: 1.5px solid currentColor;
-  content: '';
-  transform: translateY(-50%) rotate(45deg);
-}
-
-.tool-shell .torque-tools-home__card:hover {
-  padding-left: 0.55rem;
-  color: var(--vp-c-brand-1);
-}
-
-.tool-shell .torque-tools-home__card:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 3px;
-}
-
 .tools-index-page .VPPage { padding-bottom: 0; }
 .tools-index-page .VPContent { padding: 0; }
 .tools-index-page .VPDoc .container,
@@ -549,8 +512,7 @@
     text-align: left;
   }
 
-  .tool-shell .torque-tool__inline-grid,
-  .tool-shell .torque-tools-home__grid {
+  .tool-shell .torque-tool__inline-grid {
     grid-template-columns: 1fr;
   }
 

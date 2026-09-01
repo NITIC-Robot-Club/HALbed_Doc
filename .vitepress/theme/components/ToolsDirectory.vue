@@ -25,12 +25,6 @@ const groups = [
     description: 'トルク、回転数、出力の関係を計算・変換する',
     tools: [
       {
-        title: 'トルク・回転数を計算する',
-        detail: '単位変換、トルク計算、回転出力の計算から目的に合うものを選べます。',
-        meta: '4 tools',
-        link: '/Docs/Tools/TorqueRpmCalculator',
-      },
-      {
         title: 'トルクの単位を変換する',
         detail: 'N·m、N·cm、kgf·cm を相互に変換します。',
         meta: 'Unit converter',
