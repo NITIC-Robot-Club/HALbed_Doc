@@ -97,7 +97,7 @@ onMounted(() => {
           v-model="searchQuery"
           class="tag-explorer__search-input"
           type="search"
-          placeholder="例：CAN、入門、通信"
+        placeholder="例：CAN、入門、通信、protocol/can"
         />
       </label>
 

@@ -1,3 +1,10 @@
+---
+title: "CircularBuffer"
+aliases:
+  - "CircularBuffer"
+tags:
+  - "API"
+---
 # CircularBuffer
 
 ## 概要

@@ -1,3 +1,10 @@
+---
+title: "CAN"
+aliases:
+  - "CAN"
+tags:
+  - "API"
+---
 # CAN
 
 ## 概要

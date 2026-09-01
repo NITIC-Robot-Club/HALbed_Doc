@@ -1,3 +1,10 @@
+---
+title: "FAQ Home"
+aliases:
+  - "FAQ Home"
+tags:
+  - "FAQ"
+---
 # FAQ Home
 準備中....
 

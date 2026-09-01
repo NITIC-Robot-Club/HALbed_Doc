@@ -4,6 +4,7 @@ title: 計算ツール
 sidebar: false
 aside: false
 pageClass: tools-index-page
+tags:
+  - "ツール"
 ---
-
 <ToolsDirectory />

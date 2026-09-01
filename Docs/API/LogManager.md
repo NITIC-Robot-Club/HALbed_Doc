@@ -1,3 +1,10 @@
+---
+title: "LogManager"
+aliases:
+  - "LogManager"
+tags:
+  - "API"
+---
 # LogManager
 
 ## 概要

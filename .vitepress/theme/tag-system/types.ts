@@ -15,6 +15,7 @@ export interface TagSummary {
 
 export interface FrontmatterRecord {
   title?: string
+  aliases?: string[] | string
   description?: string
   date?: string
   order?: number | string
