@@ -1,3 +1,10 @@
+---
+title: "DigitalIn"
+aliases:
+  - "DigitalIn"
+tags:
+  - "API"
+---
 # DigitalIn
 
 ## 概要

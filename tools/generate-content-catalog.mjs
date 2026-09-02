@@ -1,6 +1,7 @@
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { getTags, parseFrontmatter } from './obsidian-frontmatter.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const output = join(root, '.vitepress/theme/generated/contentCatalog.ts')
@@ -10,61 +11,6 @@ function markdownFiles(directory) {
     const path = join(directory, entry.name)
     return entry.isDirectory() ? markdownFiles(path) : entry.name.endsWith('.md') ? [path] : []
   })
-}
-
-function unquote(value) {
-  const trimmed = value.trim()
-  if ((trimmed.startsWith("'") && trimmed.endsWith("'")) || (trimmed.startsWith('"') && trimmed.endsWith('"'))) {
-    return trimmed.slice(1, -1)
-  }
-  return trimmed
-}
-
-function parseFrontmatter(source) {
-  const match = source.match(/^---\s*\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/)
-  if (!match) return { frontmatter: {}, body: source }
-
-  const frontmatter = {}
-  const lines = match[1].split(/\r?\n/)
-  let section = null
-  let listKey = null
-
-  for (const line of lines) {
-    const topLevel = line.match(/^([\w-]+):\s*(.*)$/)
-    if (topLevel) {
-      const [, key, value] = topLevel
-      section = null
-      listKey = null
-      if (value) {
-        frontmatter[key] = unquote(value)
-      } else if (key === 'tags' || key === 'thumbnail') {
-        frontmatter[key] = key === 'tags' ? [] : {}
-        section = key
-      }
-      continue
-    }
-
-    const nested = line.match(/^\s+([\w-]+):\s*(.*)$/)
-    if (section === 'thumbnail' && nested) {
-      const [, key, value] = nested
-      listKey = null
-      if (value) {
-        frontmatter.thumbnail[key] = key === 'order' ? Number(value) : unquote(value)
-      } else if (key === 'targets') {
-        frontmatter.thumbnail.targets = []
-        listKey = key
-      }
-      continue
-    }
-
-    const item = line.match(/^\s*-\s+(.*)$/)
-    if (item) {
-      if (section === 'tags') frontmatter.tags.push(unquote(item[1]))
-      if (section === 'thumbnail' && listKey === 'targets') frontmatter.thumbnail.targets.push(unquote(item[1]))
-    }
-  }
-
-  return { frontmatter, body: source.slice(match[0].length) }
 }
 
 function textFromMarkdown(markdown) {
@@ -89,6 +35,7 @@ function textFromMarkdown(markdown) {
 function pageEntry(file) {
   const source = readFileSync(file, 'utf8')
   const { frontmatter, body } = parseFrontmatter(source)
+  frontmatter.tags = getTags(source)
   const inferred = textFromMarkdown(body)
   const relativePath = relative(root, file).replaceAll('\\', '/')
 

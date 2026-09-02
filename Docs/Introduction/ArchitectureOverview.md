@@ -1,3 +1,10 @@
+---
+title: "概要"
+aliases:
+  - "概要"
+tags:
+  - "ドキュメント"
+---
 # 概要
 
 HALbedは、HAL（Hardware Abstraction Layer）を抽象化し、より使いやすいインターフェースを提供するためのライブラリです。

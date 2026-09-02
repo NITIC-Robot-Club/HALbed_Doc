@@ -1,3 +1,10 @@
+---
+title: "AnalogIn (ADC)ライブラリ"
+aliases:
+  - "AnalogIn (ADC)ライブラリ"
+tags:
+  - "API"
+---
 # AnalogIn (ADC)ライブラリ
 
 ## 概要

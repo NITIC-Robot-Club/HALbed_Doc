@@ -33,7 +33,7 @@ const tags = computed(() => {
 <template>
   <div v-if="tags.length" class="article-tags" aria-label="記事タグ">
     <a v-for="tag in tags" :key="tag" class="article-tags__item" :href="getTagHref(tag)">
-      {{ tag }}
+      #{{ tag }}
     </a>
   </div>
 </template>

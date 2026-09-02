@@ -6,146 +6,349 @@ export default {
     "description": "",
     "relativePath": "Docs/API/APIHome.md",
     "frontmatter": {
-      "title": "API 一覧"
+      "title": "API 一覧",
+      "tags": [
+        "API"
+      ]
     }
   },
   "/Docs/API/AnalogIn.md": {
     "title": "AnalogIn (ADC)ライブラリ",
     "description": "AnalogIn クラスは、ADCを用いてアナログ入力を取得し、電圧値に変換します。HALライブラリのADC機能を利用し、DMAを使いCPUに負荷をかけないデータ取得も可能です。",
     "relativePath": "Docs/API/AnalogIn.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "AnalogIn (ADC)ライブラリ",
+      "aliases": [
+        "AnalogIn (ADC)ライブラリ"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/CAN.md": {
     "title": "CAN",
     "description": "このライブラリは、HAL を利用した、CAN通信を簡単に扱うためのクラスを提供する",
     "relativePath": "Docs/API/CAN.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "CAN",
+      "aliases": [
+        "CAN"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/CANFD.md": {
     "title": "CAN FD",
     "description": "このライブラリは、STM32 HAL の FDCAN 機能を利用した CAN FD 通信クラスを提供する。",
     "relativePath": "Docs/API/CANFD.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "CAN FD",
+      "aliases": [
+        "CAN FD"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/CANMessage.md": {
     "title": "HALbed::CANMessage",
     "description": "CANMessageクラスは、CAN通信のメッセージを定義します。",
     "relativePath": "Docs/API/CANMessage.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "HALbed::CANMessage",
+      "aliases": [
+        "HALbed::CANMessage"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/Callback.md": {
     "title": "Callback Library",
     "description": "Callback は、HALbed の各APIが割り込みで発生したイベントをユーザー関数へ橋渡しするための内部ライブラリです。UARTハンドルやCANハンドル、タイマハンドルなどを識別子としてコールバックを登録し、HALのコールバックから対応する関数を呼び出します。",
     "relativePath": "Docs/API/Callback.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "Callback Library",
+      "aliases": [
+        "Callback Library"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/CircularBuffer.md": {
     "title": "CircularBuffer",
     "description": "CircularBufferクラスは、循環バッファを実装します。",
     "relativePath": "Docs/API/CircularBuffer.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "CircularBuffer",
+      "aliases": [
+        "CircularBuffer"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/DMA.md": {
     "title": "DMAのモードとリクエスト",
     "description": "> [!note] DMAとは？",
     "relativePath": "Docs/API/DMA.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "DMAのモードとリクエスト",
+      "aliases": [
+        "DMAのモードとリクエスト"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/DigitalIn.md": {
     "title": "DigitalIn",
     "description": "DigitalInクラスは、GPIOポートとピン番号からデジタル入力を実現します。入力状態の読み取りと、割込み用のコールバック設定が可能です。",
     "relativePath": "Docs/API/DigitalIn.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "DigitalIn",
+      "aliases": [
+        "DigitalIn"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/DigitalOut.md": {
     "title": "DigitalOut",
     "description": "DigitalOutクラスは、GPIOポートとピン番号を用いてデジタル出力を実現します。ピンへの出力操作と読み出しが可能です。",
     "relativePath": "Docs/API/DigitalOut.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "DigitalOut",
+      "aliases": [
+        "DigitalOut"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/Encoder.md": {
     "title": "Encoder",
     "description": "このライブラリは、エンコーダを操作するためのC++クラスを提供します。エンコーダのカウント、角度、回転速度などを簡単に取得できます。",
     "relativePath": "Docs/API/Encoder.md",
-    "frontmatter": {}
-  },
-  "/Docs/API/I2C.md": {
-    "title": "I2C",
-    "description": "このライブラリは、I2C通信を簡単に行うためのクラスを提供します。",
-    "relativePath": "Docs/API/I2C.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "Encoder",
+      "aliases": [
+        "Encoder"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/LogManager.md": {
     "title": "LogManager",
     "description": "LogManager クラスは、UARTを使ってログを出力するライブラリ。ログレベルやタグフィルタリングを設定でき、ANSIカラーコードを使ってログを色分けする。",
     "relativePath": "Docs/API/LogManager.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "LogManager",
+      "aliases": [
+        "LogManager"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/PWMOut.md": {
     "title": "PWMOut",
     "description": "PWM信号の生成と制御を行うC++クラス群を提供します。タイマーとDMAの制御に対応し、精密なPWMパルス幅・周波数の設定が可能です。",
     "relativePath": "Docs/API/PWMOut.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "PWMOut",
+      "aliases": [
+        "PWMOut"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/Ticker.md": {
     "title": "Ticker",
     "description": "HALbedライブラリはハードウェアタイマの割込み処理と設定管理を提供します。",
     "relativePath": "Docs/API/Ticker.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "Ticker",
+      "aliases": [
+        "Ticker"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/TimerManager.md": {
     "title": "TimerManager",
     "description": "HALbedライブラリ内のタイマ設定管理クラス。タイマハンドルを用いて、プリスケーラ値や周期の取得・設定、タイマ周期（秒単位）や周波数の計算を行い、ハードウェアへの設定反映を実施する。",
     "relativePath": "Docs/API/TimerManager.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "TimerManager",
+      "aliases": [
+        "TimerManager"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/API/UART.md": {
     "title": "UART",
     "description": "このライブラリは、UART通信を簡単に扱うためのC++クラスです。",
     "relativePath": "Docs/API/UART.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "UART",
+      "aliases": [
+        "UART"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
+  },
+  "/Docs/API/i2c.md": {
+    "title": "I2C",
+    "description": "このライブラリは、I2C通信を簡単に行うためのクラスを提供します。",
+    "relativePath": "Docs/API/i2c.md",
+    "frontmatter": {
+      "title": "I2C",
+      "aliases": [
+        "I2C"
+      ],
+      "tags": [
+        "API"
+      ]
+    }
   },
   "/Docs/FAQ/FAQ_home.md": {
     "title": "FAQ Home",
     "description": "準備中....",
     "relativePath": "Docs/FAQ/FAQ_home.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "FAQ Home",
+      "aliases": [
+        "FAQ Home"
+      ],
+      "tags": [
+        "FAQ"
+      ]
+    }
   },
   "/Docs/Introduction/ArchitectureOverview.md": {
     "title": "概要",
     "description": "HALbedは、HAL（Hardware Abstraction Layer）を抽象化し、より使いやすいインターフェースを提供するためのライブラリです。",
     "relativePath": "Docs/Introduction/ArchitectureOverview.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "概要",
+      "aliases": [
+        "概要"
+      ],
+      "tags": [
+        "ドキュメント"
+      ]
+    }
   },
   "/Docs/Introduction/DirectoryStructure.md": {
     "title": "ディレクトリ構成",
     "description": "appproject/",
     "relativePath": "Docs/Introduction/DirectoryStructure.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "ディレクトリ構成",
+      "aliases": [
+        "ディレクトリ構成"
+      ],
+      "tags": [
+        "ドキュメント"
+      ]
+    }
   },
   "/Docs/Introduction/GettingStarted.md": {
     "title": "インストールと初期設定",
     "description": "このページでは、既存の STM32CubeIDE プロジェクトに HALbed ライブラリを導入する手順を説明します。",
     "relativePath": "Docs/Introduction/GettingStarted.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "インストールと初期設定",
+      "aliases": [
+        "インストールと初期設定"
+      ],
+      "tags": [
+        "ドキュメント"
+      ]
+    }
+  },
+  "/Docs/Introduction/Obsidian.md": {
+    "title": "Obsidianでドキュメントを管理する",
+    "description": "HALbed DocsをObsidianのVaultとして編集・検索・リンクするためのルールです。",
+    "relativePath": "Docs/Introduction/Obsidian.md",
+    "frontmatter": {
+      "title": "Obsidianでドキュメントを管理する",
+      "aliases": [
+        "Obsidian運用"
+      ],
+      "tags": [
+        "HALbed",
+        "ドキュメント運用"
+      ],
+      "description": "HALbed DocsをObsidianのVaultとして編集・検索・リンクするためのルールです。"
+    }
   },
   "/Docs/Introduction/References.md": {
     "title": "参考リンク集",
     "description": "HALbed ドキュメントで参照している外部サイト・資料をまとめています。",
     "relativePath": "Docs/Introduction/References.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "参考リンク集",
+      "aliases": [
+        "参考リンク集"
+      ],
+      "tags": [
+        "ドキュメント"
+      ]
+    }
   },
   "/Docs/Introduction/Trademark_Disclaimer.md": {
     "title": "商標・免責事項",
     "description": "このサイトは、HALbed の使い方や関連する技術情報を共有するための非公式ドキュメントです。以下に記載する会社名、製品名、サービス名およびロゴなどの権利は、それぞれの権利者に帰属します。",
     "relativePath": "Docs/Introduction/Trademark_Disclaimer.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "商標・免責事項",
+      "aliases": [
+        "商標・免責事項"
+      ],
+      "tags": [
+        "ドキュメント"
+      ]
+    }
   },
   "/Docs/Introduction/api-reference.md": {
     "title": "APIリファレンス",
     "description": "このページでは、HALbedライブラリで提供されているAPIを機能別に紹介します。",
     "relativePath": "Docs/Introduction/api-reference.md",
-    "frontmatter": {}
+    "frontmatter": {
+      "title": "APIリファレンス",
+      "aliases": [
+        "APIリファレンス"
+      ],
+      "tags": [
+        "ドキュメント"
+      ]
+    }
   },
   "/Docs/Technical_articles/About_MCU_Articles.md": {
     "title": "マイコン基礎",
@@ -154,7 +357,10 @@ export default {
     "frontmatter": {
       "title": "マイコン基礎",
       "aside": "false",
-      "pageClass": "technical-articles-wide"
+      "pageClass": "technical-articles-wide",
+      "tags": [
+        "開発資料"
+      ]
     }
   },
   "/Docs/Technical_articles/All_articles.md": {
@@ -164,7 +370,10 @@ export default {
     "frontmatter": {
       "title": "開発資料の記事一覧",
       "aside": "false",
-      "pageClass": "technical-articles-wide"
+      "pageClass": "technical-articles-wide",
+      "tags": [
+        "開発資料"
+      ]
     }
   },
   "/Docs/Technical_articles/Article_Home.md": {
@@ -174,7 +383,10 @@ export default {
     "frontmatter": {
       "title": "開発資料",
       "aside": "false",
-      "pageClass": "technical-articles-wide"
+      "pageClass": "technical-articles-wide",
+      "tags": [
+        "開発資料"
+      ]
     }
   },
   "/Docs/Technical_articles/MCU_Doc/BSP_Setting.md": {
@@ -193,7 +405,7 @@ export default {
           "mcu-home"
         ],
         "description": "Nucleo で何故か設定できないとき、\"BSP\"と競合しているかもしれません。",
-        "order": 60
+        "order": "60"
       }
     }
   },
@@ -215,7 +427,7 @@ export default {
           "mcu-home"
         ],
         "description": "CubeMXで設定するときに出てくる\"Filters Nbr\" その意味と設定について解説",
-        "order": 30
+        "order": "30"
       }
     }
   },
@@ -236,7 +448,7 @@ export default {
           "mcu-home"
         ],
         "description": "デフォルトではOffにされている大事な設定。CANを使う前に必ず確認しましょう！",
-        "order": 40
+        "order": "40"
       }
     }
   },
@@ -257,7 +469,7 @@ export default {
           "mcu-home"
         ],
         "description": "HALでCAN送信するときの関数とモードについてまとめています。",
-        "order": 50
+        "order": "50"
       }
     }
   },
@@ -276,7 +488,7 @@ export default {
           "mcu-home"
         ],
         "description": "「小数は精度のいいdouble型一択！」それは大きな落とし穴です。",
-        "order": 10
+        "order": "10"
       }
     }
   },
@@ -296,13 +508,13 @@ export default {
           "mcu-home"
         ],
         "description": "LED 点滅を通して、HAL と HALbed の違いを感じてみましょう",
-        "order": 20
+        "order": "20"
       }
     }
   },
   "/Docs/Technical_articles/MCU_Doc/I2C_address.md": {
     "title": "STM32 HALに渡すI²Cアドレス",
-    "description": "I²C機器のデータシートのアドレスと、HALに渡すアドレスは違うこともある。",
+    "description": "I²C機器のデータシートには、アドレスが 0x14 と書かれていることがあります。",
     "relativePath": "Docs/Technical_articles/MCU_Doc/I2C_address.md",
     "frontmatter": {
       "tags": [
@@ -329,7 +541,7 @@ export default {
           "mcu-home"
         ],
         "description": "イベントへ素早く反応する割り込みの仕組みと、安全な使い方を整理します。",
-        "order": 90
+        "order": "90"
       }
     }
   },
@@ -349,7 +561,7 @@ export default {
           "mcu-home"
         ],
         "description": "PSC、CNT、ARR、CCRから、タイマーが時間を数える仕組みを学びます。",
-        "order": 80
+        "order": "80"
       }
     }
   },
@@ -369,7 +581,7 @@ export default {
           "mcu-home"
         ],
         "description": "データ転送をDMAへ任せ、CPUの負担を減らす理由と注意点を説明します。",
-        "order": 110
+        "order": "110"
       }
     }
   },
@@ -418,7 +630,10 @@ export default {
     "frontmatter": {
       "title": "その他の記事",
       "aside": "false",
-      "pageClass": "technical-articles-wide"
+      "pageClass": "technical-articles-wide",
+      "tags": [
+        "開発資料"
+      ]
     }
   },
   "/Docs/Technical_articles/Other_Articles/Control_Libraries/Control_Libraries.md": {
@@ -436,7 +651,7 @@ export default {
           "other-home"
         ],
         "description": "コントローラーや受信機の入力をSTM32から扱うためのライブラリをまとめています。",
-        "order": 30
+        "order": "30"
       }
     }
   },
@@ -457,7 +672,7 @@ export default {
           "other-home"
         ],
         "description": "PS3-S.B.D.B.T.の受信データをSTM32Cube/HALプロジェクトで扱う方法を説明します。",
-        "order": 31
+        "order": "31"
       }
     }
   },
@@ -478,7 +693,7 @@ export default {
           "other-home"
         ],
         "description": "Futaba T10JのS.BUS入力を16チャンネルの操作値として扱う方法を説明します。",
-        "order": 32
+        "order": "32"
       }
     }
   },
@@ -622,7 +837,7 @@ export default {
           "other-home"
         ],
         "description": "受信機の信号をマイコンで読むための S.BUS の基礎を整理した記事です。",
-        "order": 20
+        "order": "20"
       }
     }
   },
@@ -641,7 +856,7 @@ export default {
           "article-home"
         ],
         "description": "UART / USART / LPUART の違いを整理しています。",
-        "order": 70
+        "order": "70"
       }
     }
   },
@@ -661,7 +876,7 @@ export default {
           "other-home"
         ],
         "description": "有線通信の違いをざっくり掴める入門記事です。",
-        "order": 10
+        "order": "10"
       }
     }
   },
@@ -692,7 +907,7 @@ export default {
           "other-home"
         ],
         "description": "T10J背面のS.I/Fポートからスイッチ状態を読み出せるか試したしたメモ",
-        "order": 1
+        "order": "1"
       }
     }
   },
@@ -704,7 +919,8 @@ export default {
       "tags": [
         "開発資料",
         "チュートリアル",
-        "STM32"
+        "STM32",
+        "include"
       ],
       "thumbnail": {
         "targets": [
@@ -712,7 +928,7 @@ export default {
           "tutorials-home"
         ],
         "description": "プロジェクト作成から HALbed の追加までを段階的に説明します。",
-        "order": 20
+        "order": "20"
       }
     }
   },
@@ -734,7 +950,7 @@ export default {
           "tutorials-home"
         ],
         "description": "入力に応じて出力を変える、基本の制御パターンを確認できます。",
-        "order": 30
+        "order": "30"
       }
     }
   },
@@ -754,7 +970,7 @@ export default {
           "article-home"
         ],
         "description": "マイコンの役割や内部構造の基本を、初学者向けに整理した記事です。",
-        "order": 10
+        "order": "10"
       }
     }
   },
@@ -765,7 +981,10 @@ export default {
     "frontmatter": {
       "title": "チュートリアル",
       "aside": "false",
-      "pageClass": "technical-articles-wide"
+      "pageClass": "technical-articles-wide",
+      "tags": [
+        "開発資料"
+      ]
     }
   },
   "/Docs/Tools/BitTimingCalculator.md": {
@@ -774,7 +993,10 @@ export default {
     "relativePath": "Docs/Tools/BitTimingCalculator.md",
     "frontmatter": {
       "layout": "page",
-      "title": "CAN Bit Timing Calculator"
+      "title": "CAN Bit Timing Calculator",
+      "tags": [
+        "ツール"
+      ]
     }
   },
   "/Docs/Tools/DrivetrainCalculator.md": {
@@ -795,7 +1017,10 @@ export default {
     "relativePath": "Docs/Tools/PowerCalculator.md",
     "frontmatter": {
       "layout": "page",
-      "title": "出力計算"
+      "title": "出力計算",
+      "tags": [
+        "ツール"
+      ]
     }
   },
   "/Docs/Tools/PwmCcrCalculator.md": {
@@ -804,7 +1029,10 @@ export default {
     "relativePath": "Docs/Tools/PwmCcrCalculator.md",
     "frontmatter": {
       "layout": "page",
-      "title": "PWM CCR Calculator"
+      "title": "PWM CCR Calculator",
+      "tags": [
+        "ツール"
+      ]
     }
   },
   "/Docs/Tools/SpeedUnitConverter.md": {
@@ -813,7 +1041,10 @@ export default {
     "relativePath": "Docs/Tools/SpeedUnitConverter.md",
     "frontmatter": {
       "layout": "page",
-      "title": "回転数単位変換"
+      "title": "回転数単位変換",
+      "tags": [
+        "ツール"
+      ]
     }
   },
   "/Docs/Tools/Tools_home.md": {
@@ -825,7 +1056,10 @@ export default {
       "title": "計算ツール",
       "sidebar": "false",
       "aside": "false",
-      "pageClass": "tools-index-page"
+      "pageClass": "tools-index-page",
+      "tags": [
+        "ツール"
+      ]
     }
   },
   "/Docs/Tools/TorqueCalculator.md": {
@@ -834,7 +1068,10 @@ export default {
     "relativePath": "Docs/Tools/TorqueCalculator.md",
     "frontmatter": {
       "layout": "page",
-      "title": "トルク計算"
+      "title": "トルク計算",
+      "tags": [
+        "ツール"
+      ]
     }
   },
   "/Docs/Tools/TorqueUnitConverter.md": {
@@ -843,7 +1080,10 @@ export default {
     "relativePath": "Docs/Tools/TorqueUnitConverter.md",
     "frontmatter": {
       "layout": "page",
-      "title": "トルク単位変換"
+      "title": "トルク単位変換",
+      "tags": [
+        "ツール"
+      ]
     }
   },
   "/index.md": {
@@ -851,7 +1091,17 @@ export default {
     "description": "",
     "relativePath": "index.md",
     "frontmatter": {
-      "layout": "home"
+      "layout": "home",
+      "hero": {
+        "name": "HALbed Docs",
+        "text": "HALbed について知る",
+        "tagline": "HALbed は、STM32 HAL を使いやすい形に整え、開発のはじめの一歩を支えるライブラリです。",
+        "actions": [
+          "theme: brand"
+        ],
+        "link": "/Docs/Introduction/ArchitectureOverview"
+      },
+      "tags": []
     }
   }
 } as const

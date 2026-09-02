@@ -1,3 +1,10 @@
+---
+title: "UART"
+aliases:
+  - "UART"
+tags:
+  - "API"
+---
 # UART
 
 ## 概要

@@ -5,6 +5,7 @@
   "scripts": {
     "docs:dev": "node tools/generate-content-catalog.mjs && vitepress dev",
     "docs:build": "node tools/generate-content-catalog.mjs && vitepress build",
+    "docs:obsidian:migrate": "node tools/migrate-obsidian-metadata.mjs",
     "docs:preview": "vitepress preview"
   }
 }
