@@ -120,6 +120,7 @@ export default defineConfig({
             { text: '回転数単位変換', link: '/Docs/Tools/SpeedUnitConverter' },
             { text: 'トルク計算', link: '/Docs/Tools/TorqueCalculator' },
             { text: '出力計算', link: '/Docs/Tools/PowerCalculator' },
+            { text: '足回り計算', link: '/Docs/Tools/DrivetrainCalculator' },
           ]
         }
       ]

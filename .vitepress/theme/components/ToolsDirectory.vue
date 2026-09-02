@@ -36,6 +36,12 @@ const groups = [
         meta: 'Unit converter',
         link: '/Docs/Tools/SpeedUnitConverter',
       },
+      {
+        title: '足回りのトルク・速度を計算する',
+        detail: 'メカナム／オムニの必要トルク、最高速度、加速度を概算します。',
+        meta: 'Drivetrain',
+        link: '/Docs/Tools/DrivetrainCalculator',
+      },
     ],
   },
 ]

@@ -36,6 +36,10 @@ const PowerCalculator = defineAsyncComponent(
   () => import('./components/PowerCalculator.vue')
 )
 
+const DrivetrainCalculator = defineAsyncComponent(
+  () => import('./components/DrivetrainCalculator.vue')
+)
+
 const ToolsDirectory = defineAsyncComponent(
   () => import('./components/ToolsDirectory.vue')
 )
@@ -107,6 +111,11 @@ export default {
     app.component(
       'PowerCalculator',
       PowerCalculator,
+    )
+
+    app.component(
+      'DrivetrainCalculator',
+      DrivetrainCalculator,
     )
 
     app.component(

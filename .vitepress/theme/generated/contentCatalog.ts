@@ -777,6 +777,18 @@ export default {
       "title": "CAN Bit Timing Calculator"
     }
   },
+  "/Docs/Tools/DrivetrainCalculator.md": {
+    "title": "足回り計算",
+    "description": "",
+    "relativePath": "Docs/Tools/DrivetrainCalculator.md",
+    "frontmatter": {
+      "layout": "page",
+      "title": "足回り計算",
+      "tags": [
+        "ツール"
+      ]
+    }
+  },
   "/Docs/Tools/PowerCalculator.md": {
     "title": "出力計算",
     "description": "",
