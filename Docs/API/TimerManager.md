@@ -1,3 +1,10 @@
+---
+title: "TimerManager"
+aliases:
+  - "TimerManager"
+tags:
+  - "API"
+---
 # TimerManager
 
 ## 概要

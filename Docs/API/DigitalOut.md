@@ -1,3 +1,10 @@
+---
+title: "DigitalOut"
+aliases:
+  - "DigitalOut"
+tags:
+  - "API"
+---
 # DigitalOut
 
 ## 概要

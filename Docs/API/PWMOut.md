@@ -1,3 +1,10 @@
+---
+title: "PWMOut"
+aliases:
+  - "PWMOut"
+tags:
+  - "API"
+---
 # PWMOut
 
 ## 概要

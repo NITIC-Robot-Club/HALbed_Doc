@@ -8,13 +8,13 @@ import type {
 
 export function normalizeTags(value: string[] | string | undefined): string[] {
   if (Array.isArray(value)) {
-    return value.map((tag) => tag.trim()).filter((tag) => tag.length > 0)
+    return [...new Set(value.map((tag) => tag.trim().replace(/^#/, '')).filter((tag) => tag.length > 0))]
   }
 
   if (typeof value === 'string') {
     return value
       .split(',')
-      .map((tag) => tag.trim())
+      .map((tag) => tag.trim().replace(/^#/, ''))
       .filter((tag) => tag.length > 0)
   }
 

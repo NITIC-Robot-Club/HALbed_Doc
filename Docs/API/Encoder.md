@@ -1,3 +1,10 @@
+---
+title: "Encoder"
+aliases:
+  - "Encoder"
+tags:
+  - "API"
+---
 # Encoder
 
 ## 概要

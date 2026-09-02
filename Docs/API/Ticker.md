@@ -1,3 +1,10 @@
+---
+title: "Ticker"
+aliases:
+  - "Ticker"
+tags:
+  - "API"
+---
 # Ticker
 
 ## 概要
