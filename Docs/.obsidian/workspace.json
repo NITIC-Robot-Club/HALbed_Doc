@@ -11,10 +11,14 @@
             "id": "9fb1a0b02c3b91d7",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {},
-              "icon": "lucide-git-fork",
-              "title": "グラフビュー"
+              "type": "markdown",
+              "state": {
+                "file": "Technical_articles/MCU_Doc/Boot_Failure_Afte_ Power_Cycling.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Boot_Failure_Afte_ Power_Cycling"
             }
           }
         ]
@@ -95,6 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Technical_articles/MCU_Doc/Boot_Failure_Afte_ Power_Cycling.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -167,8 +172,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -183,6 +187,7 @@
   },
   "active": "9fb1a0b02c3b91d7",
   "lastOpenFiles": [
+    "Technical_articles/MCU_Doc/Boot_Failure_Afte_ Power_Cycling.md",
     "API/UART.md",
     "2026-09-02.md",
     "API/images/CAN/img_CAN_setup_3.png",
