@@ -339,7 +339,7 @@ export default {
     }
   },
   "/Docs/Technical_articles/MCU_Doc/BSP_Setting.md": {
-    "title": "Nucleoボードでピンが設定できないときのBSP確認",
+    "title": "Nucleoボードでピンが設定できない - BSPと競合している場合の対処法",
     "description": "Nucleo で何故か設定できないとき、\"BSP\"と競合しているかもしれません。",
     "relativePath": "Docs/Technical_articles/MCU_Doc/BSP_Setting.md",
     "frontmatter": {
@@ -782,6 +782,20 @@ export default {
       ]
     }
   },
+  "/Docs/Technical_articles/Other_Articles/Wired_communication/CAN_Glossary.md": {
+    "title": "CAN 基本用語集",
+    "description": "CANの説明では、通信線、メッセージ、フレーム、ID、ビットレートが一度に登場します。しかも、同じ「ID」でも送信先を示すとは限りません。最初は、CANを「複数のノードが2本のバスを共有し、ID付きのフレームを送る通信」と捉えると、用語同士の関係を追いやすくなります。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/CAN_Glossary.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "有線通信",
+        "CAN",
+        "CAN FD",
+        "用語集"
+      ]
+    }
+  },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/Sbus.md": {
     "title": "S.BUS入門",
     "description": "受信機の信号をマイコンで読むための S.BUS の基礎を整理した記事です。",
@@ -804,7 +818,7 @@ export default {
     }
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/UART_type.md": {
-    "title": "UART / USART / LPUARTの違い",
+    "title": "UART / USART / LPUARTの違いについて",
     "description": "UART / USART / LPUART の違いを整理しています。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/UART_type.md",
     "frontmatter": {
@@ -824,7 +838,7 @@ export default {
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/Wired_Communication.md": {
     "title": "有線通信の基本",
-    "description": "有線通信の違いをざっくり掴める入門記事です。",
+    "description": "UART、I²C、SPI、CAN、S.BUSの違いを初学者向けに整理します。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/Wired_Communication.md",
     "frontmatter": {
       "tags": [
@@ -837,7 +851,7 @@ export default {
           "article-home",
           "other-home"
         ],
-        "description": "有線通信の違いをざっくり掴める入門記事です。",
+        "description": "UART、I²C、SPI、CAN、S.BUSの違いを初学者向けに整理します。",
         "order": "10"
       }
     }
@@ -857,7 +871,7 @@ export default {
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/t10j_SIF_Port.md": {
     "title": "T10J S.I/Fポートを使ってスイッチ状態を読み出したかった話",
-    "description": "T10J背面のS.I/Fポートからスイッチ状態を読み出せるか試したメモ",
+    "description": "T10J背面のS.I/Fポートからスイッチ状態を読み出せるか試したしたメモ",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/t10j_SIF_Port.md",
     "frontmatter": {
       "tags": [
@@ -868,13 +882,13 @@ export default {
         "targets": [
           "other-home"
         ],
-        "description": "T10J背面のS.I/Fポートからスイッチ状態を読み出せるか試したメモ",
+        "description": "T10J背面のS.I/Fポートからスイッチ状態を読み出せるか試したしたメモ",
         "order": "1"
       }
     }
   },
   "/Docs/Technical_articles/Tutorials_articles/CubeIDE_Tutorial.md": {
-    "title": "STM32CubeIDEでHALbedを使う",
+    "title": "Cube IDE の使い方",
     "description": "プロジェクト作成から HALbed の追加までを段階的に説明します。",
     "relativePath": "Docs/Technical_articles/Tutorials_articles/CubeIDE_Tutorial.md",
     "frontmatter": {
@@ -918,7 +932,7 @@ export default {
   },
   "/Docs/Technical_articles/Tutorials_articles/Intro_to_Microcontrollers.md": {
     "title": "マイコンってなに？",
-    "description": "マイコンの役割や内部構造の基本を、初学者向けに整理します。",
+    "description": "マイコンの役割や内部構造の基本を、初学者向けに整理した記事です。",
     "relativePath": "Docs/Technical_articles/Tutorials_articles/Intro_to_Microcontrollers.md",
     "frontmatter": {
       "tags": [
@@ -931,7 +945,7 @@ export default {
         "targets": [
           "article-home"
         ],
-        "description": "マイコンの役割や内部構造の基本を、初学者向けに整理します。",
+        "description": "マイコンの役割や内部構造の基本を、初学者向けに整理した記事です。",
         "order": "10"
       }
     }
@@ -944,18 +958,6 @@ export default {
       "title": "チュートリアル",
       "aside": "false",
       "pageClass": "technical-articles-wide",
-      "tags": [
-        "開発資料"
-      ]
-    }
-  },
-  "/Docs/Technical_articles/文章改善案.md": {
-    "title": "技術記事の文章改善案",
-    "description": "Docs/Technicalarticles 配下の本文記事34本を全文確認しました。分類用のトップページも確認しましたが、今回の主な修正対象は記事本文です。",
-    "relativePath": "Docs/Technical_articles/文章改善案.md",
-    "frontmatter": {
-      "title": "技術記事の文章改善案",
-      "aside": "false",
       "tags": [
         "開発資料"
       ]
