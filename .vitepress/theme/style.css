@@ -156,6 +156,26 @@
 }
 
 /**
+ * Page: tag discovery
+ * Tag pages are comparison-heavy, so give the search controls and article
+ * grid the same readable width as the wide technical-article pages.
+ * -------------------------------------------------------------------------- */
+
+@media (min-width: 960px) {
+  .Layout.tags-wide .VPDoc:not(.has-sidebar) .container {
+    max-width: 1480px;
+  }
+
+  .Layout.tags-wide .VPDoc:not(.has-sidebar) .content {
+    max-width: 1408px;
+  }
+
+  .Layout.tags-wide .VPDoc:not(.has-sidebar) .content-container {
+    max-width: none;
+  }
+}
+
+/**
  * Component: Tool Shell
  * -------------------------------------------------------------------------- */
 
