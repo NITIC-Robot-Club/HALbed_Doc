@@ -7,3 +7,6 @@ AGENTS.md
 .worktrees/
 .codex
 .agents
+# Semble cache
+.semble-cache/
+.semble-model/

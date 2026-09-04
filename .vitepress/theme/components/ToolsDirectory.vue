@@ -38,7 +38,7 @@ const groups = [
       },
       {
         title: '足回りのトルク・速度を計算する',
-        detail: 'メカナム／オムニの必要トルク、最高速度、加速度を概算します。',
+        detail: '重量・トルク・回転数から、必要トルクと基本性能を概算します。',
         meta: 'Drivetrain',
         link: '/Docs/Tools/DrivetrainCalculator',
       },
