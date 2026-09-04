@@ -17,6 +17,11 @@ aliases:
 
 `Futaba`、`S.BUS`、`S.BUS2` およびこれらに関連する名称・ロゴは、双葉電子工業株式会社またはその関連会社の商標または登録商標です。
 
+### Arm Mbed
+
+`Arm® Mbed™` は、Arm Limited（またはその子会社もしくは関連会社）が米国その他の国・地域で保有する登録商標または商標です。
+
+
 ## 情報とサンプルコードについて
 
 - 本サイトの情報、サンプルコード、回路例および設定例は、学習・開発の参考情報として提供しています。
@@ -24,7 +29,8 @@ aliases:
 - 製品の仕様、ライセンス、利用条件、安全上の注意事項は、必ず各メーカーの公式マニュアルや規約を確認してください。
 - 本サイトの情報を利用したことによって生じた、機器の故障、データの損失、通信上の問題、その他の損害について、運営者は責任を負いません。実機で試す場合は、利用者自身の責任と判断で、安全を確認したうえで実施してください。
 
-## 公式情報
+## 公式サイト
 
 - [STMicroelectronics Trademark List](https://www.st.com/content/st_com/en/about/st-trademark-list.html)
 - [双葉電子工業株式会社: S.BUS system](https://www.rc.futaba.co.jp/support/tips/detail/41)
+- [Arm: Using the Mbed™ Trademark](https://www.arm.com/ja/company/policies/trademarks/arm-trademark-list/mbed-trademark)
