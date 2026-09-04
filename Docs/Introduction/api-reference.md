@@ -2,8 +2,6 @@
 title: "APIリファレンス"
 aliases:
   - "APIリファレンス"
-tags:
-  - "ドキュメント"
 ---
 # APIリファレンス
 

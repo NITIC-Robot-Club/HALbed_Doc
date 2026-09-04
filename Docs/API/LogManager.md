@@ -2,8 +2,6 @@
 title: "LogManager"
 aliases:
   - "LogManager"
-tags:
-  - "API"
 ---
 # LogManager
 

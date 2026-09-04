@@ -2,8 +2,6 @@
 title: "CAN"
 aliases:
   - "CAN"
-tags:
-  - "API"
 ---
 # CAN
 

@@ -2,8 +2,6 @@
 title: "DigitalIn"
 aliases:
   - "DigitalIn"
-tags:
-  - "API"
 ---
 # DigitalIn
 

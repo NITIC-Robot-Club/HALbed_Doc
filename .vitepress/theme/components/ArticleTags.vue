@@ -1,18 +1,23 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useData, withBase } from 'vitepress'
+import { isTechnicalArticlePath } from '../composables/contentScope'
 
 interface ArticleFrontmatter {
   tags?: string[] | string
 }
 
-const { frontmatter } = useData<ArticleFrontmatter>()
+const { page, frontmatter } = useData<ArticleFrontmatter>()
 
 function getTagHref(tag: string): string {
   return withBase(`/tags/${encodeURIComponent(tag)}`)
 }
 
 const tags = computed(() => {
+  if (!isTechnicalArticlePath(page.value.relativePath)) {
+    return []
+  }
+
   const value = frontmatter.value.tags
 
   if (Array.isArray(value)) {
