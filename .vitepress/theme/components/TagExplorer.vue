@@ -131,7 +131,7 @@ onMounted(() => {
     <div class="tag-explorer__filters-panel">
       <div class="tag-explorer__filters-heading">
         <div>
-          <p class="tag-explorer__filters-eyebrow">Filters</p>
+          <p class="tag-explorer__filters-eyebrow">条件</p>
           <h2>絞り込みタグ</h2>
         </div>
         <p class="tag-explorer__filters-help">押すと追加、もう一度押すと解除</p>
@@ -172,7 +172,7 @@ onMounted(() => {
 <style scoped>
 .tag-explorer {
   display: grid;
-  gap: 1.75rem;
+  gap: 2rem;
   padding-bottom: 3rem;
 }
 
@@ -203,10 +203,9 @@ onMounted(() => {
 }
 
 .tag-explorer__searchbar {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
-  justify-content: space-between;
   gap: 0.75rem;
   padding: 1rem 0;
   border: 1px solid var(--vp-c-divider);
@@ -217,8 +216,7 @@ onMounted(() => {
 .tag-explorer__search {
   display: grid;
   gap: 0.35rem;
-  min-width: min(100%, 320px);
-  flex: 1 1 320px;
+  min-width: 0;
 }
 
 .tag-explorer__search-label {
@@ -359,8 +357,8 @@ onMounted(() => {
 }
 
 .tag-explorer__filters {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
   gap: 0.6rem;
 }
 
@@ -369,7 +367,7 @@ onMounted(() => {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  flex: 0 1 13rem;
+  width: 100%;
   gap: 0.7rem;
   min-height: 2.35rem;
   box-sizing: border-box;
@@ -458,8 +456,9 @@ onMounted(() => {
 
 .tag-explorer__grid {
   display: grid;
-  gap: 0.85rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
 }
 
 .tag-explorer__grid :deep(.article-card) {
@@ -467,16 +466,19 @@ onMounted(() => {
   box-shadow: none;
 }
 
-@media (min-width: 1100px) {
-  .tag-explorer__grid:not(.is-detail) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 720px) {
-  .tag-explorer__grid:not(.is-detail) {
+  .tag-explorer__searchbar {
     grid-template-columns: minmax(0, 1fr);
   }
+
+  .tag-explorer__clear {
+    justify-self: start;
+  }
+
+  .tag-explorer__filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
 }
 
 .tag-explorer__grid.is-detail {

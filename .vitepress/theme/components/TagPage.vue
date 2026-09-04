@@ -52,7 +52,7 @@ function getBackHref(): string {
 <style scoped>
 .tag-page {
   display: grid;
-  gap: 1.25rem;
+  gap: 1.75rem;
 }
 
 .tag-page__header {
@@ -99,23 +99,13 @@ function getBackHref(): string {
 
 .tag-page__grid {
   display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 1.15rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
 }
 
 .tag-page__grid.is-detail {
   grid-template-columns: minmax(0, 1fr);
 }
 
-@media (min-width: 1100px) {
-  .tag-page__grid:not(.is-detail) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 720px) {
-  .tag-page__grid:not(.is-detail) {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
 </style>

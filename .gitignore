@@ -5,6 +5,7 @@ node_modules/
 AGENTS.md
 .playwright-mcp
 .worktrees/
+.worktree/
 .codex
 .agents
 # Semble cache
