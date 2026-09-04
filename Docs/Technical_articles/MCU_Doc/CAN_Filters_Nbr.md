@@ -13,16 +13,15 @@ thumbnail:
   order: 30
 ---
 
-# CAN/CAN FD Filters Nbr
+# CAN / CAN FDのFilters Nbrとは
 
-## 概要
+## Filters Nbrの意味
 
-`Filters Nbr` は、
-**CAN / FDCAN で使用するIDフィルタの個数** を設定する項目です。
-標準IDと拡張IDでそれぞれ設定することができます。
----
+`Filters Nbr`は、FDCANのメッセージRAMに確保するIDフィルター要素の数です。標準ID用（`Std Filters Nbr`）と拡張ID用（`Ext Filters Nbr`）を別々に設定します。
 
-## CAN ID の種類
+フィルター1個がID 1個だけに対応するとは限りません。マスクや範囲指定を使えば、1個のフィルターで複数のIDを受け付けることもできます。
+
+## 標準IDと拡張ID
 
 CAN ID には主に2種類あります。
 
@@ -35,19 +34,14 @@ CAN ID には主に2種類あります。
 
 ## 設定例
 
-標準IDのCAN通信を使う場合は、例えば次のように設定します。
+標準IDのフィルターだけを1個使う場合は、次のように設定します。
 
 ```c
 hfdcan1.Init.StdFiltersNbr = 1;
 hfdcan1.Init.ExtFiltersNbr = 0;
 ```
 
-この場合、
-
-* 標準ID用のフィルタを1個使う
-* 拡張ID用のフィルタは使わない
-
-という意味になります。
+この設定では、標準ID用のフィルター要素を1個、拡張ID用の領域を0個確保します。実際に受信するIDやマスクは、別途`HAL_FDCAN_ConfigFilter()`などで設定します。
 
 ---
 
@@ -78,12 +72,10 @@ hfdcan1.Init.ExtFiltersNbr = 0;
 
 ---
 
-## 注意点
+## 使わないID形式は0にする
 
 `Std Filters Nbr = 0` にすると、
-**標準ID用のフィルタを用意しない** という意味になります。
-
-その状態で標準IDのフィルタを設定しようとすると、受信できなかったり、設定がうまくいかなかったりします。
+標準IDを受信しないなら、`Std Filters Nbr = 0`にできます。この状態で標準ID用のフィルターを設定しようとしても、格納先の領域がないため設定できません。
 
 ---
 
@@ -95,9 +87,4 @@ hfdcan1.Init.ExtFiltersNbr = 0;
 
 です。
 
-基本的に `1` 以上に設定します。
-
-`Ext Filters Nbr` は、
-**拡張IDのCANメッセージを受信するために、拡張IDフィルタを何個使うかを決める設定**
-です。
-拡張IDを使う場合は、基本的に `1` 以上に設定します。
+必要なフィルター要素数だけを確保します。標準IDを使わないなら`Std Filters Nbr = 0`、拡張IDを使わないなら`Ext Filters Nbr = 0`で構いません。

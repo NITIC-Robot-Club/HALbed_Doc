@@ -339,7 +339,7 @@ export default {
     }
   },
   "/Docs/Technical_articles/MCU_Doc/BSP_Setting.md": {
-    "title": "Nucleoボードでピンが設定できない - BSPと競合している場合の対処法",
+    "title": "Nucleoボードでピンが設定できないときのBSP確認",
     "description": "Nucleo で何故か設定できないとき、\"BSP\"と競合しているかもしれません。",
     "relativePath": "Docs/Technical_articles/MCU_Doc/BSP_Setting.md",
     "frontmatter": {
@@ -372,7 +372,7 @@ export default {
     }
   },
   "/Docs/Technical_articles/MCU_Doc/CAN_Filters_Nbr.md": {
-    "title": "CAN/CAN FD Filters Nbr",
+    "title": "CAN / CAN FDのFilters Nbrとは",
     "description": "CubeMXで設定するときに出てくる\"Filters Nbr\" その意味と設定について解説",
     "relativePath": "Docs/Technical_articles/MCU_Doc/CAN_Filters_Nbr.md",
     "frontmatter": {
@@ -415,7 +415,7 @@ export default {
     }
   },
   "/Docs/Technical_articles/MCU_Doc/CAN_Send_Message_FifoQ.md": {
-    "title": "CANの送信関数について",
+    "title": "FDCANの送信関数を使い分ける",
     "description": "HALでCAN送信するときの関数とモードについてまとめています。",
     "relativePath": "Docs/Technical_articles/MCU_Doc/CAN_Send_Message_FifoQ.md",
     "frontmatter": {
@@ -549,7 +549,7 @@ export default {
   },
   "/Docs/Technical_articles/MCU_Doc/dc-motor-slow-start.md": {
     "title": "DCモーターのスロースタート",
-    "description": "DCモーターに、停止状態からいきなり最大出力を与える。",
+    "description": "DCモーターへ停止中から大きなPWMを与えると、モーターが急に動き出します。このとき、起動電流、タイヤの空転、ギアやベルトへの衝撃が大きくなることがあります。",
     "relativePath": "Docs/Technical_articles/MCU_Doc/dc-motor-slow-start.md",
     "frontmatter": {
       "tags": [
@@ -618,8 +618,8 @@ export default {
     }
   },
   "/Docs/Technical_articles/Other_Articles/Control_Libraries/PS3_sbdbt_cube_lib.md": {
-    "title": "PS3-S.B.D.B.T.受信ライブラリ",
-    "description": "PS3-S.B.D.B.T.の受信データをSTM32Cube/HALプロジェクトで扱う方法を説明します。",
+    "title": "PS3-SBDBT受信ライブラリ",
+    "description": "PS3-SBDBTの受信データをSTM32Cube/HALプロジェクトで扱う方法を説明します。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Control_Libraries/PS3_sbdbt_cube_lib.md",
     "frontmatter": {
       "tags": [
@@ -633,7 +633,7 @@ export default {
           "article-home",
           "other-home"
         ],
-        "description": "PS3-S.B.D.B.T.の受信データをSTM32Cube/HALプロジェクトで扱う方法を説明します。",
+        "description": "PS3-SBDBTの受信データをSTM32Cube/HALプロジェクトで扱う方法を説明します。",
         "order": "31"
       }
     }
@@ -804,7 +804,7 @@ export default {
     }
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/UART_type.md": {
-    "title": "UART / USART / LPUARTの違いについて",
+    "title": "UART / USART / LPUARTの違い",
     "description": "UART / USART / LPUART の違いを整理しています。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/UART_type.md",
     "frontmatter": {
@@ -857,7 +857,7 @@ export default {
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/t10j_SIF_Port.md": {
     "title": "T10J S.I/Fポートを使ってスイッチ状態を読み出したかった話",
-    "description": "T10J背面のS.I/Fポートからスイッチ状態を読み出せるか試したしたメモ",
+    "description": "T10J背面のS.I/Fポートからスイッチ状態を読み出せるか試したメモ",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/t10j_SIF_Port.md",
     "frontmatter": {
       "tags": [
@@ -868,13 +868,13 @@ export default {
         "targets": [
           "other-home"
         ],
-        "description": "T10J背面のS.I/Fポートからスイッチ状態を読み出せるか試したしたメモ",
+        "description": "T10J背面のS.I/Fポートからスイッチ状態を読み出せるか試したメモ",
         "order": "1"
       }
     }
   },
   "/Docs/Technical_articles/Tutorials_articles/CubeIDE_Tutorial.md": {
-    "title": "Cube IDE の使い方",
+    "title": "STM32CubeIDEでHALbedを使う",
     "description": "プロジェクト作成から HALbed の追加までを段階的に説明します。",
     "relativePath": "Docs/Technical_articles/Tutorials_articles/CubeIDE_Tutorial.md",
     "frontmatter": {
@@ -918,7 +918,7 @@ export default {
   },
   "/Docs/Technical_articles/Tutorials_articles/Intro_to_Microcontrollers.md": {
     "title": "マイコンってなに？",
-    "description": "マイコンの役割や内部構造の基本を、初学者向けに整理した記事です。",
+    "description": "マイコンの役割や内部構造の基本を、初学者向けに整理します。",
     "relativePath": "Docs/Technical_articles/Tutorials_articles/Intro_to_Microcontrollers.md",
     "frontmatter": {
       "tags": [
@@ -931,7 +931,7 @@ export default {
         "targets": [
           "article-home"
         ],
-        "description": "マイコンの役割や内部構造の基本を、初学者向けに整理した記事です。",
+        "description": "マイコンの役割や内部構造の基本を、初学者向けに整理します。",
         "order": "10"
       }
     }
@@ -944,6 +944,18 @@ export default {
       "title": "チュートリアル",
       "aside": "false",
       "pageClass": "technical-articles-wide",
+      "tags": [
+        "開発資料"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/文章改善案.md": {
+    "title": "技術記事の文章改善案",
+    "description": "Docs/Technicalarticles 配下の本文記事34本を全文確認しました。分類用のトップページも確認しましたが、今回の主な修正対象は記事本文です。",
+    "relativePath": "Docs/Technical_articles/文章改善案.md",
+    "frontmatter": {
+      "title": "技術記事の文章改善案",
+      "aside": "false",
       "tags": [
         "開発資料"
       ]

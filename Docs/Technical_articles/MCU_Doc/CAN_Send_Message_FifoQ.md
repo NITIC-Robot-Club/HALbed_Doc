@@ -12,9 +12,9 @@ thumbnail:
   order: 50
 ---
 
-# CANの送信関数について
+# FDCANの送信関数を使い分ける
 
-`HAL_FDCAN_AddMessageToTxFifoQ()` は、FDCANでメッセージを送信するときによく使う関数です。
+通常のFDCAN送信では、`HAL_FDCAN_AddMessageToTxFifoQ()`を使います。個別のTx Bufferを管理したい場合だけ、メッセージを入れる処理と送信要求を分けます。
 
 似た役割の関数として、Tx Bufferを使う関数があります。  
 特に混同しやすいのは次の3つです。
@@ -27,15 +27,13 @@ thumbnail:
 
 ## HAL_FDCAN_AddMessageToTxFifoQ
 
-通常の送信では、この関数を使えばよいです。
-
 ```c
-HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData);
+if (HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &TxHeader, TxData) != HAL_OK) {
+    // Tx FIFO/Queueが満杯など、送信要求に失敗した場合の処理
+}
 ```
 
 この関数は、Tx FIFO/Queue の空いている場所にメッセージを入れ、そのまま送信要求も出します。
-
-そのため、基本的には1回の関数呼び出しで送信まで行えます。
 
 送信前に空きがあるか確認する場合は、次のようにします。
 
@@ -57,7 +55,7 @@ Tx FIFO/Queue が満杯のときに送信しようとすると失敗するため
 hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 ```
 
-または、
+優先度を見て送信したい場合は、次の設定にします。
 
 ```c
 hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_QUEUE_OPERATION;
@@ -70,8 +68,7 @@ hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_QUEUE_OPERATION;
 | `FDCAN_TX_FIFO_OPERATION` | 入れた順番で送信する |
 | `FDCAN_TX_QUEUE_OPERATION` | CAN IDの優先度を見て送信する |
 
-普通に順番通り送信したい場合は、`FDCAN_TX_FIFO_OPERATION` で問題ありません。  
-優先度の高いIDを先に送信したい場合は、`FDCAN_TX_QUEUE_OPERATION` を使います。
+入れた順番を重視するなら`FDCAN_TX_FIFO_OPERATION`、CAN IDの優先度を反映するなら`FDCAN_TX_QUEUE_OPERATION`を選びます。
 
 ## Tx Buffer を使う場合
 
@@ -129,7 +126,7 @@ Tx FIFO/Queueにメッセージを入れるだけでなく、送信要求まで�
 
 Tx Bufferを使う場合は、`HAL_FDCAN_AddMessageToTxBuffer()` でデータを入れ、`HAL_FDCAN_EnableTxBufferRequest()` で送信要求を出します。
 
-基本的には、Tx FIFOを使うことをおすすめします。
+迷ったときは、まずTx FIFO/Queueを使い、戻り値と送信完了状態を確認します。
 
 ## 参考
 - STM32G4 Series MCU RM0440 Reference Manual（[ST公式ホームページ](https://www.st.com/ja/) から「RM0440」を検索）: P.1927 ~ P.1928 あたり参照
