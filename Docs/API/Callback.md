@@ -2,8 +2,6 @@
 title: "Callback Library"
 aliases:
   - "Callback Library"
-tags:
-  - "API"
 ---
 # Callback Library
 

@@ -2,8 +2,6 @@
 title: "HALbed::CANMessage"
 aliases:
   - "HALbed::CANMessage"
-tags:
-  - "API"
 ---
 # HALbed::CANMessage
 

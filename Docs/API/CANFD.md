@@ -2,8 +2,6 @@
 title: "CAN FD"
 aliases:
   - "CAN FD"
-tags:
-  - "API"
 ---
 # CAN FD
 

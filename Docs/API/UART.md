@@ -2,8 +2,6 @@
 title: "UART"
 aliases:
   - "UART"
-tags:
-  - "API"
 ---
 # UART
 

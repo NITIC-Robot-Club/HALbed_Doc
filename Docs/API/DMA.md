@@ -2,8 +2,6 @@
 title: "DMAのモードとリクエスト"
 aliases:
   - "DMAのモードとリクエスト"
-tags:
-  - "API"
 ---
 # DMAのモードとリクエスト
 

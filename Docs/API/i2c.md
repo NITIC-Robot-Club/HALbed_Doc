@@ -2,8 +2,6 @@
 title: "I2C"
 aliases:
   - "I2C"
-tags:
-  - "API"
 ---
 # I2C
 

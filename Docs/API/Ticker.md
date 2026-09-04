@@ -2,8 +2,6 @@
 title: "Ticker"
 aliases:
   - "Ticker"
-tags:
-  - "API"
 ---
 # Ticker
 

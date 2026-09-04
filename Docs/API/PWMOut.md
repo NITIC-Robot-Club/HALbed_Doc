@@ -2,8 +2,6 @@
 title: "PWMOut"
 aliases:
   - "PWMOut"
-tags:
-  - "API"
 ---
 # PWMOut
 

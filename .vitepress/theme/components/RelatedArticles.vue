@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useData, withBase } from 'vitepress'
 import { normalizeTags, useTags } from '../composables/useTags'
+import { isTechnicalArticlePath } from '../composables/contentScope'
 
 interface ArticleFrontmatter {
   tags?: string[] | string
@@ -12,7 +13,9 @@ const { getRelatedArticles } = useTags()
 
 const currentTags = computed(() => normalizeTags(frontmatter.value.tags))
 const relatedArticles = computed(() =>
-  getRelatedArticles(page.value.relativePath, currentTags.value, 3)
+  isTechnicalArticlePath(page.value.relativePath)
+    ? getRelatedArticles(page.value.relativePath, currentTags.value, 3)
+    : []
 )
 
 function getTagHref(tag: string): string {

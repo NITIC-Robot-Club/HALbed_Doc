@@ -2,8 +2,6 @@
 title: "Encoder"
 aliases:
   - "Encoder"
-tags:
-  - "API"
 ---
 # Encoder
 

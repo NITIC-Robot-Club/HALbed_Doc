@@ -2,9 +2,6 @@
 title: Obsidianでドキュメントを管理する
 aliases:
   - Obsidian運用
-tags:
-  - HALbed
-  - ドキュメント運用
 description: HALbed DocsをObsidianのVaultとして編集・検索・リンクするためのルールです。
 ---
 # Obsidianでドキュメントを管理する

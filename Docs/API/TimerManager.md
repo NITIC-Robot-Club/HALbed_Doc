@@ -2,8 +2,6 @@
 title: "TimerManager"
 aliases:
   - "TimerManager"
-tags:
-  - "API"
 ---
 # TimerManager
 
