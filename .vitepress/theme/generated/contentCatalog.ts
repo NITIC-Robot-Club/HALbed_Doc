@@ -372,7 +372,7 @@ export default {
     }
   },
   "/Docs/Technical_articles/MCU_Doc/CAN_Filters_Nbr.md": {
-    "title": "CAN/CAN FD Filters Nbr",
+    "title": "CAN / CAN FDのFilters Nbrとは",
     "description": "CubeMXで設定するときに出てくる\"Filters Nbr\" その意味と設定について解説",
     "relativePath": "Docs/Technical_articles/MCU_Doc/CAN_Filters_Nbr.md",
     "frontmatter": {
@@ -415,7 +415,7 @@ export default {
     }
   },
   "/Docs/Technical_articles/MCU_Doc/CAN_Send_Message_FifoQ.md": {
-    "title": "CANの送信関数について",
+    "title": "FDCANの送信関数を使い分ける",
     "description": "HALでCAN送信するときの関数とモードについてまとめています。",
     "relativePath": "Docs/Technical_articles/MCU_Doc/CAN_Send_Message_FifoQ.md",
     "frontmatter": {
@@ -549,7 +549,7 @@ export default {
   },
   "/Docs/Technical_articles/MCU_Doc/dc-motor-slow-start.md": {
     "title": "DCモーターのスロースタート",
-    "description": "DCモーターに、停止状態からいきなり最大出力を与える。",
+    "description": "DCモーターへ停止中から大きなPWMを与えると、モーターが急に動き出します。このとき、起動電流、タイヤの空転、ギアやベルトへの衝撃が大きくなることがあります。",
     "relativePath": "Docs/Technical_articles/MCU_Doc/dc-motor-slow-start.md",
     "frontmatter": {
       "tags": [
@@ -618,8 +618,8 @@ export default {
     }
   },
   "/Docs/Technical_articles/Other_Articles/Control_Libraries/PS3_sbdbt_cube_lib.md": {
-    "title": "PS3-S.B.D.B.T.受信ライブラリ",
-    "description": "PS3-S.B.D.B.T.の受信データをSTM32Cube/HALプロジェクトで扱う方法を説明します。",
+    "title": "PS3-SBDBT受信ライブラリ",
+    "description": "PS3-SBDBTの受信データをSTM32Cube/HALプロジェクトで扱う方法を説明します。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Control_Libraries/PS3_sbdbt_cube_lib.md",
     "frontmatter": {
       "tags": [
@@ -633,7 +633,7 @@ export default {
           "article-home",
           "other-home"
         ],
-        "description": "PS3-S.B.D.B.T.の受信データをSTM32Cube/HALプロジェクトで扱う方法を説明します。",
+        "description": "PS3-SBDBTの受信データをSTM32Cube/HALプロジェクトで扱う方法を説明します。",
         "order": "31"
       }
     }
@@ -782,6 +782,20 @@ export default {
       ]
     }
   },
+  "/Docs/Technical_articles/Other_Articles/Wired_communication/CAN_Glossary.md": {
+    "title": "CAN 基本用語集",
+    "description": "CANの説明では、通信線、メッセージ、フレーム、ID、ビットレートが一度に登場します。しかも、同じ「ID」でも送信先を示すとは限りません。最初は、CANを「複数のノードが2本のバスを共有し、ID付きのフレームを送る通信」と捉えると、用語同士の関係を追いやすくなります。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/CAN_Glossary.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "有線通信",
+        "CAN",
+        "CAN FD",
+        "用語集"
+      ]
+    }
+  },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/Sbus.md": {
     "title": "S.BUS入門",
     "description": "受信機の信号をマイコンで読むための S.BUS の基礎を整理した記事です。",
@@ -824,7 +838,7 @@ export default {
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/Wired_Communication.md": {
     "title": "有線通信の基本",
-    "description": "有線通信の違いをざっくり掴める入門記事です。",
+    "description": "UART、I²C、SPI、CAN、S.BUSの違いを初学者向けに整理します。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/Wired_Communication.md",
     "frontmatter": {
       "tags": [
@@ -837,7 +851,7 @@ export default {
           "article-home",
           "other-home"
         ],
-        "description": "有線通信の違いをざっくり掴める入門記事です。",
+        "description": "UART、I²C、SPI、CAN、S.BUSの違いを初学者向けに整理します。",
         "order": "10"
       }
     }

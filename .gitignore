@@ -11,3 +11,5 @@ AGENTS.md
 # Semble cache
 .semble-cache/
 .semble-model/
+.obsidian/
+/docs/.obsidian/
