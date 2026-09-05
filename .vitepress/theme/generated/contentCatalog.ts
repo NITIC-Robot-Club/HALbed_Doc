@@ -259,6 +259,15 @@ export default {
       "tags": []
     }
   },
+  "/Docs/HAL_Docs/HALHome.md": {
+    "title": "HAL Docs",
+    "description": "",
+    "relativePath": "Docs/HAL_Docs/HALHome.md",
+    "frontmatter": {
+      "title": "HAL Docs",
+      "tags": []
+    }
+  },
   "/Docs/HAL_Docs/HAL_Functions.md": {
     "title": "STM32 HAL 関数一覧",
     "description": "HALbedの実装で使用しているSTM32 HAL関数を、周辺機能ごとに整理する。HALbedのクラスやメソッドではなく、CubeMXが生成するハンドルを直接使うHAL APIの説明である。",
@@ -337,19 +346,6 @@ export default {
       "aliases": [
         "インストールと初期設定"
       ],
-      "tags": []
-    }
-  },
-  "/Docs/Introduction/Obsidian.md": {
-    "title": "Obsidianでドキュメントを管理する",
-    "description": "HALbed DocsをObsidianのVaultとして編集・検索・リンクするためのルールです。",
-    "relativePath": "Docs/Introduction/Obsidian.md",
-    "frontmatter": {
-      "title": "Obsidianでドキュメントを管理する",
-      "aliases": [
-        "Obsidian運用"
-      ],
-      "description": "HALbed DocsをObsidianのVaultとして編集・検索・リンクするためのルールです。",
       "tags": []
     }
   },

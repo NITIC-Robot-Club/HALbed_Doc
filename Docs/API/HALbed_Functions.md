@@ -7,7 +7,7 @@ title: HALbed 関数一覧
 
 HALbed の公開ヘッダに定義されているクラス、構造体、名前空間関数、コールバック入口を一覧にする。個別クラスの使い方は、各API Docを参照すること。
 
-このページはHALbedリポジトリの実装を確認して整理したものであり、STM32 HAL/LLそのもののAPI一覧ではない。HAL/LLの関数とHALbedへの拡張候補は、別資料の [STM32 HAL/LL 関数一覧とHALbed拡張候補](../HAL_Docs/HAL_Functions.md) にまとめる。
+このページはHALbedリポジトリの実装を確認して整理したものであり、STM32 HALそのもののAPI一覧ではない。HALの関数は、別資料の [STM32 HAL 関数一覧](../HAL_Docs/HAL_Functions.md) にまとめる。
 
 対象にしたHALbedのリビジョン: `7645c17`（2026-08-06取得）
 

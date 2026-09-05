@@ -68,6 +68,7 @@ export default defineConfig({
     nav: [
       { text: 'はじめに', link: '/Docs/Introduction/ArchitectureOverview' },
       { text: 'API', link: '/Docs/API/APIHome' },
+      { text: 'HAL Docs', link: '/Docs/HAL_Docs/HALHome' },
       { text: '開発資料', link: '/Docs/Technical_articles/Article_Home' },
       { text: 'ツール', link: '/Docs/Tools/Tools_home' },
       { text: 'FAQ', link: '/Docs/FAQ/FAQ_home' }
@@ -82,7 +83,6 @@ export default defineConfig({
             { text: 'インストールと初期設定', link: '/Docs/Introduction/GettingStarted' },
             { text: 'ディレクトリ構造', link: '/Docs/Introduction/DirectoryStructure' },
             { text: '参考リンク集', link: '/Docs/Introduction/References' },
-            { text: 'Obsidianで管理する', link: '/Docs/Introduction/Obsidian' },
             { text: '商標・免責事項', link: '/Docs/Introduction/Trademark_Disclaimer' },
           ] 
         }
@@ -110,6 +110,23 @@ export default defineConfig({
         },
       ]
       ,
+      '/Docs/HAL_Docs/': [
+        {
+          text: 'HAL Docs',
+          items: [
+            { text: '用途から探す', link: '/Docs/HAL_Docs/HALHome' },
+            { text: 'HAL関数一覧', link: '/Docs/HAL_Docs/HAL_Functions' },
+            { text: 'ADC', link: '/Docs/HAL_Docs/ADC' },
+            { text: 'GPIO', link: '/Docs/HAL_Docs/GPIO' },
+            { text: 'Classic CAN', link: '/Docs/HAL_Docs/CAN' },
+            { text: 'FDCAN', link: '/Docs/HAL_Docs/FDCAN' },
+            { text: 'I2C', link: '/Docs/HAL_Docs/I2C' },
+            { text: 'TIM', link: '/Docs/HAL_Docs/TIM' },
+            { text: 'UART', link: '/Docs/HAL_Docs/UART' },
+            { text: 'RCC・時刻', link: '/Docs/HAL_Docs/RCC' },
+          ]
+        }
+      ],
       '/Docs/Tools/': [
         {
           text: '用途別に探す',
