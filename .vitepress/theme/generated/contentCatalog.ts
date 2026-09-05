@@ -130,6 +130,15 @@ export default {
       "tags": []
     }
   },
+  "/Docs/API/HALbed_Functions.md": {
+    "title": "HALbed 関数一覧",
+    "description": "HALbed の公開ヘッダに定義されているクラス、構造体、名前空間関数、コールバック入口を一覧にする。個別クラスの使い方は、各API Docを参照すること。",
+    "relativePath": "Docs/API/HALbed_Functions.md",
+    "frontmatter": {
+      "title": "HALbed 関数一覧",
+      "tags": []
+    }
+  },
   "/Docs/API/LogManager.md": {
     "title": "LogManager",
     "description": "LogManager クラスは、UARTを使ってログを出力するライブラリ。ログレベルやタグフィルタリングを設定でき、ANSIカラーコードを使ってログを色分けする。",
@@ -211,6 +220,87 @@ export default {
       "aliases": [
         "FAQ Home"
       ],
+      "tags": []
+    }
+  },
+  "/Docs/HAL_Docs/ADC.md": {
+    "title": "ADC HAL API",
+    "description": "STM32 HALのADC APIを説明する。HALbedの AnalogIn は、ここで説明するポーリング取得とDMA取得をラップしている。",
+    "relativePath": "Docs/HAL_Docs/ADC.md",
+    "frontmatter": {
+      "title": "ADC HAL API",
+      "tags": []
+    }
+  },
+  "/Docs/HAL_Docs/CAN.md": {
+    "title": "Classic CAN HAL API",
+    "description": "STM32 HALのClassic CAN APIを説明する。HALbedの CAN と CANAlt は、CANの開始、フィルタ設定、送信、受信コールバックをこのAPIで実装している。",
+    "relativePath": "Docs/HAL_Docs/CAN.md",
+    "frontmatter": {
+      "title": "Classic CAN HAL API",
+      "tags": []
+    }
+  },
+  "/Docs/HAL_Docs/FDCAN.md": {
+    "title": "FDCAN HAL API",
+    "description": "STM32 HALのFDCAN APIを説明する。HALbedの CANFD と、F3系向けの CANAlt のFDCAN実装は、ここで説明する関数を使っている。",
+    "relativePath": "Docs/HAL_Docs/FDCAN.md",
+    "frontmatter": {
+      "title": "FDCAN HAL API",
+      "tags": []
+    }
+  },
+  "/Docs/HAL_Docs/GPIO.md": {
+    "title": "GPIO HAL API",
+    "description": "STM32 HALのGPIO APIを説明する。HALbedの DigitalIn と DigitalOut は、GPIOポートとピンマスクを保持し、ここで説明する読み取り・書き込み関数を呼び出している。",
+    "relativePath": "Docs/HAL_Docs/GPIO.md",
+    "frontmatter": {
+      "title": "GPIO HAL API",
+      "tags": []
+    }
+  },
+  "/Docs/HAL_Docs/HAL_Functions.md": {
+    "title": "STM32 HAL 関数一覧",
+    "description": "HALbedの実装で使用しているSTM32 HAL関数を、周辺機能ごとに整理する。HALbedのクラスやメソッドではなく、CubeMXが生成するハンドルを直接使うHAL APIの説明である。",
+    "relativePath": "Docs/HAL_Docs/HAL_Functions.md",
+    "frontmatter": {
+      "title": "STM32 HAL 関数一覧",
+      "tags": []
+    }
+  },
+  "/Docs/HAL_Docs/I2C.md": {
+    "title": "I2C HAL API",
+    "description": "STM32 HALのI2C APIを説明する。HALbedの I2C クラスは、同期通信、レジスタ通信、デバイス確認、DMA通信をこのAPIへ委譲している。",
+    "relativePath": "Docs/HAL_Docs/I2C.md",
+    "frontmatter": {
+      "title": "I2C HAL API",
+      "tags": []
+    }
+  },
+  "/Docs/HAL_Docs/RCC.md": {
+    "title": "RCC・時刻 HAL API",
+    "description": "タイマや通信の設定で使うクロック取得関数と、HALのミリ秒時刻関数を説明する。HALbedの TimerAPB、TimerManager、Ticker、Encoder がこれらを使用している。",
+    "relativePath": "Docs/HAL_Docs/RCC.md",
+    "frontmatter": {
+      "title": "RCC・時刻 HAL API",
+      "tags": []
+    }
+  },
+  "/Docs/HAL_Docs/TIM.md": {
+    "title": "TIM HAL API",
+    "description": "STM32 HALのタイマAPIを説明する。HALbedの Ticker、PWMOut、Encoder、TimerManager は、タイマの基本動作、PWM、エンコーダ、更新割り込みをこのAPIで実装している。",
+    "relativePath": "Docs/HAL_Docs/TIM.md",
+    "frontmatter": {
+      "title": "TIM HAL API",
+      "tags": []
+    }
+  },
+  "/Docs/HAL_Docs/UART.md": {
+    "title": "UART HAL API",
+    "description": "STM32 HALのUART APIを説明する。HALbedの UART と LogManager は、同期送受信、受信割り込み、UARTフラグ確認、ログ送信にこのAPIを使っている。",
+    "relativePath": "Docs/HAL_Docs/UART.md",
+    "frontmatter": {
+      "title": "UART HAL API",
       "tags": []
     }
   },
