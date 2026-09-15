@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useData, withBase } from 'vitepress'
-import { isTechnicalArticlePath } from '../composables/contentScope'
+import { isTechnicalArticlePath, isTechnicalArticlesHomePath } from '../composables/contentScope'
 
 interface ArticleFrontmatter {
   tags?: string[] | string
@@ -14,7 +14,10 @@ function getTagHref(tag: string): string {
 }
 
 const tags = computed(() => {
-  if (!isTechnicalArticlePath(page.value.relativePath)) {
+  if (
+    !isTechnicalArticlePath(page.value.relativePath) ||
+    isTechnicalArticlesHomePath(page.value.relativePath)
+  ) {
     return []
   }
 
