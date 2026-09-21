@@ -1,8 +1,7 @@
 ---
-title: 開発資料
+title:
 aside: false
 pageClass: technical-articles-wide
 tags:
-  - "開発資料"
 ---
 <TechnicalArticlesHome />

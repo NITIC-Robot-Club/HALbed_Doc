@@ -1,9 +1,9 @@
 ---
 tags:
-    - 開発資料
-    - 有線通信
-    - CAN
-    - CAN FD
+  - 開発資料
+  - 有線通信
+  - CAN
+  - CAN FD
 ---
 
 # CAN / CAN FD入門 第2編

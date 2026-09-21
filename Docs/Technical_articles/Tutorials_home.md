@@ -3,7 +3,6 @@ title: チュートリアル
 aside: false
 pageClass: technical-articles-wide
 tags:
-  - "開発資料"
 ---
 <script setup lang="ts">
 import type { HomeThumbnailSection } from '../../.vitepress/theme/home-thumbnail'
