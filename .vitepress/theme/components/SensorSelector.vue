@@ -66,6 +66,7 @@ const flowConnectorSize = ref({ width: 1, height: 1 })
 const flowConnectorPaths = ref<string[]>([])
 let flowResizeObserver: ResizeObserver | null = null
 let flowMeasurementTimer: number | undefined
+let overviewResizeTimer: number | undefined
 
 const activeMode = computed(() => activeModeId.value ? getSensorMode(activeModeId.value) : null)
 
@@ -197,7 +198,7 @@ function measureFlowConnectors(): void {
 
 onMounted(() => {
   document.addEventListener('fullscreenchange', syncOverviewFullscreen)
-  window.addEventListener('resize', measureFlowConnectors)
+  window.addEventListener('resize', handleWindowResize)
   nextTick(() => {
     measureFlowConnectors()
     flowMeasurementTimer = window.setTimeout(measureFlowConnectors, 80)
@@ -208,10 +209,21 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   document.removeEventListener('fullscreenchange', syncOverviewFullscreen)
-  window.removeEventListener('resize', measureFlowConnectors)
+  window.removeEventListener('resize', handleWindowResize)
   if (flowMeasurementTimer) window.clearTimeout(flowMeasurementTimer)
+  if (overviewResizeTimer) window.clearTimeout(overviewResizeTimer)
   flowResizeObserver?.disconnect()
 })
+
+function handleWindowResize(): void {
+  measureFlowConnectors()
+  if (!isOverviewVisible.value) return
+
+  if (overviewResizeTimer) window.clearTimeout(overviewResizeTimer)
+  overviewResizeTimer = window.setTimeout(() => {
+    nextTick(centerOverviewSelection)
+  }, 80)
+}
 
 function syncOverviewFullscreen(): void {
   isOverviewFullscreen.value = document.fullscreenElement === overviewPanel.value
@@ -231,10 +243,7 @@ async function toggleOverviewFullscreen(): Promise<void> {
 
 function setTreeZoom(nextZoom: number): void {
   treeZoom.value = Math.min(1.6, Math.max(0.7, Number(nextZoom.toFixed(2))))
-  nextTick(() => {
-    const currentTreeNode = treeViewport.value?.querySelector<HTMLElement>('.sensor-tree-node.is-current > .sensor-tree-node__button')
-    if (currentTreeNode) centerTreeSelection(currentTreeNode)
-  })
+  nextTick(centerOverviewSelection)
 }
 
 function changeTreeZoom(delta: number): void {
@@ -248,10 +257,7 @@ function resetTreeExpansion(): void {
 function expandTreeNode(nodeId: string): void {
   if (expandedTreeNodes.value.includes(nodeId)) return
   expandedTreeNodes.value = [...expandedTreeNodes.value, nodeId]
-  nextTick(() => {
-    const currentTreeNode = treeViewport.value?.querySelector<HTMLElement>('.sensor-tree-node.is-current > .sensor-tree-node__button')
-    if (currentTreeNode) centerTreeSelection(currentTreeNode)
-  })
+  nextTick(centerOverviewSelection)
 }
 
 function centerTreeSelection(element: HTMLElement): void {
@@ -259,10 +265,7 @@ function centerTreeSelection(element: HTMLElement): void {
   if (!viewport) return
 
   const viewportRect = viewport.getBoundingClientRect()
-  const relatedNodes = [
-    element,
-    ...Array.from(viewport.querySelectorAll<HTMLElement>('.sensor-tree-node.is-next > .sensor-tree-node__button')),
-  ]
+  const relatedNodes = [element]
   const bounds = relatedNodes.reduce((current, node) => {
     const rect = node.getBoundingClientRect()
     return {
@@ -279,6 +282,14 @@ function centerTreeSelection(element: HTMLElement): void {
   const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
 
   viewport.scrollTo({ top: Math.max(0, top), left: Math.max(0, left), behavior })
+}
+
+function centerOverviewSelection(): void {
+  const currentTreeNode = treeViewport.value?.querySelector<HTMLElement>('.sensor-tree-node.is-current > .sensor-tree-node__button')
+  if (!currentTreeNode) return
+
+  revealTreeViewport()
+  centerTreeSelection(currentTreeNode)
 }
 
 function revealTreeViewport(): void {
@@ -307,18 +318,20 @@ function focusStepHeading(): void {
     measureFlowConnectors()
     requestAnimationFrame(() => requestAnimationFrame(measureFlowConnectors))
     stepHeading.value?.focus({ preventScroll: true })
-    if (selectedPath.value.length > 1) {
-      const currentTreeNode = treeViewport.value?.querySelector<HTMLElement>('.sensor-tree-node.is-current > .sensor-tree-node__button')
-      if (isOverviewVisible.value && currentTreeNode) {
-        revealTreeViewport()
-        nextTick(() => centerTreeSelection(currentTreeNode))
-      } else {
-        currentFlowNode.value?.scrollIntoView({
-          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-          block: 'center',
-          inline: 'center',
+    if (isOverviewVisible.value) {
+      nextTick(() => {
+        centerOverviewSelection()
+        requestAnimationFrame(() => {
+          centerOverviewSelection()
+          window.setTimeout(centerOverviewSelection, 80)
         })
-      }
+      })
+    } else if (selectedPath.value.length > 1) {
+      currentFlowNode.value?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'center',
+        inline: 'center',
+      })
     }
   })
 }
