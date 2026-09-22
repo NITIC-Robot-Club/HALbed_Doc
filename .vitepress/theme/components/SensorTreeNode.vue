@@ -9,10 +9,13 @@ const props = defineProps<{
   mode: SensorMode
   nodeId: string
   selectedPath: string[]
+  focusOnly?: boolean
+  expandedNodeIds?: string[]
 }>()
 
 const emit = defineEmits<{
   select: [nodeId: string]
+  expand: [nodeId: string]
 }>()
 
 const node = computed(() => getSensorNode(props.mode, props.nodeId))
@@ -24,6 +27,10 @@ const tooltipId = computed(() => `sensor-node-hint-${node.value.id}`)
 const groupNotes = computed(() => props.mode.overviewGroups.filter((group) => group.members.includes(node.value.id)))
 const isSelected = computed(() => props.selectedPath.includes(node.value.id))
 const isCurrent = computed(() => props.selectedPath.at(-1) === node.value.id)
+const isExpanded = computed(() => props.expandedNodeIds?.includes(node.value.id) ?? false)
+const shouldRenderChildren = computed(() => children.value.length > 0
+  && (!props.focusOnly || isSelected.value || isExpanded.value))
+const shouldShowExpand = computed(() => props.focusOnly && children.value.length > 0 && !shouldRenderChildren.value)
 const isNext = computed(() => {
   const currentId = props.selectedPath.at(-1)
   if (!currentId || currentId === node.value.id) return false
@@ -54,7 +61,7 @@ function roundedOrthogonalPath(startX: number, startY: number, endX: number, end
 function measureConnectors(): void {
   const root = rootElement.value
   const parentButton = buttonElement.value
-  if (!root || !parentButton || !children.value.length) {
+  if (!root || !parentButton || !shouldRenderChildren.value) {
     connectorPaths.value = []
     return
   }
@@ -116,7 +123,7 @@ onBeforeUnmount(() => {
     </aside>
 
     <svg
-      v-if="children.length && connectorPaths.length"
+      v-if="shouldRenderChildren && connectorPaths.length"
       class="sensor-tree-node__connectors"
       :viewBox="`0 0 ${connectorSize.width} ${connectorSize.height}`"
       preserveAspectRatio="none"
@@ -125,7 +132,18 @@ onBeforeUnmount(() => {
       <path v-for="(path, index) in connectorPaths" :key="index" :d="path" />
     </svg>
 
-    <div v-if="children.length" class="sensor-tree-node__branch">
+    <button
+      v-if="shouldShowExpand"
+      type="button"
+      class="sensor-tree-node__expand"
+      :aria-label="`${node.label}の下位を1段表示`"
+      :title="`${node.label}の下位を1段表示`"
+      @click.stop="emit('expand', node.id)"
+    >
+      ＋ 下位を表示
+    </button>
+
+    <div v-if="shouldRenderChildren" class="sensor-tree-node__branch">
       <ul class="sensor-tree-node__children">
         <SensorTreeNode
           v-for="childId in children"
@@ -133,7 +151,10 @@ onBeforeUnmount(() => {
           :mode="mode"
           :node-id="childId"
           :selected-path="selectedPath"
+          :focus-only="focusOnly"
+          :expanded-node-ids="expandedNodeIds"
           @select="emit('select', $event)"
+          @expand="emit('expand', $event)"
         />
       </ul>
     </div>
@@ -229,6 +250,39 @@ onBeforeUnmount(() => {
   transform: translate(-50%, -0.25rem);
   transition: opacity 140ms ease, transform 140ms ease;
   white-space: normal;
+}
+
+.sensor-tree-node__expand {
+  position: relative;
+  z-index: 1;
+  margin-top: 0.7rem;
+  padding: 0.3rem 0.6rem;
+  border: 1px dashed var(--sensor-line, var(--vp-c-divider));
+  border-radius: 999px;
+  color: var(--vp-c-text-2);
+  background: var(--vp-c-bg);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.sensor-tree-node__expand::before {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 1px;
+  height: 0.7rem;
+  background: var(--sensor-line, var(--vp-c-divider));
+  content: '';
+  transform: translateX(-50%);
+}
+
+.sensor-tree-node__expand:hover,
+.sensor-tree-node__expand:focus-visible {
+  border-color: var(--vp-c-brand-1);
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-default-soft);
 }
 
 .sensor-tree-node__button:hover .sensor-tree-node__tooltip,

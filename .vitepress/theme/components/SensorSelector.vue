@@ -53,6 +53,7 @@ const modeChoices: ModeChoice[] = [
 
 const activeModeId = ref<SensorModeId | null>(null)
 const selectedPath = ref<string[]>([startNode.id])
+const expandedTreeNodes = ref<string[]>([])
 const isOverviewVisible = ref(false)
 const isOverviewFullscreen = ref(false)
 const overviewPanel = ref<HTMLElement | null>(null)
@@ -95,6 +96,25 @@ const currentChildren = computed(() => {
     return activeMode.value ? getSensorNode(activeMode.value, modeChoice.entryNodeId).children ?? [] : []
   }
   return currentNode.value.children ?? []
+})
+const currentSelectionNeighbors = computed(() => {
+  const currentId = selectedPath.value.at(-1) ?? startNode.id
+  let siblingIds: string[] = []
+
+  const modeChoiceIndex = modeChoices.findIndex((choice) => choice.id === currentId)
+  if (modeChoiceIndex >= 0) {
+    siblingIds = modeChoices.map((choice) => choice.id)
+  } else if (activeMode.value && currentId !== startNode.id) {
+    const path = findSensorPath(activeMode.value, currentId)
+    const parentId = path?.at(-2)
+    siblingIds = parentId ? getSensorNode(activeMode.value, parentId).children ?? [] : []
+  }
+
+  const currentIndex = siblingIds.indexOf(currentId)
+  return {
+    before: currentIndex > 0 ? siblingIds[currentIndex - 1] : undefined,
+    after: currentIndex >= 0 ? siblingIds[currentIndex + 1] : undefined,
+  }
 })
 const currentResult = computed(() => getSensorResult(currentNode.value))
 const isDeadEnd = computed(() => currentNode.value.kind === 'branch' && currentChildren.value.length === 0)
@@ -221,6 +241,19 @@ function changeTreeZoom(delta: number): void {
   setTreeZoom(treeZoom.value + delta)
 }
 
+function resetTreeExpansion(): void {
+  expandedTreeNodes.value = []
+}
+
+function expandTreeNode(nodeId: string): void {
+  if (expandedTreeNodes.value.includes(nodeId)) return
+  expandedTreeNodes.value = [...expandedTreeNodes.value, nodeId]
+  nextTick(() => {
+    const currentTreeNode = treeViewport.value?.querySelector<HTMLElement>('.sensor-tree-node.is-current > .sensor-tree-node__button')
+    if (currentTreeNode) centerTreeSelection(currentTreeNode)
+  })
+}
+
 function centerTreeSelection(element: HTMLElement): void {
   const viewport = treeViewport.value
   if (!viewport) return
@@ -293,6 +326,7 @@ function focusStepHeading(): void {
 function resetSelection(): void {
   activeModeId.value = null
   selectedPath.value = [startNode.id]
+  resetTreeExpansion()
   isOverviewVisible.value = false
   window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
   focusStepHeading()
@@ -321,6 +355,7 @@ function selectMode(modeId: SensorModeId, choiceId?: string): void {
   selectedPath.value = modeChoice
     ? appendSingleChildNodes(nextPath, modeChoice.entryNodeId)
     : nextPath
+  resetTreeExpansion()
   isOverviewVisible.value = false
   focusStepHeading()
 }
@@ -344,6 +379,7 @@ function selectNode(nodeId: string): void {
     : selectedPath.value[1] ?? pathChoiceId
   const nextPath = [startNode.id, ...(modeChoiceId ? [modeChoiceId] : []), ...path.slice(2)]
   selectedPath.value = appendSingleChildNodes(nextPath)
+  resetTreeExpansion()
   isOverviewVisible.value = wasOverviewVisible
   focusStepHeading()
 }
@@ -351,6 +387,7 @@ function selectNode(nodeId: string): void {
 function goBack(): void {
   if (selectedPath.value.length <= 1) return
   selectedPath.value = selectedPath.value.slice(0, -1)
+  resetTreeExpansion()
   if (selectedPath.value.length === 1) {
     activeModeId.value = null
     isOverviewVisible.value = false
@@ -360,6 +397,7 @@ function goBack(): void {
 
 function selectBreadcrumb(index: number): void {
   selectedPath.value = selectedPath.value.slice(0, index + 1)
+  resetTreeExpansion()
   if (index === 0) activeModeId.value = null
   isOverviewVisible.value = false
   focusStepHeading()
@@ -381,6 +419,7 @@ function switchToExternalMode(): void {
 function showOverviewFromStart(): void {
   activeModeId.value = 'all-sensors'
   selectedPath.value = [startNode.id]
+  resetTreeExpansion()
   isOverviewVisible.value = true
   focusStepHeading()
 }
@@ -459,6 +498,18 @@ async function toggleOverview(): Promise<void> {
                 :class="{ 'is-current': index === selectedPath.length - 1, 'has-next-node': index < selectedPath.length - 1 }"
               >
                 <button
+                  v-if="index === selectedPath.length - 1 && currentSelectionNeighbors.before"
+                  type="button"
+                  class="sensor-selector__flow-context-node"
+                  :class="getToneClass(getSelectionNode(currentSelectionNeighbors.before))"
+                  :aria-label="`前の選択肢: ${getSelectionNode(currentSelectionNeighbors.before).label}`"
+                  :title="getNodeDescription(getSelectionNode(currentSelectionNeighbors.before))"
+                  @click="selectNode(currentSelectionNeighbors.before)"
+                >
+                  {{ getSelectionNode(currentSelectionNeighbors.before).label }}
+                </button>
+
+                <button
                   type="button"
                   class="sensor-selector__flow-node"
                   :ref="index === selectedPath.length - 1 ? setCurrentFlowNode : undefined"
@@ -472,6 +523,18 @@ async function toggleOverview(): Promise<void> {
                   <span v-if="getNodeDescription(getSelectionNode(nodeId))" class="sensor-selector__flow-tooltip" role="tooltip">
                     {{ getNodeDescription(getSelectionNode(nodeId)) }}
                   </span>
+                </button>
+
+                <button
+                  v-if="index === selectedPath.length - 1 && currentSelectionNeighbors.after"
+                  type="button"
+                  class="sensor-selector__flow-context-node"
+                  :class="getToneClass(getSelectionNode(currentSelectionNeighbors.after))"
+                  :aria-label="`次の選択肢: ${getSelectionNode(currentSelectionNeighbors.after).label}`"
+                  :title="getNodeDescription(getSelectionNode(currentSelectionNeighbors.after))"
+                  @click="selectNode(currentSelectionNeighbors.after)"
+                >
+                  {{ getSelectionNode(currentSelectionNeighbors.after).label }}
                 </button>
               </div>
 
@@ -573,7 +636,15 @@ async function toggleOverview(): Promise<void> {
         <div ref="treeViewport" class="sensor-selector__tree-wrap">
           <div class="sensor-selector__tree-zoom" :style="{ '--sensor-tree-zoom': treeZoom }">
             <ul class="sensor-selector__tree" aria-label="センサー選定ツリー">
-              <SensorTreeNode :mode="activeMode" :node-id="activeMode.rootId" :selected-path="overviewSelectedPath" @select="selectNode" />
+              <SensorTreeNode
+                :mode="activeMode"
+                :node-id="activeMode.rootId"
+                :selected-path="overviewSelectedPath"
+                :focus-only="true"
+                :expanded-node-ids="expandedTreeNodes"
+                @select="selectNode"
+                @expand="expandTreeNode"
+              />
             </ul>
           </div>
         </div>
@@ -881,6 +952,36 @@ html.dark .sensor-selector {
   display: flex;
   align-items: center;
   z-index: 1;
+}
+
+.sensor-selector__flow-column.is-current {
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.sensor-selector__flow-context-node {
+  min-width: 7.8rem;
+  max-width: 14rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--vp-c-text-3) 45%, var(--vp-c-divider));
+  border-radius: 1.1rem;
+  color: var(--vp-c-text-3);
+  background: color-mix(in srgb, var(--vp-c-text-3) 7%, var(--vp-c-bg));
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  opacity: 0.78;
+  text-align: center;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, opacity 160ms ease;
+}
+
+.sensor-selector__flow-context-node:hover,
+.sensor-selector__flow-context-node:focus-visible {
+  border-color: var(--vp-c-text-2);
+  color: var(--vp-c-text-2);
+  background: var(--vp-c-default-soft);
+  opacity: 1;
 }
 
 .sensor-selector__flow-column.has-next-node::after {
