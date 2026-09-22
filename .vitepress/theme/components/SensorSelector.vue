@@ -69,6 +69,7 @@ let flowResizeObserver: ResizeObserver | null = null
 let flowMeasurementTimer: number | undefined
 let overviewResizeTimer: number | undefined
 let treeTransitionTimer: number | undefined
+let treeZoomCenterTimer: number | undefined
 
 const activeMode = computed(() => activeModeId.value ? getSensorMode(activeModeId.value) : null)
 
@@ -215,6 +216,7 @@ onBeforeUnmount(() => {
   if (flowMeasurementTimer) window.clearTimeout(flowMeasurementTimer)
   if (overviewResizeTimer) window.clearTimeout(overviewResizeTimer)
   if (treeTransitionTimer) window.clearTimeout(treeTransitionTimer)
+  if (treeZoomCenterTimer) window.clearTimeout(treeZoomCenterTimer)
   flowResizeObserver?.disconnect()
 })
 
@@ -246,7 +248,12 @@ async function toggleOverviewFullscreen(): Promise<void> {
 
 function setTreeZoom(nextZoom: number): void {
   treeZoom.value = Math.min(1.6, Math.max(0.7, Number(nextZoom.toFixed(2))))
-  nextTick(centerOverviewSelection)
+  if (treeZoomCenterTimer) window.clearTimeout(treeZoomCenterTimer)
+  nextTick(() => {
+    treeZoomCenterTimer = window.setTimeout(() => {
+      centerOverviewSelection('auto')
+    }, 240)
+  })
 }
 
 function changeTreeZoom(delta: number): void {
@@ -282,7 +289,7 @@ function expandTreeNode(nodeId: string): void {
   nextTick(centerOverviewSelection)
 }
 
-function centerTreeSelection(element: HTMLElement): void {
+function centerTreeSelection(element: HTMLElement, scrollBehavior?: ScrollBehavior): void {
   const viewport = treeViewport.value
   if (!viewport) return
 
@@ -299,19 +306,22 @@ function centerTreeSelection(element: HTMLElement): void {
   }, { top: Number.POSITIVE_INFINITY, right: Number.NEGATIVE_INFINITY, bottom: Number.NEGATIVE_INFINITY, left: Number.POSITIVE_INFINITY })
   const regionWidth = bounds.right - bounds.left
   const regionHeight = bounds.bottom - bounds.top
-  const top = viewport.scrollTop + bounds.top - viewportRect.top - (viewport.clientHeight - regionHeight) / 2
-  const left = viewport.scrollLeft + bounds.left - viewportRect.left - (viewport.clientWidth - regionWidth) / 2
-  const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+  const topDelta = bounds.top - viewportRect.top - (viewport.clientHeight - regionHeight) / 2
+  const leftDelta = bounds.left - viewportRect.left - (viewport.clientWidth - regionWidth) / 2
+  const top = viewport.scrollTop + topDelta
+  const left = viewport.scrollLeft + leftDelta
+  const behavior = scrollBehavior
+    ?? (window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth')
 
   viewport.scrollTo({ top: Math.max(0, top), left: Math.max(0, left), behavior })
 }
 
-function centerOverviewSelection(): void {
+function centerOverviewSelection(scrollBehavior?: ScrollBehavior): void {
   const currentTreeNode = treeViewport.value?.querySelector<HTMLElement>('.sensor-tree-node.is-current > .sensor-tree-node__button')
   if (!currentTreeNode) return
 
   revealTreeViewport()
-  centerTreeSelection(currentTreeNode)
+  centerTreeSelection(currentTreeNode, scrollBehavior)
 }
 
 function revealTreeViewport(): void {
@@ -701,6 +711,7 @@ async function toggleOverview(): Promise<void> {
                 :node-id="activeMode.rootId"
                 :selected-path="overviewSelectedPath"
                 :expanded-node-ids="expandedTreeNodes"
+                :zoom="treeZoom"
                 @select="selectNode"
                 @expand="expandTreeNode"
               />
@@ -1493,6 +1504,7 @@ html.dark .sensor-selector {
 .sensor-selector__tree-zoom {
   width: max-content;
   min-width: 100%;
+  padding: 50vh 50vw;
   zoom: var(--sensor-tree-zoom);
   transition: zoom 220ms ease;
 }

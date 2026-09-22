@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import type { SensorMode, SensorNode } from './sensorSelector'
 import { getSensorNode, getSensorNodeTone, getSensorResult } from './sensorSelector'
 
@@ -11,6 +11,7 @@ const props = defineProps<{
   selectedPath: string[]
   focusOnly?: boolean
   expandedNodeIds?: string[]
+  zoom?: number
 }>()
 
 const emit = defineEmits<{
@@ -69,22 +70,32 @@ function measureConnectors(): void {
 
   const rootRect = root.getBoundingClientRect()
   const parentRect = parentButton.getBoundingClientRect()
-  const parentCenterX = parentRect.left - rootRect.left + parentRect.width / 2
-  const parentCenterY = parentRect.top - rootRect.top + parentRect.height / 2
-  const elbowX = parentRect.right - rootRect.left + 24
+  const scaleX = root.clientWidth > 0 ? rootRect.width / root.clientWidth : 1
+  const scaleY = root.clientHeight > 0 ? rootRect.height / root.clientHeight : 1
+  const parentCenterX = (parentRect.left - rootRect.left + parentRect.width / 2) / scaleX
+  const parentCenterY = (parentRect.top - rootRect.top + parentRect.height / 2) / scaleY
+  const elbowX = (parentRect.right - rootRect.left) / scaleX + 24
 
   connectorPaths.value = children.value.flatMap((childId) => {
     const childButton = root.querySelector<HTMLElement>(`[data-sensor-node-id="${childId}"]`)
     if (!childButton) return []
 
     const childRect = childButton.getBoundingClientRect()
-    const childCenterX = childRect.left - rootRect.left + childRect.width / 2
-    const childCenterY = childRect.top - rootRect.top + childRect.height / 2
+    const childCenterX = (childRect.left - rootRect.left + childRect.width / 2) / scaleX
+    const childCenterY = (childRect.top - rootRect.top + childRect.height / 2) / scaleY
 
     return [roundedOrthogonalPath(parentCenterX, parentCenterY, childCenterX, childCenterY, elbowX)]
   })
   connectorSize.value = { width: root.clientWidth, height: root.clientHeight }
 }
+
+watch(() => props.zoom, () => {
+  nextTick(() => {
+    measureConnectors()
+    if (measurementTimer) window.clearTimeout(measurementTimer)
+    measurementTimer = window.setTimeout(measureConnectors, 80)
+  })
+})
 
 onMounted(() => {
   nextTick(() => {
@@ -159,6 +170,7 @@ onBeforeUnmount(() => {
           :selected-path="selectedPath"
           :focus-only="focusOnly"
           :expanded-node-ids="expandedNodeIds"
+          :zoom="zoom"
           @select="emit('select', $event)"
           @expand="emit('expand', $event)"
         />
