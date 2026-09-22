@@ -250,6 +250,13 @@ function changeTreeZoom(delta: number): void {
   setTreeZoom(treeZoom.value + delta)
 }
 
+function handleTreeWheel(event: WheelEvent): void {
+  if (!event.ctrlKey || event.deltaY === 0) return
+
+  event.preventDefault()
+  changeTreeZoom(event.deltaY < 0 ? 0.1 : -0.1)
+}
+
 function resetTreeExpansion(): void {
   expandedTreeNodes.value = []
 }
@@ -640,7 +647,13 @@ async function toggleOverview(): Promise<void> {
             >
               ＋
             </button>
-            <button type="button" class="sensor-selector__zoom-reset" @click="setTreeZoom(1)">
+            <button
+              type="button"
+              class="sensor-selector__zoom-reset"
+              aria-label="ツリーの倍率を100%に戻す"
+              title="倍率を100%に戻す"
+              @click="setTreeZoom(1)"
+            >
               100%
             </button>
           </div>
@@ -655,7 +668,12 @@ async function toggleOverview(): Promise<void> {
           </button>
         </div>
 
-        <div ref="treeViewport" class="sensor-selector__tree-wrap">
+        <div
+          ref="treeViewport"
+          class="sensor-selector__tree-wrap"
+          title="Ctrlキーを押しながらスクロールすると拡大縮小できます"
+          @wheel="handleTreeWheel"
+        >
           <div class="sensor-selector__tree-zoom" :style="{ '--sensor-tree-zoom': treeZoom }">
             <ul class="sensor-selector__tree" aria-label="センサー選定ツリー">
               <SensorTreeNode
