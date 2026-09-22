@@ -501,7 +501,7 @@ async function toggleOverview(): Promise<void> {
                   v-if="index === selectedPath.length - 1 && currentSelectionNeighbors.before"
                   type="button"
                   class="sensor-selector__flow-context-node"
-                  :class="getToneClass(getSelectionNode(currentSelectionNeighbors.before))"
+                  :class="['is-before', getToneClass(getSelectionNode(currentSelectionNeighbors.before))]"
                   :aria-label="`前の選択肢: ${getSelectionNode(currentSelectionNeighbors.before).label}`"
                   :title="getNodeDescription(getSelectionNode(currentSelectionNeighbors.before))"
                   @click="selectNode(currentSelectionNeighbors.before)"
@@ -529,7 +529,7 @@ async function toggleOverview(): Promise<void> {
                   v-if="index === selectedPath.length - 1 && currentSelectionNeighbors.after"
                   type="button"
                   class="sensor-selector__flow-context-node"
-                  :class="getToneClass(getSelectionNode(currentSelectionNeighbors.after))"
+                  :class="['is-after', getToneClass(getSelectionNode(currentSelectionNeighbors.after))]"
                   :aria-label="`次の選択肢: ${getSelectionNode(currentSelectionNeighbors.after).label}`"
                   :title="getNodeDescription(getSelectionNode(currentSelectionNeighbors.after))"
                   @click="selectNode(currentSelectionNeighbors.after)"
@@ -901,7 +901,7 @@ html.dark .sensor-selector {
   overflow-x: auto;
   display: flex;
   align-items: center;
-  min-height: 19rem;
+  min-height: clamp(27rem, 58vh, 38rem);
   padding: 1.5rem 1rem 1.75rem;
   border-top: 1px solid var(--vp-c-divider);
   border-bottom: 1px solid var(--vp-c-divider);
@@ -932,6 +932,11 @@ html.dark .sensor-selector {
   padding-block: 0.75rem;
 }
 
+.sensor-selector__workspace.is-start .sensor-selector__flow-track,
+.sensor-selector__workspace.is-start .sensor-selector__flow-column.is-current {
+  min-height: 0;
+}
+
 .sensor-selector__workspace.is-start .sensor-selector__flow-choices {
   min-height: 7rem;
   gap: 0.75rem;
@@ -944,7 +949,7 @@ html.dark .sensor-selector {
   align-items: center;
   gap: 3rem;
   min-width: max-content;
-  min-height: 100%;
+  min-height: clamp(27rem, 58vh, 38rem);
 }
 
 .sensor-selector__flow-column {
@@ -955,11 +960,15 @@ html.dark .sensor-selector {
 }
 
 .sensor-selector__flow-column.is-current {
+  position: relative;
   flex-direction: column;
-  gap: 0.65rem;
+  justify-content: center;
+  min-height: clamp(27rem, 58vh, 38rem);
 }
 
 .sensor-selector__flow-context-node {
+  position: absolute;
+  left: 50%;
   min-width: 7.8rem;
   max-width: 14rem;
   padding: 0.45rem 0.8rem;
@@ -973,7 +982,16 @@ html.dark .sensor-selector {
   font-weight: 600;
   opacity: 0.78;
   text-align: center;
+  transform: translateX(-50%);
   transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease, opacity 160ms ease;
+}
+
+.sensor-selector__flow-context-node.is-before {
+  top: 0;
+}
+
+.sensor-selector__flow-context-node.is-after {
+  bottom: 0;
 }
 
 .sensor-selector__flow-context-node:hover,
