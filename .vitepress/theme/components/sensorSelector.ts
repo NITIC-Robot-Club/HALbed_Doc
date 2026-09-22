@@ -1,7 +1,26 @@
 export type SensorModeId = 'all-sensors'
 
 export type SensorNodeKind = 'branch' | 'result'
-export type SensorNodeTone = 'root' | 'structure' | 'motion' | 'position' | 'distance' | 'detection' | 'circuit' | 'result'
+export type SensorNodeTone =
+  | 'root'
+  | 'structure'
+  | 'external'
+  | 'motion'
+  | 'speed'
+  | 'acceleration'
+  | 'angular'
+  | 'rotation'
+  | 'position'
+  | 'distance'
+  | 'distance-result'
+  | 'detection'
+  | 'detection-result'
+  | 'circuit'
+  | 'encoder'
+  | 'encoder-relative'
+  | 'encoder-absolute'
+  | 'imu'
+  | 'result'
 
 export interface SensorNode {
   id: string
@@ -488,8 +507,18 @@ export function getSensorNodeTone(node: SensorNode): SensorNodeTone {
   if (node.tone) return node.tone
 
   const id = node.id
+  if (id.includes('relative') || id.includes('incremental')) return 'encoder-relative'
+  if (id.includes('absolute')) return 'encoder-absolute'
+  if (id.includes('rotary-encoder')) return 'encoder'
+  if (id.includes('imu')) return 'imu'
+  if (id.includes('acceleration')) return 'acceleration'
+  if (id.includes('angular')) return 'angular'
+  if (id.includes('rotation')) return 'rotation'
+  if (id.includes('speed')) return 'speed'
+  if (node.kind === 'result' && (id.includes('distance') || id.includes('lidar'))) return 'distance-result'
+  if (node.kind === 'result' && (id.includes('object') || id.includes('photo') || id.includes('limit'))) return 'detection-result'
+  if (id.includes('external')) return 'external'
   if (id.includes('robot')) return 'root'
-  if (id.includes('speed') || id.includes('acceleration') || id.includes('angular') || id.includes('rotation')) return 'motion'
   if (id.includes('distance') || id.includes('lidar')) return 'distance'
   if (id.includes('object') || id.includes('photo') || id.includes('limit')) return 'detection'
   if (id.includes('color')) return 'position'

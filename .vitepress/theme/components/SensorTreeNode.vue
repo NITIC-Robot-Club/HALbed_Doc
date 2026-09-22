@@ -24,6 +24,7 @@ const nodeDescription = computed(() => node.value.hint
   ?? getSensorResult(node.value)?.description
   ?? (node.value.kind === 'branch' ? `${node.value.label}から次の候補を選びます。` : undefined))
 const tooltipId = computed(() => `sensor-node-hint-${node.value.id}`)
+const markerId = computed(() => 'sensor-tree-arrow-' + node.value.id)
 const groupNotes = computed(() => props.mode.overviewGroups.filter((group) => group.members.includes(node.value.id)))
 const isSelected = computed(() => props.selectedPath.includes(node.value.id))
 const isCurrent = computed(() => props.selectedPath.at(-1) === node.value.id)
@@ -129,7 +130,12 @@ onBeforeUnmount(() => {
       preserveAspectRatio="none"
       aria-hidden="true"
     >
-      <path v-for="(path, index) in connectorPaths" :key="index" :d="path" />
+      <defs>
+        <marker :id="markerId" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+          <path d="M 0 0 L 7 3.5 L 0 7 Z" />
+        </marker>
+      </defs>
+      <path v-for="(path, index) in connectorPaths" :key="index" :d="path" :marker-end="'url(#' + markerId + ')'" />
     </svg>
 
     <button
@@ -184,8 +190,8 @@ onBeforeUnmount(() => {
   padding: 0.7rem 1rem;
   border: 1px solid color-mix(in srgb, var(--sensor-node-color) 66%, var(--vp-c-divider));
   border-radius: 1.1rem;
-  color: var(--sensor-ink, var(--vp-c-text-1));
-  background: color-mix(in srgb, var(--sensor-node-color) 24%, var(--vp-c-bg));
+  color: var(--sensor-node-ink, var(--sensor-ink, var(--vp-c-text-1)));
+  background: color-mix(in srgb, var(--sensor-node-color) 68%, var(--vp-c-bg));
   cursor: pointer;
   font: inherit;
   font-size: 0.95rem;
@@ -198,14 +204,14 @@ onBeforeUnmount(() => {
 .sensor-tree-node__button:hover,
 .sensor-tree-node__button:focus-visible {
   border-color: var(--sensor-node-color);
-  color: var(--sensor-ink, var(--vp-c-text-1));
-  background: color-mix(in srgb, var(--sensor-node-color) 38%, var(--vp-c-bg));
+  color: var(--sensor-node-ink, var(--sensor-ink, var(--vp-c-text-1)));
+  background: color-mix(in srgb, var(--sensor-node-color) 82%, var(--vp-c-bg));
 }
 
 .sensor-tree-node.is-selected > .sensor-tree-node__button {
   border-color: var(--sensor-node-color);
-  color: var(--sensor-ink, var(--vp-c-text-1));
-  background: color-mix(in srgb, var(--sensor-node-color) 30%, var(--vp-c-bg));
+  color: var(--sensor-node-ink, var(--sensor-ink, var(--vp-c-text-1)));
+  background: color-mix(in srgb, var(--sensor-node-color) 76%, var(--vp-c-bg));
 }
 
 .sensor-tree-node.is-current > .sensor-tree-node__button {
@@ -293,34 +299,100 @@ onBeforeUnmount(() => {
 
 .sensor-tree-node__button.is-tone-root {
   --sensor-node-color: var(--sensor-node-root, #9fc3ee);
+  --sensor-node-ink: #fff;
 }
 
 .sensor-tree-node__button.is-tone-structure {
   --sensor-node-color: var(--sensor-node-structure, #b0c3e8);
+  --sensor-node-ink: #fff;
+}
+
+.sensor-tree-node__button.is-tone-external {
+  --sensor-node-color: var(--sensor-node-external, #0eb5b5);
+  --sensor-node-ink: #fff;
 }
 
 .sensor-tree-node__button.is-tone-motion {
   --sensor-node-color: var(--sensor-node-motion, #a8dce5);
+  --sensor-node-ink: #fff;
+}
+
+.sensor-tree-node__button.is-tone-speed {
+  --sensor-node-color: var(--sensor-node-speed, #0b83bb);
+  --sensor-node-ink: #fff;
+}
+
+.sensor-tree-node__button.is-tone-acceleration {
+  --sensor-node-color: var(--sensor-node-acceleration, #08478e);
+  --sensor-node-ink: #fff;
+}
+
+.sensor-tree-node__button.is-tone-angular {
+  --sensor-node-color: var(--sensor-node-angular, #0879b0);
+  --sensor-node-ink: #fff;
+}
+
+.sensor-tree-node__button.is-tone-rotation {
+  --sensor-node-color: var(--sensor-node-rotation, #06b4d1);
+  --sensor-node-ink: #fff;
 }
 
 .sensor-tree-node__button.is-tone-position {
   --sensor-node-color: var(--sensor-node-position, #b0cbe6);
+  --sensor-node-ink: #fff;
 }
 
 .sensor-tree-node__button.is-tone-distance {
   --sensor-node-color: var(--sensor-node-distance, #afdabb);
+  --sensor-node-ink: #fff;
+}
+
+.sensor-tree-node__button.is-tone-distance-result {
+  --sensor-node-color: var(--sensor-node-distance-result, #a9dfc0);
+  --sensor-node-ink: #173047;
+  --sensor-current-ink: #173047;
 }
 
 .sensor-tree-node__button.is-tone-detection {
   --sensor-node-color: var(--sensor-node-detection, #a9d9df);
+  --sensor-node-ink: #fff;
+}
+
+.sensor-tree-node__button.is-tone-detection-result {
+  --sensor-node-color: var(--sensor-node-detection-result, #8dd8e5);
+  --sensor-node-ink: #173047;
+  --sensor-current-ink: #173047;
 }
 
 .sensor-tree-node__button.is-tone-circuit {
   --sensor-node-color: var(--sensor-node-circuit, #a8d9d8);
+  --sensor-node-ink: #fff;
+}
+
+.sensor-tree-node__button.is-tone-encoder {
+  --sensor-node-color: var(--sensor-node-encoder, #06b5d2);
+  --sensor-node-ink: #fff;
+}
+
+.sensor-tree-node__button.is-tone-encoder-relative {
+  --sensor-node-color: var(--sensor-node-encoder-relative, #1888a7);
+  --sensor-node-ink: #fff;
+}
+
+.sensor-tree-node__button.is-tone-encoder-absolute {
+  --sensor-node-color: var(--sensor-node-encoder-absolute, #3ca5aa);
+  --sensor-node-ink: #fff;
+}
+
+.sensor-tree-node__button.is-tone-imu {
+  --sensor-node-color: var(--sensor-node-imu, #548be7);
+  --sensor-node-ink: #fff;
 }
 
 .sensor-tree-node__button.is-tone-result {
   --sensor-node-color: var(--sensor-node-result, #b9dfe1);
+  --sensor-node-ink: #173047;
+  --sensor-current-ink: #173047;
 }
 
 .sensor-tree-node__group-note {
@@ -368,6 +440,11 @@ onBeforeUnmount(() => {
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
+}
+
+.sensor-tree-node__connectors marker path {
+  fill: var(--sensor-line, var(--vp-c-text-2));
+  stroke: none;
 }
 
 .sensor-tree-node__children {

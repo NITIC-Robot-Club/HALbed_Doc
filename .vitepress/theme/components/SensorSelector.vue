@@ -488,6 +488,11 @@ async function toggleOverview(): Promise<void> {
                 preserveAspectRatio="none"
                 aria-hidden="true"
               >
+                <defs>
+                  <marker id="sensor-flow-arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+                    <path d="M 0 0 L 7 3.5 L 0 7 Z" />
+                  </marker>
+                </defs>
                 <path v-for="(path, index) in flowConnectorPaths" :key="index" :d="path" />
               </svg>
 
@@ -495,7 +500,11 @@ async function toggleOverview(): Promise<void> {
                 v-for="(nodeId, index) in selectedPath"
                 :key="nodeId"
                 class="sensor-selector__flow-column"
-                :class="{ 'is-current': index === selectedPath.length - 1, 'has-next-node': index < selectedPath.length - 1 }"
+                :class="{
+                  'is-current': index === selectedPath.length - 1,
+                  'has-context': index === selectedPath.length - 1 && (currentSelectionNeighbors.before || currentSelectionNeighbors.after),
+                  'has-next-node': index < selectedPath.length - 1,
+                }"
               >
                 <button
                   v-if="index === selectedPath.length - 1 && currentSelectionNeighbors.before"
@@ -640,7 +649,6 @@ async function toggleOverview(): Promise<void> {
                 :mode="activeMode"
                 :node-id="activeMode.rootId"
                 :selected-path="overviewSelectedPath"
-                :focus-only="true"
                 :expanded-node-ids="expandedTreeNodes"
                 @select="selectNode"
                 @expand="expandTreeNode"
@@ -672,17 +680,28 @@ async function toggleOverview(): Promise<void> {
 <style scoped>
 .sensor-selector {
   --sensor-ink: #173047;
-  --sensor-current-ink: #10273b;
-  --sensor-line: #6f87b3;
-  --sensor-note-border: #5278aa;
-  --sensor-node-root: #9fc3ee;
-  --sensor-node-structure: #b0c3e8;
-  --sensor-node-motion: #a8dce5;
-  --sensor-node-position: #b0cbe6;
-  --sensor-node-distance: #afdabb;
-  --sensor-node-detection: #a9d9df;
-  --sensor-node-circuit: #a8d9d8;
-  --sensor-node-result: #b9dfe1;
+  --sensor-current-ink: #fff;
+  --sensor-line: #b7b7b7;
+  --sensor-note-border: #06b5d2;
+  --sensor-node-root: #2d8fd4;
+  --sensor-node-structure: #3f63c7;
+  --sensor-node-external: #0eb5b5;
+  --sensor-node-motion: #1682b4;
+  --sensor-node-speed: #0b83bb;
+  --sensor-node-acceleration: #08478e;
+  --sensor-node-angular: #0879b0;
+  --sensor-node-rotation: #06b4d1;
+  --sensor-node-position: #176db0;
+  --sensor-node-distance: #429b72;
+  --sensor-node-distance-result: #a9dfc0;
+  --sensor-node-detection: #12b6d1;
+  --sensor-node-detection-result: #8dd8e5;
+  --sensor-node-circuit: #2fa7a1;
+  --sensor-node-encoder: #06b5d2;
+  --sensor-node-encoder-relative: #1888a7;
+  --sensor-node-encoder-absolute: #3ca5aa;
+  --sensor-node-imu: #548be7;
+  --sensor-node-result: #46bfda;
   color-scheme: light;
   width: min(100% - 2rem, 1280px);
   margin: 0 auto;
@@ -693,15 +712,26 @@ async function toggleOverview(): Promise<void> {
 html.dark .sensor-selector {
   --sensor-ink: #f1f6fc;
   --sensor-current-ink: #f7fbff;
-  --sensor-line: #91a9c8;
-  --sensor-note-border: #a7c4e7;
-  --sensor-node-root: #3f6fa8;
-  --sensor-node-structure: #4f6493;
+  --sensor-line: #9ea4aa;
+  --sensor-note-border: #54c9dd;
+  --sensor-node-root: #2f7fc0;
+  --sensor-node-structure: #40568f;
+  --sensor-node-external: #258d8d;
   --sensor-node-motion: #2f7888;
-  --sensor-node-position: #456f99;
+  --sensor-node-speed: #2b83a5;
+  --sensor-node-acceleration: #164f84;
+  --sensor-node-angular: #277a9d;
+  --sensor-node-rotation: #19a2bd;
+  --sensor-node-position: #356f98;
   --sensor-node-distance: #36745d;
+  --sensor-node-distance-result: #6ba989;
   --sensor-node-detection: #2c7781;
+  --sensor-node-detection-result: #5caebb;
   --sensor-node-circuit: #327c7a;
+  --sensor-node-encoder: #2c9daf;
+  --sensor-node-encoder-relative: #28798e;
+  --sensor-node-encoder-absolute: #3d999d;
+  --sensor-node-imu: #4c78c2;
   --sensor-node-result: #397579;
   color-scheme: dark;
 }
@@ -966,9 +996,22 @@ html.dark .sensor-selector {
   min-height: clamp(27rem, 58vh, 38rem);
 }
 
+.sensor-selector__flow-column.is-current.has-context::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  z-index: 0;
+  border-left: 1px solid color-mix(in srgb, var(--vp-c-text-3) 42%, var(--vp-c-divider));
+  content: '';
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
 .sensor-selector__flow-context-node {
   position: absolute;
   left: 50%;
+  z-index: 1;
   min-width: 7.8rem;
   max-width: 14rem;
   padding: 0.45rem 0.8rem;
@@ -1110,6 +1153,13 @@ html.dark .sensor-selector {
   stroke-linejoin: round;
   stroke-width: 1.6;
   vector-effect: non-scaling-stroke;
+  marker-end: url('#sensor-flow-arrow');
+}
+
+.sensor-selector__branch-connectors marker path {
+  fill: var(--sensor-line);
+  stroke: none;
+  marker-end: none;
 }
 
 .sensor-selector__flow-choice {
@@ -1134,6 +1184,11 @@ html.dark .sensor-selector {
   --sensor-node-color: var(--sensor-node-root);
 }
 
+.sensor-selector__flow-node.is-tone-external,
+.sensor-selector__flow-choice.is-tone-external {
+  --sensor-node-color: var(--sensor-node-external);
+}
+
 .sensor-selector__flow-node.is-tone-structure,
 .sensor-selector__flow-choice.is-tone-structure {
   --sensor-node-color: var(--sensor-node-structure);
@@ -1142,6 +1197,26 @@ html.dark .sensor-selector {
 .sensor-selector__flow-node.is-tone-motion,
 .sensor-selector__flow-choice.is-tone-motion {
   --sensor-node-color: var(--sensor-node-motion);
+}
+
+.sensor-selector__flow-node.is-tone-speed,
+.sensor-selector__flow-choice.is-tone-speed {
+  --sensor-node-color: var(--sensor-node-speed);
+}
+
+.sensor-selector__flow-node.is-tone-acceleration,
+.sensor-selector__flow-choice.is-tone-acceleration {
+  --sensor-node-color: var(--sensor-node-acceleration);
+}
+
+.sensor-selector__flow-node.is-tone-angular,
+.sensor-selector__flow-choice.is-tone-angular {
+  --sensor-node-color: var(--sensor-node-angular);
+}
+
+.sensor-selector__flow-node.is-tone-rotation,
+.sensor-selector__flow-choice.is-tone-rotation {
+  --sensor-node-color: var(--sensor-node-rotation);
 }
 
 .sensor-selector__flow-node.is-tone-position,
@@ -1154,9 +1229,21 @@ html.dark .sensor-selector {
   --sensor-node-color: var(--sensor-node-distance);
 }
 
+.sensor-selector__flow-node.is-tone-distance-result,
+.sensor-selector__flow-choice.is-tone-distance-result {
+  --sensor-node-color: var(--sensor-node-distance-result);
+  --sensor-current-ink: #173047;
+}
+
 .sensor-selector__flow-node.is-tone-detection,
 .sensor-selector__flow-choice.is-tone-detection {
   --sensor-node-color: var(--sensor-node-detection);
+}
+
+.sensor-selector__flow-node.is-tone-detection-result,
+.sensor-selector__flow-choice.is-tone-detection-result {
+  --sensor-node-color: var(--sensor-node-detection-result);
+  --sensor-current-ink: #173047;
 }
 
 .sensor-selector__flow-node.is-tone-circuit,
@@ -1164,9 +1251,30 @@ html.dark .sensor-selector {
   --sensor-node-color: var(--sensor-node-circuit);
 }
 
+.sensor-selector__flow-node.is-tone-encoder,
+.sensor-selector__flow-choice.is-tone-encoder {
+  --sensor-node-color: var(--sensor-node-encoder);
+}
+
+.sensor-selector__flow-node.is-tone-encoder-relative,
+.sensor-selector__flow-choice.is-tone-encoder-relative {
+  --sensor-node-color: var(--sensor-node-encoder-relative);
+}
+
+.sensor-selector__flow-node.is-tone-encoder-absolute,
+.sensor-selector__flow-choice.is-tone-encoder-absolute {
+  --sensor-node-color: var(--sensor-node-encoder-absolute);
+}
+
+.sensor-selector__flow-node.is-tone-imu,
+.sensor-selector__flow-choice.is-tone-imu {
+  --sensor-node-color: var(--sensor-node-imu);
+}
+
 .sensor-selector__flow-node.is-tone-result,
 .sensor-selector__flow-choice.is-tone-result {
   --sensor-node-color: var(--sensor-node-result);
+  --sensor-current-ink: #173047;
 }
 
 .sensor-selector__flow-choice.is-result {
