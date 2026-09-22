@@ -977,6 +977,75 @@ export default {
       }
     }
   },
+  "/Docs/Technical_articles/Other_Articles/Wireless_communication/02_Wireless_Examples.md": {
+    "title": "無線通信 2：身の回りの無線通信とロボコンで使う無線",
+    "description": "ロボットにカメラを取り付けたとします。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wireless_communication/02_Wireless_Examples.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "無線通信",
+        "入門"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wireless_communication/03_What_Is_Radio.md": {
+    "title": "無線通信 3：電波とは",
+    "description": "「2.4GHzと5GHzは何が違うのか」。無線を選び始めると、周波数の数字が気になります。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wireless_communication/03_What_Is_Radio.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "無線通信",
+        "入門"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wireless_communication/04_Radio_Characteristics.md": {
+    "title": "無線通信 4：電波の伝わり方",
+    "description": "ロボットを少し動かしただけで、無線の状態が変わることがあります。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wireless_communication/04_Radio_Characteristics.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "無線通信",
+        "入門"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wireless_communication/05_WiFi_5_6GHz.md": {
+    "title": "無線通信 5：Wi-Fiの5GHz・6GHz帯",
+    "description": "「2.4GHzより5GHzのほうが速い」と聞くことがあります。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wireless_communication/05_WiFi_5_6GHz.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "無線通信",
+        "Wi-Fi",
+        "入門"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wireless_communication/Wireless_Communication.md": {
+    "title": "無線通信の基本",
+    "description": "高専生・ロボット部向けに、日常の無線通信から電波の基本、ロボコンで使う無線までを整理します。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wireless_communication/Wireless_Communication.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "無線通信",
+        "入門"
+      ],
+      "thumbnail": {
+        "targets": [
+          "article-home",
+          "other-home"
+        ],
+        "description": "高専生・ロボット部向けに、日常の無線通信から電波の基本、ロボコンで使う無線までを整理します。",
+        "order": "20"
+      }
+    }
+  },
   "/Docs/Technical_articles/Tutorials_articles/CubeIDE_Tutorial.md": {
     "title": "Cube IDE の使い方",
     "description": "プロジェクト作成から HALbed の追加までを段階的に説明します。",

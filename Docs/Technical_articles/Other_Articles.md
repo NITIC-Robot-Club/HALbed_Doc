@@ -17,6 +17,13 @@ const sections: HomeThumbnailSection[] = [
     ],
   },
   {
+    title: '無線通信',
+    description: '電波の基本と、ロボット製作で使う無線方式をまとめています。',
+    filters: [
+      { includeTags: ['開発資料', '無線通信', '入門'] },
+    ],
+  },
+  {
     title: '制御ライブラリ',
     description: 'コントローラーや受信機など、ロボットの操作入力を扱うライブラリをまとめています。',
     filters: [
@@ -39,5 +46,6 @@ const sections: HomeThumbnailSection[] = [
 今回追加した図付き記事は、既存の分類へ配置しています。
 
 - [有線通信の基本](/Docs/Technical_articles/Other_Articles/Wired_communication/Wired_Communication)
+- [無線通信の基本](/Docs/Technical_articles/Other_Articles/Wireless_communication/Wireless_Communication)
 - [DCモーターのスロースタート](/Docs/Technical_articles/MCU_Doc/dc-motor-slow-start)
 - [制御ライブラリ](/Docs/Technical_articles/Other_Articles/Control_Libraries/Control_Libraries)
