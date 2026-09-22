@@ -41,3 +41,4 @@ const sections: HomeThumbnailSection[] = [
 - [有線通信の基本](/Docs/Technical_articles/Other_Articles/Wired_communication/Wired_Communication)
 - [DCモーターのスロースタート](/Docs/Technical_articles/MCU_Doc/dc-motor-slow-start)
 - [制御ライブラリ](/Docs/Technical_articles/Other_Articles/Control_Libraries/Control_Libraries)
+- [センサー選定チャート](/Docs/Technical_articles/Other_Articles/Sensor_Selection)

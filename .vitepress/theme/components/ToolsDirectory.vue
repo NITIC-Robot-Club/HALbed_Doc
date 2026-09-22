@@ -44,6 +44,18 @@ const groups = [
       },
     ],
   },
+  {
+    label: 'センサー選定',
+    description: '知りたい量や対象から、候補となるセンサーをたどる',
+    tools: [
+      {
+        title: 'センサーを選ぶ',
+        detail: '内部・外部・回路から分岐を選び、センサーの候補と用途を確認します。',
+        meta: 'Sensor guide',
+        link: '/Docs/Tools/SensorSelector',
+      },
+    ],
+  },
 ]
 </script>
 

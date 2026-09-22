@@ -749,6 +749,21 @@ export default {
       }
     }
   },
+  "/Docs/Technical_articles/Other_Articles/Sensor_Selection.md": {
+    "title": "センサー選定",
+    "description": "ロボットで知りたい量や対象から、候補となるセンサーを選びます。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Sensor_Selection.md",
+    "frontmatter": {
+      "title": "センサー選定",
+      "description": "ロボットで知りたい量や対象から、候補となるセンサーを選びます。",
+      "aside": "false",
+      "pageClass": "technical-articles-wide",
+      "tags": [
+        "開発資料",
+        "センサー"
+      ]
+    }
+  },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/01-controller-and-transceiver.md": {
     "title": "CANコントローラとCANトランシーバの違い",
     "description": "CAN通信を始めたばかりのころは、「CAN対応マイコンなのに、なぜ別のICが必要なのだろう」と疑問に思うことがあります。",
@@ -1092,6 +1107,19 @@ export default {
     "frontmatter": {
       "layout": "page",
       "title": "PWM CCR Calculator",
+      "tags": []
+    }
+  },
+  "/Docs/Tools/SensorSelector.md": {
+    "title": "センサー選定",
+    "description": "",
+    "relativePath": "Docs/Tools/SensorSelector.md",
+    "frontmatter": {
+      "layout": "page",
+      "title": "センサー選定",
+      "sidebar": "true",
+      "aside": "false",
+      "pageClass": "sensor-selector-page",
       "tags": []
     }
   },

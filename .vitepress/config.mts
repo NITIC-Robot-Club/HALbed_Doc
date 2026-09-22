@@ -122,6 +122,7 @@ export default defineConfig({
             { text: 'トルク計算', link: '/Docs/Tools/TorqueCalculator' },
             { text: '出力計算', link: '/Docs/Tools/PowerCalculator' },
             { text: '足回り計算', link: '/Docs/Tools/DrivetrainCalculator' },
+            { text: 'センサー選定', link: '/Docs/Tools/SensorSelector' },
           ]
         }
       ]
