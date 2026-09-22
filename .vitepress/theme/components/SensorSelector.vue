@@ -58,6 +58,7 @@ const isOverviewVisible = ref(false)
 const isOverviewFullscreen = ref(false)
 const overviewPanel = ref<HTMLElement | null>(null)
 const treeZoom = ref(1)
+const isTreeTransitioning = ref(false)
 const stepHeading = ref<HTMLElement | null>(null)
 const currentFlowNode = ref<HTMLElement | null>(null)
 const flowTrack = ref<HTMLElement | null>(null)
@@ -67,6 +68,7 @@ const flowConnectorPaths = ref<string[]>([])
 let flowResizeObserver: ResizeObserver | null = null
 let flowMeasurementTimer: number | undefined
 let overviewResizeTimer: number | undefined
+let treeTransitionTimer: number | undefined
 
 const activeMode = computed(() => activeModeId.value ? getSensorMode(activeModeId.value) : null)
 
@@ -212,6 +214,7 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', handleWindowResize)
   if (flowMeasurementTimer) window.clearTimeout(flowMeasurementTimer)
   if (overviewResizeTimer) window.clearTimeout(overviewResizeTimer)
+  if (treeTransitionTimer) window.clearTimeout(treeTransitionTimer)
   flowResizeObserver?.disconnect()
 })
 
@@ -248,6 +251,18 @@ function setTreeZoom(nextZoom: number): void {
 
 function changeTreeZoom(delta: number): void {
   setTreeZoom(treeZoom.value + delta)
+}
+
+function playTreeTransition(): void {
+  if (treeTransitionTimer) window.clearTimeout(treeTransitionTimer)
+  isTreeTransitioning.value = false
+
+  requestAnimationFrame(() => {
+    isTreeTransitioning.value = true
+    treeTransitionTimer = window.setTimeout(() => {
+      isTreeTransitioning.value = false
+    }, 280)
+  })
 }
 
 function handleTreeWheel(event: WheelEvent): void {
@@ -326,6 +341,7 @@ function focusStepHeading(): void {
     requestAnimationFrame(() => requestAnimationFrame(measureFlowConnectors))
     stepHeading.value?.focus({ preventScroll: true })
     if (isOverviewVisible.value) {
+      playTreeTransition()
       nextTick(() => {
         centerOverviewSelection()
         requestAnimationFrame(() => {
@@ -674,7 +690,11 @@ async function toggleOverview(): Promise<void> {
           title="Ctrlキーを押しながらスクロールすると拡大縮小できます"
           @wheel="handleTreeWheel"
         >
-          <div class="sensor-selector__tree-zoom" :style="{ '--sensor-tree-zoom': treeZoom }">
+          <div
+            class="sensor-selector__tree-zoom"
+            :class="{ 'is-transitioning': isTreeTransitioning }"
+            :style="{ '--sensor-tree-zoom': treeZoom }"
+          >
             <ul class="sensor-selector__tree" aria-label="センサー選定ツリー">
               <SensorTreeNode
                 :mode="activeMode"
@@ -1474,6 +1494,21 @@ html.dark .sensor-selector {
   width: max-content;
   min-width: 100%;
   zoom: var(--sensor-tree-zoom);
+  transition: zoom 220ms ease;
+}
+
+.sensor-selector__tree-zoom.is-transitioning {
+  animation: sensor-tree-soft-transition 280ms ease both;
+}
+
+@keyframes sensor-tree-soft-transition {
+  from {
+    opacity: 0.58;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .sensor-selector__tree {
@@ -1649,6 +1684,14 @@ html.dark .sensor-selector {
   .sensor-selector__flow-viewport {
     transition: none;
     scroll-behavior: auto;
+  }
+
+  .sensor-selector__tree-zoom {
+    transition: none;
+  }
+
+  .sensor-selector__tree-zoom.is-transitioning {
+    animation: none;
   }
 }
 </style>
