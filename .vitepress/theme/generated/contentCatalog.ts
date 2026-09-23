@@ -1117,7 +1117,7 @@ export default {
     "frontmatter": {
       "layout": "page",
       "title": "センサー選定",
-      "sidebar": "true",
+      "sidebar": "false",
       "aside": "false",
       "pageClass": "sensor-selector-page",
       "tags": []

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
-import SensorTreeNode from './SensorTreeNode.vue'
+import SensorOverviewGraph from './SensorOverviewGraph.vue'
 import {
   findSensorPath,
   getSensorMode,
   getSensorNode,
   getSensorNodeTone,
+  getSensorOverviewGraph,
   getSensorResult,
   type SensorNode,
   type SensorModeId,
@@ -59,9 +60,10 @@ const isOverviewFullscreen = ref(false)
 const overviewPanel = ref<HTMLElement | null>(null)
 const treeZoom = ref(1)
 const isTreeTransitioning = ref(false)
-const stepHeading = ref<HTMLElement | null>(null)
+const isFlowTransitioning = ref(false)
 const currentFlowNode = ref<HTMLElement | null>(null)
 const flowTrack = ref<HTMLElement | null>(null)
+const flowViewport = ref<HTMLElement | null>(null)
 const treeViewport = ref<HTMLElement | null>(null)
 const flowConnectorSize = ref({ width: 1, height: 1 })
 const flowConnectorPaths = ref<string[]>([])
@@ -70,6 +72,9 @@ let flowMeasurementTimer: number | undefined
 let overviewResizeTimer: number | undefined
 let treeTransitionTimer: number | undefined
 let treeZoomCenterTimer: number | undefined
+let flowTransitionTimer: number | undefined
+let interactionPosition: { pageX: number; pageY: number; flowLeft: number; flowTop: number } | null = null
+let fitOverviewOnNextRender = false
 
 const activeMode = computed(() => activeModeId.value ? getSensorMode(activeModeId.value) : null)
 
@@ -168,34 +173,70 @@ function roundedVerticalBranchPath(startX: number, startY: number, endX: number,
 function measureFlowConnectors(): void {
   const track = flowTrack.value
   const parentButton = track?.querySelector<HTMLElement>('.sensor-selector__flow-node.is-current')
+  const flowNodes = track ? [...track.querySelectorAll<HTMLElement>('.sensor-selector__flow-node')] : []
   const choices = track ? [...track.querySelectorAll<HTMLElement>('.sensor-selector__flow-choice')] : []
-  if (!track || !parentButton || !choices.length) {
+  if (!track || !parentButton || (!choices.length && flowNodes.length < 2)) {
     flowConnectorPaths.value = []
     return
   }
 
   const trackRect = track.getBoundingClientRect()
+  const isCompact = window.matchMedia('(max-width: 700px)').matches
+  const contextNodes = track ? [...track.querySelectorAll<HTMLElement>('.sensor-selector__flow-context-node')] : []
+  const sequencePaths = flowNodes.slice(0, -1).flatMap((source, index) => {
+    const target = flowNodes[index + 1]
+    const sourceRect = source.getBoundingClientRect()
+    const targets = index === flowNodes.length - 2 && contextNodes.length
+      ? [target, ...contextNodes]
+      : [target]
+
+    return targets.map((targetNode) => {
+      const targetRect = targetNode.getBoundingClientRect()
+
+      if (isCompact) {
+        const startX = sourceRect.left - trackRect.left + sourceRect.width / 2
+        const startY = sourceRect.bottom - trackRect.top
+        const endX = targetRect.left - trackRect.left + targetRect.width / 2
+        const endY = targetRect.top - trackRect.top
+        const branchY = startY + Math.max(10, (endY - startY) / 2)
+        return roundedVerticalBranchPath(startX, startY, endX, endY, branchY)
+      }
+
+      const startX = sourceRect.right - trackRect.left
+      const startY = sourceRect.top - trackRect.top + sourceRect.height / 2
+      const endX = targetRect.left - trackRect.left
+      const endY = targetRect.top - trackRect.top + targetRect.height / 2
+      const elbowX = startX + Math.max(18, Math.min(28, (endX - startX) / 2))
+      return roundedOrthogonalPath(startX, startY, endX, endY, elbowX)
+    })
+  })
+
   const parentRect = parentButton.getBoundingClientRect()
   const startX = parentRect.left - trackRect.left + parentRect.width / 2
   const startY = parentRect.top - trackRect.top + parentRect.height / 2
-  const firstChoiceRect = choices[0].getBoundingClientRect()
-  const isCompact = window.matchMedia('(max-width: 700px)').matches
-  const elbowX = isCompact
-    ? firstChoiceRect.left - trackRect.left - 16
-    : parentRect.right - trackRect.left + 24
-  const compactBranchY = startY + Math.max(
-    12,
-    Math.min(28, firstChoiceRect.top - trackRect.top - startY - 8),
-  )
+  const branchPaths = choices.length
+    ? (() => {
+      const firstChoiceRect = choices[0].getBoundingClientRect()
+      const elbowX = isCompact
+        ? firstChoiceRect.left - trackRect.left - 16
+        : parentRect.right - trackRect.left + 24
+      const compactBranchY = startY + Math.max(
+        12,
+        Math.min(28, firstChoiceRect.top - trackRect.top - startY - 8),
+      )
 
-  flowConnectorPaths.value = choices.map((choice) => {
-    const choiceRect = choice.getBoundingClientRect()
-    const endX = choiceRect.left - trackRect.left + choiceRect.width / 2
-    const endY = choiceRect.top - trackRect.top + choiceRect.height / 2
-    return isCompact
-      ? roundedVerticalBranchPath(startX, startY, endX, endY, compactBranchY)
-      : roundedOrthogonalPath(startX, startY, endX, endY, elbowX)
-  })
+      return choices.map((choice) => {
+        const choiceRect = choice.getBoundingClientRect()
+        const endX = choiceRect.left - trackRect.left + choiceRect.width / 2
+        const endY = choiceRect.top - trackRect.top + choiceRect.height / 2
+        return isCompact
+          ? roundedVerticalBranchPath(startX, startY, endX, endY, compactBranchY)
+          : roundedOrthogonalPath(startX, startY, endX, endY, elbowX)
+      })
+    })()
+    : []
+
+  flowConnectorPaths.value = [...sequencePaths, ...branchPaths]
   flowConnectorSize.value = { width: track.clientWidth, height: track.clientHeight }
 }
 
@@ -217,6 +258,7 @@ onBeforeUnmount(() => {
   if (overviewResizeTimer) window.clearTimeout(overviewResizeTimer)
   if (treeTransitionTimer) window.clearTimeout(treeTransitionTimer)
   if (treeZoomCenterTimer) window.clearTimeout(treeZoomCenterTimer)
+  if (flowTransitionTimer) window.clearTimeout(flowTransitionTimer)
   flowResizeObserver?.disconnect()
 })
 
@@ -230,8 +272,44 @@ function handleWindowResize(): void {
   }, 80)
 }
 
+function rememberInteractionPosition(): void {
+  if (interactionPosition) return
+
+  interactionPosition = {
+    pageX: window.scrollX,
+    pageY: window.scrollY,
+    flowLeft: flowViewport.value?.scrollLeft ?? 0,
+    flowTop: flowViewport.value?.scrollTop ?? 0,
+  }
+}
+
+function restoreInteractionPosition(): void {
+  const position = interactionPosition
+  interactionPosition = null
+  if (!position) return
+
+  nextTick(() => {
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: position.pageY, left: position.pageX, behavior: 'auto' })
+      flowViewport.value?.scrollTo({ top: position.flowTop, left: position.flowLeft, behavior: 'auto' })
+    })
+  })
+}
+
 function syncOverviewFullscreen(): void {
   isOverviewFullscreen.value = document.fullscreenElement === overviewPanel.value
+  if (!isOverviewVisible.value) return
+
+  fitOverviewOnNextRender = true
+  nextTick(() => {
+    requestAnimationFrame(() => {
+      centerOverviewSelection('auto')
+      requestAnimationFrame(() => {
+        centerOverviewSelection('auto')
+        window.setTimeout(() => centerOverviewSelection('auto'), 80)
+      })
+    })
+  })
 }
 
 async function toggleOverviewFullscreen(): Promise<void> {
@@ -268,7 +346,19 @@ function playTreeTransition(): void {
     isTreeTransitioning.value = true
     treeTransitionTimer = window.setTimeout(() => {
       isTreeTransitioning.value = false
-    }, 280)
+    }, 520)
+  })
+}
+
+function playFlowTransition(): void {
+  if (flowTransitionTimer) window.clearTimeout(flowTransitionTimer)
+  isFlowTransitioning.value = false
+
+  requestAnimationFrame(() => {
+    isFlowTransitioning.value = true
+    flowTransitionTimer = window.setTimeout(() => {
+      isFlowTransitioning.value = false
+    }, 520)
   })
 }
 
@@ -317,11 +407,21 @@ function centerTreeSelection(element: HTMLElement, scrollBehavior?: ScrollBehavi
 }
 
 function centerOverviewSelection(scrollBehavior?: ScrollBehavior): void {
-  const currentTreeNode = treeViewport.value?.querySelector<HTMLElement>('.sensor-tree-node.is-current > .sensor-tree-node__button')
+  const currentTreeNode = treeViewport.value?.querySelector<HTMLElement>('.sensor-overview-graph__node.is-current')
   if (!currentTreeNode) return
 
   revealTreeViewport()
   centerTreeSelection(currentTreeNode, scrollBehavior)
+}
+
+function fitOverviewTree(): boolean {
+  const viewport = treeViewport.value
+  const graphWidth = activeMode.value ? getSensorOverviewGraph(activeMode.value).width : 0
+  if (!viewport || !graphWidth) return false
+
+  const availableWidth = Math.max(1, viewport.clientWidth - 24)
+  treeZoom.value = Math.min(1, Math.max(0.7, Number((availableWidth / graphWidth).toFixed(2))))
+  return true
 }
 
 function revealTreeViewport(): void {
@@ -349,27 +449,50 @@ function focusStepHeading(): void {
   nextTick(() => {
     measureFlowConnectors()
     requestAnimationFrame(() => requestAnimationFrame(measureFlowConnectors))
-    stepHeading.value?.focus({ preventScroll: true })
     if (isOverviewVisible.value) {
+      interactionPosition = null
       playTreeTransition()
       nextTick(() => {
-        centerOverviewSelection()
-        requestAnimationFrame(() => {
-          centerOverviewSelection()
-          window.setTimeout(centerOverviewSelection, 80)
-        })
+        let overviewWasFitted = false
+        const centerOverviewAfterLayout = (): void => {
+          centerOverviewSelection(overviewWasFitted ? 'auto' : undefined)
+          requestAnimationFrame(() => {
+            if (fitOverviewOnNextRender && fitOverviewTree()) {
+              fitOverviewOnNextRender = false
+              overviewWasFitted = true
+              window.setTimeout(centerOverviewAfterLayout, 240)
+              return
+            }
+            centerOverviewSelection(overviewWasFitted ? 'auto' : undefined)
+            window.setTimeout(() => {
+              if (fitOverviewOnNextRender && fitOverviewTree()) {
+                fitOverviewOnNextRender = false
+                overviewWasFitted = true
+                window.setTimeout(centerOverviewAfterLayout, 240)
+                return
+              }
+              centerOverviewSelection(overviewWasFitted ? 'auto' : undefined)
+            }, 80)
+          })
+        }
+
+        if (fitOverviewOnNextRender && fitOverviewTree()) {
+            fitOverviewOnNextRender = false
+            overviewWasFitted = true
+          window.setTimeout(centerOverviewAfterLayout, 240)
+        } else {
+          centerOverviewAfterLayout()
+        }
       })
-    } else if (selectedPath.value.length > 1) {
-      currentFlowNode.value?.scrollIntoView({
-        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-        block: 'center',
-        inline: 'center',
-      })
+    } else {
+      playFlowTransition()
+      restoreInteractionPosition()
     }
   })
 }
 
 function resetSelection(): void {
+  interactionPosition = null
   activeModeId.value = null
   selectedPath.value = [startNode.id]
   resetTreeExpansion()
@@ -395,6 +518,7 @@ function appendSingleChildNodes(path: string[], startNodeId?: string): string[] 
 }
 
 function selectMode(modeId: SensorModeId, choiceId?: string): void {
+  rememberInteractionPosition()
   activeModeId.value = modeId
   const modeChoice = modeChoices.find((choice) => choice.id === choiceId) ?? modeChoices.find((choice) => choice.modeId === modeId)
   const nextPath = [startNode.id, modeChoice?.id ?? startNode.id]
@@ -407,6 +531,7 @@ function selectMode(modeId: SensorModeId, choiceId?: string): void {
 }
 
 function selectNode(nodeId: string): void {
+  if (!isOverviewVisible.value) rememberInteractionPosition()
   const modeChoice = modeChoices.find((choice) => choice.id === nodeId)
   if (modeChoice) {
     selectMode(modeChoice.modeId, modeChoice.id)
@@ -432,6 +557,7 @@ function selectNode(nodeId: string): void {
 
 function goBack(): void {
   if (selectedPath.value.length <= 1) return
+  rememberInteractionPosition()
   selectedPath.value = selectedPath.value.slice(0, -1)
   resetTreeExpansion()
   if (selectedPath.value.length === 1) {
@@ -442,6 +568,7 @@ function goBack(): void {
 }
 
 function selectBreadcrumb(index: number): void {
+  rememberInteractionPosition()
   selectedPath.value = selectedPath.value.slice(0, index + 1)
   resetTreeExpansion()
   if (index === 0) activeModeId.value = null
@@ -467,6 +594,7 @@ function showOverviewFromStart(): void {
   selectedPath.value = [startNode.id]
   resetTreeExpansion()
   isOverviewVisible.value = true
+  fitOverviewOnNextRender = true
   focusStepHeading()
 }
 
@@ -475,12 +603,18 @@ async function toggleOverview(): Promise<void> {
     await document.exitFullscreen?.()
   }
   isOverviewVisible.value = !isOverviewVisible.value
+  if (isOverviewVisible.value) fitOverviewOnNextRender = true
   focusStepHeading()
 }
 </script>
 
 <template>
-  <section class="sensor-selector" :class="{ 'is-start': !activeMode }" aria-label="センサー選定">
+  <section
+    class="sensor-selector"
+    :class="{ 'is-start': !activeMode }"
+    aria-label="センサー選定"
+    @pointerdown.capture="rememberInteractionPosition"
+  >
     <section class="sensor-selector__workspace" :class="{ 'is-start': !activeMode }" :aria-label="activeMode?.title ?? '測る場所を選ぶ'">
       <div class="sensor-selector__workspace-header">
         <div v-if="!activeMode">
@@ -525,7 +659,12 @@ async function toggleOverview(): Promise<void> {
             <p>{{ currentNode.hint ?? selectionStatus }}</p>
           </div>
 
-          <div class="sensor-selector__flow-viewport" aria-label="選定経路と次の分岐">
+          <div
+            ref="flowViewport"
+            class="sensor-selector__flow-viewport"
+            :class="{ 'is-transitioning': isFlowTransitioning }"
+            aria-label="選定経路と次の分岐"
+          >
             <div ref="flowTrack" class="sensor-selector__flow-track">
               <svg
                 v-if="flowConnectorPaths.length"
@@ -568,7 +707,7 @@ async function toggleOverview(): Promise<void> {
                   type="button"
                   class="sensor-selector__flow-node"
                   :ref="index === selectedPath.length - 1 ? setCurrentFlowNode : undefined"
-                  :class="[getToneClass(getSelectionNode(nodeId)), { 'is-current': index === selectedPath.length - 1, 'is-result': getSelectionNode(nodeId).kind === 'result' }]"
+                  :class="[getToneClass(getSelectionNode(nodeId)), { 'is-start': index === 0, 'is-current': index === selectedPath.length - 1, 'is-result': getSelectionNode(nodeId).kind === 'result' }]"
                   :disabled="index === selectedPath.length - 1"
                   :aria-current="index === selectedPath.length - 1 ? 'step' : undefined"
                   :title="getNodeDescription(getSelectionNode(nodeId))"
@@ -705,33 +844,13 @@ async function toggleOverview(): Promise<void> {
             :class="{ 'is-transitioning': isTreeTransitioning }"
             :style="{ '--sensor-tree-zoom': treeZoom }"
           >
-            <ul class="sensor-selector__tree" aria-label="センサー選定ツリー">
-              <SensorTreeNode
-                :mode="activeMode"
-                :node-id="activeMode.rootId"
-                :selected-path="overviewSelectedPath"
-                :expanded-node-ids="expandedTreeNodes"
-                :zoom="treeZoom"
-                @select="selectNode"
-                @expand="expandTreeNode"
-              />
-            </ul>
+            <SensorOverviewGraph
+              :mode="activeMode"
+              :selected-path="overviewSelectedPath"
+              :zoom="treeZoom"
+              @select="selectNode"
+            />
           </div>
-        </div>
-
-        <div v-if="currentResult" class="sensor-selector__result" aria-label="選定結果" aria-live="polite">
-          <p class="sensor-selector__result-label">選定結果</p>
-          <h3>{{ currentResult.label }}</h3>
-          <p>{{ currentResult.description }}</p>
-          <p class="sensor-selector__path-label">選択経路</p>
-          <p class="sensor-selector__result-path">{{ selectedPath.map((nodeId) => getSelectionNode(nodeId).label).join(' → ') }}</p>
-        </div>
-
-        <div v-else-if="isDeadEnd" class="sensor-selector__notice" aria-live="polite">
-          <p>{{ selectionStatus }}</p>
-          <button type="button" class="sensor-selector__link-button" @click="switchToExternalMode">
-            「外部」から選ぶ →
-          </button>
         </div>
 
       </div>
@@ -741,6 +860,7 @@ async function toggleOverview(): Promise<void> {
 
 <style scoped>
 .sensor-selector {
+  --sensor-workspace-height: clamp(18rem, calc(100svh - 7rem), 42rem);
   --sensor-ink: #173047;
   --sensor-current-ink: #fff;
   --sensor-line: #b7b7b7;
@@ -799,7 +919,11 @@ html.dark .sensor-selector {
 }
 
 .sensor-selector__workspace {
+  box-sizing: border-box;
   border-bottom: 1px solid var(--vp-c-divider);
+  height: var(--sensor-workspace-height);
+  min-height: 0;
+  overflow: hidden;
 }
 
 .sensor-selector__eyebrow {
@@ -859,11 +983,14 @@ html.dark .sensor-selector {
 }
 
 .sensor-selector__workspace {
-  padding: 1.6rem 0 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0 0;
 }
 
 .sensor-selector__workspace-header,
 .sensor-selector__overview-header {
+  flex: 0 0 auto;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
@@ -874,7 +1001,7 @@ html.dark .sensor-selector {
   display: flex;
   flex-wrap: wrap;
   justify-content: end;
-  gap: 0.7rem;
+  gap: 0.35rem;
 }
 
 .sensor-selector__text-button,
@@ -883,13 +1010,13 @@ html.dark .sensor-selector {
   border: 0;
   color: var(--vp-c-brand-1);
   background: transparent;
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 750;
 }
 
 .sensor-selector__text-button {
-  min-height: 2.5rem;
-  padding: 0.45rem 0.7rem;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.55rem;
   border-radius: 0.35rem;
 }
 
@@ -904,7 +1031,7 @@ html.dark .sensor-selector {
 }
 
 .sensor-selector__primary-button {
-  padding: 0.55rem 0.75rem;
+  padding: 0.45rem 0.65rem;
   border: 1px solid var(--vp-c-brand-1);
   border-radius: 0.35rem;
 }
@@ -916,7 +1043,11 @@ html.dark .sensor-selector {
 }
 
 .sensor-selector__step-view {
-  padding: 1.25rem 0 2.5rem;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0.75rem 0 1rem;
 }
 
 .sensor-selector__breadcrumb ol {
@@ -959,8 +1090,12 @@ html.dark .sensor-selector {
 
 .sensor-selector__step-content {
   display: grid;
-  gap: 1.15rem;
-  padding-top: 1.7rem;
+  flex: 1 1 auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  min-width: 0;
+  min-height: 0;
+  padding-top: 0.75rem;
 }
 
 .sensor-selector__step-copy {
@@ -984,29 +1119,49 @@ html.dark .sensor-selector {
 }
 
 .sensor-selector__step-copy > p:last-child {
-  margin-top: 0.75rem;
+  margin-top: 0.35rem;
   color: var(--vp-c-text-1);
-  line-height: 1.75;
+  line-height: 1.45;
 }
 
 .sensor-selector__flow-viewport {
   overflow-x: auto;
+  overflow-anchor: none;
   display: flex;
   align-items: center;
-  min-height: clamp(27rem, 58vh, 38rem);
-  padding: 1.5rem 1rem 1.75rem;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 0;
+  height: auto;
+  padding: 0.75rem 1rem;
   border-top: 1px solid var(--vp-c-divider);
   border-bottom: 1px solid var(--vp-c-divider);
   scroll-behavior: smooth;
 }
 
+.sensor-selector__flow-viewport.is-transitioning {
+  animation: sensor-flow-fade 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes sensor-flow-fade {
+  from {
+    opacity: 0.78;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .sensor-selector__workspace.is-start .sensor-selector__step-view {
-  padding-top: 0.5rem;
-  padding-bottom: 1.5rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.75rem;
 }
 
 .sensor-selector.is-start .sensor-selector__workspace {
-  padding-top: 1rem;
+  padding-top: 0.75rem;
 }
 
 .sensor-selector.is-start .sensor-selector__breadcrumb,
@@ -1015,33 +1170,35 @@ html.dark .sensor-selector {
 }
 
 .sensor-selector__workspace.is-start .sensor-selector__step-content {
-  gap: 0.8rem;
+  gap: 0.5rem;
+  grid-template-rows: minmax(0, 1fr);
   padding-top: 0;
 }
 
 .sensor-selector__workspace.is-start .sensor-selector__flow-viewport {
-  min-height: 9rem;
-  padding-block: 0.75rem;
+  min-height: 0;
+  padding-block: 0.35rem;
 }
 
 .sensor-selector__workspace.is-start .sensor-selector__flow-track,
 .sensor-selector__workspace.is-start .sensor-selector__flow-column.is-current {
-  min-height: 0;
+  min-height: 100%;
 }
 
 .sensor-selector__workspace.is-start .sensor-selector__flow-choices {
-  min-height: 7rem;
-  gap: 0.75rem;
-  padding-block: 0.75rem;
+  min-height: 0;
+  gap: 0.65rem;
+  padding-block: 0.5rem;
 }
 
 .sensor-selector__flow-track {
   position: relative;
   display: flex;
   align-items: center;
+  align-self: stretch;
   gap: 3rem;
+  height: 100%;
   min-width: max-content;
-  min-height: clamp(27rem, 58vh, 38rem);
 }
 
 .sensor-selector__flow-column {
@@ -1055,19 +1212,8 @@ html.dark .sensor-selector {
   position: relative;
   flex-direction: column;
   justify-content: center;
-  min-height: clamp(27rem, 58vh, 38rem);
-}
-
-.sensor-selector__flow-column.is-current.has-context::before {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  z-index: 0;
-  border-left: 1px solid color-mix(in srgb, var(--vp-c-text-3) 42%, var(--vp-c-divider));
-  content: '';
-  pointer-events: none;
-  transform: translateX(-50%);
+  align-self: stretch;
+  height: 100%;
 }
 
 .sensor-selector__flow-context-node {
@@ -1105,15 +1251,6 @@ html.dark .sensor-selector {
   color: var(--vp-c-text-2);
   background: var(--vp-c-default-soft);
   opacity: 1;
-}
-
-.sensor-selector__flow-column.has-next-node::after {
-  position: absolute;
-  top: 50%;
-  right: -3rem;
-  width: 3rem;
-  border-top: 2px solid var(--sensor-line);
-  content: '';
 }
 
 .sensor-selector__flow-node,
@@ -1156,7 +1293,7 @@ html.dark .sensor-selector {
   left: 50%;
   z-index: 5;
   width: max-content;
-  max-width: min(18rem, 70vw);
+  max-width: min(18rem, calc(100vw - 2rem));
   padding: 0.5rem 0.65rem;
   border: 1px solid var(--vp-c-divider);
   border-radius: 0.45rem;
@@ -1173,12 +1310,22 @@ html.dark .sensor-selector {
   white-space: normal;
 }
 
+.sensor-selector__flow-node.is-start .sensor-selector__flow-tooltip {
+  left: 0;
+  transform: translate(0, -0.25rem);
+}
+
 .sensor-selector__flow-node:hover .sensor-selector__flow-tooltip,
 .sensor-selector__flow-node:focus-visible .sensor-selector__flow-tooltip,
 .sensor-selector__flow-choice:hover .sensor-selector__flow-tooltip,
 .sensor-selector__flow-choice:focus-visible .sensor-selector__flow-tooltip {
   opacity: 1;
   transform: translate(-50%, 0);
+}
+
+.sensor-selector__flow-node.is-start:hover .sensor-selector__flow-tooltip,
+.sensor-selector__flow-node.is-start:focus-visible .sensor-selector__flow-tooltip {
+  transform: translate(0, 0);
 }
 
 .sensor-selector__flow-node.is-result {
@@ -1227,7 +1374,7 @@ html.dark .sensor-selector {
 .sensor-selector__flow-choice {
   position: relative;
   display: block;
-  min-width: 12rem;
+  min-width: 16rem;
   padding: 0.7rem 0.95rem;
   border-radius: 1.3rem;
   font-weight: 700;
@@ -1386,11 +1533,16 @@ html.dark .sensor-selector {
 }
 
 .sensor-selector__overview {
-  padding: 1.4rem 0 2.5rem;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0.75rem 0 1rem;
 }
 
 .sensor-selector__overview-header {
-  padding-bottom: 1.2rem;
+  flex: 0 0 auto;
+  padding-bottom: 0.65rem;
   border-bottom: 1px solid var(--vp-c-divider);
 }
 
@@ -1419,8 +1571,8 @@ html.dark .sensor-selector {
   justify-content: space-between;
   align-items: center;
   gap: 0.75rem;
-  margin-top: 1rem;
-  padding: 0.65rem 0.75rem;
+  margin-top: 0.6rem;
+  padding: 0.4rem 0.5rem;
   border: 1px solid var(--vp-c-divider);
   background: color-mix(in srgb, var(--vp-c-bg-soft) 68%, var(--vp-c-bg));
 }
@@ -1489,12 +1641,12 @@ html.dark .sensor-selector {
 }
 
 .sensor-selector__tree-wrap {
+  flex: 1 1 auto;
   overflow: auto;
-  height: clamp(24rem, 64vh, 42rem);
-  max-height: calc(100vh - 5rem);
-  min-height: 20rem;
-  margin-top: 1.4rem;
-  padding: 2.5rem 2rem 3rem;
+  height: auto;
+  min-height: 0;
+  margin-top: 0.75rem;
+  padding: 1rem 1.25rem 1.25rem;
   background: color-mix(in srgb, var(--vp-c-bg-soft) 34%, var(--vp-c-bg));
   border-top: 1px solid var(--vp-c-divider);
   border-bottom: 1px solid var(--vp-c-divider);
@@ -1504,18 +1656,18 @@ html.dark .sensor-selector {
 .sensor-selector__tree-zoom {
   width: max-content;
   min-width: 100%;
-  padding: 50vh 50vw;
+  padding: 2.5rem 3rem;
   zoom: var(--sensor-tree-zoom);
   transition: zoom 220ms ease;
 }
 
 .sensor-selector__tree-zoom.is-transitioning {
-  animation: sensor-tree-soft-transition 280ms ease both;
+  animation: sensor-tree-soft-transition 520ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
 @keyframes sensor-tree-soft-transition {
   from {
-    opacity: 0.58;
+    opacity: 0.86;
   }
 
   to {
@@ -1577,27 +1729,28 @@ html.dark .sensor-selector {
 
   .sensor-selector__workspace-header,
   .sensor-selector__overview-header {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     min-width: 0;
   }
 
   .sensor-selector__actions {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 100%;
+    display: flex;
+    width: auto;
     justify-content: start;
-    gap: 0.5rem;
+    gap: 0.25rem;
   }
 
   .sensor-selector__text-button,
   .sensor-selector__primary-button {
-    width: 100%;
+    width: auto;
     min-width: 0;
     box-sizing: border-box;
+    white-space: nowrap;
   }
 
   .sensor-selector__primary-button {
-    grid-column: 1 / -1;
+    grid-column: auto;
   }
 
   .sensor-selector__overview-meta {
@@ -1610,20 +1763,20 @@ html.dark .sensor-selector {
   }
 
   .sensor-selector__overview-tools {
-    align-items: stretch;
+    align-items: center;
   }
 
   .sensor-selector__zoom-control,
   .sensor-selector__fullscreen-button {
-    width: 100%;
+    width: auto;
   }
 
   .sensor-selector__zoom-control {
-    justify-content: center;
+    justify-content: start;
   }
 
   .sensor-selector__fullscreen-button {
-    justify-content: center;
+    justify-content: start;
   }
 
   .sensor-selector__tree {
@@ -1645,24 +1798,19 @@ html.dark .sensor-selector {
     min-height: 0;
     flex-direction: column;
     align-items: stretch;
+    justify-content: center;
     gap: 1.75rem;
+  }
+
+  .sensor-selector__flow-column.is-current {
+    align-self: stretch;
+    height: 14rem;
   }
 
   .sensor-selector__flow-column {
     width: 100%;
     min-width: 0;
     justify-content: center;
-  }
-
-  .sensor-selector__flow-column.has-next-node::after {
-    top: 100%;
-    right: auto;
-    left: 50%;
-    width: 0;
-    height: 1.75rem;
-    border-top: 0;
-    border-left: 2px solid var(--sensor-line);
-    transform: translateX(-1px);
   }
 
   .sensor-selector__flow-node,
@@ -1696,6 +1844,10 @@ html.dark .sensor-selector {
   .sensor-selector__flow-viewport {
     transition: none;
     scroll-behavior: auto;
+  }
+
+  .sensor-selector__flow-viewport.is-transitioning {
+    animation: none;
   }
 
   .sensor-selector__tree-zoom {

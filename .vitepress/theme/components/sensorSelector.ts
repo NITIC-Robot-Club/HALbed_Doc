@@ -53,6 +53,46 @@ export interface SensorMode {
   rootId: string
   nodes: Record<string, SensorNode>
   overviewGroups: SensorOverviewGroup[]
+  overviewGraph?: SensorOverviewGraph
+}
+
+export interface SensorOverviewGraphNode {
+  id: string
+  label: string
+  kind: SensorNodeKind
+  tone?: SensorNodeTone
+  selectNodeId?: string
+  x: number
+  y: number
+  width?: number
+  height?: number
+  className?: string
+  layout?: 'flow' | 'fixed'
+}
+
+export interface SensorOverviewGraphEdge {
+  id: string
+  source: string
+  target: string
+}
+
+export interface SensorOverviewGraphGroup {
+  id: string
+  label: string
+  x: number
+  y: number
+  width: number
+  height: number
+  tone?: SensorNodeTone
+  className?: string
+}
+
+export interface SensorOverviewGraph {
+  width: number
+  height: number
+  nodes: SensorOverviewGraphNode[]
+  edges: SensorOverviewGraphEdge[]
+  groups?: SensorOverviewGraphGroup[]
 }
 
 export const SENSOR_RESULTS: Record<string, SensorResult> = {
@@ -468,6 +508,204 @@ const unifiedNodes: Record<string, SensorNode> = {
   ...unifiedCircuitNodes,
 }
 
+function createOverviewNode(
+  id: string,
+  x: number,
+  y: number,
+  options: Partial<Pick<SensorOverviewGraphNode, 'label' | 'kind' | 'tone' | 'selectNodeId' | 'width' | 'height' | 'className' | 'layout'>> = {},
+): SensorOverviewGraphNode {
+  const sourceId = options.selectNodeId ?? id
+  const source = unifiedNodes[sourceId]
+  return {
+    id,
+    label: options.label ?? source?.label ?? id,
+    kind: options.kind ?? source?.kind ?? 'branch',
+    tone: options.tone ?? source?.tone,
+    selectNodeId: options.selectNodeId ?? (source ? sourceId : undefined),
+    x,
+    y,
+    width: options.width,
+    height: options.height,
+    className: options.className,
+    layout: options.layout ?? 'flow',
+  }
+}
+
+const overviewEdgePairs: Array<[string, string]> = [
+  ['overview-robot', 'overview-internal'],
+  ['overview-robot', 'overview-external'],
+  ['overview-robot', 'overview-circuit'],
+  ['overview-internal', 'overview-speed'],
+  ['overview-internal', 'overview-position'],
+  ['overview-speed', 'overview-acceleration'],
+  ['overview-speed', 'overview-angular-velocity'],
+  ['overview-speed', 'overview-rotation-speed'],
+  ['overview-acceleration', 'overview-acceleration-sensor'],
+  ['overview-angular-velocity', 'overview-gyro-sensor'],
+  ['overview-rotation-speed', 'overview-encoder-title'],
+  ['overview-position', 'overview-angle'],
+  ['overview-position', 'overview-distance'],
+  ['overview-position', 'overview-object-detection'],
+  ['overview-angle', 'overview-relative'],
+  ['overview-angle', 'overview-absolute'],
+  ['overview-relative', 'overview-incremental'],
+  ['overview-absolute', 'overview-absolute-method'],
+  ['overview-incremental', 'overview-incremental-combination'],
+  ['overview-distance', 'overview-infrared-distance'],
+  ['overview-distance', 'overview-ultrasonic-distance'],
+  ['overview-distance', 'overview-laser-distance'],
+  ['overview-object-detection', 'overview-photo-reflector'],
+  ['overview-object-detection', 'overview-photo-interrupter'],
+  ['overview-object-detection', 'overview-limit-switch'],
+  ['overview-photo-interrupter', 'overview-homing'],
+  ['overview-limit-switch', 'overview-homing'],
+  ['overview-external', 'overview-external-distance'],
+  ['overview-external-distance', 'overview-external-rotary-encoder'],
+  ['overview-external-distance', 'overview-external-infrared'],
+  ['overview-external-distance', 'overview-external-ultrasonic'],
+  ['overview-external-distance', 'overview-external-laser'],
+  ['overview-external-distance', 'overview-external-lidar'],
+  ['overview-external-distance', 'overview-external-imu'],
+  ['overview-external', 'overview-external-color'],
+  ['overview-external-color', 'overview-color-sensor'],
+  ['overview-circuit', 'overview-power'],
+  ['overview-power', 'overview-voltage'],
+  ['overview-power', 'overview-current'],
+]
+
+function layoutOverviewGraph(graph: SensorOverviewGraph): SensorOverviewGraph {
+  const nodeMap = new Map(graph.nodes.map((node) => [node.id, node]))
+  const primaryParent = new Map<string, string>()
+
+  // A shared result belongs visually to the last branch that reaches it.
+  // The other edge is still drawn, but it does not reserve a second layout slot.
+  graph.edges.forEach((edge) => primaryParent.set(edge.target, edge.source))
+
+  const children = new Map<string, string[]>()
+  graph.edges.forEach((edge) => {
+    if (primaryParent.get(edge.target) !== edge.source) return
+    const branch = children.get(edge.source) ?? []
+    branch.push(edge.target)
+    children.set(edge.source, branch)
+  })
+
+  const verticalGap = 42
+  let cursor = 44
+  const placed = new Set(graph.nodes.filter((node) => node.layout === 'fixed').map((node) => node.id))
+
+  const placeSubtree = (nodeId: string): number => {
+    const node = nodeMap.get(nodeId)
+    if (!node) return 0
+    if (node.layout === 'fixed') return node.y + (node.height ?? 52) / 2
+    if (placed.has(nodeId)) return node.y + (node.height ?? 52) / 2
+
+    const childIds = (children.get(nodeId) ?? []).filter((childId) => nodeMap.has(childId))
+    if (!childIds.length) {
+      node.y = cursor
+      cursor += (node.height ?? 52) + verticalGap
+      placed.add(nodeId)
+      return node.y + (node.height ?? 52) / 2
+    }
+
+    const childCenters = childIds.map(placeSubtree)
+    const center = (Math.min(...childCenters) + Math.max(...childCenters)) / 2
+    node.y = center - (node.height ?? 52) / 2
+    placed.add(nodeId)
+    return center
+  }
+
+  const roots = graph.nodes.filter((node) => !primaryParent.has(node.id) && node.id !== 'overview-plus')
+  roots.forEach((node) => placeSubtree(node.id))
+
+  // The plus sign is a visual continuation of the encoder combination node.
+  const combination = nodeMap.get('overview-incremental-combination')
+  const plus = nodeMap.get('overview-plus')
+  if (combination && plus) plus.y = combination.y + ((combination.height ?? 52) - (plus.height ?? 48)) / 2
+
+  const encoderIds = new Set([
+    'overview-encoder-title',
+    'overview-incremental',
+    'overview-absolute-method',
+    'overview-incremental-combination',
+    'overview-plus',
+    'overview-homing',
+  ])
+  const encoderNodes = graph.nodes.filter((node) => encoderIds.has(node.id))
+  const encoderGroup = graph.groups?.find((group) => group.id === 'overview-encoder-group')
+  if (encoderGroup && encoderNodes.length) {
+    const top = Math.min(...encoderNodes.map((node) => node.y))
+    const bottom = Math.max(...encoderNodes.map((node) => node.y + (node.height ?? 52)))
+    encoderGroup.y = top - 34
+    encoderGroup.height = bottom - encoderGroup.y + 26
+  }
+
+  const bottom = Math.max(...graph.nodes.map((node) => node.y + (node.height ?? 52)))
+  return { ...graph, height: Math.max(900, bottom + 44) }
+}
+
+const unifiedOverviewGraph = layoutOverviewGraph({
+  width: 2140,
+  height: 1660,
+  groups: [
+    {
+      id: 'overview-encoder-group',
+      label: 'ロータリーエンコーダー',
+      x: 1470,
+      y: 120,
+      width: 620,
+      height: 500,
+      tone: 'encoder',
+      className: 'is-panel',
+    },
+  ],
+  nodes: [
+    createOverviewNode('overview-robot', 40, 570, { selectNodeId: 'unified-robot', width: 180 }),
+    createOverviewNode('overview-internal', 300, 390, { selectNodeId: 'unified-internal' }),
+    createOverviewNode('overview-external', 300, 910, { selectNodeId: 'unified-external', tone: 'external' }),
+    createOverviewNode('overview-circuit', 300, 1110, { selectNodeId: 'unified-circuit', tone: 'circuit' }),
+
+    createOverviewNode('overview-speed', 560, 200, { selectNodeId: 'unified-internal-speed' }),
+    createOverviewNode('overview-position', 560, 700, { selectNodeId: 'unified-internal-position' }),
+    createOverviewNode('overview-acceleration', 790, 90, { selectNodeId: 'unified-internal-acceleration' }),
+    createOverviewNode('overview-angular-velocity', 790, 190, { selectNodeId: 'unified-internal-angular-velocity' }),
+    createOverviewNode('overview-rotation-speed', 790, 290, { selectNodeId: 'unified-internal-rotation-speed' }),
+    createOverviewNode('overview-acceleration-sensor', 1030, 90, { selectNodeId: 'unified-internal-acceleration-sensor', width: 190 }),
+    createOverviewNode('overview-gyro-sensor', 1030, 190, { selectNodeId: 'unified-internal-gyro-sensor', width: 190 }),
+    createOverviewNode('overview-angle', 790, 500, { selectNodeId: 'unified-internal-angle' }),
+    createOverviewNode('overview-distance', 790, 760, { selectNodeId: 'unified-internal-distance' }),
+    createOverviewNode('overview-object-detection', 790, 1150, { selectNodeId: 'unified-internal-object-detection', width: 150 }),
+    createOverviewNode('overview-relative', 1060, 430, { label: '相対', selectNodeId: 'unified-internal-relative-angle', tone: 'encoder-relative' }),
+    createOverviewNode('overview-absolute', 1060, 540, { label: '絶対', selectNodeId: 'unified-internal-absolute-angle', tone: 'encoder-absolute' }),
+    createOverviewNode('overview-infrared-distance', 1030, 700, { selectNodeId: 'unified-internal-infrared-distance', width: 220 }),
+    createOverviewNode('overview-ultrasonic-distance', 1030, 800, { selectNodeId: 'unified-internal-ultrasonic-distance', width: 220 }),
+    createOverviewNode('overview-laser-distance', 1030, 900, { selectNodeId: 'unified-internal-laser-distance', width: 220 }),
+    createOverviewNode('overview-photo-reflector', 1030, 1300, { selectNodeId: 'unified-internal-photo-reflector', width: 190 }),
+    createOverviewNode('overview-photo-interrupter', 1030, 1400, { selectNodeId: 'unified-internal-photo-interrupter', width: 190 }),
+    createOverviewNode('overview-limit-switch', 1030, 1500, { selectNodeId: 'unified-internal-limit-switch', width: 190 }),
+    createOverviewNode('overview-homing', 1790, 445, { label: '原点どり', selectNodeId: 'unified-internal-homing', width: 250, tone: 'detection', className: 'is-combination', layout: 'fixed' }),
+
+    createOverviewNode('overview-encoder-title', 1510, 120, { label: 'ロータリーエンコーダー', selectNodeId: 'unified-internal-rotary-encoder', width: 430, tone: 'encoder', layout: 'fixed' }),
+    createOverviewNode('overview-incremental', 1510, 230, { label: 'インクリメンタル方式', selectNodeId: 'unified-internal-incremental', width: 430, tone: 'encoder-relative', layout: 'fixed' }),
+    createOverviewNode('overview-absolute-method', 1510, 330, { label: 'アブソリュート方式', selectNodeId: 'unified-internal-absolute', width: 430, tone: 'encoder-absolute', layout: 'fixed' }),
+    createOverviewNode('overview-incremental-combination', 1510, 445, { label: 'インクリメンタル方式', selectNodeId: 'unified-internal-incremental', width: 250, tone: 'encoder-relative', className: 'is-combination', layout: 'fixed' }),
+    createOverviewNode('overview-plus', 1768, 445, { label: '＋', kind: 'branch', selectNodeId: undefined, width: 30, height: 52, className: 'is-plus', layout: 'fixed' }),
+
+    createOverviewNode('overview-external-distance', 560, 900, { selectNodeId: 'unified-external-distance-position', width: 170 }),
+    createOverviewNode('overview-external-color', 560, 1080, { selectNodeId: 'unified-external-color' }),
+    createOverviewNode('overview-external-rotary-encoder', 790, 820, { selectNodeId: 'unified-external-rotary-encoder', width: 190 }),
+    createOverviewNode('overview-external-infrared', 790, 920, { selectNodeId: 'unified-external-infrared-distance', width: 190 }),
+    createOverviewNode('overview-external-ultrasonic', 790, 1020, { selectNodeId: 'unified-external-ultrasonic-distance', width: 190 }),
+    createOverviewNode('overview-external-laser', 1030, 1000, { selectNodeId: 'unified-external-laser-distance', width: 190 }),
+    createOverviewNode('overview-external-lidar', 1030, 1100, { selectNodeId: 'unified-external-lidar', width: 190 }),
+    createOverviewNode('overview-external-imu', 1030, 1200, { selectNodeId: 'unified-external-imu', width: 190 }),
+    createOverviewNode('overview-color-sensor', 790, 1250, { selectNodeId: 'unified-external-color-sensor', width: 190 }),
+    createOverviewNode('overview-power', 560, 1220, { selectNodeId: 'unified-circuit-power' }),
+    createOverviewNode('overview-voltage', 790, 1360, { selectNodeId: 'unified-circuit-voltage-sensor', width: 190 }),
+    createOverviewNode('overview-current', 790, 1460, { selectNodeId: 'unified-circuit-current-sensor', width: 190 }),
+  ],
+  edges: overviewEdgePairs.map(([source, target], index) => ({ id: `overview-edge-${index}`, source, target })),
+})
+
 export const SENSOR_MODES: SensorMode[] = [
   {
     id: 'all-sensors',
@@ -476,6 +714,7 @@ export const SENSOR_MODES: SensorMode[] = [
     description: 'ロボットの内部、外部、回路のどこを測るかからたどります。',
     rootId: 'unified-robot',
     nodes: unifiedNodes,
+    overviewGraph: unifiedOverviewGraph,
     overviewGroups: [
       {
         label: 'IMU',
@@ -526,6 +765,17 @@ export function getSensorNodeTone(node: SensorNode): SensorNodeTone {
   if (id.includes('angle') || id.includes('position')) return 'position'
   if (id.includes('internal') || id.includes('external')) return 'structure'
   return node.kind === 'result' ? 'result' : 'structure'
+}
+
+export function getSensorOverviewGraph(mode: SensorMode): SensorOverviewGraph {
+  if (mode.overviewGraph) return mode.overviewGraph
+
+  return {
+    width: 1200,
+    height: 800,
+    nodes: [],
+    edges: [],
+  }
 }
 
 export function findSensorPath(mode: SensorMode, targetId: string): string[] | undefined {
