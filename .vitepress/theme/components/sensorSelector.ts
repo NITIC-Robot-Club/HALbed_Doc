@@ -642,11 +642,14 @@ function layoutOverviewGraph(graph: SensorOverviewGraph): SensorOverviewGraph {
     ) + 56
   }
 
-  // The plus sign and homing node are visual continuations of the combination row.
+  // The combination is a vertical mini-layout: truncated incremental label,
+  // plus sign, then the homing node.
   const plus = nodeMap.get('overview-plus')
-  if (combination && plus) plus.y = combination.y + ((combination.height ?? 52) - (plus.height ?? 48)) / 2
   const homing = nodeMap.get('overview-homing')
-  if (combination && homing) homing.y = combination.y + ((combination.height ?? 52) - (homing.height ?? 52)) / 2
+  if (combination && plus && homing) {
+    plus.y = combination.y + (combination.height ?? 52) + 12
+    homing.y = plus.y + (plus.height ?? 48) + 12
+  }
 
   const encoderIds = new Set([
     'overview-encoder-title',
@@ -665,6 +668,26 @@ function layoutOverviewGraph(graph: SensorOverviewGraph): SensorOverviewGraph {
     encoderGroup.height = bottom - encoderGroup.y + 26
   }
 
+  const combinationGroup = graph.groups?.find((group) => group.id === 'overview-encoder-combination-group')
+  if (combinationGroup && combination && plus && homing) {
+    const left = Math.min(combination.x, plus.x, homing.x)
+    const right = Math.max(
+      combination.x + (combination.width ?? 150),
+      plus.x + (plus.width ?? 150),
+      homing.x + (homing.width ?? 150),
+    )
+    const top = Math.min(combination.y, plus.y, homing.y)
+    const bottom = Math.max(
+      combination.y + (combination.height ?? 52),
+      plus.y + (plus.height ?? 52),
+      homing.y + (homing.height ?? 52),
+    )
+    combinationGroup.x = left - 18
+    combinationGroup.y = top - 18
+    combinationGroup.width = right - left + 36
+    combinationGroup.height = bottom - top + 36
+  }
+
   const bottom = Math.max(...graph.nodes.map((node) => node.y + (node.height ?? 52)))
   return { ...graph, height: Math.max(900, bottom + 44) }
 }
@@ -675,13 +698,23 @@ const unifiedOverviewGraph = layoutOverviewGraph({
   groups: [
     {
       id: 'overview-encoder-group',
-      label: 'ロータリーエンコーダー',
+      label: '',
       x: 1470,
       y: 120,
       width: 620,
       height: 500,
       tone: 'encoder',
       className: 'is-panel',
+    },
+    {
+      id: 'overview-encoder-combination-group',
+      label: '',
+      x: 1490,
+      y: 500,
+      width: 580,
+      height: 210,
+      tone: 'encoder',
+      className: 'is-encoder-combination',
     },
   ],
   nodes: [
@@ -708,14 +741,14 @@ const unifiedOverviewGraph = layoutOverviewGraph({
     createOverviewNode('overview-photo-reflector', 1030, 1300, { selectNodeId: 'unified-internal-photo-reflector', width: 190 }),
     createOverviewNode('overview-photo-interrupter', 1030, 1400, { selectNodeId: 'unified-internal-photo-interrupter', width: 190 }),
     createOverviewNode('overview-limit-switch', 1030, 1500, { selectNodeId: 'unified-internal-limit-switch', width: 190 }),
-    createOverviewNode('overview-homing', 1790, 445, { label: '原点どり', selectNodeId: 'unified-internal-homing', width: 250, tone: 'detection', className: 'is-combination', layout: 'fixed' }),
+    createOverviewNode('overview-homing', 1510, 445, { label: '原点どり', selectNodeId: 'unified-internal-homing', width: 540, height: 72, tone: 'detection', className: 'is-combination is-homing is-encoder-method', layout: 'fixed' }),
 
-    createOverviewNode('overview-encoder-title', 1510, 120, { label: 'ロータリーエンコーダー', selectNodeId: 'unified-internal-rotary-encoder', width: 430, tone: 'encoder', layout: 'fixed' }),
-    createOverviewNode('overview-incremental', 1510, 230, { label: 'インクリメンタル方式', selectNodeId: 'unified-internal-incremental', width: 430, tone: 'encoder-relative', layout: 'fixed' }),
-    createOverviewNode('overview-absolute-method', 1510, 330, { label: 'アブソリュート方式', selectNodeId: 'unified-internal-absolute', width: 430, tone: 'encoder-absolute', layout: 'fixed' }),
+    createOverviewNode('overview-encoder-title', 1510, 120, { label: 'ロータリーエンコーダー', selectNodeId: 'unified-internal-rotary-encoder', width: 540, height: 72, tone: 'encoder', className: 'is-panel-title', layout: 'fixed' }),
+    createOverviewNode('overview-incremental', 1510, 230, { label: 'インクリメンタル方式', selectNodeId: 'unified-internal-incremental', width: 540, height: 72, tone: 'encoder-relative', className: 'is-encoder-method', layout: 'fixed' }),
+    createOverviewNode('overview-absolute-method', 1510, 330, { label: 'アブソリュート方式', selectNodeId: 'unified-internal-absolute', width: 540, height: 72, tone: 'encoder-absolute', className: 'is-encoder-method', layout: 'fixed' }),
     // This repeated label explains the composition without adding a second flow step.
-    createOverviewNode('overview-incremental-combination', 1510, 445, { label: 'インクリメンタル方式', selectNodeId: 'unified-internal-incremental', width: 250, tone: 'encoder-relative', className: 'is-combination', layout: 'fixed' }),
-    createOverviewNode('overview-plus', 1768, 445, { label: '＋', kind: 'branch', selectNodeId: undefined, width: 30, height: 52, className: 'is-plus', layout: 'fixed' }),
+    createOverviewNode('overview-incremental-combination', 1510, 445, { label: 'インクリメンタル方…', selectNodeId: 'unified-internal-incremental', width: 540, height: 72, tone: 'encoder-relative', className: 'is-combination is-encoder-method', layout: 'fixed' }),
+    createOverviewNode('overview-plus', 1760, 445, { label: '＋', kind: 'branch', selectNodeId: undefined, width: 40, height: 48, className: 'is-plus', layout: 'fixed' }),
 
     createOverviewNode('overview-external-distance', 560, 900, { selectNodeId: 'unified-external-distance-position', width: 170 }),
     createOverviewNode('overview-external-color', 560, 1080, { selectNodeId: 'unified-external-color' }),

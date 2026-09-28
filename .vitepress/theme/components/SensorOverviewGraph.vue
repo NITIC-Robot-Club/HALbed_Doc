@@ -201,7 +201,7 @@ onBeforeUnmount(() => {
       :class="[`is-tone-${group.tone ?? 'structure'}`, group.className]"
       :style="{ left: `${group.x}px`, top: `${group.y}px`, width: `${group.width}px`, height: `${group.height}px` }"
     >
-      <span>{{ group.label }}</span>
+      <span v-if="group.label">{{ group.label }}</span>
     </div>
 
     <svg
@@ -273,10 +273,10 @@ onBeforeUnmount(() => {
 }
 
 .sensor-overview-graph__group.is-panel {
-  padding: 1rem;
-  border: 1px solid color-mix(in srgb, var(--sensor-node-color, #06b5d2) 76%, var(--vp-c-divider));
+  padding: 0;
+  border: 0;
   border-radius: 1.35rem;
-  background: color-mix(in srgb, var(--sensor-node-color, #06b5d2) 78%, var(--vp-c-bg));
+  background: var(--sensor-encoder-panel-bg, #06b5d2);
 }
 
 .sensor-overview-graph__group.is-panel > span {
@@ -293,6 +293,11 @@ onBeforeUnmount(() => {
   border-radius: 999px;
   background: color-mix(in srgb, var(--sensor-node-color, #06b5d2) 10%, var(--vp-c-bg));
   white-space: nowrap;
+}
+
+.sensor-overview-graph__group.is-encoder-combination {
+  border-radius: 1.45rem;
+  background: var(--sensor-encoder-combination-bg, #4ed3c9);
 }
 
 .sensor-overview-graph__node {
@@ -324,6 +329,28 @@ onBeforeUnmount(() => {
   border-color: var(--sensor-node-color);
   color: var(--sensor-current-ink, #263746);
   background: var(--sensor-node-color);
+}
+
+.sensor-overview-graph__node.is-panel-title,
+.sensor-overview-graph__node.is-panel-title:hover,
+.sensor-overview-graph__node.is-panel-title:focus-visible {
+  justify-content: flex-start;
+  padding: 0 1.2rem;
+  border: 0;
+  border-radius: 0;
+  color: #fff;
+  background: transparent;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: left;
+}
+
+.sensor-overview-graph__node.is-encoder-method {
+  border-radius: 1.7rem;
+  font-size: 1.55rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .sensor-overview-graph__label-node {
@@ -379,6 +406,11 @@ onBeforeUnmount(() => {
 
 .is-combination {
   border-radius: 0.95rem;
+}
+
+.is-homing {
+  color: #173047;
+  background: #bdf5f0;
 }
 
 .is-plus {
