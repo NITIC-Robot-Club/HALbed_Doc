@@ -74,6 +74,7 @@ export interface SensorOverviewGraphEdge {
   id: string
   source: string
   target: string
+  route?: 'auto' | 'bottom'
 }
 
 export interface SensorOverviewGraphGroup {
@@ -550,7 +551,6 @@ const overviewEdgePairs: Array<[string, string]> = [
   ['overview-angle', 'overview-absolute'],
   ['overview-relative', 'overview-incremental'],
   ['overview-absolute', 'overview-absolute-method'],
-  ['overview-incremental', 'overview-incremental-combination'],
   ['overview-distance', 'overview-infrared-distance'],
   ['overview-distance', 'overview-ultrasonic-distance'],
   ['overview-distance', 'overview-laser-distance'],
@@ -575,6 +575,7 @@ const overviewEdgePairs: Array<[string, string]> = [
 
 function layoutOverviewGraph(graph: SensorOverviewGraph): SensorOverviewGraph {
   const nodeMap = new Map(graph.nodes.map((node) => [node.id, node]))
+  const fixedNodeIds = new Set(graph.nodes.filter((node) => node.layout === 'fixed').map((node) => node.id))
   const primaryParent = new Map<string, string>()
 
   // A shared result belongs visually to the last branch that reaches it.
@@ -583,6 +584,9 @@ function layoutOverviewGraph(graph: SensorOverviewGraph): SensorOverviewGraph {
 
   const children = new Map<string, string[]>()
   graph.edges.forEach((edge) => {
+    // Fixed nodes are visual destinations inside a composed panel. They must
+    // not consume a slot in the flow layout of their source branch.
+    if (fixedNodeIds.has(edge.target)) return
     if (primaryParent.get(edge.target) !== edge.source) return
     const branch = children.get(edge.source) ?? []
     branch.push(edge.target)
@@ -591,12 +595,11 @@ function layoutOverviewGraph(graph: SensorOverviewGraph): SensorOverviewGraph {
 
   const verticalGap = 42
   let cursor = 44
-  const placed = new Set(graph.nodes.filter((node) => node.layout === 'fixed').map((node) => node.id))
+  const placed = new Set<string>()
 
   const placeSubtree = (nodeId: string): number => {
     const node = nodeMap.get(nodeId)
     if (!node) return 0
-    if (node.layout === 'fixed') return node.y + (node.height ?? 52) / 2
     if (placed.has(nodeId)) return node.y + (node.height ?? 52) / 2
 
     const childIds = (children.get(nodeId) ?? []).filter((childId) => nodeMap.has(childId))
@@ -614,7 +617,7 @@ function layoutOverviewGraph(graph: SensorOverviewGraph): SensorOverviewGraph {
     return center
   }
 
-  const roots = graph.nodes.filter((node) => !primaryParent.has(node.id) && node.id !== 'overview-plus')
+  const roots = graph.nodes.filter((node) => node.layout !== 'fixed' && !primaryParent.has(node.id))
   roots.forEach((node) => placeSubtree(node.id))
 
   // The plus sign is a visual continuation of the encoder combination node.
@@ -687,6 +690,7 @@ const unifiedOverviewGraph = layoutOverviewGraph({
     createOverviewNode('overview-encoder-title', 1510, 120, { label: 'ロータリーエンコーダー', selectNodeId: 'unified-internal-rotary-encoder', width: 430, tone: 'encoder', layout: 'fixed' }),
     createOverviewNode('overview-incremental', 1510, 230, { label: 'インクリメンタル方式', selectNodeId: 'unified-internal-incremental', width: 430, tone: 'encoder-relative', layout: 'fixed' }),
     createOverviewNode('overview-absolute-method', 1510, 330, { label: 'アブソリュート方式', selectNodeId: 'unified-internal-absolute', width: 430, tone: 'encoder-absolute', layout: 'fixed' }),
+    // This repeated label explains the composition without adding a second flow step.
     createOverviewNode('overview-incremental-combination', 1510, 445, { label: 'インクリメンタル方式', selectNodeId: 'unified-internal-incremental', width: 250, tone: 'encoder-relative', className: 'is-combination', layout: 'fixed' }),
     createOverviewNode('overview-plus', 1768, 445, { label: '＋', kind: 'branch', selectNodeId: undefined, width: 30, height: 52, className: 'is-plus', layout: 'fixed' }),
 
@@ -703,7 +707,12 @@ const unifiedOverviewGraph = layoutOverviewGraph({
     createOverviewNode('overview-voltage', 790, 1360, { selectNodeId: 'unified-circuit-voltage-sensor', width: 190 }),
     createOverviewNode('overview-current', 790, 1460, { selectNodeId: 'unified-circuit-current-sensor', width: 190 }),
   ],
-  edges: overviewEdgePairs.map(([source, target], index) => ({ id: `overview-edge-${index}`, source, target })),
+  edges: overviewEdgePairs.map(([source, target], index) => ({
+    id: `overview-edge-${index}`,
+    source,
+    target,
+    route: target === 'overview-homing' ? 'bottom' : 'auto',
+  })),
 })
 
 export const SENSOR_MODES: SensorMode[] = [

@@ -78,6 +78,7 @@ function measureConnectors(): void {
 
   const groupedEdges = new Map<string, {
     source: { left: number; top: number; width: number; height: number }
+    route: 'auto' | 'bottom'
     targets: Array<{ left: number; top: number; width: number; height: number }>
   }>()
 
@@ -96,18 +97,35 @@ function measureConnectors(): void {
     })
     const sourceLayoutRect = toLayoutRect(sourceRect)
     const targetLayoutRect = toLayoutRect(targetRect)
-    const existing = groupedEdges.get(edge.source)
+    const route = edge.route ?? 'auto'
+    const groupKey = `${edge.source}:${route}`
+    const existing = groupedEdges.get(groupKey)
     if (existing) {
       existing.targets.push(targetLayoutRect)
     } else {
-      groupedEdges.set(edge.source, { source: sourceLayoutRect, targets: [targetLayoutRect] })
+      groupedEdges.set(groupKey, { source: sourceLayoutRect, route, targets: [targetLayoutRect] })
     }
   })
 
-  connectorPaths.value = [...groupedEdges.values()].flatMap(({ source, targets }) => {
+  connectorPaths.value = [...groupedEdges.values()].flatMap(({ source, route, targets }) => {
     const sourceRight = source.left + source.width
     const sourceCenterX = source.left + source.width / 2
     const sourceCenterY = source.top + source.height / 2
+
+    if (route === 'bottom') {
+      const targetBottoms = targets.map((target) => target.top + target.height)
+      const laneY = Math.max(source.top + source.height + 32, ...targetBottoms.map((bottom) => bottom + 32))
+      const trunkX = sourceRight + Math.max(18, Math.min(70, (Math.min(...targets.map((target) => target.left)) - sourceRight) / 2))
+      const branchPaths: ConnectorPath[] = [
+        { d: `M ${sourceRight} ${sourceCenterY} H ${trunkX} V ${laneY}`, arrow: false },
+      ]
+      targets.forEach((target) => {
+        const targetCenterX = target.left + target.width / 2
+        branchPaths.push({ d: `M ${trunkX} ${laneY} H ${targetCenterX} V ${target.top + target.height}`, arrow: true })
+      })
+      return branchPaths
+    }
+
     const allTargetsToRight = targets.every((target) => target.left > sourceRight + 12)
 
     if (allTargetsToRight) {
