@@ -420,7 +420,9 @@ function fitOverviewTree(): boolean {
   if (!viewport || !graphWidth) return false
 
   const availableWidth = Math.max(1, viewport.clientWidth - 24)
-  treeZoom.value = Math.min(1, Math.max(0.7, Number((availableWidth / graphWidth).toFixed(2))))
+  const horizontalPadding = 96
+  const minimumZoom = 0.45
+  treeZoom.value = Math.min(1, Math.max(minimumZoom, Number((availableWidth / (graphWidth + horizontalPadding)).toFixed(2))))
   return true
 }
 
