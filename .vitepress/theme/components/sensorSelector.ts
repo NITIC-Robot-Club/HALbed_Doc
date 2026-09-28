@@ -620,10 +620,33 @@ function layoutOverviewGraph(graph: SensorOverviewGraph): SensorOverviewGraph {
   const roots = graph.nodes.filter((node) => node.layout !== 'fixed' && !primaryParent.has(node.id))
   roots.forEach((node) => placeSubtree(node.id))
 
-  // The plus sign is a visual continuation of the encoder combination node.
+  const alignCenter = (sourceId: string, targetId: string): void => {
+    const source = nodeMap.get(sourceId)
+    const target = nodeMap.get(targetId)
+    if (!source || !target) return
+    target.y = source.y + ((source.height ?? 52) - (target.height ?? 52)) / 2
+  }
+
+  // Keep the encoder panel aligned with the flow nodes that feed it.
+  alignCenter('overview-rotation-speed', 'overview-encoder-title')
+  alignCenter('overview-relative', 'overview-incremental')
+  alignCenter('overview-absolute', 'overview-absolute-method')
+
   const combination = nodeMap.get('overview-incremental-combination')
+  const incremental = nodeMap.get('overview-incremental')
+  const absoluteMethod = nodeMap.get('overview-absolute-method')
+  if (combination && incremental && absoluteMethod) {
+    combination.y = Math.max(
+      incremental.y + (incremental.height ?? 52),
+      absoluteMethod.y + (absoluteMethod.height ?? 52),
+    ) + 56
+  }
+
+  // The plus sign and homing node are visual continuations of the combination row.
   const plus = nodeMap.get('overview-plus')
   if (combination && plus) plus.y = combination.y + ((combination.height ?? 52) - (plus.height ?? 48)) / 2
+  const homing = nodeMap.get('overview-homing')
+  if (combination && homing) homing.y = combination.y + ((combination.height ?? 52) - (homing.height ?? 52)) / 2
 
   const encoderIds = new Set([
     'overview-encoder-title',
