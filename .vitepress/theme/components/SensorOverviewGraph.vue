@@ -335,20 +335,21 @@ onBeforeUnmount(() => {
 .sensor-overview-graph__node.is-panel-title:hover,
 .sensor-overview-graph__node.is-panel-title:focus-visible {
   justify-content: flex-start;
-  padding: 0 1.2rem;
+  padding: 0 0.6rem;
   border: 0;
   border-radius: 0;
   color: #fff;
   background: transparent;
-  font-size: 2rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.02em;
   text-align: left;
+  white-space: nowrap;
 }
 
 .sensor-overview-graph__node.is-encoder-method {
-  border-radius: 1.7rem;
-  font-size: 1.55rem;
+  border-radius: 1.35rem;
+  font-size: 1rem;
   font-weight: 700;
   white-space: nowrap;
 }

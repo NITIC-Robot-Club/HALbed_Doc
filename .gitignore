@@ -2,7 +2,6 @@
 .vitepress/cache/
 .vitepress/.temp/
 node_modules/
-AGENTS.md
 .playwright-mcp
 .worktrees/
 .worktree/
