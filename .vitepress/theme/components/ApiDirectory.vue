@@ -19,9 +19,10 @@ const groups = [
     items: [
       { title: 'CAN', detail: 'CAN 通信を行う', link: '/Docs/API/CAN' },
       { title: 'CANMessage', detail: 'CAN メッセージを扱う', link: '/Docs/API/CANMessage' },
+      { title: 'CAN FD', detail: 'FDCAN で CAN FD 通信を行う', link: '/Docs/API/CANFD' },
       { title: 'UART', detail: 'シリアル通信を行う', link: '/Docs/API/UART' },
       { title: 'I2C', detail: 'I2C 通信を行う', link: '/Docs/API/i2c' },
-      { title: 'Callback', detail: '受信時などの処理を登録する', link: '/Docs/API/Callback' },
+      { title: 'Callback', detail: '割り込みイベントの処理を登録する', link: '/Docs/API/Callback' },
     ],
   },
   {
@@ -99,7 +100,7 @@ const groups = [
 .api-directory__item:hover { padding-left: .55rem; color: var(--vp-c-brand-1); }
 .api-directory__item span { display: grid; gap: .2rem; min-width: 0; }
 .api-directory__item strong { font-size: .95rem; }
-.api-directory__item small { color: var(--vp-c-text-2); font-size: .76rem; line-height: 1.45; }
+.api-directory__item small { color: var(--vp-c-text-2); font-size: .82rem; line-height: 1.5; }
 .api-directory__note { grid-column: 2; margin: -.85rem 0 0; color: var(--vp-c-text-2); font-size: .82rem; line-height: 1.6; }
 @media (max-width: 700px) { .api-directory__hero { padding-top: .5rem; padding-bottom: 2.25rem; } .api-directory__group { grid-template-columns: 1fr; gap: 1rem; padding: 1.9rem 0; } .api-directory__items { grid-template-columns: 1fr; } .api-directory__item:nth-child(odd), .api-directory__item:nth-child(even) { padding-left: 0; padding-right: 0; } .api-directory__item:nth-child(even) { border-left: 0; } .api-directory__note { grid-column: auto; margin: -.35rem 0 0; } }
 @media (prefers-reduced-motion: reduce) { .api-directory__item { transition: none; } }

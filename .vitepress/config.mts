@@ -68,6 +68,7 @@ export default defineConfig({
     nav: [
       { text: 'はじめに', link: '/Docs/Introduction/ArchitectureOverview' },
       { text: 'API', link: '/Docs/API/APIHome' },
+      { text: 'HAL Docs', link: '/Docs/HAL_Docs/HAL_Functions' },
       { text: '開発資料', link: '/Docs/Technical_articles/Article_Home' },
       { text: 'ツール', link: '/Docs/Tools/Tools_home' },
       { text: 'FAQ', link: '/Docs/FAQ/FAQ_home' }
@@ -94,6 +95,7 @@ export default defineConfig({
             { text: 'AnalogIn', link: '/Docs/API/AnalogIn' },
             { text: 'CAN', link: '/Docs/API/CAN' },
             { text: 'CANMessage', link: '/Docs/API/CANMessage' },
+            { text: 'CAN FD', link: '/Docs/API/CANFD' },
             { text: 'Callback', link: '/Docs/API/Callback' },
             { text: 'CircularBuffer', link: '/Docs/API/CircularBuffer' },
             { text: 'DMA', link: '/Docs/API/DMA' },
@@ -110,6 +112,27 @@ export default defineConfig({
         },
       ]
       ,
+      '/Docs/HAL_Docs/': [
+        {
+          text: 'STM32 HAL API',
+          items: [
+            { text: '関数一覧', link: '/Docs/HAL_Docs/HAL_Functions' },
+            { text: 'ADC', link: '/Docs/HAL_Docs/ADC' },
+            { text: 'CAN', link: '/Docs/HAL_Docs/CAN' },
+            { text: 'FDCAN', link: '/Docs/HAL_Docs/FDCAN' },
+            { text: 'GPIO', link: '/Docs/HAL_Docs/GPIO' },
+            { text: 'DMA', link: '/Docs/HAL_Docs/DMA' },
+            { text: 'Flash', link: '/Docs/HAL_Docs/Flash' },
+            { text: 'I2C', link: '/Docs/HAL_Docs/I2C' },
+            { text: 'NVIC', link: '/Docs/HAL_Docs/NVIC' },
+            { text: 'RCC・時刻', link: '/Docs/HAL_Docs/RCC' },
+            { text: 'TIM', link: '/Docs/HAL_Docs/TIM' },
+            { text: 'UART', link: '/Docs/HAL_Docs/UART' },
+            { text: 'STM32Cube Middleware', link: '/Docs/HAL_Docs/STM32Cube_Middleware' },
+            { text: 'USB CDC', link: '/Docs/HAL_Docs/USB_CDC' },
+          ]
+        }
+      ],
       '/Docs/Tools/': [
         {
           text: '用途別に探す',

@@ -7,6 +7,7 @@ import ArticleCard from './components/ArticleCard.vue'
 import ArticleTagList from './components/ArticleTagList.vue'
 import HomeLanding from './components/HomeLanding.vue'
 import ApiDirectory from './components/ApiDirectory.vue'
+import ApiSignature from './components/ApiSignature.vue'
 import TechnicalArticlesHome from './components/TechnicalArticlesHome.vue'
 import TechnicalArticleCategory from './components/TechnicalArticleCategory.vue'
 import ArticleDiscoveryHome from './components/ArticleDiscoveryHome.vue'
@@ -166,6 +167,8 @@ export default {
     app.component('HomeLanding', HomeLanding)
 
     app.component('ApiDirectory', ApiDirectory)
+
+    app.component('ApiSignature', ApiSignature)
 
     app.component('TechnicalArticlesHome', TechnicalArticlesHome)
 

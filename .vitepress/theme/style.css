@@ -561,6 +561,43 @@
   overflow-x: auto;
 }
 
+.vp-doc .api-signature {
+  max-width: 100%;
+  margin: 1rem 0 1.25rem;
+  padding: 0.7rem 1rem;
+  border-top: 3px solid var(--vp-c-brand-1);
+  background: var(--vp-c-brand-soft);
+  color: var(--vp-c-text-1);
+  line-height: 1.6;
+}
+
+.vp-doc .api-signature code {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.vp-doc .api-signature a {
+  color: var(--vp-c-brand-1);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--vp-c-brand-1) 45%, transparent);
+  text-underline-offset: 0.18em;
+}
+
+.vp-doc .api-signature a:hover {
+  text-decoration-color: currentColor;
+}
+
+.vp-doc .api-signature a:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 3px;
+}
+
 :where(.vp-doc code) {
   word-break: break-word;
 }
