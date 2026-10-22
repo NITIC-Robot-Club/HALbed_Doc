@@ -1,0 +1,66 @@
+<svg width="872" height="922" viewBox="0 0 872 922" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M872 0H0V922H872V0Z" fill="white"/>
+<path d="M124 130V146" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M124 149C125.657 149 127 147.657 127 146C127 144.343 125.657 143 124 143C122.343 143 121 144.343 121 146C121 147.657 122.343 149 124 149Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M124 209C125.657 209 127 207.657 127 206C127 204.343 125.657 203 124 203C122.343 203 121 204.343 121 206C121 207.657 122.343 209 124 209Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M124 202L151 150" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M124 206V229" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M124 233C126.209 233 128 231.209 128 229C128 226.791 126.209 225 124 225C121.791 225 120 226.791 120 229C120 231.209 121.791 233 124 233Z" fill="#263238" stroke="#263238" stroke-width="2"/>
+<path d="M124 229H289" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M401 199H289V259H401V199Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M548 130V146" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M548 146V229" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M548 229V256" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M548 259C549.657 259 551 257.657 551 256C551 254.343 549.657 253 548 253C546.343 253 545 254.343 545 256C545 257.657 546.343 259 548 259Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M548 319C549.657 319 551 317.657 551 316C551 314.343 549.657 313 548 313C546.343 313 545 314.343 545 316C545 317.657 546.343 319 548 319Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M548 312V260" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M548 316V334" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M548 334V346" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M532 346H564" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M538 353H558" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M544 360H552" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M515 147V324" stroke="#D55E00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M515 324L520 314H510L515 324Z" fill="#D55E00" stroke="#D55E00" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M548 233C550.209 233 552 231.209 552 229C552 226.791 550.209 225 548 225C545.791 225 544 226.791 544 229C544 231.209 545.791 233 548 233Z" fill="#263238" stroke="#263238" stroke-width="2"/>
+<path d="M548 229H713" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M825 199H713V259H825V199Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M336 579V595" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M336 595V605" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M347 605H325V643H347V605Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M336 643V653" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M336 653V678" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M336 678V705" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M336 708C337.657 708 339 706.657 339 705C339 703.343 337.657 702 336 702C334.343 702 333 703.343 333 705C333 706.657 334.343 708 336 708Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M336 768C337.657 768 339 766.657 339 765C339 763.343 337.657 762 336 762C334.343 762 333 763.343 333 765C333 766.657 334.343 768 336 768Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M336 761V709" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M336 765V783" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M336 783V795" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M320 795H352" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M326 802H346" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M332 809H340" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M303 596V773" stroke="#0072B2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M303 773L308 763H298L303 773Z" fill="#0072B2" stroke="#0072B2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M336 682C338.209 682 340 680.209 340 678C340 675.791 338.209 674 336 674C333.791 674 332 675.791 332 678C332 680.209 333.791 682 336 682Z" fill="#263238" stroke="#263238" stroke-width="2"/>
+<path d="M336 678H501" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M613 648H501V708H613V648Z" fill="white" stroke="#263238" stroke-width="2"/>
+<text fill="#D55E00" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="22" font-weight="bold" letter-spacing="0em"><tspan x="24" y="49.3">&#x5165;&#x529b;&#x304c;&#x6d6e;&#x304f;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="24" y="84.1">SW OFF</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="98" y="120.7">VCC</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="302" y="234.1">GPIO&#x5165;&#x529b;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="24" y="328.1">VCC&#x306b;&#x3082;GND&#x306b;&#x3082;&#x3064;&#x306a;&#x304c;&#x3089;&#x306a;&#x3044;</tspan></text>
+<text fill="#D55E00" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="20" letter-spacing="0em"><tspan x="24" y="366">&#x5165;&#x529b;&#x306f;High / Low&#x304c;&#x4e0d;&#x5b9a;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="24" y="416.7">&#x5bfe;&#x7b56;&#xff1a;&#x5165;&#x529b;&#x70b9;&#x304b;&#x3089;GND&#x3078;&#x62b5;&#x6297;&#x3092;&#x8ffd;&#x52a0;</tspan></text>
+<text fill="#D55E00" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="22" font-weight="bold" letter-spacing="0em"><tspan x="448" y="49.3">&#x96fb;&#x6e90;&#x304c;&#x77ed;&#x7d61;&#x3059;&#x308b;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="448" y="84.1">SW ON</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="522" y="120.7">VCC</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="726" y="234.1">GPIO&#x5165;&#x529b;</tspan></text>
+<text fill="#D55E00" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="448" y="408.1">VCC &#x2192; SW &#x2192; GND&#x306b;&#x5927;&#x96fb;&#x6d41;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="448" y="439.7">&#x96fb;&#x6e90;&#x30fb;&#x914d;&#x7dda;&#x30fb;&#x63a5;&#x70b9;&#x306e;&#x62b5;&#x6297;&#x3060;&#x3051;&#x3067;&#x5236;&#x9650;</tspan></text>
+<text fill="#0072B2" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="22" font-weight="bold" letter-spacing="0em"><tspan x="236" y="498.3">&#x62b5;&#x6297;&#x3067;&#x96fb;&#x6d41;&#x3092;&#x5236;&#x9650;&#x3059;&#x308b;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="236" y="533.1">SW ON</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="310" y="569.7">VCC</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="370" y="631.1">10 k&#x3a9;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="514" y="683.1">GPIO&#x5165;&#x529b;</tspan></text>
+<text fill="#0072B2" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="20" letter-spacing="0em"><tspan x="236" y="858">3.3 V / 10 k&#x3a9; = 0.33 mA</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="236" y="890.1">SW OFF : High    SW ON : Low</tspan></text>
+</svg>

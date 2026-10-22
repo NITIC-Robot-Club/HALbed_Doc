@@ -1,0 +1,51 @@
+<svg width="872" height="458" viewBox="0 0 872 458" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M872 0H0V458H872V0Z" fill="white"/>
+<path d="M134 131V150" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M134 150V160" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M145 160H123V198H145V160Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M134 198V208" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M134 208V229" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M134 229V254" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M134 257C135.657 257 137 255.657 137 254C137 252.343 135.657 251 134 251C132.343 251 131 252.343 131 254C131 255.657 132.343 257 134 257Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M134 317C135.657 317 137 315.657 137 314C137 312.343 135.657 311 134 311C132.343 311 131 312.343 131 314C131 315.657 132.343 317 134 317Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M134 310L161 258" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M134 314V334" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M134 334V346" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M118 346H150" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M124 353H144" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M130 360H138" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M134 233C136.209 233 138 231.209 138 229C138 226.791 136.209 225 134 225C131.791 225 130 226.791 130 229C130 231.209 131.791 233 134 233Z" fill="#263238" stroke="#263238" stroke-width="2"/>
+<path d="M134 229H288" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M400 199H288V259H400V199Z" fill="#EDF6FA" stroke="#0072B2" stroke-width="2"/>
+<path d="M558 131V150" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M558 153C559.657 153 561 151.657 561 150C561 148.343 559.657 147 558 147C556.343 147 555 148.343 555 150C555 151.657 556.343 153 558 153Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M558 213C559.657 213 561 211.657 561 210C561 208.343 559.657 207 558 207C556.343 207 555 208.343 555 210C555 211.657 556.343 213 558 213Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M558 206L585 154" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M558 210V229" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M558 229V254" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M558 254V264" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M569 264H547V302H569V264Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M558 302V312" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M558 312V334" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M558 334V346" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M542 346H574" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M548 353H568" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M554 360H562" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M558 233C560.209 233 562 231.209 562 229C562 226.791 560.209 225 558 225C555.791 225 554 226.791 554 229C554 231.209 555.791 233 558 233Z" fill="#263238" stroke="#263238" stroke-width="2"/>
+<path d="M558 229H712" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M824 199H712V259H824V199Z" fill="#EDF6FA" stroke="#0072B2" stroke-width="2"/>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="23" font-weight="bold" letter-spacing="0em"><tspan x="24" y="50.7">&#x30d7;&#x30eb;&#x30a2;&#x30c3;&#x30d7;</tspan></text>
+<text fill="#0072B2" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="20" letter-spacing="0em"><tspan x="24" y="84">&#x958b;&#x653e;&#x6642;&#x306f;High</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="109" y="120.7">VCC</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="164" y="184.7">R</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="172" y="292.7">SW OFF</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="301" y="234.1">GPIO&#x5165;&#x529b;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="24" y="404.1">SW OFF : High    SW ON : Low</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="23" font-weight="bold" letter-spacing="0em"><tspan x="448" y="50.7">&#x30d7;&#x30eb;&#x30c0;&#x30a6;&#x30f3;</tspan></text>
+<text fill="#0072B2" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="20" letter-spacing="0em"><tspan x="448" y="84">&#x958b;&#x653e;&#x6642;&#x306f;Low</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="533" y="120.7">VCC</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="596" y="184.7">SW OFF</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="588" y="291.7">R</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="725" y="234.1">GPIO&#x5165;&#x529b;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="448" y="404.1">SW OFF : Low     SW ON : High</tspan></text>
+</svg>

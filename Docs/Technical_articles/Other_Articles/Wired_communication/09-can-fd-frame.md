@@ -16,7 +16,7 @@ CAN FDは「データを64 byteまで増やしたCAN」と説明されること�
 
 CAN FDフレームは、データが増えただけのCANフレームではありません。
 
-![CAN FDデータフレームの構造](./images/Wired_Communication/can-fd-frame-detail.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/can-fd-frame-detail-mobile.svg"><img src="./images/Wired_Communication/can-fd-frame-detail.svg" alt="CAN FDデータフレームの構造" style="width:100%;height:auto"></picture>
 
 ## フレーム前半はClassical CANに近い
 

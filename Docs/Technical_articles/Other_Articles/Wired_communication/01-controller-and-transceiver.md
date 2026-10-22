@@ -13,7 +13,7 @@ CAN通信を始めたばかりのころは、「CAN対応マイコンなのに�
 
 実は、CAN通信は役割が2つに分かれています。
 
-![CANコントローラとトランシーバの構成](./images/Wired_Communication/can-controller-vs-transceiver.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/can-controller-vs-transceiver-mobile.svg"><img src="./images/Wired_Communication/can-controller-vs-transceiver.svg" alt="CANコントローラとトランシーバの構成" style="width:100%;height:auto"></picture>
 
 ## CANコントローラ
 

@@ -37,7 +37,7 @@ CAN FDという名前だけでは、通信条件は決まりません。公称�
 
 `アプリケーション → CANコントローラ → CANトランシーバ → CAN_H / CAN_L`
 
-![CANコントローラとトランシーバ](./images/Wired_Communication/can-controller-vs-transceiver.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/can-controller-vs-transceiver-mobile.svg"><img src="./images/Wired_Communication/can-controller-vs-transceiver.svg" alt="CANコントローラとトランシーバ" style="width:100%;height:auto"></picture>
 
 確認項目は次のとおりです。
 

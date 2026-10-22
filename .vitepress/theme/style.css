@@ -561,6 +561,19 @@
   overflow-x: auto;
 }
 
+/* Keep technical figures legible in either page theme; picture selects the narrow layout. */
+.vp-doc .low-layer-figure {
+  display: block;
+  margin: 24px 0;
+  background: #fff;
+}
+
+.vp-doc .low-layer-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 :where(.vp-doc code) {
   word-break: break-word;
 }
