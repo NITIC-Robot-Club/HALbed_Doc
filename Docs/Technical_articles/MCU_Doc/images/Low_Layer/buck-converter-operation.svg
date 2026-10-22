@@ -1,0 +1,108 @@
+<svg width="872" height="534" viewBox="0 0 872 534" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M872 0H0V534H872V0Z" fill="white"/>
+<path d="M44 148H96" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M96 151C97.6569 151 99 149.657 99 148C99 146.343 97.6569 145 96 145C94.3431 145 93 146.343 93 148C93 149.657 94.3431 151 96 151Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M142 151C143.657 151 145 149.657 145 148C145 146.343 143.657 145 142 145C140.343 145 139 146.343 139 148C139 149.657 140.343 151 142 151Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M100 148H138" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M142 148H199" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M177 152C179.209 152 181 150.209 181 148C181 145.791 179.209 144 177 144C174.791 144 173 145.791 173 148C173 150.209 174.791 152 177 152Z" fill="#263238" stroke="#263238" stroke-width="2"/>
+<path d="M199 148C199 144.817 200.054 141.765 201.929 139.515C203.804 137.264 206.348 136 209 136C211.652 136 214.196 137.264 216.071 139.515C217.946 141.765 219 144.817 219 148" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M219 148C219 144.817 220.054 141.765 221.929 139.515C223.804 137.264 226.348 136 229 136C231.652 136 234.196 137.264 236.071 139.515C237.946 141.765 239 144.817 239 148" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M239 148C239 144.817 240.054 141.765 241.929 139.515C243.804 137.264 246.348 136 249 136C251.652 136 254.196 137.264 256.071 139.515C257.946 141.765 259 144.817 259 148" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M259 148C259 144.817 260.054 141.765 261.929 139.515C263.804 137.264 266.348 136 269 136C271.652 136 274.196 137.264 276.071 139.515C277.946 141.765 279 144.817 279 148" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M279 148H380" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M308 148V228" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M292 228H324" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M292 238H324" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M308 238V318" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M380 148V214" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M380 214V224" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M391 224H369V276H391V224Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M380 276V286" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M380 286V318" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M44 318H380" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M44 148V194" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M44 259C58.3594 259 70 247.359 70 233C70 218.641 58.3594 207 44 207C29.6406 207 18 218.641 18 233C18 247.359 29.6406 259 44 259Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M44 194V207" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M44 259V318" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M177 148V219" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M163 219H191" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M177 219L163 249H191L177 219Z" fill="white" stroke="#263238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M177 249V318" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M229 318V330" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M213 330H245" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M219 337H239" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M225 344H233" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M74 175H276" stroke="#0072B2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M276 175L266 170V180L276 175Z" fill="#0072B2" stroke="#0072B2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M404 196V294" stroke="#0072B2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M404 294L409 284H399L404 294Z" fill="#0072B2" stroke="#0072B2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M353 341H72" stroke="#0072B2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M72 341L82 346V336L72 341Z" fill="#0072B2" stroke="#0072B2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M468 148H520" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M520 151C521.657 151 523 149.657 523 148C523 146.343 521.657 145 520 145C518.343 145 517 146.343 517 148C517 149.657 518.343 151 520 151Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M566 151C567.657 151 569 149.657 569 148C569 146.343 567.657 145 566 145C564.343 145 563 146.343 563 148C563 149.657 564.343 151 566 151Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M524 148L562 124" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M566 148H623" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M601 152C603.209 152 605 150.209 605 148C605 145.791 603.209 144 601 144C598.791 144 597 145.791 597 148C597 150.209 598.791 152 601 152Z" fill="#263238" stroke="#263238" stroke-width="2"/>
+<path d="M623 148C623 144.817 624.054 141.765 625.929 139.515C627.804 137.264 630.348 136 633 136C635.652 136 638.196 137.264 640.071 139.515C641.946 141.765 643 144.817 643 148" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M643 148C643 144.817 644.054 141.765 645.929 139.515C647.804 137.264 650.348 136 653 136C655.652 136 658.196 137.264 660.071 139.515C661.946 141.765 663 144.817 663 148" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M663 148C663 144.817 664.054 141.765 665.929 139.515C667.804 137.264 670.348 136 673 136C675.652 136 678.196 137.264 680.071 139.515C681.946 141.765 683 144.817 683 148" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M683 148C683 144.817 684.054 141.765 685.929 139.515C687.804 137.264 690.348 136 693 136C695.652 136 698.196 137.264 700.071 139.515C701.946 141.765 703 144.817 703 148" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M703 148H804" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M732 148V228" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M716 228H748" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M716 238H748" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M732 238V318" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M804 148V214" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M804 214V224" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M815 224H793V276H815V224Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M804 276V286" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M804 286V318" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M468 318H804" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M468 148V194" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M468 259C482.359 259 494 247.359 494 233C494 218.641 482.359 207 468 207C453.641 207 442 218.641 442 233C442 247.359 453.641 259 468 259Z" fill="white" stroke="#263238" stroke-width="2"/>
+<path d="M468 194V207" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M468 259V318" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M601 148V219" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M587 219H615" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M601 219L587 249H615L601 219Z" fill="white" stroke="#263238" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M601 249V318" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M653 318V330" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M637 330H669" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M643 337H663" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M649 344H657" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M618 175H700" stroke="#D55E00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M700 175L690 170V180L700 175Z" fill="#D55E00" stroke="#D55E00" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M828 196V294" stroke="#D55E00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M828 294L833 284H823L828 294Z" fill="#D55E00" stroke="#D55E00" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M777 341H601" stroke="#D55E00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M601 341L611 346V336L601 341Z" fill="#D55E00" stroke="#D55E00" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M574 302V258" stroke="#D55E00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M574 258L569 268H579L574 258Z" fill="#D55E00" stroke="#D55E00" stroke-linecap="round" stroke-linejoin="round"/>
+<text fill="#0072B2" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="23" font-weight="bold" letter-spacing="0em"><tspan x="24" y="50.7">&#x30b9;&#x30a4;&#x30c3;&#x30c1;ON</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="24" y="82.7">&#x5165;&#x529b;&#x304b;&#x3089;&#x8ca0;&#x8377;&#x3078;&#x96fb;&#x529b;&#x3092;&#x9001;&#x308b;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="24" y="136.7">VIN</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="100" y="116.7">SW</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="229" y="116.7">L</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="327" y="128.7">VOUT</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="277" y="274.7">C</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="331" y="252.7">&#x8ca0;&#x8377;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="37" y="233.1">+</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="38" y="256.1">&#x2212;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="200" y="244.7">D</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="24" y="397.1">L&#x306e;&#x96fb;&#x6d41;&#x304c;&#x5897;&#x52a0;&#x3002;D&#x306f;&#x9006;&#x30d0;&#x30a4;&#x30a2;&#x30b9;</tspan></text>
+<text fill="#D55E00" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="23" font-weight="bold" letter-spacing="0em"><tspan x="448" y="50.7">&#x30b9;&#x30a4;&#x30c3;&#x30c1;OFF</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="448" y="82.7">L&#x306e;&#x96fb;&#x6d41;&#x304c;&#x30c0;&#x30a4;&#x30aa;&#x30fc;&#x30c9;&#x3092;&#x901a;&#x3063;&#x3066;&#x7d9a;&#x304f;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="448" y="136.7">VIN</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="524" y="116.7">SW</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="653" y="116.7">L</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="751" y="128.7">VOUT</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="701" y="274.7">C</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="755" y="252.7">&#x8ca0;&#x8377;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="461" y="233.1">+</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="462" y="256.1">&#x2212;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="624" y="244.7">D</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="19" letter-spacing="0em"><tspan x="448" y="397.1">D&#x304c;&#x5c0e;&#x901a;&#x3057;&#x3001;GND&#x5074;&#x304b;&#x3089;L&#x3078;&#x9084;&#x6d41;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="24" y="486.7">&#x7406;&#x60f3;&#x90e8;&#x54c1;&#x30fb;&#x5b9a;&#x5e38;&#x72b6;&#x614b;&#x30fb;&#x9023;&#x7d9a;&#x5c0e;&#x901a;&#x30e2;&#x30fc;&#x30c9;&#xff1a;VOUT = VIN &#xd7; D&#10;</tspan><tspan x="24" y="513.7">D&#x306f;&#x30b9;&#x30a4;&#x30c3;&#x30c1;ON&#x6642;&#x9593;&#x306e;&#x5272;&#x5408;&#x3002;&#x77e2;&#x5370;&#x306f;&#x4e3b;&#x306a;&#x8ca0;&#x8377;&#x96fb;&#x6d41;&#x306e;&#x5411;&#x304d;&#x3002;</tspan></text>
+</svg>

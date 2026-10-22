@@ -1,0 +1,30 @@
+<svg width="848" height="474" viewBox="0 0 848 474" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M848 0H0V474H848V0Z" fill="white"/>
+<path d="M174 110H24V174H174V110Z" fill="white" stroke="#0072B2" stroke-width="2"/>
+<path d="M182 142H222" stroke="#0072B2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M222 142L212 137V147L222 142Z" fill="#0072B2" stroke="#0072B2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M426 110H232V174H426V110Z" fill="#EDF6FA" stroke="#0072B2" stroke-width="2"/>
+<path d="M434 142H500" stroke="#0072B2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M500 142L490 137V147L500 142Z" fill="#0072B2" stroke="#0072B2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M174 272H24V336H174V272Z" fill="white" stroke="#D55E00" stroke-width="2"/>
+<path d="M182 304H500" stroke="#D55E00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M500 304L490 299V309L500 304Z" fill="#D55E00" stroke="#D55E00" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M500 142V304" stroke="#263238" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M500 223H536" stroke="#0072B2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M536 223L526 218V228L536 223Z" fill="#0072B2" stroke="#0072B2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M806 180H546V266H806V180Z" fill="#EDF6FA" stroke="#263238" stroke-width="2"/>
+<path d="M676 275V308" stroke="#0072B2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M676 308L681 298H671L676 308Z" fill="#0072B2" stroke="#0072B2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M806 318H546V382H806V318Z" fill="white" stroke="#263238" stroke-width="2"/>
+<text fill="#0072B2" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="22" font-weight="bold" letter-spacing="0em"><tspan x="24" y="53.3">HAL&#x7d4c;&#x7531;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="24" y="88.7">HAL_GPIO_WritePin()</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="20" letter-spacing="0em"><tspan x="60" y="149">&#x30a2;&#x30d7;&#x30ea;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="20" letter-spacing="0em"><tspan x="254" y="149">HAL&#x5185;&#x90e8;&#x306e;&#x51e6;&#x7406;</tspan></text>
+<text fill="#D55E00" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="22" font-weight="bold" letter-spacing="0em"><tspan x="24" y="215.3">&#x76f4;&#x63a5;&#x64cd;&#x4f5c;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="24" y="250.7">GPIO&#x306e;&#x30ec;&#x30b8;&#x30b9;&#x30bf;&#x3078;&#x66f8;&#x304d;&#x8fbc;&#x3080;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="20" letter-spacing="0em"><tspan x="60" y="311">&#x30a2;&#x30d7;&#x30ea;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="22" font-weight="bold" letter-spacing="0em"><tspan x="565" y="214.3">&#x5171;&#x901a;&#x306e;&#x30ec;&#x30b8;&#x30b9;&#x30bf;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="18" letter-spacing="0em"><tspan x="565" y="250.7">GPIO&#x51fa;&#x529b;&#x5024;&#x3092;&#x66f4;&#x65b0;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="20" letter-spacing="0em"><tspan x="566" y="356">&#x5468;&#x8fba;&#x56de;&#x8def; &#x2192; LED&#x70b9;&#x706f;</tspan></text>
+<text fill="#263238" style="white-space: pre" xml:space="preserve" font-family="Noto Sans JP" font-size="20" letter-spacing="0em"><tspan x="24" y="448">&#x9055;&#x3044;&#x306f;&#x3001;&#x30ec;&#x30b8;&#x30b9;&#x30bf;&#x3092;&#x66f4;&#x65b0;&#x3059;&#x308b;&#x51e6;&#x7406;&#x3092;HAL&#x306b;&#x4efb;&#x305b;&#x308b;&#x304b;&#x3069;&#x3046;&#x304b;&#x3002;</tspan></text>
+</svg>

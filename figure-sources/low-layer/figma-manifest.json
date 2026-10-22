@@ -1,0 +1,198 @@
+{
+  "fileKey": "ZzagJOJ7DUCduUufzJPtj7",
+  "fileUrl": "https://www.figma.com/design/ZzagJOJ7DUCduUufzJPtj7",
+  "pageId": "0:1",
+  "created": "2026-10-20",
+  "lastSyncAttempt": {
+    "date": "2026-10-22",
+    "status": "success",
+    "account": "student",
+    "complete": true,
+    "conflicts": [],
+    "mutatedNodeIds": [
+      "3:178",
+      "3:440"
+    ],
+    "verifiedFrames": {
+      "3:63": {
+        "labelNodeId": "3:178",
+        "position": {
+          "x": 94,
+          "y": 740
+        },
+        "previousY": 712
+      },
+      "3:325": {
+        "labelNodeId": "3:440",
+        "position": {
+          "x": 94,
+          "y": 740
+        },
+        "previousY": 712
+      }
+    },
+    "screenshotQA": {
+      "status": "partial",
+      "verifiedCount": 14,
+      "totalCount": 16,
+      "unavailableFrameIds": [
+        "2:260",
+        "2:312"
+      ],
+      "reason": "Starter plan MCP call limit; no further screenshot calls made"
+    },
+    "repairScript": "sync-figma-annotations.js"
+  },
+  "figures": [
+    {
+      "name": "pull-up-vs-pull-down",
+      "nodeId": "2:2",
+      "width": 872,
+      "height": 458,
+      "svgOrigin": "figma-export",
+      "pngOrigin": "local-rasterization-of-final-svg"
+    },
+    {
+      "name": "wrong-pull-circuits",
+      "nodeId": "2:54",
+      "width": 872,
+      "height": 922,
+      "svgOrigin": "figma-export",
+      "pngOrigin": "local-rasterization-of-final-svg"
+    },
+    {
+      "name": "buck-converter-operation",
+      "nodeId": "2:122",
+      "width": 872,
+      "height": 534,
+      "svgOrigin": "figma-export",
+      "pngOrigin": "local-rasterization-of-final-svg"
+    },
+    {
+      "name": "hal-register-access-flow",
+      "nodeId": "2:231",
+      "width": 848,
+      "height": 474,
+      "svgOrigin": "figma-export",
+      "pngOrigin": "local-rasterization-of-final-svg"
+    },
+    {
+      "name": "motor-command-profiles",
+      "nodeId": "3:2",
+      "width": 720,
+      "height": 534,
+      "svgOrigin": "python-source-matching-figma",
+      "pngOrigin": "local-rasterization-of-final-svg"
+    },
+    {
+      "name": "s-curve-functions",
+      "nodeId": "3:33",
+      "width": 720,
+      "height": 635,
+      "svgOrigin": "figma-export",
+      "pngOrigin": "local-rasterization-of-final-svg"
+    },
+    {
+      "name": "trapezoid-vs-scurve-motion",
+      "nodeId": "3:63",
+      "width": 872,
+      "height": 853,
+      "svgOrigin": "python-source-matching-figma",
+      "pngOrigin": "local-rasterization-of-final-svg",
+      "syncStatus": "synced",
+      "syncedDate": "2026-10-22",
+      "syncEvidence": {
+        "labelNodeId": "3:178",
+        "position": {
+          "x": 94,
+          "y": 740
+        },
+        "previousY": 712,
+        "screenshotVerified": true
+      }
+    },
+    {
+      "name": "pull-resistor-selection",
+      "nodeId": "3:211",
+      "width": 872,
+      "height": 653,
+      "svgOrigin": "python-source-matching-figma",
+      "pngOrigin": "local-rasterization-of-final-svg"
+    },
+    {
+      "name": "pull-up-vs-pull-down-mobile",
+      "nodeId": "2:260",
+      "width": 448,
+      "height": 892,
+      "svgOrigin": "figma-export",
+      "pngOrigin": null
+    },
+    {
+      "name": "wrong-pull-circuits-mobile",
+      "nodeId": "2:312",
+      "width": 448,
+      "height": 1371,
+      "svgOrigin": "python-source-matching-figma",
+      "pngOrigin": null
+    },
+    {
+      "name": "buck-converter-operation-mobile",
+      "nodeId": "2:380",
+      "width": 448,
+      "height": 1024,
+      "svgOrigin": "python-source-matching-figma",
+      "pngOrigin": null
+    },
+    {
+      "name": "hal-register-access-flow-mobile",
+      "nodeId": "2:489",
+      "width": 448,
+      "height": 680,
+      "svgOrigin": "python-source-matching-figma",
+      "pngOrigin": null
+    },
+    {
+      "name": "motor-command-profiles-mobile",
+      "nodeId": "3:264",
+      "width": 448,
+      "height": 534,
+      "svgOrigin": "python-source-matching-figma",
+      "pngOrigin": null
+    },
+    {
+      "name": "s-curve-functions-mobile",
+      "nodeId": "3:295",
+      "width": 448,
+      "height": 635,
+      "svgOrigin": "python-source-matching-figma",
+      "pngOrigin": null
+    },
+    {
+      "name": "trapezoid-vs-scurve-motion-mobile",
+      "nodeId": "3:325",
+      "width": 448,
+      "height": 1682,
+      "svgOrigin": "python-source-matching-figma",
+      "pngOrigin": null,
+      "syncStatus": "synced",
+      "syncedDate": "2026-10-22",
+      "syncEvidence": {
+        "labelNodeId": "3:440",
+        "position": {
+          "x": 94,
+          "y": 740
+        },
+        "previousY": 712,
+        "screenshotVerified": true
+      }
+    },
+    {
+      "name": "pull-resistor-selection-mobile",
+      "nodeId": "3:473",
+      "width": 448,
+      "height": 1142,
+      "svgOrigin": "python-source-matching-figma",
+      "pngOrigin": null
+    }
+  ]
+}

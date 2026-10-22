@@ -15,7 +15,7 @@ tags:
 
 ところがCANコントローラは、その並びを開始、ID、データ、検査、応答、終了という領域に分けて処理しています。このまとまりが**CANフレーム**です。
 
-![Classical CANデータフレーム](./images/Wired_Communication/classical-can-frame.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/classical-can-frame-mobile.svg"><img src="./images/Wired_Communication/classical-can-frame.svg" alt="Classical CANデータフレーム" style="width:100%;height:auto"></picture>
 
 ## データフレームの主な領域
 
@@ -80,7 +80,7 @@ CANはNRZ方式を使うため、同じ値が長く続くと信号の変化が�
 
 そこで、同じ論理値が5 bit連続すると、送信側は反対値の**スタッフビット**を1 bit挿入します。受信側は同じ規則でスタッフビットを取り除きます。
 
-![CANのビットスタッフィング](./images/Wired_Communication/can-bit-stuffing.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/can-bit-stuffing-mobile.svg"><img src="./images/Wired_Communication/can-bit-stuffing.svg" alt="CANのビットスタッフィング" style="width:100%;height:auto"></picture>
 
 スタッフビットはデータそのものではありません。しかしバス上では実際に送信されるため、フレーム時間とバス負荷には影響します。
 

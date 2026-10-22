@@ -17,7 +17,7 @@ CAN FDは、CANの調停やエラー処理の考え方を残しながら、デ�
 
 ## Classical CANとCAN FD
 
-![Classical CANとCAN FDの比較](./images/Wired_Communication/can-vs-canfd-frame.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/can-vs-canfd-frame-mobile.svg"><img src="./images/Wired_Communication/can-vs-canfd-frame.svg" alt="Classical CANとCAN FDの比較" style="width:100%;height:auto"></picture>
 
 | 項目 | Classical CAN | CAN FD |
 |---|---|---|

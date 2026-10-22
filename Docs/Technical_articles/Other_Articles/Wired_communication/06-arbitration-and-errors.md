@@ -25,7 +25,7 @@ CAN IDは最上位ビットから順番に送信されます。0はドミナン�
 
 数値の小さいIDは、上位側で0が現れやすいため優先されます。
 
-![CAN IDによる調停](./images/Wired_Communication/can-arbitration-retransmission.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/can-arbitration-retransmission-mobile.svg"><img src="./images/Wired_Communication/can-arbitration-retransmission.svg" alt="CAN IDによる調停" style="width:100%;height:auto"></picture>
 
 調停に負けたノードはエラーを発生させません。受信側へ切り替わり、勝ったフレームを見届けます。その後、バスが空けば再び送信を試みます。
 
@@ -71,7 +71,7 @@ CANコントローラは、通信中に複数の観点でフレームを監視�
 
 CANコントローラは送信エラーカウンターと受信エラーカウンターを持ち、エラーの蓄積に応じて状態を変えます。
 
-![CANのエラー状態遷移](./images/Wired_Communication/can-error-state-flow.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/can-error-state-flow-mobile.svg"><img src="./images/Wired_Communication/can-error-state-flow.svg" alt="CANのエラー状態遷移" style="width:100%;height:auto"></picture>
 
 - **Error Active**：通常状態。アクティブエラーフラグを送れる
 - **Error Passive**：エラーが多い状態。バスへの影響を抑える

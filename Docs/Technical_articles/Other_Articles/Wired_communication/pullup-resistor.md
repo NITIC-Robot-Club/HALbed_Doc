@@ -26,7 +26,7 @@ I2CのSCL・SDAは**オープンドレイン（Open Drain）**という出力方
 
 つまり、誰もHighを出力しないため、プルアップ抵抗で電源へ引き上げる必要があります。
 
-![I2Cオープンドレインとプルアップ抵抗](./images/Wired_Communication/i2c-open-drain-pullup.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/i2c-open-drain-pullup-mobile.svg"><img src="./images/Wired_Communication/i2c-open-drain-pullup.svg" alt="I2Cオープンドレインとプルアップ抵抗" style="width:100%;height:auto"></picture>
 
 マイコンがLowを出力すると0Vになり、出力を開放すると抵抗によってVCCまで引き上げられます。
 

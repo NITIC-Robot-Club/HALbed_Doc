@@ -16,7 +16,7 @@ UARTだけで構成しようとすると、送信相手ごとに配線やポー�
 
 CANでは考え方が違います。CAN_HとCAN_Lという2本の通信線を複数のノードで共有し、メッセージをバス全体へ流します。
 
-![CANバスの接続](./images/Wired_Communication/can-bus-connection.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/can-bus-connection-mobile.svg"><img src="./images/Wired_Communication/can-bus-connection.svg" alt="CANバスの接続" style="width:100%;height:auto"></picture>
 
 ここでいう**ノード**は、CANバスへ接続されたECU、マイコン基板、センサー、アクチュエーターなどです。
 
@@ -38,7 +38,7 @@ CANのIDは、送信先の機器番号ではありません。
 
 一つのメッセージを複数のノードが利用できるため、送信相手ごとに配線を増やす必要がありません。これがCANの配線を単純にできる理由です。
 
-![CANメッセージの配信](./images/Wired_Communication/can-message-broadcast.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/can-message-broadcast-mobile.svg"><img src="./images/Wired_Communication/can-message-broadcast.svg" alt="CANメッセージの配信" style="width:100%;height:auto"></picture>
 
 ## すべてのノードが送信を開始できる
 
@@ -61,7 +61,7 @@ CAN通信は、主に次の2段に分かれています。
 - **CANコントローラ**：ID、フレーム、CRC、調停、ACK、エラー処理を扱う
 - **CANトランシーバ**：マイコン側のTX/RX信号をCAN_H/CAN_Lの電気信号へ変換する
 
-![CANコントローラとトランシーバ](./images/Wired_Communication/can-controller-vs-transceiver.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/can-controller-vs-transceiver-mobile.svg"><img src="./images/Wired_Communication/can-controller-vs-transceiver.svg" alt="CANコントローラとトランシーバ" style="width:100%;height:auto"></picture>
 
 CANコントローラは通信規則を担当し、トランシーバは実際の配線を駆動します。STM32などでCAN周辺回路が内蔵されていても、通常は外付けのCANトランシーバが必要です。
 

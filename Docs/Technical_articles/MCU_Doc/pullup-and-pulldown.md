@@ -16,7 +16,10 @@ tags:
 
 プルアップ抵抗とプルダウン抵抗の第一の役割は、入力に何も接続されていない時間の論理値を決めることです。
 
-![プルアップとプルダウン](./images/Low_Layer/pull-up-vs-pull-down.png)
+<picture class="low-layer-figure">
+  <source media="(max-width: 639px)" srcset="./images/Low_Layer/pull-up-vs-pull-down-mobile.svg" width="448" height="892">
+  <img src="./images/Low_Layer/pull-up-vs-pull-down.svg" alt="プルアップは抵抗で入力をVCCへ、プルダウンはGNDへ接続します。スイッチ開放時はそれぞれHigh、Lowに固定され、押すと反対の論理値になります。" width="872" height="458" loading="lazy" decoding="async">
+</picture>
 
 ## 入力ピンは「何もつながっていないからLow」ではない
 
@@ -37,7 +40,10 @@ STMicroelectronicsのGPIO資料でも、信号のないフローティング入�
 
 プル抵抗が必要な理由は、間違った回路と比べると分かりやすくなります。
 
-![フローティングと短絡が起きる間違った回路](./images/Low_Layer/wrong-pull-circuits.png)
+<picture class="low-layer-figure">
+  <source media="(max-width: 639px)" srcset="./images/Low_Layer/wrong-pull-circuits-mobile.svg" width="448" height="1371">
+  <img src="./images/Low_Layer/wrong-pull-circuits.svg" alt="抵抗がない回路では、スイッチ開放時に入力が浮く場合と、閉じたときにVCCとGNDが短絡する場合があります。プルアップ抵抗10キロオームを入れると、3.3ボルトで閉じたときの電流は約0.33ミリアンペアです。" width="872" height="922" loading="lazy" decoding="async">
+</picture>
 
 ### スイッチOFFで入力が浮く
 
@@ -124,7 +130,12 @@ VCCと入力点の間にプルアップ抵抗を入れれば、スイッチON時
 
 抵抗が大きい場合は消費電流を減らせます。しかし漏れ電流による電圧変化が大きくなり、長い配線や容量の大きい入力では立上り・立下りも遅くなります。
 
-![プル抵抗の選び方](./images/Low_Layer/pull-resistor-selection.png)
+<picture class="low-layer-figure">
+  <source media="(max-width: 639px)" srcset="./images/Low_Layer/pull-resistor-selection-mobile.svg" width="448" height="1142">
+  <img src="./images/Low_Layer/pull-resistor-selection.svg" alt="抵抗を小さくすると駆動中の電流が増え、大きくするとRC時定数が増えます。3.3ボルト、入力容量100ピコファラドを仮定した例と、許容電流・漏れ電流から求める抵抗値の上下限。" width="872" height="653" loading="lazy" decoding="async">
+</picture>
+
+図の`Rup`はプルアップ抵抗、`Rdown`はプルダウン抵抗です。`VIH,min`はHighと判定できる最小入力電圧、`VIL,max`はLowと判定できる最大入力電圧を表します。どちらも使用するICのデータシートで確認します。
 
 ### 漏れ電流から上限を考える
 

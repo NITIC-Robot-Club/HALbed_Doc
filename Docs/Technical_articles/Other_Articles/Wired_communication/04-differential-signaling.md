@@ -13,7 +13,7 @@ CANの論理値は、1本の線の電圧だけでは決まりません。
 
 CAN_HとCAN_Lの**電圧差**を使って判定します。外来ノイズが両方の線へほぼ同じように加わっても、2本の差は変化しにくいためです。
 
-![CANの差動信号](./images/Wired_Communication/can-differential-signal.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/can-differential-signal-mobile.svg"><img src="./images/Wired_Communication/can-differential-signal.svg" alt="CANの差動信号" style="width:100%;height:auto"></picture>
 
 ## ドミナントとレセシブ
 
@@ -46,7 +46,7 @@ CANでは論理値を、High／Lowではなく次の名前で表します。
 
 の差は大きく変わりません。
 
-![差動信号と一瞬のノイズ](./images/Wired_Communication/differential-noise-immunity.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/differential-noise-immunity-mobile.svg"><img src="./images/Wired_Communication/differential-noise-immunity.svg" alt="差動信号と一瞬のノイズ" style="width:100%;height:auto"></picture>
 
 この効果を得るには、2本の線が似た経路を通ることが重要です。そのためCAN_HとCAN_Lには、一般にツイストペア線を使用します。
 
@@ -71,7 +71,7 @@ High-speed CANでは、一本の幹線の両端に終端抵抗を置き、各ノ
 
 一般的なHigh-speed CANでは、バスの物理的な両端へ120 Ωを1本ずつ接続します。
 
-![CAN終端抵抗の役割](./images/Wired_Communication/can-termination-reflection-check.png)
+<picture><source media="(max-width: 600px)" srcset="./images/Wired_Communication/can-termination-reflection-check-mobile.svg"><img src="./images/Wired_Communication/can-termination-reflection-check.svg" alt="CAN終端抵抗の役割" style="width:100%;height:auto"></picture>
 
 電源を切った状態でCAN_HとCAN_L間を測ると、120 Ωが2本並列になるため、正常な構成では約60 Ωになります。
 

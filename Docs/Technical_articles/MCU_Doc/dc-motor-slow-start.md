@@ -27,7 +27,10 @@ DCモーターへ停止中から大きなPWMを与えると、モーターが急
 
 これにより、起動時の電流や機構への衝撃を小さくできる可能性があります。ただし、指令値を滑らかにしても、実際の速度が同じように変化するとは限りません。負荷、電源電圧、静止摩擦によってモーターの動きは変わります。
 
-![モーター指令値の変化形状](./images/Low_Layer/motor-command-profiles.png)
+<picture class="low-layer-figure">
+  <source media="(max-width: 639px)" srcset="./images/Low_Layer/motor-command-profiles-mobile.svg" width="448" height="534">
+  <img src="./images/Low_Layer/motor-command-profiles.svg" alt="同じ時間と目標値で比較したステップ、直線ランプ、S字ランプの指令値。実速度の応答を示す図ではありません。" width="720" height="534" loading="lazy" decoding="async">
+</picture>
 
 ## まず使うレートリミッタ
 
@@ -92,7 +95,10 @@ motor_output = target_output;
 
 台形加減速では、速度を直線的に変化させます。速度そのものは連続ですが、加速を始める瞬間には、加速度が0から一定値へ急に変化します。
 
-![台形加減速とS字加減速の比較](./images/Low_Layer/trapezoid-vs-scurve-motion.png)
+<picture class="low-layer-figure">
+  <source media="(max-width: 639px)" srcset="./images/Low_Layer/trapezoid-vs-scurve-motion-mobile.svg" width="448" height="1682">
+  <img src="./images/Low_Layer/trapezoid-vs-scurve-motion.svg" alt="台形速度とcos補間によるS字速度の、速度・加速度・ジャークの比較。台形速度の加速度切替点は理想インパルスで示し、矢印の高さは量の比較に使いません。" width="872" height="853" loading="lazy" decoding="async">
+</picture>
 
 加速度の時間変化率を**ジャーク**と呼びます。
 
@@ -106,7 +112,10 @@ motor_output = target_output;
 
 加速度を急に切り替えず、徐々に増減させる方法が**S字加減速**です。速度のグラフは、始めと終わりが丸くなったS字に近い形になります。
 
-![S字を作る代表的な関数](./images/Low_Layer/s-curve-functions.png)
+<picture class="low-layer-figure">
+  <source media="(max-width: 639px)" srcset="./images/Low_Layer/s-curve-functions-mobile.svg" width="448" height="635">
+  <img src="./images/Low_Layer/s-curve-functions.svg" alt="同じ進行度で比較したロジスティック関数、cos補間、Smoothstep。ロジスティック関数は有限区間の端点で正確な0と1になりません。" width="720" height="635" loading="lazy" decoding="async">
+</picture>
 
 ```text
 台形加減速：速度は直線的、加速度は急に切り替わる
