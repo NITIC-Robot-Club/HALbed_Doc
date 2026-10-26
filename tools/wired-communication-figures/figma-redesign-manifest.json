@@ -1,0 +1,530 @@
+{
+  "fileKey": "GMuPLPoa8dWTF9vdT6qsEs",
+  "url": "https://www.figma.com/design/GMuPLPoa8dWTF9vdT6qsEs/",
+  "verifiedDate": "2026-10-22",
+  "status": "synced",
+  "scope": "Figma only; article images and references unchanged in this revision",
+  "sources": [
+    "redesign.py",
+    "redesign_can.py",
+    "redesign_serial.py",
+    "redesign_common.py",
+    "figma-apply-scenes.js"
+  ],
+  "preservedFrameIds": true,
+  "editable": {
+    "geometry": "SVG vectors",
+    "labels": "Native Noto Sans JP Regular/Bold"
+  },
+  "validation": {
+    "count": 38,
+    "labelCount": 540,
+    "frames": [
+      {
+        "id": "2:61",
+        "name": "can-arbitration-retransmission",
+        "width": 840,
+        "height": 430,
+        "labels": 51,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:141",
+        "name": "can-bit-stuffing",
+        "width": 840,
+        "height": 350,
+        "labels": 14,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:204",
+        "name": "can-bus-connection",
+        "width": 840,
+        "height": 410,
+        "labels": 10,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:241",
+        "name": "can-connection-low-layer",
+        "width": 840,
+        "height": 410,
+        "labels": 10,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:278",
+        "name": "can-connection",
+        "width": 840,
+        "height": 410,
+        "labels": 10,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:331",
+        "name": "can-controller-vs-transceiver",
+        "width": 840,
+        "height": 380,
+        "labels": 13,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:365",
+        "name": "can-differential-signal",
+        "width": 840,
+        "height": 530,
+        "labels": 13,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:396",
+        "name": "can-error-state-flow",
+        "width": 840,
+        "height": 650,
+        "labels": 17,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:436",
+        "name": "can-fd-frame-detail",
+        "width": 840,
+        "height": 345,
+        "labels": 10,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:485",
+        "name": "can-message-broadcast",
+        "width": 840,
+        "height": 410,
+        "labels": 9,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:531",
+        "name": "can-termination-reflection-check",
+        "width": 840,
+        "height": 470,
+        "labels": 6,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:557",
+        "name": "can-vs-canfd-frame",
+        "width": 840,
+        "height": 400,
+        "labels": 8,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:583",
+        "name": "classical-can-frame",
+        "width": 840,
+        "height": 345,
+        "labels": 10,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:612",
+        "name": "differential-noise-immunity",
+        "width": 840,
+        "height": 645,
+        "labels": 15,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:622",
+        "name": "i2c-clock-data-signal",
+        "width": 840,
+        "height": 440,
+        "labels": 17,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:653",
+        "name": "i2c-open-drain-pullup",
+        "width": 840,
+        "height": 440,
+        "labels": 9,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:669",
+        "name": "i2c-pullup-resistor-tradeoff",
+        "width": 840,
+        "height": 470,
+        "labels": 14,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:680",
+        "name": "i2c-shared-bus",
+        "width": 840,
+        "height": 400,
+        "labels": 10,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:699",
+        "name": "single-ended-vs-differential",
+        "width": 840,
+        "height": 500,
+        "labels": 11,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:715",
+        "name": "spi-chip-select-wiring",
+        "width": 840,
+        "height": 450,
+        "labels": 12,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:750",
+        "name": "spi-daisy-chain-wiring",
+        "width": 840,
+        "height": 470,
+        "labels": 13,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:776",
+        "name": "uart_connection",
+        "width": 840,
+        "height": 400,
+        "labels": 7,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:792",
+        "name": "uart-connection",
+        "width": 840,
+        "height": 400,
+        "labels": 7,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:808",
+        "name": "uart-frame-8n1",
+        "width": 840,
+        "height": 420,
+        "labels": 16,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:834",
+        "name": "uart-waveform",
+        "width": 840,
+        "height": 430,
+        "labels": 25,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:7",
+        "name": "Mobile · can-arbitration-retransmission",
+        "width": 400,
+        "height": 430,
+        "labels": 51,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:116",
+        "name": "Mobile · can-bit-stuffing",
+        "width": 400,
+        "height": 350,
+        "labels": 14,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:168",
+        "name": "Mobile · can-bus-connection",
+        "width": 400,
+        "height": 445,
+        "labels": 10,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:315",
+        "name": "Mobile · can-controller-vs-transceiver",
+        "width": 400,
+        "height": 650,
+        "labels": 10,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:354",
+        "name": "Mobile · can-differential-signal",
+        "width": 400,
+        "height": 530,
+        "labels": 13,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:374",
+        "name": "Mobile · can-error-state-flow",
+        "width": 400,
+        "height": 715,
+        "labels": 13,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:419",
+        "name": "Mobile · can-fd-frame-detail",
+        "width": 400,
+        "height": 670,
+        "labels": 24,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:454",
+        "name": "Mobile · can-message-broadcast",
+        "width": 400,
+        "height": 445,
+        "labels": 9,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:516",
+        "name": "Mobile · can-termination-reflection-check",
+        "width": 400,
+        "height": 470,
+        "labels": 6,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:546",
+        "name": "Mobile · can-vs-canfd-frame",
+        "width": 400,
+        "height": 400,
+        "labels": 8,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:566",
+        "name": "Mobile · classical-can-frame",
+        "width": 400,
+        "height": 670,
+        "labels": 23,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:601",
+        "name": "Mobile · differential-noise-immunity",
+        "width": 400,
+        "height": 645,
+        "labels": 15,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      },
+      {
+        "id": "2:636",
+        "name": "Mobile · i2c-open-drain-pullup",
+        "width": 400,
+        "height": 510,
+        "labels": 7,
+        "match": true,
+        "missingFonts": 0,
+        "outside": []
+      }
+    ],
+    "overlap": [],
+    "outsideSection": [],
+    "pass": true
+  },
+  "figmaScreenshotReviewed": [
+    "2:331",
+    "2:612",
+    "2:7",
+    "2:315",
+    "2:419",
+    "2:715",
+    "2:750",
+    "2:622",
+    "2:669",
+    "2:834",
+    "2:636",
+    "2:168",
+    "2:374"
+  ],
+  "visualCoverage": "38 local SVG previews; 13 representative Figma frames, with final screenshots after relevant visual fixes",
+  "sourceOutput": ".vitepress/cache/wired-redesign/scenes.json",
+  "additionalTextNodes": [
+    "11:2",
+    "11:3",
+    "11:4",
+    "11:5",
+    "11:6",
+    "11:7"
+  ],
+  "execution": [
+    {
+      "mutatedNodeIds": [
+        "2:61",
+        "2:141",
+        "2:204",
+        "2:241",
+        "2:278",
+        "2:331"
+      ],
+      "createdCount": 213,
+      "removedCount": 210
+    },
+    {
+      "mutatedNodeIds": [
+        "2:365",
+        "2:396",
+        "2:436",
+        "2:485",
+        "2:531",
+        "2:557",
+        "2:583"
+      ],
+      "createdCount": 167,
+      "removedCount": 116
+    },
+    {
+      "mutatedNodeIds": [
+        "2:612"
+      ],
+      "createdCount": 25,
+      "removedCount": 9
+    },
+    {
+      "mutatedNodeIds": [
+        "2:7",
+        "2:116",
+        "2:168",
+        "2:315",
+        "2:354",
+        "2:374",
+        "2:419"
+      ],
+      "createdCount": 211,
+      "removedCount": 174
+    },
+    {
+      "mutatedNodeIds": [
+        "2:454",
+        "2:516",
+        "2:546",
+        "2:566",
+        "2:601"
+      ],
+      "createdCount": 134,
+      "removedCount": 80
+    },
+    {
+      "mutatedNodeIds": [
+        "2:622",
+        "2:653",
+        "2:669",
+        "2:680",
+        "2:699",
+        "2:715",
+        "2:750",
+        "2:776",
+        "2:792",
+        "2:808"
+      ],
+      "createdCount": 348,
+      "removedCount": 185
+    },
+    {
+      "mutatedNodeIds": [
+        "2:834",
+        "2:636"
+      ],
+      "createdCount": 61,
+      "removedCount": 43
+    },
+    {
+      "mutatedNodeIds": [
+        "2:622",
+        "2:669"
+      ],
+      "createdCount": 56,
+      "removedCount": 55
+    },
+    {
+      "mutatedNodeIds": [
+        "2:636"
+      ],
+      "createdCount": 22,
+      "removedCount": 22
+    }
+  ]
+}

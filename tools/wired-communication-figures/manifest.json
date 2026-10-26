@@ -1,0 +1,94 @@
+{
+  "can-controller-vs-transceiver": {
+    "title": "CANコントローラとCANトランシーバ",
+    "description": "コントローラがフレーム処理、トランシーバがCANH/CANLの電気信号を扱う"
+  },
+  "can-bus-connection": {
+    "title": "CANバス接続と終端抵抗",
+    "description": "幹線の両端に120Ωを置き、各ノードを短い分岐で接続する"
+  },
+  "can-message-broadcast": {
+    "title": "CANメッセージのブロードキャスト",
+    "description": "送信フレームはバス上の全ノードへ届き、受信側がIDなどで採否を判断する"
+  },
+  "can-differential-signal": {
+    "title": "CANの差動信号",
+    "description": "CANHとCANLの差電圧でドミナントとレセシブを表す"
+  },
+  "differential-noise-immunity": {
+    "title": "差動信号と同相ノイズ",
+    "description": "両線に同じ向きで加わるノイズは差をとる受信器で抑制される"
+  },
+  "single-ended-vs-differential": {
+    "title": "単端信号と差動信号",
+    "description": "信号線と基準電位で読む方式と、2線間の差で読む方式の違い"
+  },
+  "can-termination-reflection-check": {
+    "title": "CAN終端と反射",
+    "description": "終端抵抗はケーブルの特性インピーダンスに合わせ、幹線の両端に置く"
+  },
+  "classical-can-frame": {
+    "title": "Classical CANデータフレーム",
+    "description": "CANデータフレームの基本フィールド"
+  },
+  "can-bit-stuffing": {
+    "title": "CANビットスタッフィング",
+    "description": "同じ値が5 bit続いた後、反対値のスタッフビットを挿入する"
+  },
+  "can-arbitration-retransmission": {
+    "title": "CAN IDによる調停",
+    "description": "複数送信のビット単位比較で、レセシブを送ってドミナントを読むノードは送信を中止する"
+  },
+  "can-error-state-flow": {
+    "title": "CANノードのエラー状態",
+    "description": "TEC/RECに応じてError Active、Error Passive、Bus Offへ遷移する"
+  },
+  "can-vs-canfd-frame": {
+    "title": "Classical CANとCAN FD",
+    "description": "Classical CANは最大8 byte、CAN FDは最大64 byteのデータを扱える"
+  },
+  "can-fd-frame-detail": {
+    "title": "CAN FDデータフレーム",
+    "description": "CAN FDデータフレームを制御・データ・CRC領域で分けて見る"
+  },
+  "i2c-open-drain-pullup": {
+    "title": "I2Cオープンドレインとプルアップ",
+    "description": "出力解放で抵抗がHIGHにし、いずれかの出力がLOWへ引き下げる"
+  },
+  "i2c-pullup-resistor-tradeoff": {
+    "title": "I2Cプルアップ抵抗の選定",
+    "description": "3.3Vの例では低い抵抗ほどLOW時のシンク電流が大きくなる"
+  },
+  "i2c-clock-data-signal": {
+    "title": "I2Cのクロックとデータ",
+    "description": "SCLのクロックに合わせてSDAを読み書きし、STARTとSTOPで区切る"
+  },
+  "i2c-shared-bus": {
+    "title": "I2C共有バス",
+    "description": "SCLとSDAを複数デバイスで共有しアドレス指定する"
+  },
+  "spi-chip-select-wiring": {
+    "title": "SPIの配線",
+    "description": "クロックとデータ線を共有し、個別のCSでスレーブを選択する"
+  },
+  "spi-daisy-chain-wiring": {
+    "title": "SPIデイジーチェーン",
+    "description": "シフトデータをデバイス間で順送りする直列接続例"
+  },
+  "uart-connection": {
+    "title": "UARTの接続",
+    "description": "TXとRXを交差接続し、GNDを共通化する"
+  },
+  "uart_connection": {
+    "title": "UART TX/RXの交差接続",
+    "description": "UARTでは送信端TXを相手機器のRXへつなぐ"
+  },
+  "uart-frame-8n1": {
+    "title": "UART 8N1フレーム",
+    "description": "8N1はスタート、8データ、パリティなし、ストップ1 bit"
+  },
+  "uart-waveform": {
+    "title": "UART 8N1の信号波形",
+    "description": "0xA5をLSB firstで送る例。アイドルと開始・データ・停止ビットを示す"
+  }
+}

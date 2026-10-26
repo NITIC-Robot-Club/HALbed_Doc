@@ -226,7 +226,7 @@ export default {
   },
   "/Docs/HAL_Docs/ADC.md": {
     "title": "ADC HAL API",
-    "description": "STM32 HALのADC APIを説明する。HALbedの AnalogIn は、ここで説明するポーリング取得とDMA取得をラップしている。",
+    "description": "STM32 HALのADC APIを説明します。ポーリング取得とDMA取得の関数、設定構造体、使い分けを扱います。",
     "relativePath": "Docs/HAL_Docs/ADC.md",
     "frontmatter": {
       "title": "ADC HAL API",
@@ -235,7 +235,7 @@ export default {
   },
   "/Docs/HAL_Docs/CAN.md": {
     "title": "Classic CAN HAL API",
-    "description": "STM32 HALのClassic CAN APIを説明する。HALbedの CAN と CANAlt は、CANの開始、フィルタ設定、送信、受信コールバックをこのAPIで実装している。",
+    "description": "STM32 HALのClassic CAN APIを説明します。CANの開始、フィルタ設定、送信、受信コールバックを扱います。",
     "relativePath": "Docs/HAL_Docs/CAN.md",
     "frontmatter": {
       "title": "Classic CAN HAL API",
@@ -253,7 +253,7 @@ export default {
   },
   "/Docs/HAL_Docs/FDCAN.md": {
     "title": "FDCAN HAL API",
-    "description": "STM32G4 HALのFDCAN APIを説明する。FDCANはClassic CANとCAN FDの両方を扱い、送受信キュー、フィルタ、割り込み通知をMessage RAM上に構成する。HALbedのCANFDはこのAPIを使う。Classic CAN用の旧CANHandleTypeDef APIとは型と設定手順が異なる。",
+    "description": "STM32G4 HALのFDCAN APIを説明します。FDCANはClassic CANとCAN FDの両方を扱い、送受信キュー、フィルタ、割り込み通知をMessage RAM上に構成します。Classic CAN用のCANHandleTypeDef APIとは型と設定手順が異なります。",
     "relativePath": "Docs/HAL_Docs/FDCAN.md",
     "frontmatter": {
       "title": "FDCAN HAL API",
@@ -271,7 +271,7 @@ export default {
   },
   "/Docs/HAL_Docs/GPIO.md": {
     "title": "GPIO HAL API",
-    "description": "STM32 HALのGPIO APIを説明する。HALbedの DigitalIn と DigitalOut は、GPIOポートとピンマスクを保持し、ここで説明する読み取り・書き込み関数を呼び出している。",
+    "description": "STM32 HALのGPIO APIを説明します。GPIOポートとピンマスクを使う読み取り・書き込み関数、初期化方法、関連する型を扱います。",
     "relativePath": "Docs/HAL_Docs/GPIO.md",
     "frontmatter": {
       "title": "GPIO HAL API",
@@ -280,7 +280,7 @@ export default {
   },
   "/Docs/HAL_Docs/HAL_Functions.md": {
     "title": "STM32 HAL 関数一覧",
-    "description": "HALbed本体とHALbedを使うアプリケーションが呼び出すSTM32 HAL関数を、周辺機能ごとにまとめています。HALbedのクラスやメソッドではなく、CubeMXが生成するハンドルを使うHAL APIを扱います。HALの上位にあるMiddlewareとの違いはを参照してください。",
+    "description": "STM32 HALの関数を周辺機能ごとにまとめています。CubeMXが生成するハンドルを使うAPIを扱います。HALの上位にあるMiddlewareとの違いはを参照してください。",
     "relativePath": "Docs/HAL_Docs/HAL_Functions.md",
     "frontmatter": {
       "title": "STM32 HAL 関数一覧",
@@ -289,7 +289,7 @@ export default {
   },
   "/Docs/HAL_Docs/I2C.md": {
     "title": "I2C HAL API",
-    "description": "STM32 HALのI2C APIを説明する。HALbedの I2C クラスは、同期通信、レジスタ通信、デバイス確認、DMA通信をこのAPIへ委譲している。",
+    "description": "STM32 HALのI2C APIを説明します。同期通信、レジスタ通信、デバイス確認、DMA通信に使う関数と設定を扱います。",
     "relativePath": "Docs/HAL_Docs/I2C.md",
     "frontmatter": {
       "title": "I2C HAL API",
@@ -307,7 +307,7 @@ export default {
   },
   "/Docs/HAL_Docs/RCC.md": {
     "title": "RCC・時刻 HAL API",
-    "description": "このページでは、クロックの取得・設定とHALのtick関数を扱います。HALbedのTimerAPB、TimerManager、Ticker、Encoderも、これらの関数を使います。",
+    "description": "このページでは、クロックの取得・設定とHALのtick関数を扱います。",
     "relativePath": "Docs/HAL_Docs/RCC.md",
     "frontmatter": {
       "title": "RCC・時刻 HAL API",
@@ -325,7 +325,7 @@ export default {
   },
   "/Docs/HAL_Docs/TIM.md": {
     "title": "TIM HAL API",
-    "description": "STM32 HALのタイマAPIを説明する。HALbedの Ticker、PWMOut、Encoder、TimerManager は、タイマの基本動作、PWM、エンコーダ、更新割り込みをこのAPIで実装している。",
+    "description": "STM32 HALのタイマAPIを説明します。タイマの基本動作、PWM、エンコーダ、更新割り込みに使う関数と設定を扱います。",
     "relativePath": "Docs/HAL_Docs/TIM.md",
     "frontmatter": {
       "title": "TIM HAL API",
@@ -334,7 +334,7 @@ export default {
   },
   "/Docs/HAL_Docs/UART.md": {
     "title": "UART HAL API",
-    "description": "STM32 HALのUART APIを説明する。HALbedの UART と LogManager は、同期送受信、受信割り込み、UARTフラグ確認、ログ送信にこのAPIを使っている。",
+    "description": "STM32 HALのUART APIを説明します。同期送受信、受信割り込み、UARTフラグ確認、ログ送信に使う関数を扱います。",
     "relativePath": "Docs/HAL_Docs/UART.md",
     "frontmatter": {
       "title": "UART HAL API",

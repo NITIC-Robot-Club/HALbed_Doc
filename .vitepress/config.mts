@@ -40,6 +40,9 @@ export default defineConfig({
     ]
   ],
   themeConfig: {
+    sidebarMenuLabel: '目次',
+    returnToTopLabel: 'ページ上部へ',
+    outline: { label: 'このページの内容' },
     search: {
       provider: 'local',
       options: {

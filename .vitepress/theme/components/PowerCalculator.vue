@@ -13,7 +13,6 @@ const torqueNm = computed(() => toTorqueNm(torqueValue.value, torqueUnit.value))
 const speedRadPerSec = computed(() => toRadPerSec(speedValue.value, speedUnit.value))
 const powerW = computed(() => torqueNm.value * speedRadPerSec.value)
 const rows = computed(() => [
-  { label: 'W', value: formatNumber(powerW.value, 6), unit: 'W' },
   { label: 'kW', value: formatNumber(powerW.value / 1_000, 6), unit: 'kW' },
   { label: 'hp', value: formatNumber(powerW.value / 745.6998715822702, 6), unit: 'hp' },
 ])

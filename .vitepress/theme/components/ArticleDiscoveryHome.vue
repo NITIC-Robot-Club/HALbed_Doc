@@ -180,7 +180,7 @@ watch([query, category, tag, sort, showAll], () => {
 .discovery .discovery__group li a { padding-inline: 0; border-bottom: 0; }
 .discovery__group > header button { flex-shrink: 0; }
 .discovery ul { list-style: none; }
-.discovery li a { display: flex; align-items: center; gap: 16px; min-height: 52px; padding: 12px 0; border-bottom: 1px solid var(--vp-c-divider); color: var(--vp-c-brand-1); font-size: 16px; line-height: 1.65; overflow-wrap: anywhere; }
+.discovery li a { display: flex; align-items: center; gap: 16px; min-height: 52px; padding: 12px 0; border-bottom: 1px solid var(--vp-c-divider); color: var(--vp-c-text-1); font-family: var(--vp-font-family-base); font-size: 16px; font-weight: 500; line-height: 1.75; letter-spacing: .01em; overflow-wrap: anywhere; }
 .discovery li a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
 .discovery li a > span[aria-hidden] { margin-left: auto; flex-shrink: 0; color: var(--vp-c-text-2); }
 .discovery__results a > small { margin-left: auto; flex-shrink: 0; color: var(--vp-c-text-2); font-size: 13px; }
