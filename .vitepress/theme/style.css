@@ -45,17 +45,17 @@
 
 :root {
   --tool-rule: color-mix(in srgb, var(--vp-c-text-1) 16%, transparent);
-  --tool-accent: var(--vp-c-brand-1);
+  --tool-accent: #3258c8;
   --vp-font-family-base: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --vp-c-default-1: var(--vp-c-gray-1);
   --vp-c-default-2: var(--vp-c-gray-2);
   --vp-c-default-3: var(--vp-c-gray-3);
   --vp-c-default-soft: var(--vp-c-gray-soft);
 
-  --vp-c-brand-1: #2454b8;
-  --vp-c-brand-2: #204ba4;
-  --vp-c-brand-3: #2755b9;
-  --vp-c-brand-soft: rgb(39 85 185 / 10%);
+  --vp-c-brand-1: var(--vp-c-indigo-1);
+  --vp-c-brand-2: var(--vp-c-indigo-2);
+  --vp-c-brand-3: var(--vp-c-indigo-3);
+  --vp-c-brand-soft: var(--vp-c-indigo-soft);
 
   --vp-c-tip-1: var(--vp-c-brand-1);
   --vp-c-tip-2: var(--vp-c-brand-2);
@@ -94,8 +94,12 @@
  * -------------------------------------------------------------------------- */
 
 :root {
-  --vp-home-hero-name-color: var(--vp-c-brand-1);
-  --vp-home-hero-name-background: none;
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: -webkit-linear-gradient(
+    120deg,
+    #0e40d7 30%,
+    #41d1ff
+  );
 
   --vp-home-hero-image-background-image: linear-gradient(
     -45deg,
@@ -223,8 +227,7 @@
 
 .tool-shell__title {
   margin: 0;
-  font-size: clamp(1.5rem, 3vw, 1.875rem);
-  line-height: 1.4;
+  font-size: 1.25rem;
   letter-spacing: -0.02em;
 }
 
@@ -571,6 +574,15 @@
   height: auto;
 }
 
+:where(.vp-doc code) {
+  word-break: break-word;
+}
+
+html.dark {
+  --vp-c-divider: color-mix(in srgb, var(--vp-c-white) 16%, transparent);
+  --vp-shadow-2: 0 12px 32px rgb(0 0 0 / 0.35);
+}
+
 .vp-doc .api-signature {
   max-width: 100%;
   margin: 1rem 0 1.25rem;
@@ -608,50 +620,13 @@
   outline-offset: 3px;
 }
 
-:where(.vp-doc code) {
-  word-break: break-word;
-}
-
-html.dark {
-  --vp-c-brand-1: #9bbcff;
-  --vp-c-brand-2: #3b65bf;
-  --vp-c-brand-3: #2755b9;
-  --vp-c-brand-soft: rgb(155 188 255 / 12%);
-  --vp-c-divider: color-mix(in srgb, var(--vp-c-white) 16%, transparent);
-  --vp-shadow-2: 0 12px 32px rgb(0 0 0 / 0.35);
-}
-
-/* Shared controls are enclosed; content sections remain open. */
-body { min-width: 0; }
-.tool-shell__back {
-  display: inline-flex;
-  align-items: center;
-  justify-self: start;
-  min-height: 44px;
-  color: var(--vp-c-brand-1);
-  font-size: 14px;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.tool-shell__back:focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 3px;
-}
-.tool-shell .tool-shell__body :is(input:not([type='checkbox']):not([type='radio']), select, textarea) {
-  min-height: 46px;
-  border: 1px solid var(--vp-c-border);
-  border-radius: 6px;
-  padding: 0.6rem 0.75rem;
-  background-color: var(--vp-c-bg);
-  color: var(--vp-c-text-1);
-  font: inherit;
-  box-sizing: border-box;
-}
-.tool-shell .tool-shell__body :is(input:not([type='checkbox']):not([type='radio']), select, textarea):focus-visible {
-  outline: 2px solid var(--vp-c-brand-1);
-  outline-offset: 2px;
-  border-color: var(--vp-c-brand-1);
-  box-shadow: none;
+/* Keep the approved home hero while restoring the surrounding documentation UI. */
+.VPHomeHero {
+  --vp-home-hero-name-color: #2454b8;
+  --vp-home-hero-name-background: none;
+  --vp-button-brand-bg: #2755b9;
+  --vp-button-brand-hover-bg: #204ba4;
+  --vp-button-brand-active-bg: #2454b8;
 }
 .VPHomeHero .name, .VPHomeHero .text {
   font-size: clamp(32px, 4vw, 48px);
@@ -659,13 +634,8 @@ body { min-width: 0; }
 }
 .VPHomeHero .tagline { font-size: 18px; line-height: 1.75; }
 .Layout .VPHomeHero .VPButton { border-radius: 6px; }
-.vp-doc h2 { border-top: 0; padding-top: 0; }
-.tool-shell .tool-shell__body .torque-tool__result-card {
-  padding: 0.9rem 0;
-  border-left: 0;
-  border-bottom: 0;
-  background: transparent;
-}
-@media (max-width: 720px) {
-  .tool-shell .tool-shell__body :is(.torque-tool__result-card, .torque-tool__row) { align-items: flex-start; text-align: left; }
+html.dark .VPHomeHero {
+  --vp-home-hero-name-color: #9bbcff;
+  --vp-button-brand-hover-bg: #3b65bf;
+  --vp-button-brand-active-bg: #9bbcff;
 }

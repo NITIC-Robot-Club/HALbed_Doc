@@ -6,7 +6,7 @@ import DirectorySelect from './DirectorySelect.vue'
 
 const { articles } = useTags()
 // Directory pages are navigation, not reading material.
-const entries = articles.filter(a => /Technical_articles\/(MCU_Doc|Tutorials_articles|Other_Articles)\//.test(a.relativePath))
+const entries = articles.filter(a => /Technical_articles\/(MCU_Doc|Tutorials_articles|Other_Articles|Wired_communication|Wireless_communication|Control_Libraries)\//.test(a.relativePath) || a.relativePath.endsWith('/Sensor_Selection.md'))
 const topics = [
   { id: 'start', title: '入門・チュートリアル', description: 'マイコンの基礎、開発環境、Lチカ', matches: (p: string) => p.includes('/Tutorials_articles/') },
   { id: 'mcu', title: 'マイコン・HAL', description: 'GPIO、割り込み、タイマー、DMA', matches: (p: string) => p.includes('/MCU_Doc/') },
@@ -16,27 +16,7 @@ const topics = [
   { id: 'other', title: 'その他', description: 'そのほかの開発記事', matches: (_p: string) => false },
 ]
 function topicOf(path: string) { return topics.find(t => t.matches(path))?.id ?? 'other' }
-const topicIcons: Record<string, string> = {
-  start: 'M4 5h6a3 3 0 0 1 2 1 3 3 0 0 1 2-1h6v14h-6a3 3 0 0 0-2 1 3 3 0 0 0-2-1H4z M12 6v14',
-  mcu: 'M7 7h10v10H7z M10 10h4v4h-4z M9 3v4m6-4v4M9 17v4m6-4v4M3 9h4m-4 6h4m10-6h4m-4 6h4',
-  wired: 'M5 4h5v5H5z M14 15h5v5h-5z M7.5 9v5h9v1 M16.5 5v5 M14 7.5h5',
-  wireless: 'M3 9a14 14 0 0 1 18 0 M6 12a9 9 0 0 1 12 0 M9 15a4 4 0 0 1 6 0 M12 18h.01',
-  control: 'M5 4v16 M12 4v16 M19 4v16 M3 8h4 M10 15h4 M17 10h4',
-}
 const groups = computed(() => topics.map(t => ({ ...t, entries: entries.filter(a => topicOf(a.relativePath) === t.id).sort((a,b) => a.order - b.order || a.title.localeCompare(b.title, 'ja')) })).filter(t => t.entries.length))
-const firstReads: Record<string, string[]> = {
-  start: ['Intro_to_Microcontrollers.md', 'CubeIDE_Tutorial.md', 'DigitalIn_UserButton_LED.md'],
-  mcu: ['HAL_Blink_LED.md', 'Interrupt_Basics.md', 'Why_Use_DMA.md'],
-  wired: ['Wired_Communication.md', '03-network-basics.md', 'CAN_Glossary.md'],
-  wireless: ['Wireless_Communication.md', '02_Wireless_Examples.md', '03_What_Is_Radio.md'],
-}
-function previews(group: typeof groups.value[number]) {
-  const preferred = firstReads[group.id] ?? []
-  return [...group.entries].sort((a,b) => {
-    const rank = (path: string) => { const index = preferred.findIndex(name => path.endsWith('/' + name)); return index < 0 ? preferred.length : index }
-    return rank(a.relativePath) - rank(b.relativePath)
-  }).slice(0,3)
-}
 const query = ref('')
 const category = ref('')
 const tag = ref('')
@@ -50,6 +30,7 @@ const terms = computed(() => normalize(query.value).split(/\s+/).filter(Boolean)
 const filtered = computed(() => Boolean(query.value.trim() || category.value || tag.value))
 const active = computed(() => filtered.value || showAll.value || sort.value === 'title')
 const tags = computed(() => [...new Set(entries.flatMap(a => a.tags))].filter(t => t !== '開発資料').sort((a,b) => a.localeCompare(b, 'ja')))
+const popularTags = computed(() => tags.value.map(tag => ({ tag, count: entries.filter(article => article.tags.includes(tag)).length })).sort((a,b) => b.count - a.count || a.tag.localeCompare(b.tag, 'ja')).slice(0, 8))
 const categoryOptions = computed(() => [{ value: '', label: 'すべての分野' }, ...groups.value.map(group => ({ value: group.id, label: group.title }))])
 const tagOptions = computed(() => [{ value: '', label: 'すべてのタグ' }, ...tags.value.map(item => ({ value: item, label: item }))])
 const sortOptions = [{ value: 'recommended', label: '分野順' }, { value: 'title', label: 'タイトル順' }]
@@ -68,6 +49,12 @@ function readUrl() {
 function reset() { query.value = ''; category.value = ''; tag.value = ''; sort.value = 'recommended'; showAll.value = false; searchInput.value?.focus() }
 async function showGroup(id: string) {
   category.value = id
+  await nextTick()
+  resultHeading.value?.focus({ preventScroll: true })
+  resultHeading.value?.scrollIntoView({ block: 'start' })
+}
+async function showTag(value: string) {
+  tag.value = value
   await nextTick()
   resultHeading.value?.focus({ preventScroll: true })
   resultHeading.value?.scrollIntoView({ block: 'start' })
@@ -121,15 +108,31 @@ watch([query, category, tag, sort, showAll], () => {
         <button v-else @click="reset">{{ filtered ? '条件をクリア' : '分野別に戻る' }}</button>
       </div>
 
-      <div v-if="!active" class="discovery__groups">
-        <section v-for="group in groups" :key="group.id" class="discovery__group" :aria-labelledby="`group-${group.id}`">
-          <header>
-            <h3 :id="`group-${group.id}`"><span class="discovery__topic-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path :d="topicIcons[group.id] || topicIcons.start" /></svg></span>{{ group.title }}</h3>
-            <button v-if="group.entries.length > 3" :aria-label="`${group.title}の記事をすべて見る`" @click="showGroup(group.id)">すべて見る →</button>
-          </header>
-          <ul><li v-for="article in previews(group)" :key="article.relativePath"><a :href="withBase(article.link)">{{ article.title }}<span aria-hidden="true">→</span></a></li></ul>
-        </section>
+      <div v-if="!active" class="discovery__overview" aria-label="開発資料の概要">
+        <div><strong>{{ entries.length }}</strong><span>記事</span></div>
+        <div><strong>{{ groups.length }}</strong><span>分野</span></div>
+        <div><strong>{{ tags.length }}</strong><span>タグ</span></div>
       </div>
+
+      <div v-if="!active" class="discovery__topics" aria-label="目的から探す">
+        <h3 class="discovery__purpose-title">目的から探す</h3>
+        <a v-for="(group, index) in groups" :key="group.id" class="discovery__topic" href="#article-heading" @click.prevent="showGroup(group.id)">
+          <span class="discovery__topic-label">{{ String(index + 1).padStart(2, '0') }}</span>
+          <strong>{{ group.title }}</strong>
+          <small>{{ group.description }}</small>
+          <span class="discovery__topic-count">{{ group.entries.length }} 記事 <b>↗</b></span>
+        </a>
+      </div>
+
+      <section v-if="!active" class="discovery__tag-row" aria-labelledby="popular-tag-title">
+        <div class="discovery__tag-heading"><p class="discovery__eyebrow">タグから探す</p><h2 id="popular-tag-title">主要タグ</h2></div>
+        <div class="discovery__tags"><a v-for="item in popularTags" :key="item.tag" href="#article-heading" @click.prevent="showTag(item.tag)"><span>{{ item.tag }}</span><span class="discovery__tag-count">{{ item.count }}件</span></a></div>
+      </section>
+
+      <section v-if="!active" class="discovery__archive-cta" aria-label="記事一覧">
+        <div><p class="discovery__eyebrow">記事一覧</p><h2>記事一覧</h2><p>キーワードや分野、タグで記事を絞り込めます。</p></div>
+        <button @click="listAll">記事一覧を開く <span>→</span></button>
+      </section>
 
       <ul v-else-if="results.length" class="discovery__results">
         <li v-for="article in results" :key="article.relativePath">
@@ -142,7 +145,8 @@ watch([query, category, tag, sort, showAll], () => {
 </template>
 
 <style scoped>
-.discovery { box-sizing: border-box; width: 100%; max-width: 1120px; margin: 0 auto; padding: 40px 32px 64px; color: var(--vp-c-text-1); }
+.discovery { --vp-c-brand-1: #2454b8; --vp-c-brand-2: #204ba4; --vp-c-brand-3: #2755b9; --vp-c-bg-soft: rgb(39 85 185 / 10%); box-sizing: border-box; width: 100%; max-width: 1120px; margin: 0 auto; padding: 40px 32px 64px; color: var(--vp-c-text-1); }
+:global(html.dark) .discovery { --vp-c-brand-1: #9bbcff; --vp-c-brand-2: #3b65bf; --vp-c-brand-3: #2755b9; --vp-c-bg-soft: rgb(155 188 255 / 12%); }
 .discovery :is(h1,h2,h3,p,ul) { margin: 0; padding: 0; border: 0; }
 .discovery :is(h1,h2,h3) { font-weight: 600; }
 .discovery button,.discovery input { font: inherit; }
@@ -171,14 +175,27 @@ watch([query, category, tag, sort, showAll], () => {
 .discovery__toolbar > button { margin-left: auto; }
 .discovery button { min-height: 44px; color: var(--vp-c-brand-1); font-size: 14px; text-align: left; }
 #article-heading { scroll-margin-top: 88px; }
-.discovery__groups { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 40px 48px; }
-.discovery__group { min-width: 0; }
-.discovery__group > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--vp-c-text-3); }
-.discovery__group h3 { display: flex; align-items: center; gap: 10px; font-size: 18px; line-height: 1.5; }
-.discovery__topic-icon { display: inline-flex; align-items: center; flex-shrink: 0; color: var(--vp-c-brand-1); }
-.discovery__topic-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.discovery .discovery__group li a { padding-inline: 0; border-bottom: 0; }
-.discovery__group > header button { flex-shrink: 0; }
+.discovery__overview { display: flex; align-items: center; gap: 1.3rem; padding: 1.1rem 0 2rem; border-bottom: 1px solid var(--vp-c-divider); }
+.discovery__overview div { display: inline-flex; align-items: baseline; gap: .35rem; padding-right: 1.3rem; border-right: 1px solid var(--vp-c-divider); }
+.discovery__overview div:last-child { border-right: 0; }
+.discovery__overview strong { font-size: 1.25rem; }
+.discovery__overview span,.discovery__topic small,.discovery__topic-count,.discovery__tag-count { color: var(--vp-c-text-2); }
+.discovery__topics { padding: 1.5rem 0 2rem; border-top: 1px solid var(--vp-c-divider); }
+.discovery__purpose-title { margin-bottom: .8rem !important; font-size: 18px; }
+.discovery__topic { display: grid; grid-template-columns: 2.5rem minmax(9rem,.8fr) minmax(12rem,1.5fr) auto; align-items: center; gap: 1rem; padding: 1rem .15rem; border-bottom: 1px solid var(--vp-c-divider); }
+.discovery__topic:hover { padding-left: .45rem; background: var(--vp-c-bg-soft); }
+.discovery__topic-label { color: var(--vp-c-text-3); font-variant-numeric: tabular-nums; }
+.discovery__topic strong { font-size: 1rem; }
+.discovery__topic small { font-size: .95rem; }
+.discovery__topic-count { white-space: nowrap; }
+.discovery__topic-count b { color: var(--vp-c-brand-1); }
+.discovery__eyebrow { margin-bottom: .45rem !important; color: var(--vp-c-brand-1); font-size: 13px; font-weight: 700; }
+.discovery__tag-row { display: grid; grid-template-columns: 12rem 1fr; gap: 1.5rem; padding: 1.2rem 0 2rem; border-top: 1px solid var(--vp-c-divider); }
+.discovery__tag-heading h2,.discovery__archive-cta h2 { font-size: 18px; }
+.discovery__tags { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); border-top: 1px solid var(--vp-c-divider); }
+.discovery__tags a { display: flex; justify-content: space-between; gap: .75rem; padding: .7rem .35rem; border-bottom: 1px solid var(--vp-c-divider); }
+.discovery__archive-cta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.35rem 0; border-block: 1px solid var(--vp-c-divider); }
+.discovery__archive-cta p:last-child { margin-top: .4rem; color: var(--vp-c-text-2); font-size: 14px; }
 .discovery ul { list-style: none; }
 .discovery li a { display: flex; align-items: center; gap: 16px; min-height: 52px; padding: 12px 0; border-bottom: 1px solid var(--vp-c-divider); color: var(--vp-c-text-1); font-family: var(--vp-font-family-base); font-size: 16px; font-weight: 500; line-height: 1.75; letter-spacing: .01em; overflow-wrap: anywhere; }
 .discovery li a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
@@ -189,14 +206,11 @@ watch([query, category, tag, sort, showAll], () => {
 .discovery__empty p { color: var(--vp-c-text-2); margin-bottom: 8px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 @media (hover:hover) { .discovery li a:hover { text-decoration: underline; text-underline-offset: 4px; background: var(--vp-c-bg-soft); } .discovery button:hover { text-decoration: underline; } }
-@media (max-width: 700px) { .discovery { padding: 28px 24px 48px; } .discovery__header { align-items: start; } .discovery__header > a { font-size: 13px; } .discovery__groups { grid-template-columns: 1fr; gap: 24px; } .discovery__finder form { flex-basis: 100%; } .discovery__category { flex: 1 1 150px; } .discovery__option-fields { grid-template-columns: repeat(2,minmax(0,1fr)); } .discovery__results a { flex-wrap: wrap; gap: 2px 12px; } .discovery__results a > span:first-child { flex: 1 1 calc(100% - 32px); } .discovery__results a > small { order: 2; flex-basis: 100%; margin: 0; } }
+@media (max-width: 700px) { .discovery { padding: 28px 24px 48px; } .discovery__header { align-items: start; } .discovery__header > a { font-size: 13px; } .discovery__finder form { flex-basis: 100%; } .discovery__category { flex: 1 1 150px; } .discovery__option-fields { grid-template-columns: repeat(2,minmax(0,1fr)); } .discovery__results a { flex-wrap: wrap; gap: 2px 12px; } .discovery__results a > span:first-child { flex: 1 1 calc(100% - 32px); } .discovery__results a > small { order: 2; flex-basis: 100%; margin: 0; } .discovery__topic { grid-template-columns: 2rem minmax(0,1fr) auto; gap: .65rem; } .discovery__topic small,.discovery__topic-count { grid-column: 2 / -1; } .discovery__tag-row { grid-template-columns: 1fr; gap: .75rem; } .discovery__tags { grid-template-columns: 1fr; } .discovery__archive-cta { align-items: start; flex-direction: column; } }
 @media (max-width: 380px) { .discovery__header { flex-wrap: wrap; gap: 4px; } }
 @media (max-width: 700px) {
   .discovery__finder { gap: 10px; }
   .discovery__category { flex-basis: 140px; }
-  .discovery__group h3 { gap: 8px; font-size: 16px; }
-  .discovery__group > header { gap: 8px; }
-  .discovery__group > header button { font-size: 14px; }
   .discovery__results a > small { flex-basis: auto; }
 }
 </style>
