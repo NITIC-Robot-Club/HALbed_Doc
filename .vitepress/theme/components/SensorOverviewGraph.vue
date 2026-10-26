@@ -334,7 +334,7 @@ onBeforeUnmount(() => {
 .sensor-overview-graph__node.is-panel-title,
 .sensor-overview-graph__node.is-panel-title:hover,
 .sensor-overview-graph__node.is-panel-title:focus-visible {
-  justify-content: flex-start;
+  justify-content: center;
   padding: 0 0.6rem;
   border: 0;
   border-radius: 0;
@@ -343,7 +343,7 @@ onBeforeUnmount(() => {
   font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.02em;
-  text-align: left;
+  text-align: center;
   white-space: nowrap;
 }
 

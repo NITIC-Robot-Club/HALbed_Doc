@@ -39,7 +39,7 @@ ID マスク方式の FDCAN フィルタを設定します。
 
 - `filter_id` : フィルタ ID
 - `filter_mask` : フィルタマスク
-- `is_extended` : 拡張 ID の場合は `1`、標準 ID の場合は `0`
+- `is_extended` : 拡張IDの場合は `1`、標準IDの場合は `0`
 - `fifo` : 受信先 FIFO 番号（`0` または `1`）
 
 フィルタインデックスは `0` を使用します。複数のフィルタを設定する場合や、より詳細な設定が必要な場合は `filterSetupWithConfig()` を使用してください。
@@ -103,9 +103,9 @@ struct CANFDMessage {
 - `format` : `CANStandard`（Classic CAN）または `CANExtended`（CAN FD）
 - `brs` : ビットレートスイッチを使用する場合は `true`
 
-コンストラクタでは、`size` が 64 を超えた場合は 64 に制限されます。
+コンストラクタでは、`size`が64を超えた場合は64に制限されます。
 
-CAN FD のデータ長は規格上、8 バイトを超える場合に 12、16、20、24、32、48、64 バイトのいずれかになります。`write()` は指定された `size` に対応する DLC を選択するため、8 バイトを超えるデータでは実際のフレーム長が次の有効な長さへ切り上げられます。
+CAN FDのデータ長は規格上、8バイトを超える場合に12、16、20、24、32、48、64バイトのいずれかになります。`write()`は指定された`size`に対応するDLCを選択するため、8バイトを超えるデータでは実際のフレーム長が次の有効な長さへ切り上げられます。
 
 ---
 
@@ -118,12 +118,12 @@ CAN FD のデータ長は規格上、8 バイトを超える場合に 12、16、
 2. **FDCAN のクロックとビットタイミングを設定**
    - Nominal Bit Timing（アービトレーションフェーズ）を、接続する CAN バスに合わせて設定します。
    - CAN FD を使用する場合は Data Bit Timing（データフェーズ）も設定します。
-3. **CAN FD と BRS の設定を確認**
+3. **CAN FDとBRSの設定を確認**
    - CAN FD フレームを使用する場合は、接続先も CAN FD に対応している必要があります。
    - `brs = true` を使用する場合は、接続先と Data Bit Rate を合わせてください。
-4. **受信 FIFO と割り込みを有効化**
+4. **受信FIFOと割り込みを有効化**
    - FIFO 0 または FIFO 1 の受信割り込みを有効にします。
-   - 使用する FIFO と `attach()` の `fifo` 引数を一致させてください。
+   - 使用するFIFOと`attach()`の`fifo`引数を一致させてください。
 5. **Message RAM の設定を確認**
    - Rx FIFO、Tx FIFO/Queue の要素数と、データフィールドのサイズが CAN FD の最大データ長に対応していることを確認します。
 
@@ -176,18 +176,18 @@ extern "C" void app_main(void) {
 
 ## 受信割り込みの仕組み
 
-通常は HALbed が `HAL_FDCAN_RxFifo0Callback()` と `HAL_FDCAN_RxFifo1Callback()` を提供し、受信したメッセージを `attach()` で登録した関数へ通知します。受信した ID、ID 種別、Classic CAN/CAN FD の種別、BRS、データ長、データが `CANFDMessage` に格納されます。
+通常はHALbedが`HAL_FDCAN_RxFifo0Callback()`と`HAL_FDCAN_RxFifo1Callback()`を提供し、受信したメッセージを`attach()`で登録した関数へ通知します。受信したID、ID種別、Classic CAN/CAN FDの種別、BRS、データ長、データが`CANFDMessage`に格納されます。
 
-`HALBED_MANUAL_CAN_CB` を `halbed` ターゲットに定義した場合は、HALbed の自動コールバック実装が無効になります。その場合はアプリケーション側で HAL の FDCAN コールバックを実装し、FDCAN メッセージ取得後に対象ハンドルと FIFO に対応する `HALbed::callback::callback()` を呼び出してください。自動実装とアプリケーション側の実装を同時に定義すると、リンク時に多重定義になります。
+`HALBED_MANUAL_CAN_CB`を`halbed`ターゲットに定義した場合は、HALbedの自動コールバック実装が無効になります。その場合はアプリケーション側でHALのFDCANコールバックを実装し、FDCANメッセージ取得後に対象ハンドルとFIFOに対応する`HALbed::callback::callback()`を呼び出してください。自動実装とアプリケーション側の実装を同時に定義すると、リンク時に多重定義になります。
 
 ---
 
 ## 注意事項
 
-- FDCAN の受信 FIFO と `attach()` の `fifo` 引数を一致させる
+- FDCANの受信FIFOと`attach()`の`fifo`引数を一致させる
 - Classic CAN と CAN FD では、接続先、ビットタイミング、最大データ長の条件が異なる
 - BRS を有効にする場合は、バス上のすべてのノードでデータビットレートを合わせる
 - 割り込みコールバック内では長時間の処理やブロッキング処理を避ける
-- Message RAM の FIFO/Queue 要素数とデータサイズを CubeMX で確認する
-- `writeable()` で送信 FIFO の空きを確認してから `write()` を呼び出す
+- Message RAMのFIFO/Queue要素数とデータサイズをCubeMXで確認する
+- `writeable()`で送信FIFOの空きを確認してから`write()`を呼び出す
 

@@ -37,7 +37,7 @@ DMAを用いてADC変換を開始
 ---
 
 ##### `float read_voltage(uint8_t channel)`
-指定チャネルの電圧値を計算して返す。計算式は以下の通り:
+指定チャネルの電圧値を、次の式で計算して返します。
 
 ```
 電圧値 = (ADC変換値 * maxInputVoltage) / ADC_Resolution
@@ -120,12 +120,12 @@ Modeは `Circular` に設定する
    ```
 
 3. read() または read_voltage() で各チャネルの値を取得する。
-- ポーリング使用時:
+- ポーリングを使う場合は、次のメソッドで値を取得します。
    ```cpp
    uint16_t adcValue = analogInput.poll_read(0, timeout);
    float voltage = analogInput.poll_read_voltage(0, timeout);
    ```
-- DMA使用時:
+- DMAを使う場合は、次のメソッドで値を取得します。
    ```cpp
    uint16_t adcValue = analogInput.read(0);
    float voltage = analogInput.read_voltage(0);
@@ -183,7 +183,7 @@ extern "C" void app_main(void)
 > 以下の内容は、**"HAL" ライブラリを使用する場合のADC入力設定に関するものです。** <br>
 > HALbedでは、**ADCの差動入力はサポートされていません。** 単端入力のみをサポートしています。
 
-一部シリーズでCubeMXでADCチャンネルを設定する際、各入力ピンに対して以下の3つの設定を選択できます：
+一部シリーズでは、CubeMXのADCチャンネル設定で各入力ピンに次の3種類を選べます。
 
 - **Disable**
 - **Single-ended**

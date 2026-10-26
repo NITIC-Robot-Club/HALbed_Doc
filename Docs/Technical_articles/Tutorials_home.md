@@ -18,7 +18,7 @@ const sections: HomeThumbnailSection[] = [
   },
   {
     title: 'チュートリアル',
-    description: '実際の開発手順に沿って、CubeIDE や GPIO の扱いを学べます。',
+    description: '実際の開発手順に沿って、CubeIDEやGPIOの扱いを学べます。',
     filters: [
       { includeTags: ['開発資料', 'チュートリアル'], excludeTags: ['入門'] },
     ],
@@ -28,7 +28,7 @@ const sections: HomeThumbnailSection[] = [
 
 <TechnicalArticleCategory
   title="チュートリアル"
-  description="CubeIDE と GPIO の基本操作を、手順に沿って学べます。"
+  description="CubeIDEとGPIOの基本操作を、手順に沿って学べます。"
   target="tutorials-home"
   back-link="/Docs/Technical_articles/Article_Home"
   :sections="sections"

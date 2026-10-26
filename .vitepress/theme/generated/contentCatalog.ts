@@ -780,7 +780,7 @@ export default {
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/02-termination-resistor.md": {
     "title": "CANの終端抵抗の役割",
-    "description": "CAN通信では、CANH と CANL の2本の線を使って信号を送ります。",
+    "description": "CAN通信では、CANHとCANLの2本の線を使って信号を送ります。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/02-termination-resistor.md",
     "frontmatter": {
       "tags": [

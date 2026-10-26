@@ -14,7 +14,7 @@ thumbnail:
 
 # STM32 CAN の Auto Retransmission 設定に注意
 
-STM32 の CAN / FDCAN では、`.ioc` ファイル作成時に **Auto Retransmission がデフォルトで Disable になっています**。(シリーズや、CubeMX / CubeIDE のバージョンによって異なる場合があります)
+STM32のCAN/FDCANでは、`.ioc`ファイル作成時に**Auto RetransmissionがデフォルトでDisableになっています**（シリーズやCubeMX / CubeIDEのバージョンによって異なる場合があります）。
 
 この設定が `Disable` のままだと、送信に失敗したメッセージが自動で再送されません。
 

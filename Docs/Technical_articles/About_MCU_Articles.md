@@ -52,7 +52,7 @@ const sections: HomeThumbnailSection[] = [
 
 <TechnicalArticleCategory
   title="マイコン基礎"
-  description="HAL や FPU など、実装前に押さえたい前提知識をまとめています。"
+  description="HALやFPUなど、実装前に押さえたい前提知識をまとめています。"
   target="mcu-home"
   back-link="/Docs/Technical_articles/Article_Home"
   :sections="sections"

@@ -6,7 +6,7 @@ export default defineConfig({
   description: "HALラッパー関数群[HALbed] ドキュメントサイト",
   lastUpdated: true,
   base: '/HALbed_Doc/',
-  srcExclude: ['AGENTS.md'],
+  srcExclude: ['AGENTS.md', 'tools/low-layer-figures/**'],
   vite: {
     plugins: [
       {

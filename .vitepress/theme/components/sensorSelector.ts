@@ -551,6 +551,7 @@ const overviewEdgePairs: Array<[string, string]> = [
   ['overview-angle', 'overview-absolute'],
   ['overview-relative', 'overview-incremental'],
   ['overview-absolute', 'overview-absolute-method'],
+  ['overview-absolute-method', 'overview-incremental-combination'],
   ['overview-distance', 'overview-infrared-distance'],
   ['overview-distance', 'overview-ultrasonic-distance'],
   ['overview-distance', 'overview-laser-distance'],
@@ -664,8 +665,8 @@ function layoutOverviewGraph(graph: SensorOverviewGraph): SensorOverviewGraph {
   if (encoderGroup && encoderNodes.length) {
     const top = Math.min(...encoderNodes.map((node) => node.y))
     const bottom = Math.max(...encoderNodes.map((node) => node.y + (node.height ?? 52)))
-    encoderGroup.y = top - 34
-    encoderGroup.height = bottom - encoderGroup.y + 26
+    encoderGroup.y = top - 24
+    encoderGroup.height = bottom - encoderGroup.y + 16
   }
 
   const combinationGroup = graph.groups?.find((group) => group.id === 'overview-encoder-combination-group')

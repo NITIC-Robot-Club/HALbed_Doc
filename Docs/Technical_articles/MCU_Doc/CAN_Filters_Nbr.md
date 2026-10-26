@@ -55,7 +55,7 @@ hfdcan1.Init.ExtFiltersNbr = 0;
 0x7FF
 ```
 
-これらは 11bit のIDなので、`Std Filters Nbr` に関係します。
+これらは11bitのIDなので、`Std Filters Nbr`に関係します。
 
 ---
 
@@ -68,7 +68,7 @@ hfdcan1.Init.ExtFiltersNbr = 0;
 0x1ABCDEFF
 ```
 
-これらは 29bit のIDなので、`Ext Filters Nbr` に関係します。
+これらは29bitのIDなので、`Ext Filters Nbr`に関係します。
 
 ---
 
