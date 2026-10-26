@@ -15,6 +15,13 @@ const topics = [
   { id: 'other', title: 'その他', description: 'そのほかの開発記事', matches: (_p: string) => false },
 ]
 function topicOf(path: string) { return topics.find(t => t.matches(path))?.id ?? 'other' }
+const topicIcons: Record<string, string> = {
+  start: 'M4 5h6a3 3 0 0 1 2 1 3 3 0 0 1 2-1h6v14h-6a3 3 0 0 0-2 1 3 3 0 0 0-2-1H4z M12 6v14',
+  mcu: 'M7 7h10v10H7z M10 10h4v4h-4z M9 3v4m6-4v4M9 17v4m6-4v4M3 9h4m-4 6h4m10-6h4m-4 6h4',
+  wired: 'M5 4h5v5H5z M14 15h5v5h-5z M7.5 9v5h9v1 M16.5 5v5 M14 7.5h5',
+  wireless: 'M3 9a14 14 0 0 1 18 0 M6 12a9 9 0 0 1 12 0 M9 15a4 4 0 0 1 6 0 M12 18h.01',
+  control: 'M5 4v16 M12 4v16 M19 4v16 M3 8h4 M10 15h4 M17 10h4',
+}
 const groups = computed(() => topics.map(t => ({ ...t, entries: entries.filter(a => topicOf(a.relativePath) === t.id).sort((a,b) => a.order - b.order || a.title.localeCompare(b.title, 'ja')) })).filter(t => t.entries.length))
 const firstReads: Record<string, string[]> = {
   start: ['Intro_to_Microcontrollers.md', 'CubeIDE_Tutorial.md', 'DigitalIn_UserButton_LED.md'],
@@ -116,7 +123,7 @@ watch([query, category, tag, sort, showAll], () => {
       <div v-if="!active" class="discovery__groups">
         <section v-for="group in groups" :key="group.id" class="discovery__group" :aria-labelledby="`group-${group.id}`">
           <header>
-            <h3 :id="`group-${group.id}`">{{ group.title }}</h3>
+            <h3 :id="`group-${group.id}`"><span class="discovery__topic-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path :d="topicIcons[group.id] || topicIcons.start" /></svg></span>{{ group.title }}</h3>
             <button v-if="group.entries.length > 3" :aria-label="`${group.title}の記事をすべて見る`" @click="showGroup(group.id)">すべて見る →</button>
           </header>
           <ul><li v-for="article in previews(group)" :key="article.relativePath"><a :href="withBase(article.link)">{{ article.title }}<span aria-hidden="true">→</span></a></li></ul>
@@ -146,13 +153,13 @@ watch([query, category, tag, sort, showAll], () => {
 .discovery__header > a { flex-shrink: 0; min-height: 44px; display: inline-flex; align-items: center; color: var(--vp-c-brand-1); font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
 .discovery__finder { display: flex; flex-wrap: wrap; align-items: start; gap: 12px; }
 .discovery__finder form { flex: 1 1 250px; min-width: 0; }
-.discovery__input { display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 12px; border: 1px solid var(--vp-c-divider); border-radius: 5px; background: var(--vp-c-bg); }
+.discovery__input { display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 12px; border: 1px solid var(--vp-c-divider); background: var(--vp-c-bg); }
 .discovery__input:focus-within { border-color: var(--vp-c-brand-1); outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; }
 .discovery .discovery__input input:focus-visible { outline: none; }
 .discovery__input svg { width: 20px; flex-shrink: 0; fill: none; stroke: var(--vp-c-text-2); stroke-width: 1.5; }
 .discovery input { min-width: 0; width: 100%; height: 100%; color: var(--vp-c-text-1); }
 .discovery__category { flex: 0 1 190px; min-width: 0; }
-.discovery select { width: 100%; min-width: 0; height: 46px; padding: 0 28px 0 10px; border: 1px solid var(--vp-c-divider); border-radius: 5px; color: var(--vp-c-text-1); background: var(--vp-c-bg); appearance: auto; }
+.discovery select { width: 100%; min-width: 0; height: 46px; padding: 0 28px 0 10px; border: 1px solid var(--vp-c-divider); border-radius: 0; color: var(--vp-c-text-1); background: var(--vp-c-bg); appearance: auto; }
 .discovery__options summary { min-height: 46px; padding: 11px 4px; color: var(--vp-c-text-2); font-size: 14px; cursor: pointer; }
 .discovery__options[open] { flex-basis: 100%; }
 .discovery__option-fields { display: grid; grid-template-columns: minmax(0,230px) minmax(0,180px); gap: 12px; padding-top: 8px; }
@@ -164,10 +171,14 @@ watch([query, category, tag, sort, showAll], () => {
 .discovery__toolbar > button { margin-left: auto; }
 .discovery button { min-height: 44px; color: var(--vp-c-brand-1); font-size: 13px; text-align: left; }
 #article-heading { scroll-margin-top: 88px; }
-.discovery__groups { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px; }
+.discovery__groups { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 40px 48px; }
 .discovery__group { min-width: 0; }
-.discovery__group > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; margin-bottom: 8px; }
-.discovery__group h3 { font-size: 17px; line-height: 1.6; }
+.discovery__group > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--vp-c-text-3); }
+.discovery__group h3 { display: flex; align-items: center; gap: 10px; font-size: 18px; line-height: 1.5; }
+.discovery__topic-icon { display: inline-flex; align-items: center; flex-shrink: 0; color: var(--vp-c-brand-1); }
+.discovery__topic-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.discovery .discovery__group li a { padding-inline: 0; border-bottom: 0; }
+.discovery__group > header button { flex-shrink: 0; }
 .discovery ul { list-style: none; }
 .discovery li a { display: flex; align-items: center; gap: 16px; min-height: 52px; padding: 12px 0; border-bottom: 1px solid var(--vp-c-divider); font-size: 16px; line-height: 1.65; overflow-wrap: anywhere; }
 .discovery li a > span[aria-hidden] { margin-left: auto; flex-shrink: 0; color: var(--vp-c-text-2); }
@@ -176,9 +187,17 @@ watch([query, category, tag, sort, showAll], () => {
 .discovery__empty { padding: 24px 0; }
 .discovery__empty p { color: var(--vp-c-text-2); margin-bottom: 8px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-@media (hover:hover) { .discovery li a:hover { color: var(--vp-c-brand-1); background: var(--vp-c-bg-soft); } .discovery button:hover { text-decoration: underline; } }
+@media (hover:hover) { .discovery li a:hover { color: var(--vp-c-brand-1); background: var(--vp-c-brand-soft); } .discovery button:hover { text-decoration: underline; } }
 @media (max-width: 700px) { .discovery { padding: 28px 24px 48px; } .discovery__header { align-items: start; } .discovery__header > a { font-size: 13px; } .discovery__groups { grid-template-columns: 1fr; gap: 24px; } .discovery__finder form { flex-basis: 100%; } .discovery__category { flex: 1 1 150px; } .discovery__option-fields { grid-template-columns: repeat(2,minmax(0,1fr)); } .discovery__results a { flex-wrap: wrap; gap: 2px 12px; } .discovery__results a > span:first-child { flex: 1 1 calc(100% - 32px); } .discovery__results a > small { order: 2; flex-basis: 100%; margin: 0; } }
 @media (max-width: 380px) { .discovery__header { flex-wrap: wrap; gap: 4px; } }
+@media (max-width: 700px) {
+  .discovery__finder { gap: 10px; }
+  .discovery__category { flex-basis: 140px; }
+  .discovery__group h3 { gap: 8px; font-size: 16px; }
+  .discovery__group > header { gap: 8px; }
+  .discovery__group > header button { font-size: 12px; }
+  .discovery__results a > small { flex-basis: auto; }
+}
 </style>
 <style>
 body:has(.article-discovery-page) { min-width: 0; }
