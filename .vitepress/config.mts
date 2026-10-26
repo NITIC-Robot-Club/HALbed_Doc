@@ -40,6 +40,9 @@ export default defineConfig({
     ]
   ],
   themeConfig: {
+    sidebarMenuLabel: '目次',
+    returnToTopLabel: 'ページ上部へ',
+    outline: { label: 'このページの内容' },
     search: {
       provider: 'local',
       options: {
@@ -94,6 +97,7 @@ export default defineConfig({
             { text: 'AnalogIn', link: '/Docs/API/AnalogIn' },
             { text: 'CAN', link: '/Docs/API/CAN' },
             { text: 'CANMessage', link: '/Docs/API/CANMessage' },
+            { text: 'CAN FD', link: '/Docs/API/CANFD' },
             { text: 'Callback', link: '/Docs/API/Callback' },
             { text: 'CircularBuffer', link: '/Docs/API/CircularBuffer' },
             { text: 'DMA', link: '/Docs/API/DMA' },
@@ -120,10 +124,15 @@ export default defineConfig({
             { text: 'GPIO', link: '/Docs/HAL_Docs/GPIO' },
             { text: 'Classic CAN', link: '/Docs/HAL_Docs/CAN' },
             { text: 'FDCAN', link: '/Docs/HAL_Docs/FDCAN' },
+            { text: 'DMA', link: '/Docs/HAL_Docs/DMA' },
+            { text: 'Flash', link: '/Docs/HAL_Docs/Flash' },
             { text: 'I2C', link: '/Docs/HAL_Docs/I2C' },
+            { text: 'NVIC', link: '/Docs/HAL_Docs/NVIC' },
             { text: 'TIM', link: '/Docs/HAL_Docs/TIM' },
             { text: 'UART', link: '/Docs/HAL_Docs/UART' },
             { text: 'RCC・時刻', link: '/Docs/HAL_Docs/RCC' },
+            { text: 'STM32Cube Middleware', link: '/Docs/HAL_Docs/STM32Cube_Middleware' },
+            { text: 'USB CDC', link: '/Docs/HAL_Docs/USB_CDC' },
           ]
         }
       ],

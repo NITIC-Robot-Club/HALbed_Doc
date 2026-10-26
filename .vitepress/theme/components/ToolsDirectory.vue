@@ -1,187 +1,229 @@
 <script setup lang="ts">
 import { withBase } from 'vitepress'
 
+const icons: Record<string, string> = {
+  mcu: 'M7 7h10v10H7z M10 10h4v4h-4z M9 3v4m6-4v4M9 17v4m6-4v4M3 9h4m-4 6h4m10-6h4m-4 6h4',
+  motor: 'M8 6h9v12H8z M5 9h3m-3 6h3m9-3h4M11 3v3m3-3v3 M11 10l3 2-3 2',
+  units: 'M4 7h15m-4-4 4 4-4 4 M20 17H5m4-4-4 4 4 4',
+}
+
 const groups = [
   {
+    id: 'mcu',
     label: 'マイコン設定',
-    description: 'CubeMXでの設定に必要な値を求める',
     tools: [
-      {
-        title: 'CAN のビットタイミングを決める',
-        detail: 'クロックと目標ビットレートから、設定候補と誤差を比較します。',
-        meta: 'CAN / CAN FD',
-        link: '/Docs/Tools/BitTimingCalculator',
-      },
-      {
-        title: 'PWM の CCR 値を求める',
-        detail: 'タイマ設定と High 時間から、CCR・Duty 比・出力誤差を確認します。',
-        meta: 'STM32 PWM',
-        link: '/Docs/Tools/PwmCcrCalculator',
-      },
+      { title: 'CANビットタイミング', scope: 'bxCAN', link: '/Docs/Tools/BitTimingCalculator' },
+      { title: 'PWMのCCR値', link: '/Docs/Tools/PwmCcrCalculator' },
     ],
   },
   {
-    label: 'モーター計算',
-    description: 'トルク、回転数、出力の関係を計算・変換する',
+    id: 'motor',
+    label: 'モーター・足回り',
     tools: [
-      {
-        title: 'トルクの単位を変換する',
-        detail: 'N·m、N·cm、kgf·cm を相互に変換します。',
-        meta: 'Unit converter',
-        link: '/Docs/Tools/TorqueUnitConverter',
-      },
-      {
-        title: '回転数の単位を変換する',
-        detail: 'rpm、rps、角速度を相互に変換します。',
-        meta: 'Unit converter',
-        link: '/Docs/Tools/SpeedUnitConverter',
-      },
-      {
-        title: '足回りのトルク・速度を計算する',
-        detail: '重量・トルク・回転数から、必要トルクと基本性能を概算します。',
-        meta: 'Drivetrain',
-        link: '/Docs/Tools/DrivetrainCalculator',
-      },
+      { title: '足回りのトルク・速度', link: '/Docs/Tools/DrivetrainCalculator' },
+      { title: 'トルク計算（力×半径）', link: '/Docs/Tools/TorqueCalculator' },
+      { title: '出力計算（トルク×回転数）', link: '/Docs/Tools/PowerCalculator' },
+    ],
+  },
+  {
+    id: 'units',
+    label: '単位変換',
+    tools: [
+      { title: 'トルク単位変換', link: '/Docs/Tools/TorqueUnitConverter' },
+      { title: '回転数・角速度の単位変換', link: '/Docs/Tools/SpeedUnitConverter' },
     ],
   },
 ]
 </script>
 
 <template>
-  <main class="tools-directory">
+  <div class="tools-directory">
     <header class="tools-directory__intro">
-      <p class="tools-directory__kicker">Utilities</p>
       <h1>計算ツール</h1>
-      <p>設定値の検討や単位変換を、ブラウザ上ですぐに行えます。目的に近い項目を選んでください。</p>
+      <a :href="withBase('/Docs/Technical_articles/Article_Home')">開発資料</a>
     </header>
 
     <div class="tools-directory__groups">
-      <section v-for="group in groups" :key="group.label" class="tools-directory__group">
-        <header class="tools-directory__group-header">
-          <h2>{{ group.label }}</h2>
-          <p>{{ group.description }}</p>
-        </header>
-
-        <nav :aria-label="`${group.label}のツール`" class="tools-directory__list">
-          <a v-for="tool in group.tools" :key="tool.link" :href="withBase(tool.link)" class="tools-directory__item">
-            <span class="tools-directory__item-body">
-              <span class="tools-directory__meta">{{ tool.meta }}</span>
-              <strong>{{ tool.title }}</strong>
-              <span class="tools-directory__detail">{{ tool.detail }}</span>
-            </span>
-            <svg aria-hidden="true" viewBox="0 0 20 20">
-              <path d="m7.5 4.5 5.5 5.5-5.5 5.5" />
-            </svg>
-          </a>
-        </nav>
+      <section
+        v-for="group in groups"
+        :key="group.id"
+        class="tools-directory__group"
+        :aria-labelledby="`tools-${group.id}`"
+      >
+        <h2 :id="`tools-${group.id}`"><svg class="tools-directory__icon" aria-hidden="true" viewBox="0 0 24 24"><path :d="icons[group.id]" /></svg>{{ group.label }}</h2>
+        <ul class="tools-directory__list">
+          <li v-for="tool in group.tools" :key="tool.link">
+            <a :href="withBase(tool.link)" class="tools-directory__item">
+              <span class="tools-directory__item-label">
+                <span>{{ tool.title }}</span>
+                <small v-if="tool.scope">{{ tool.scope }}</small>
+              </span>
+              <span class="tools-directory__arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
       </section>
     </div>
-  </main>
+  </div>
 </template>
 
 <style scoped>
 .tools-directory {
-  width: min(100% - 2rem, 960px);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 4.5rem 0 5rem;
+  padding: 40px 32px 64px;
+  color: var(--vp-c-text-1);
+}
+
+.tools-directory :is(h1, h2, ul) {
+  margin: 0;
+  padding: 0;
+}
+
+.tools-directory h1,
+.tools-directory h2 {
+  font-weight: 600;
 }
 
 .tools-directory__intro {
-  max-width: 680px;
-  margin-bottom: 3.5rem;
-}
-
-.tools-directory__kicker,
-.tools-directory__intro h1,
-.tools-directory__intro p,
-.tools-directory__group-header h2,
-.tools-directory__group-header p {
-  margin: 0;
-}
-
-.tools-directory__kicker {
-  margin-bottom: 0.65rem;
-  color: var(--vp-c-brand-1);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 36px;
 }
 
 .tools-directory__intro h1 {
-  color: var(--vp-c-text-1);
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  font-weight: 650;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
+  font-size: clamp(28px, 4vw, 34px);
+  line-height: 1.35;
+  letter-spacing: -0.025em;
 }
 
-.tools-directory__intro > p:last-child {
-  margin-top: 1rem;
-  color: var(--vp-c-text-2);
-  font-size: 1.05rem;
-  line-height: 1.8;
+.tools-directory__intro a {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--vp-c-brand-1);
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .tools-directory__groups {
   display: grid;
-  gap: 3.25rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
 }
 
 .tools-directory__group {
-  display: grid;
-  grid-template-columns: minmax(180px, 0.35fr) minmax(0, 1fr);
-  gap: 2rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--vp-c-divider);
+  min-width: 0;
 }
 
-.tools-directory__group-header h2 {
-  font-size: 1rem;
-  letter-spacing: -0.01em;
+.tools-directory__group h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 0 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--vp-c-text-3);
+  font-size: 18px;
+  line-height: 1.5;
 }
 
-.tools-directory__group-header p {
-  margin-top: 0.45rem;
-  color: var(--vp-c-text-2);
-  font-size: 0.86rem;
-  line-height: 1.65;
+.tools-directory__icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  color: var(--vp-c-brand-1);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .tools-directory__list {
-  display: grid;
-  border-bottom: 1px solid var(--vp-c-divider);
+  list-style: none;
 }
 
 .tools-directory__item {
+  box-sizing: border-box;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 1.25rem;
-  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  padding: 1rem 0;
-  border-top: 1px solid var(--vp-c-divider);
-  color: inherit;
+  gap: 12px;
+  min-height: 52px;
+  padding: 12px 0;
+  color: var(--vp-c-brand-1);
+  font-size: 16px;
+  line-height: 1.5;
   text-decoration: none;
-  transition: color 160ms ease, padding 160ms ease;
 }
 
-.tools-directory__item:first-child { border-top: 0; }
-.tools-directory__item:hover { color: var(--vp-c-brand-1); padding-left: 0.35rem; background: color-mix(in srgb, var(--vp-c-brand-soft) 32%, transparent); }
-.tools-directory__item:focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 4px; }
-
-.tools-directory__item-body { display: grid; gap: 0.2rem; }
-.tools-directory__meta { color: var(--vp-c-text-3); font-size: 0.72rem; font-weight: 650; letter-spacing: 0.04em; text-transform: uppercase; }
-.tools-directory__item strong { font-size: 1rem; font-weight: 650; }
-.tools-directory__detail { color: var(--vp-c-text-2); font-size: 0.86rem; line-height: 1.6; }
-.tools-directory__item svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
-
-@media (max-width: 700px) {
-  .tools-directory { padding-top: 2.75rem; }
-  .tools-directory__intro { margin-bottom: 2.75rem; }
-  .tools-directory__group { grid-template-columns: 1fr; gap: 0.75rem; }
+.tools-directory__item:hover {
+  color: var(--vp-c-brand-1);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .tools-directory__item { transition: none; }
+.tools-directory__item:focus-visible,
+.tools-directory__intro a:focus-visible {
+  outline: 2px solid var(--vp-c-brand-1);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
+
+.tools-directory__item-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 8px;
+  min-width: 0;
+}
+
+.tools-directory__item-label small {
+  color: var(--vp-c-text-2);
+  font-size: 13px;
+}
+
+.tools-directory__arrow {
+  color: var(--vp-c-text-2);
+  font-size: 18px;
+}
+
+@media (hover: hover) {
+  .tools-directory__item:hover {
+    background: var(--vp-c-bg-soft);
+  }
+}
+
+@media (max-width: 1000px) {
+  .tools-directory__groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .tools-directory {
+    padding: 28px 24px 48px;
+  }
+
+  .tools-directory__intro {
+    margin-bottom: 28px;
+  }
+
+  .tools-directory__groups {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+</style>
+
+<style>
+body:has(.tools-index-page) { min-width: 0; }
+@media (min-width: 960px) { .Layout.tools-index-page .VPContent { padding-top: var(--vp-nav-height, 64px); } }
 </style>

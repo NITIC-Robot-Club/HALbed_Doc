@@ -2,11 +2,11 @@
 
 export default {
   "/Docs/API/APIHome.md": {
-    "title": "API 一覧",
+    "title": "HALbed API リファレンス",
     "description": "",
     "relativePath": "Docs/API/APIHome.md",
     "frontmatter": {
-      "title": "API 一覧",
+      "title": "HALbed API リファレンス",
       "tags": []
     }
   },
@@ -47,13 +47,14 @@ export default {
     }
   },
   "/Docs/API/CANMessage.md": {
-    "title": "HALbed::CANMessage",
-    "description": "CANMessageクラスは、CAN通信のメッセージを定義します。",
+    "title": "CAN メッセージ型",
+    "description": "HALbedにはClassic CAN用のHALbed::CANMessageとFDCAN用のHALbed::CANFDMessageがあります。どちらも識別子、データ、長さ、フレーム形式を保持し、CAN::write()またはCANFD::write()へ渡します。受信データは対応する型に格納され、attach()で登録したコールバックへ渡されます。",
     "relativePath": "Docs/API/CANMessage.md",
     "frontmatter": {
-      "title": "HALbed::CANMessage",
+      "title": "CAN メッセージ型",
       "aliases": [
-        "HALbed::CANMessage"
+        "HALbed::CANMessage",
+        "CANMessage"
       ],
       "tags": []
     }
@@ -72,7 +73,7 @@ export default {
   },
   "/Docs/API/CircularBuffer.md": {
     "title": "CircularBuffer",
-    "description": "CircularBufferクラスは、循環バッファを実装します。",
+    "description": "CircularBufferは、コンパイル時に容量を決める固定長の循環バッファです。容量を超えて要素を追加すると、最も古い要素から上書きします。動的にメモリを確保せず、受信データやセンサー値を一定数だけ保持できます。",
     "relativePath": "Docs/API/CircularBuffer.md",
     "frontmatter": {
       "title": "CircularBuffer",
@@ -225,7 +226,7 @@ export default {
   },
   "/Docs/HAL_Docs/ADC.md": {
     "title": "ADC HAL API",
-    "description": "STM32 HALのADC APIを説明する。HALbedの AnalogIn は、ここで説明するポーリング取得とDMA取得をラップしている。",
+    "description": "STM32 HALのADC APIを説明します。ポーリング取得とDMA取得の関数、設定構造体、使い分けを扱います。",
     "relativePath": "Docs/HAL_Docs/ADC.md",
     "frontmatter": {
       "title": "ADC HAL API",
@@ -234,25 +235,43 @@ export default {
   },
   "/Docs/HAL_Docs/CAN.md": {
     "title": "Classic CAN HAL API",
-    "description": "STM32 HALのClassic CAN APIを説明する。HALbedの CAN と CANAlt は、CANの開始、フィルタ設定、送信、受信コールバックをこのAPIで実装している。",
+    "description": "STM32 HALのClassic CAN APIを説明します。CANの開始、フィルタ設定、送信、受信コールバックを扱います。",
     "relativePath": "Docs/HAL_Docs/CAN.md",
     "frontmatter": {
       "title": "Classic CAN HAL API",
       "tags": []
     }
   },
+  "/Docs/HAL_Docs/DMA.md": {
+    "title": "DMA HAL API",
+    "description": "DMAを使うと、CPUがデータを1要素ずつコピーせずに、ペリフェラルとメモリの間で転送できます。PWMの波形出力、ADCの連続取得、UARTの非同期通信などに使います。",
+    "relativePath": "Docs/HAL_Docs/DMA.md",
+    "frontmatter": {
+      "title": "DMA HAL API",
+      "tags": []
+    }
+  },
   "/Docs/HAL_Docs/FDCAN.md": {
     "title": "FDCAN HAL API",
-    "description": "STM32 HALのFDCAN APIを説明する。HALbedの CANFD と、F3系向けの CANAlt のFDCAN実装は、ここで説明する関数を使っている。",
+    "description": "STM32G4 HALのFDCAN APIを説明します。FDCANはClassic CANとCAN FDの両方を扱い、送受信キュー、フィルタ、割り込み通知をMessage RAM上に構成します。Classic CAN用のCANHandleTypeDef APIとは型と設定手順が異なります。",
     "relativePath": "Docs/HAL_Docs/FDCAN.md",
     "frontmatter": {
       "title": "FDCAN HAL API",
       "tags": []
     }
   },
+  "/Docs/HAL_Docs/Flash.md": {
+    "title": "Flash HAL API",
+    "description": "内蔵Flashに設定値や保存データを書き込むと、電源を切った後も値を保持できます。RAMと違い、Flashは任意のバイトをそのまま上書きできません。書き込み前にページを消去し、MCUが対応する書き込み幅とアラインメントに合わせてデータを書き込みます。",
+    "relativePath": "Docs/HAL_Docs/Flash.md",
+    "frontmatter": {
+      "title": "Flash HAL API",
+      "tags": []
+    }
+  },
   "/Docs/HAL_Docs/GPIO.md": {
     "title": "GPIO HAL API",
-    "description": "STM32 HALのGPIO APIを説明する。HALbedの DigitalIn と DigitalOut は、GPIOポートとピンマスクを保持し、ここで説明する読み取り・書き込み関数を呼び出している。",
+    "description": "STM32 HALのGPIO APIを説明します。GPIOポートとピンマスクを使う読み取り・書き込み関数、初期化方法、関連する型を扱います。",
     "relativePath": "Docs/HAL_Docs/GPIO.md",
     "frontmatter": {
       "title": "GPIO HAL API",
@@ -270,7 +289,7 @@ export default {
   },
   "/Docs/HAL_Docs/HAL_Functions.md": {
     "title": "STM32 HAL 関数一覧",
-    "description": "HALbedの実装で使用しているSTM32 HAL関数を、周辺機能ごとに整理する。HALbedのクラスやメソッドではなく、CubeMXが生成するハンドルを直接使うHAL APIの説明である。",
+    "description": "STM32 HALの関数を周辺機能ごとにまとめています。CubeMXが生成するハンドルを使うAPIを扱います。HALの上位にあるMiddlewareとの違いはを参照してください。",
     "relativePath": "Docs/HAL_Docs/HAL_Functions.md",
     "frontmatter": {
       "title": "STM32 HAL 関数一覧",
@@ -279,25 +298,43 @@ export default {
   },
   "/Docs/HAL_Docs/I2C.md": {
     "title": "I2C HAL API",
-    "description": "STM32 HALのI2C APIを説明する。HALbedの I2C クラスは、同期通信、レジスタ通信、デバイス確認、DMA通信をこのAPIへ委譲している。",
+    "description": "STM32 HALのI2C APIを説明します。同期通信、レジスタ通信、デバイス確認、DMA通信に使う関数と設定を扱います。",
     "relativePath": "Docs/HAL_Docs/I2C.md",
     "frontmatter": {
       "title": "I2C HAL API",
       "tags": []
     }
   },
+  "/Docs/HAL_Docs/NVIC.md": {
+    "title": "NVIC HAL API",
+    "description": "NVIC（Nested Vectored Interrupt Controller）は、Cortex-Mコアが周辺機能からの割り込みを管理する機構です。STM32 HALでは、HALNVIC関数で優先度を設定し、IRQ線を有効・無効にします。",
+    "relativePath": "Docs/HAL_Docs/NVIC.md",
+    "frontmatter": {
+      "title": "NVIC HAL API",
+      "tags": []
+    }
+  },
   "/Docs/HAL_Docs/RCC.md": {
     "title": "RCC・時刻 HAL API",
-    "description": "タイマや通信の設定で使うクロック取得関数と、HALのミリ秒時刻関数を説明する。HALbedの TimerAPB、TimerManager、Ticker、Encoder がこれらを使用している。",
+    "description": "このページでは、クロックの取得・設定とHALのtick関数を扱います。",
     "relativePath": "Docs/HAL_Docs/RCC.md",
     "frontmatter": {
       "title": "RCC・時刻 HAL API",
       "tags": []
     }
   },
+  "/Docs/HAL_Docs/STM32Cube_Middleware.md": {
+    "title": "STM32Cube Middleware",
+    "description": "STM32Cubeは、STM32向けの開発環境とシリーズ別ファームウェアパッケージの総称です。パッケージにはHAL、LL、CMSIS、ボード支援コード、サンプルが含まれます。USB、ファイルシステム、ネットワーク、RTOS、グラフィックスなどのMiddlewareも、シリーズに応じて用意されています。",
+    "relativePath": "Docs/HAL_Docs/STM32Cube_Middleware.md",
+    "frontmatter": {
+      "title": "STM32Cube Middleware",
+      "tags": []
+    }
+  },
   "/Docs/HAL_Docs/TIM.md": {
     "title": "TIM HAL API",
-    "description": "STM32 HALのタイマAPIを説明する。HALbedの Ticker、PWMOut、Encoder、TimerManager は、タイマの基本動作、PWM、エンコーダ、更新割り込みをこのAPIで実装している。",
+    "description": "STM32 HALのタイマAPIを説明します。タイマの基本動作、PWM、エンコーダ、更新割り込みに使う関数と設定を扱います。",
     "relativePath": "Docs/HAL_Docs/TIM.md",
     "frontmatter": {
       "title": "TIM HAL API",
@@ -306,10 +343,19 @@ export default {
   },
   "/Docs/HAL_Docs/UART.md": {
     "title": "UART HAL API",
-    "description": "STM32 HALのUART APIを説明する。HALbedの UART と LogManager は、同期送受信、受信割り込み、UARTフラグ確認、ログ送信にこのAPIを使っている。",
+    "description": "STM32 HALのUART APIを説明します。同期送受信、受信割り込み、UARTフラグ確認、ログ送信に使う関数を扱います。",
     "relativePath": "Docs/HAL_Docs/UART.md",
     "frontmatter": {
       "title": "UART HAL API",
+      "tags": []
+    }
+  },
+  "/Docs/HAL_Docs/USB_CDC.md": {
+    "title": "USB CDC API",
+    "description": "USB CDC（Communications Device Class）は、USBデバイスをホストの仮想COMポートとして使うためのクラスです。USB Device Middlewareが列挙とCDC処理を行い、STM32 HALのPCD（Peripheral Controller Driver）がUSB周辺回路を制御します。STM32Cube内の層の関係はを参照してください。",
+    "relativePath": "Docs/HAL_Docs/USB_CDC.md",
+    "frontmatter": {
+      "title": "USB CDC API",
       "tags": []
     }
   },
@@ -408,13 +454,14 @@ export default {
     }
   },
   "/Docs/Technical_articles/Article_Home.md": {
-    "title": {},
+    "title": "開発資料",
     "description": "",
     "relativePath": "Docs/Technical_articles/Article_Home.md",
     "frontmatter": {
-      "title": {},
+      "title": "開発資料",
+      "layout": "page",
       "aside": "false",
-      "pageClass": "technical-articles-wide",
+      "pageClass": "article-discovery-page",
       "tags": []
     }
   },
@@ -512,6 +559,27 @@ export default {
         ],
         "description": "HALでCAN送信するときの関数とモードについてまとめています。",
         "order": "50"
+      }
+    }
+  },
+  "/Docs/Technical_articles/MCU_Doc/FDCAN_Rx_FIFO_Loss.md": {
+    "title": "STM32G4 FDCAN：割り込み受信でもデータを取りこぼす理由",
+    "description": "割り込み受信でもFDCANのRx FIFOが満杯になれば、CANフレームは失われます。まずFIFOとNVICを確認しましょう。",
+    "relativePath": "Docs/Technical_articles/MCU_Doc/FDCAN_Rx_FIFO_Loss.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "MCU",
+        "CAN",
+        "CAN FD"
+      ],
+      "thumbnail": {
+        "targets": [
+          "article-home",
+          "mcu-home"
+        ],
+        "description": "割り込み受信でもFDCANのRx FIFOが満杯になれば、CANフレームは失われます。まずFIFOとNVICを確認しましょう。",
+        "order": "60"
       }
     }
   },
@@ -964,6 +1032,75 @@ export default {
         ],
         "description": "T10J背面のS.I/Fポートからスイッチ状態を読み出せるか試したしたメモ",
         "order": "1"
+      }
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wireless_communication/02_Wireless_Examples.md": {
+    "title": "無線通信 2：身の回りの無線通信とロボコンで使う無線",
+    "description": "ロボットにカメラを取り付けたとします。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wireless_communication/02_Wireless_Examples.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "無線通信",
+        "入門"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wireless_communication/03_What_Is_Radio.md": {
+    "title": "無線通信 3：電波とは",
+    "description": "「2.4GHzと5GHzは何が違うのか」。無線を選び始めると、周波数の数字が気になります。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wireless_communication/03_What_Is_Radio.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "無線通信",
+        "入門"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wireless_communication/04_Radio_Characteristics.md": {
+    "title": "無線通信 4：電波の伝わり方",
+    "description": "無線通信が不安定になったとき、まず「電波が弱い」と考えたくなります。しかし、電波の状態を変えるのは距離だけではありません。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wireless_communication/04_Radio_Characteristics.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "無線通信",
+        "入門"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wireless_communication/05_WiFi_5_6GHz.md": {
+    "title": "無線通信 5：Wi-Fiの5GHz・6GHz帯",
+    "description": "「2.4GHzより5GHzのほうが速い」と聞くことがあります。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wireless_communication/05_WiFi_5_6GHz.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "無線通信",
+        "Wi-Fi",
+        "入門"
+      ]
+    }
+  },
+  "/Docs/Technical_articles/Other_Articles/Wireless_communication/Wireless_Communication.md": {
+    "title": "無線通信の基本",
+    "description": "日常の無線通信から電波の基本、ロボコンで使う無線までを整理します。",
+    "relativePath": "Docs/Technical_articles/Other_Articles/Wireless_communication/Wireless_Communication.md",
+    "frontmatter": {
+      "tags": [
+        "開発資料",
+        "無線通信",
+        "入門"
+      ],
+      "thumbnail": {
+        "targets": [
+          "article-home",
+          "other-home"
+        ],
+        "description": "日常の無線通信から電波の基本、ロボコンで使う無線までを整理します。",
+        "order": "20"
       }
     }
   },

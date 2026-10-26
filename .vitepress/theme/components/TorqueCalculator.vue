@@ -14,7 +14,6 @@ const forceN = computed(() => toNewton(forceValue.value, forceUnit.value))
 const torqueNm = computed(() => radiusM.value * forceN.value)
 
 const rows = computed(() => [
-  { label: 'N·m', value: formatNumber(torqueNm.value, 6), unit: 'N·m' },
   { label: 'kgf·cm', value: formatNumber(torqueNm.value / 0.0980665, 6), unit: 'kgf·cm' },
   { label: 'kgf·m', value: formatNumber(torqueNm.value / 9.80665, 6), unit: 'kgf·m' },
   { label: 'lbf·ft', value: formatNumber(torqueNm.value / 1.3558179483314004, 6), unit: 'lbf·ft' },

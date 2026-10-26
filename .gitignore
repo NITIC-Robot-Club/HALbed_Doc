@@ -13,3 +13,7 @@ AGENTS.md
 .semble-model/
 .obsidian/
 /docs/.obsidian/
+
+# Python-generated caches
+__pycache__/
+*.py[cod]
