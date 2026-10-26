@@ -2,6 +2,7 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { withBase } from 'vitepress'
 import { useTags } from '../composables/useTags'
+import DirectorySelect from './DirectorySelect.vue'
 
 const { articles } = useTags()
 // Directory pages are navigation, not reading material.
@@ -49,6 +50,9 @@ const terms = computed(() => normalize(query.value).split(/\s+/).filter(Boolean)
 const filtered = computed(() => Boolean(query.value.trim() || category.value || tag.value))
 const active = computed(() => filtered.value || showAll.value)
 const tags = computed(() => [...new Set(entries.flatMap(a => a.tags))].filter(t => t !== '開発資料').sort((a,b) => a.localeCompare(b, 'ja')))
+const categoryOptions = computed(() => [{ value: '', label: 'すべての分野' }, ...groups.value.map(group => ({ value: group.id, label: group.title }))])
+const tagOptions = computed(() => [{ value: '', label: 'すべてのタグ' }, ...tags.value.map(item => ({ value: item, label: item }))])
+const sortOptions = [{ value: 'recommended', label: '分野順' }, { value: 'title', label: 'タイトル順' }]
 const results = computed(() => entries.filter(a => {
   const text = normalize([a.title, a.description, ...a.tags].join(' '))
   return (!category.value || topicOf(a.relativePath) === category.value) && (!tag.value || a.tags.includes(tag.value)) && terms.value.every(term => text.includes(term))
@@ -100,15 +104,12 @@ watch([query, category, tag, sort, showAll], () => {
           <input id="article-search" ref="searchInput" v-model="query" type="search" placeholder="記事を検索" />
         </div>
       </form>
-      <label class="discovery__category">
-        <span class="sr-only">分野</span>
-        <select v-model="category" aria-label="分野"><option value="">すべての分野</option><option v-for="group in groups" :key="group.id" :value="group.id">{{ group.title }}</option></select>
-      </label>
+      <DirectorySelect id="article-category" v-model="category" class="discovery__category" label="分野" :options="categoryOptions" />
       <details class="discovery__options" :open="Boolean(tag) || sort === 'title'">
         <summary>タグ・並び順{{ tag || sort === 'title' ? '（適用中）' : '' }}</summary>
         <div class="discovery__option-fields">
-          <label>タグ<select v-model="tag" aria-label="タグ"><option value="">すべてのタグ</option><option v-for="item in tags" :key="item" :value="item">{{ item }}</option></select></label>
-          <label>並び順<select v-model="sort" aria-label="並び順"><option value="recommended">分野順</option><option value="title">タイトル順</option></select></label>
+          <div class="discovery__option-field"><span>タグ</span><DirectorySelect id="article-tag" v-model="tag" label="タグ" :options="tagOptions" /></div>
+          <div class="discovery__option-field"><span>並び順</span><DirectorySelect id="article-sort" v-model="sort" label="並び順" :options="sortOptions" /></div>
         </div>
       </details>
     </section>
@@ -144,26 +145,25 @@ watch([query, category, tag, sort, showAll], () => {
 .discovery { box-sizing: border-box; width: 100%; max-width: 1120px; margin: 0 auto; padding: 40px 32px 64px; color: var(--vp-c-text-1); }
 .discovery :is(h1,h2,h3,p,ul) { margin: 0; padding: 0; border: 0; }
 .discovery :is(h1,h2,h3) { font-weight: 600; }
-.discovery button,.discovery select,.discovery input { font: inherit; }
+.discovery button,.discovery input { font: inherit; }
 .discovery button { cursor: pointer; }
 .discovery a { color: inherit; text-decoration: none; }
-.discovery :is(a,button,select,input,summary):focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; }
+.discovery :is(a,button,input,summary):focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; }
 .discovery__header { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 28px; }
 .discovery h1 { font-size: clamp(28px,4vw,34px); line-height: 1.35; letter-spacing: -.025em; }
 .discovery__header > a { flex-shrink: 0; min-height: 44px; display: inline-flex; align-items: center; color: var(--vp-c-brand-1); font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
 .discovery__finder { display: flex; flex-wrap: wrap; align-items: start; gap: 12px; }
 .discovery__finder form { flex: 1 1 250px; min-width: 0; }
-.discovery__input { display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 12px; border: 1px solid var(--vp-c-divider); background: var(--vp-c-bg); }
+.discovery__input { display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 12px; border: 1px solid var(--vp-c-divider); border-radius: 6px; background: var(--vp-c-bg); }
 .discovery__input:focus-within { border-color: var(--vp-c-brand-1); outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; }
 .discovery .discovery__input input:focus-visible { outline: none; }
 .discovery__input svg { width: 20px; flex-shrink: 0; fill: none; stroke: var(--vp-c-text-2); stroke-width: 1.5; }
 .discovery input { min-width: 0; width: 100%; height: 100%; color: var(--vp-c-text-1); }
 .discovery__category { flex: 0 1 190px; min-width: 0; }
-.discovery select { width: 100%; min-width: 0; height: 46px; padding: 0 28px 0 10px; border: 1px solid var(--vp-c-divider); border-radius: 0; color: var(--vp-c-text-1); background: var(--vp-c-bg); appearance: auto; }
 .discovery__options summary { min-height: 46px; padding: 11px 4px; color: var(--vp-c-text-2); font-size: 14px; cursor: pointer; }
 .discovery__options[open] { flex-basis: 100%; }
 .discovery__option-fields { display: grid; grid-template-columns: minmax(0,230px) minmax(0,180px); gap: 12px; padding-top: 8px; }
-.discovery__option-fields label { display: grid; gap: 6px; color: var(--vp-c-text-2); font-size: 13px; }
+.discovery__option-field { display: grid; gap: 6px; color: var(--vp-c-text-2); font-size: 13px; }
 .discovery__content { margin-top: 20px; }
 .discovery__toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; min-height: 44px; margin-bottom: 16px; }
 .discovery__toolbar h2 { font-size: 18px; line-height: 1.6; }
