@@ -1,177 +1,185 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { withBase } from 'vitepress'
 import { useTags } from '../composables/useTags'
 
-const { articles, tagSummaries } = useTags()
-
-const developmentArticles = computed(() =>
-  articles.filter((article) => article.relativePath.includes('/Technical_articles/'))
-)
-
+const { articles } = useTags()
+// Directory pages are navigation, not reading material.
+const entries = articles.filter(a => /Technical_articles\/(MCU_Doc|Tutorials_articles|Other_Articles)\//.test(a.relativePath))
 const topics = [
-  { id: 'start', label: '01', title: '入門・チュートリアル', description: '環境構築とLED制御に関する記事', tag: 'チュートリアル' },
-  { id: 'mcu', label: '02', title: 'マイコンと HAL', description: 'STM32とHALの基礎に関する記事', tag: 'MCU' },
-  { id: 'wired', label: '03', title: '有線通信', description: 'UART、I2C、S.BUSに関する記事', tag: '有線通信' },
-] as const
-
-const searchQuery = ref('')
-
-const popularTags = computed(() => {
-  const technicalPaths = new Set(developmentArticles.value.map((article) => article.relativePath))
-
-  return tagSummaries
-    .filter((item) => item.tag !== '開発資料' && developmentArticles.value.some((article) => technicalPaths.has(article.relativePath) && article.tags.includes(item.tag)))
-    .slice(0, 8)
+  { id: 'start', title: '入門・チュートリアル', description: 'マイコンの基礎、開発環境、Lチカ', matches: (p: string) => p.includes('/Tutorials_articles/') },
+  { id: 'mcu', title: 'マイコン・HAL', description: 'GPIO、割り込み、タイマー、DMA', matches: (p: string) => p.includes('/MCU_Doc/') },
+  { id: 'wired', title: '有線通信', description: 'CAN / CAN FD、UART、I2C、S.BUS', matches: (p: string) => p.includes('/Wired_communication/') },
+  { id: 'wireless', title: '無線通信', description: '電波の基礎、Wi-Fi、通信方式', matches: (p: string) => p.includes('/Wireless_communication/') },
+  { id: 'control', title: entries.some(a => a.relativePath.endsWith('/Sensor_Selection.md')) ? '制御・センサー' : '制御ライブラリ', description: entries.some(a => a.relativePath.endsWith('/Sensor_Selection.md')) ? '受信ライブラリとセンサー選定' : 'コントローラー・受信機の入力を扱う', matches: (p: string) => p.includes('/Control_Libraries/') || p.endsWith('/Sensor_Selection.md') },
+  { id: 'other', title: 'その他', description: 'そのほかの開発記事', matches: (_p: string) => false },
+]
+function topicOf(path: string) { return topics.find(t => t.matches(path))?.id ?? 'other' }
+const groups = computed(() => topics.map(t => ({ ...t, entries: entries.filter(a => topicOf(a.relativePath) === t.id).sort((a,b) => a.order - b.order || a.title.localeCompare(b.title, 'ja')) })).filter(t => t.entries.length))
+const firstReads: Record<string, string[]> = {
+  start: ['Intro_to_Microcontrollers.md', 'CubeIDE_Tutorial.md', 'DigitalIn_UserButton_LED.md'],
+  mcu: ['HAL_Blink_LED.md', 'Interrupt_Basics.md', 'Why_Use_DMA.md'],
+  wired: ['Wired_Communication.md', '03-network-basics.md', 'CAN_Glossary.md'],
+  wireless: ['Wireless_Communication.md', '02_Wireless_Examples.md', '03_What_Is_Radio.md'],
+}
+function previews(group: typeof groups.value[number]) {
+  const preferred = firstReads[group.id] ?? []
+  return [...group.entries].sort((a,b) => {
+    const rank = (path: string) => { const index = preferred.findIndex(name => path.endsWith('/' + name)); return index < 0 ? preferred.length : index }
+    return rank(a.relativePath) - rank(b.relativePath)
+  }).slice(0,3)
+}
+const query = ref('')
+const category = ref('')
+const tag = ref('')
+const sort = ref('recommended')
+const showAll = ref(false)
+const ready = ref(false)
+const searchInput = ref<HTMLInputElement>()
+const resultHeading = ref<HTMLHeadingElement>()
+const normalize = (value: string) => value.normalize('NFKC').toLocaleLowerCase('ja').trim()
+const terms = computed(() => normalize(query.value).split(/\s+/).filter(Boolean))
+const filtered = computed(() => Boolean(query.value.trim() || category.value || tag.value))
+const active = computed(() => filtered.value || showAll.value)
+const tags = computed(() => [...new Set(entries.flatMap(a => a.tags))].filter(t => t !== '開発資料').sort((a,b) => a.localeCompare(b, 'ja')))
+const results = computed(() => entries.filter(a => {
+  const text = normalize([a.title, a.description, ...a.tags].join(' '))
+  return (!category.value || topicOf(a.relativePath) === category.value) && (!tag.value || a.tags.includes(tag.value)) && terms.value.every(term => text.includes(term))
+}).sort((a,b) => sort.value === 'title' ? a.title.localeCompare(b.title, 'ja') : topics.findIndex(t => t.id === topicOf(a.relativePath)) - topics.findIndex(t => t.id === topicOf(b.relativePath)) || a.order - b.order || a.title.localeCompare(b.title, 'ja')))
+function readUrl() {
+  const params = new URLSearchParams(location.search)
+  query.value = params.get('q') ?? ''
+  category.value = groups.value.some(t => t.id === params.get('category')) ? params.get('category')! : ''
+  tag.value = tags.value.includes(params.get('tag') ?? '') ? params.get('tag')! : ''
+  sort.value = params.get('sort') === 'title' ? 'title' : 'recommended'
+  showAll.value = params.get('view') === 'all'
+}
+function reset() { query.value = ''; category.value = ''; tag.value = ''; sort.value = 'recommended'; showAll.value = false; searchInput.value?.focus() }
+async function showGroup(id: string) {
+  category.value = id
+  await nextTick()
+  resultHeading.value?.focus({ preventScroll: true })
+  resultHeading.value?.scrollIntoView({ block: 'start' })
+}
+async function listAll() {
+  showAll.value = true
+  await nextTick()
+  resultHeading.value?.focus({ preventScroll: true })
+}
+onMounted(() => { readUrl(); ready.value = true; window.addEventListener('popstate', readUrl) })
+onUnmounted(() => window.removeEventListener('popstate', readUrl))
+watch([query, category, tag, sort, showAll], () => {
+  if (!ready.value) return
+  const url = new URL(location.href)
+  for (const [key,value] of [['q',query.value],['category',category.value],['tag',tag.value],['sort',sort.value === 'title' ? 'title' : ''],['view',showAll.value ? 'all' : '']]) {
+    if (value) url.searchParams.set(key,value); else url.searchParams.delete(key)
+  }
+  window.history.replaceState(window.history.state, '', url)
 })
-
-const tagCount = computed(() => new Set(developmentArticles.value.flatMap((article) => article.tags)).size)
-
-function getTopicCount(tag: string): number {
-  return developmentArticles.value.filter((article) => article.tags.includes(tag)).length
-}
-
-function getArchiveHref(query = ''): string {
-  const base = withBase('/Docs/Technical_articles/All_articles')
-  return query.trim() ? `${base}?q=${encodeURIComponent(query.trim())}` : base
-}
-
-function openSearch(): void {
-  window.location.href = getArchiveHref(searchQuery.value)
-}
 </script>
 
 <template>
-  <main class="article-discovery">
-    <section class="article-discovery__hero" aria-labelledby="discovery-title">
-      <div class="article-discovery__hero-copy">
-        <p class="article-discovery__eyebrow">開発資料</p>
-        <h1 id="discovery-title">開発資料を探す</h1>
-        <p class="article-discovery__lead">HALbed と STM32 の開発資料を、キーワード・目的・タグから検索できます。</p>
-      </div>
+  <div class="discovery">
+    <header class="discovery__header">
+      <h1>開発資料</h1>
+      <a :href="withBase('/Docs/API/APIHome')">APIリファレンス</a>
+    </header>
 
-      <form class="article-discovery__search" role="search" @submit.prevent="openSearch">
-        <svg class="article-discovery__search-icon" aria-hidden="true" viewBox="0 0 20 20"><circle cx="8.5" cy="8.5" r="5.5" /><path d="m12.5 12.5 4 4" /></svg>
+    <section class="discovery__finder" aria-label="記事を探す">
+      <form role="search" @submit.prevent>
         <label class="sr-only" for="article-search">記事を検索</label>
-        <input id="article-search" v-model="searchQuery" type="search" placeholder="記事タイトル、キーワード、タグで検索" />
-        <button type="submit">検索</button>
-      </form>
-
-      <div class="article-discovery__hero-links">
-        <a :href="getArchiveHref()">全記事を見る <span>→</span></a>
-        <a :href="withBase('/tags/')">タグで絞り込む <span>→</span></a>
-        <a :href="withBase('/Docs/API/APIHome')">APIリファレンス <span>→</span></a>
-      </div>
-    </section>
-
-    <section class="article-discovery__overview" aria-label="開発資料の概要">
-      <div><strong>{{ developmentArticles.length }}</strong><span>記事</span></div>
-      <div><strong>{{ topics.length }}</strong><span>カテゴリ</span></div>
-      <div><strong>{{ tagCount }}</strong><span>タグ</span></div>
-    </section>
-
-    <section class="article-discovery__topics" aria-labelledby="topic-title">
-      <div class="article-discovery__section-heading">
-        <div>
-          <p class="article-discovery__eyebrow">探し方</p>
-          <h2 id="topic-title">目的から探す</h2>
+        <div class="discovery__input">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 5 5"/></svg>
+          <input id="article-search" ref="searchInput" v-model="query" type="search" placeholder="記事を検索" />
         </div>
-        <a :href="getArchiveHref()">全記事一覧 <span>→</span></a>
-      </div>
-
-      <div class="article-discovery__topic-grid">
-        <a
-          v-for="topic in topics"
-          :key="topic.id"
-          class="article-discovery__topic"
-          :href="withBase(`/tags/?tags=${encodeURIComponent(topic.tag)}`)"
-        >
-          <span class="article-discovery__topic-label">{{ topic.label }}</span>
-          <strong>{{ topic.title }}</strong>
-          <small>{{ topic.description }}</small>
-          <span class="article-discovery__topic-count">{{ getTopicCount(topic.tag) }} 記事 <b>↗</b></span>
-        </a>
-      </div>
+      </form>
+      <label class="discovery__category">
+        <span class="sr-only">分野</span>
+        <select v-model="category" aria-label="分野"><option value="">すべての分野</option><option v-for="group in groups" :key="group.id" :value="group.id">{{ group.title }}</option></select>
+      </label>
+      <details class="discovery__options" :open="Boolean(tag) || sort === 'title'">
+        <summary>タグ・並び順{{ tag || sort === 'title' ? '（適用中）' : '' }}</summary>
+        <div class="discovery__option-fields">
+          <label>タグ<select v-model="tag" aria-label="タグ"><option value="">すべてのタグ</option><option v-for="item in tags" :key="item" :value="item">{{ item }}</option></select></label>
+          <label>並び順<select v-model="sort" aria-label="並び順"><option value="recommended">分野順</option><option value="title">タイトル順</option></select></label>
+        </div>
+      </details>
     </section>
 
-    <section class="article-discovery__tag-row" aria-labelledby="tag-title">
-      <div class="article-discovery__tag-heading">
-        <p class="article-discovery__eyebrow">タグから探す</p>
-        <h2 id="tag-title">主要タグ</h2>
-        <a :href="withBase('/tags/')">すべてのタグを見る →</a>
+    <section class="discovery__content" aria-labelledby="article-heading">
+      <div class="discovery__toolbar">
+        <h2 id="article-heading" ref="resultHeading" tabindex="-1" :class="{ 'sr-only': !active }">{{ filtered ? '検索結果' : showAll ? 'すべての記事' : '分野別の記事' }}<span v-if="active" role="status" aria-live="polite">{{ results.length }}件</span></h2>
+        <button v-if="!active" @click="listAll">すべての記事 →</button>
+        <button v-else @click="reset">{{ filtered ? '条件をクリア' : '分野別に戻る' }}</button>
       </div>
-      <div class="article-discovery__tags">
-        <a v-for="item in popularTags" :key="item.tag" :href="withBase(`/tags/${encodeURIComponent(item.tag)}`)">
-          <span>{{ item.tag }}</span>
-          <span class="article-discovery__tag-count">{{ item.count }}件</span>
-        </a>
-      </div>
-    </section>
 
-    <section class="article-discovery__archive-cta" aria-labelledby="archive-title">
-      <div>
-        <p class="article-discovery__eyebrow">記事一覧</p>
-        <h2 id="archive-title">記事一覧</h2>
-        <p>キーワード検索、並び替え、詳細表示を利用できます。</p>
+      <div v-if="!active" class="discovery__groups">
+        <section v-for="group in groups" :key="group.id" class="discovery__group" :aria-labelledby="`group-${group.id}`">
+          <header>
+            <h3 :id="`group-${group.id}`">{{ group.title }}</h3>
+            <button v-if="group.entries.length > 3" :aria-label="`${group.title}の記事をすべて見る`" @click="showGroup(group.id)">すべて見る →</button>
+          </header>
+          <ul><li v-for="article in previews(group)" :key="article.relativePath"><a :href="withBase(article.link)">{{ article.title }}<span aria-hidden="true">→</span></a></li></ul>
+        </section>
       </div>
-      <a class="article-discovery__archive-button" :href="getArchiveHref()">記事一覧を開く <span>→</span></a>
+
+      <ul v-else-if="results.length" class="discovery__results">
+        <li v-for="article in results" :key="article.relativePath">
+          <a :href="withBase(article.link)"><span>{{ article.title }}</span><small v-if="!category">{{ topics.find(t => t.id === topicOf(article.relativePath))?.title }}</small><span aria-hidden="true">→</span></a>
+        </li>
+      </ul>
+      <div v-else class="discovery__empty"><p>条件に合う記事がありません。</p><button @click="reset">条件をクリア</button></div>
     </section>
-  </main>
+  </div>
 </template>
 
 <style scoped>
-.article-discovery { width: min(100%, 1240px); margin: 0 auto; padding: 0 0 4rem; color: var(--vp-c-text-1); }
-.article-discovery__hero { padding: clamp(1.6rem, 4vw, 3.1rem) 0 2rem; border-bottom: 1px solid var(--vp-c-divider); }
-.article-discovery__hero-copy { max-width: 43rem; }
-.article-discovery__eyebrow { margin: 0 0 .55rem; color: var(--vp-c-brand-1); font-size: .82rem; font-weight: 700; letter-spacing: .08em; }
-.article-discovery h1, .article-discovery h2 { margin: 0; letter-spacing: -.035em; }
-.article-discovery h1 { font-size: clamp(2rem, 5vw, 3.35rem); line-height: 1.12; }
-.article-discovery__lead { max-width: 44rem; margin: 1rem 0 0; color: var(--vp-c-text-2); font-size: 1rem; line-height: 1.8; }
-.article-discovery__search { display: flex; align-items: center; gap: .65rem; max-width: 47rem; margin-top: 1.6rem; padding: .35rem .35rem .35rem .8rem; border: 1px solid var(--vp-c-divider); border-radius: .45rem; background: var(--vp-c-bg); }
-.article-discovery__search:focus-within { border-color: var(--vp-c-brand-1); box-shadow: 0 0 0 3px color-mix(in srgb, var(--vp-c-brand-1) 14%, transparent); }
-.article-discovery__search-icon { width: 1.2rem; flex: 0 0 auto; fill: none; stroke: var(--vp-c-text-2); stroke-linecap: round; stroke-width: 1.5; }
-.article-discovery__search input { width: 100%; min-width: 0; border: 0; outline: 0; color: var(--vp-c-text-1); background: transparent; font: inherit; }
-.article-discovery__search input::placeholder { color: var(--vp-c-text-3); }
-.article-discovery__search button { flex: 0 0 auto; border: 0; border-radius: .3rem; padding: .6rem .95rem; color: #fff; background: var(--vp-c-brand-3); cursor: pointer; font: inherit; font-size: .85rem; font-weight: 700; }
-.article-discovery__search button:hover { background: var(--vp-c-brand-2); }
-.article-discovery__hero-links { display: flex; flex-wrap: wrap; gap: 1.15rem; margin-top: 1rem; }
-.article-discovery__hero-links a, .article-discovery__section-heading a { color: var(--vp-c-brand-1); font-size: .92rem; text-decoration: none; }
-.article-discovery__hero-links a:hover, .article-discovery__section-heading a:hover { text-decoration: underline; }
-.article-discovery__hero-links span, .article-discovery__section-heading span { margin-left: .15rem; }
-.article-discovery__overview { display: flex; align-items: center; gap: 1.3rem; padding: 1.1rem 0 2rem; border-bottom: 1px solid var(--vp-c-divider); }
-.article-discovery__overview div { display: inline-flex; align-items: baseline; gap: .35rem; padding-right: 1.3rem; border-right: 1px solid var(--vp-c-divider); }
-.article-discovery__overview div:nth-child(3) { border-right: 0; }
-.article-discovery__overview strong { color: var(--vp-c-text-1); font-size: 1.25rem; line-height: 1; }
-.article-discovery__overview span { color: var(--vp-c-text-2); font-size: .9rem; }
-.article-discovery__overview p { margin: 0 0 0 auto; color: var(--vp-c-text-2); font-size: .94rem; }
-.article-discovery__topics { padding: 2.35rem 0 2.4rem; }
-.article-discovery__section-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: .8rem; }
-.article-discovery__section-heading a { font-weight: 600; }
-.article-discovery__section-heading h2, .article-discovery__tag-row h2, .article-discovery__archive-cta h2 { font-size: clamp(1.35rem, 3vw, 1.8rem); }
-.article-discovery__topic-grid { border-top: 1px solid var(--vp-c-divider); }
-.article-discovery__topic { display: grid; grid-template-columns: 2.5rem minmax(9rem, .8fr) minmax(12rem, 1.5fr) auto; align-items: center; gap: 1rem; padding: 1rem .15rem; border-bottom: 1px solid var(--vp-c-divider); color: var(--vp-c-text-1); text-decoration: none; }
-.article-discovery__topic:hover { padding-left: .45rem; color: var(--vp-c-brand-1); background: var(--vp-c-bg-soft); }
-.article-discovery__topic-label { color: var(--vp-c-text-3); font-size: .86rem; font-variant-numeric: tabular-nums; }
-.article-discovery__topic strong { font-size: 1rem; }
-.article-discovery__topic small { color: var(--vp-c-text-2); font-size: .95rem; line-height: 1.5; }
-.article-discovery__topic-count { color: var(--vp-c-text-2); font-size: .9rem; white-space: nowrap; }
-.article-discovery__topic-count b { margin-left: .25rem; color: var(--vp-c-brand-1); font-size: 1rem; }
-.article-discovery__tag-row { display: grid; grid-template-columns: 12rem 1fr; gap: 1.5rem; align-items: start; padding: 1.2rem 0 2.25rem; border-top: 1px solid var(--vp-c-divider); }
-.article-discovery__tag-heading { display: grid; align-content: start; gap: .45rem; }
-.article-discovery__tag-row h2 { font-size: 1.05rem; }
-.article-discovery__tag-heading > a { color: var(--vp-c-brand-1); font-size: .88rem; text-decoration: none; }
-.article-discovery__tag-heading > a:hover { text-decoration: underline; }
-.article-discovery__tags { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--vp-c-divider); }
-.article-discovery__tags a { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .7rem .35rem; border-bottom: 1px solid var(--vp-c-divider); color: var(--vp-c-text-1); font-size: .92rem; text-decoration: none; }
-.article-discovery__tags a:hover { color: var(--vp-c-brand-1); background: var(--vp-c-bg-soft); }
-.article-discovery__tag-count { color: var(--vp-c-text-2); font-size: .84rem; white-space: nowrap; }
-.article-discovery__archive-cta { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.35rem 0; border-top: 1px solid var(--vp-c-divider); border-bottom: 1px solid var(--vp-c-divider); }
-.article-discovery__archive-cta h2 { font-size: 1.25rem; }
-.article-discovery__archive-cta p:last-child { margin: .4rem 0 0; color: var(--vp-c-text-2); font-size: .94rem; }
-.article-discovery__archive-button { flex: 0 0 auto; color: var(--vp-c-brand-1); font-size: .88rem; font-weight: 700; text-decoration: none; }
-.article-discovery__archive-button:hover { text-decoration: underline; }
-.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-@media (min-width: 1100px) { .article-discovery__tags { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-@media (max-width: 640px) { .article-discovery { padding-bottom: 2rem; } .article-discovery__overview { align-items: start; flex-wrap: wrap; } .article-discovery__overview p { flex-basis: 100%; margin: .25rem 0 0; } .article-discovery__section-heading, .article-discovery__archive-cta { align-items: start; flex-direction: column; } .article-discovery__topic { grid-template-columns: 2rem minmax(0, 1fr) auto; gap: .65rem; } .article-discovery__topic small { grid-column: 2 / -1; } .article-discovery__topic-count { grid-column: 2 / -1; } .article-discovery__tag-row { grid-template-columns: 1fr; gap: .75rem; } .article-discovery__tags { grid-template-columns: 1fr; } }
-@media (prefers-reduced-motion: reduce) { .article-discovery__topic { transition: none; } }
+.discovery { box-sizing: border-box; width: 100%; max-width: 1120px; margin: 0 auto; padding: 40px 32px 64px; color: var(--vp-c-text-1); }
+.discovery :is(h1,h2,h3,p,ul) { margin: 0; padding: 0; border: 0; }
+.discovery :is(h1,h2,h3) { font-weight: 600; }
+.discovery button,.discovery select,.discovery input { font: inherit; }
+.discovery button { cursor: pointer; }
+.discovery a { color: inherit; text-decoration: none; }
+.discovery :is(a,button,select,input,summary):focus-visible { outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; }
+.discovery__header { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 28px; }
+.discovery h1 { font-size: clamp(28px,4vw,34px); line-height: 1.35; letter-spacing: -.025em; }
+.discovery__header > a { flex-shrink: 0; min-height: 44px; display: inline-flex; align-items: center; color: var(--vp-c-brand-1); font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
+.discovery__finder { display: flex; flex-wrap: wrap; align-items: start; gap: 12px; }
+.discovery__finder form { flex: 1 1 250px; min-width: 0; }
+.discovery__input { display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 12px; border: 1px solid var(--vp-c-divider); border-radius: 5px; background: var(--vp-c-bg); }
+.discovery__input:focus-within { border-color: var(--vp-c-brand-1); outline: 2px solid var(--vp-c-brand-1); outline-offset: 3px; }
+.discovery .discovery__input input:focus-visible { outline: none; }
+.discovery__input svg { width: 20px; flex-shrink: 0; fill: none; stroke: var(--vp-c-text-2); stroke-width: 1.5; }
+.discovery input { min-width: 0; width: 100%; height: 100%; color: var(--vp-c-text-1); }
+.discovery__category { flex: 0 1 190px; min-width: 0; }
+.discovery select { width: 100%; min-width: 0; height: 46px; padding: 0 28px 0 10px; border: 1px solid var(--vp-c-divider); border-radius: 5px; color: var(--vp-c-text-1); background: var(--vp-c-bg); appearance: auto; }
+.discovery__options summary { min-height: 46px; padding: 11px 4px; color: var(--vp-c-text-2); font-size: 14px; cursor: pointer; }
+.discovery__options[open] { flex-basis: 100%; }
+.discovery__option-fields { display: grid; grid-template-columns: minmax(0,230px) minmax(0,180px); gap: 12px; padding-top: 8px; }
+.discovery__option-fields label { display: grid; gap: 6px; color: var(--vp-c-text-2); font-size: 13px; }
+.discovery__content { margin-top: 20px; }
+.discovery__toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; min-height: 44px; margin-bottom: 16px; }
+.discovery__toolbar h2 { font-size: 18px; line-height: 1.6; }
+.discovery__toolbar h2 span { margin-left: 10px; color: var(--vp-c-text-2); font-size: 13px; font-weight: 400; }
+.discovery__toolbar > button { margin-left: auto; }
+.discovery button { min-height: 44px; color: var(--vp-c-brand-1); font-size: 13px; text-align: left; }
+#article-heading { scroll-margin-top: 88px; }
+.discovery__groups { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px; }
+.discovery__group { min-width: 0; }
+.discovery__group > header { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; margin-bottom: 8px; }
+.discovery__group h3 { font-size: 17px; line-height: 1.6; }
+.discovery ul { list-style: none; }
+.discovery li a { display: flex; align-items: center; gap: 16px; min-height: 52px; padding: 12px 0; border-bottom: 1px solid var(--vp-c-divider); font-size: 16px; line-height: 1.65; overflow-wrap: anywhere; }
+.discovery li a > span[aria-hidden] { margin-left: auto; flex-shrink: 0; color: var(--vp-c-text-2); }
+.discovery__results a > small { margin-left: auto; flex-shrink: 0; color: var(--vp-c-text-2); font-size: 12px; }
+.discovery__results a > small + span { margin-left: 0; }
+.discovery__empty { padding: 24px 0; }
+.discovery__empty p { color: var(--vp-c-text-2); margin-bottom: 8px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+@media (hover:hover) { .discovery li a:hover { color: var(--vp-c-brand-1); background: var(--vp-c-bg-soft); } .discovery button:hover { text-decoration: underline; } }
+@media (max-width: 700px) { .discovery { padding: 28px 24px 48px; } .discovery__header { align-items: start; } .discovery__header > a { font-size: 13px; } .discovery__groups { grid-template-columns: 1fr; gap: 24px; } .discovery__finder form { flex-basis: 100%; } .discovery__category { flex: 1 1 150px; } .discovery__option-fields { grid-template-columns: repeat(2,minmax(0,1fr)); } .discovery__results a { flex-wrap: wrap; gap: 2px 12px; } .discovery__results a > span:first-child { flex: 1 1 calc(100% - 32px); } .discovery__results a > small { order: 2; flex-basis: 100%; margin: 0; } }
+@media (max-width: 380px) { .discovery__header { flex-wrap: wrap; gap: 4px; } }
+</style>
+<style>
+body:has(.article-discovery-page) { min-width: 0; }
 </style>

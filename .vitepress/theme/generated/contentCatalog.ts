@@ -467,8 +467,9 @@ export default {
     "relativePath": "Docs/Technical_articles/Article_Home.md",
     "frontmatter": {
       "title": "開発資料",
+      "layout": "page",
       "aside": "false",
-      "pageClass": "technical-articles-wide",
+      "pageClass": "article-discovery-page",
       "tags": [
         "開発資料"
       ]

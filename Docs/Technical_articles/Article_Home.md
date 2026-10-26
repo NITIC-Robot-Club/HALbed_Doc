@@ -1,7 +1,8 @@
 ---
 title: 開発資料
+layout: page
 aside: false
-pageClass: technical-articles-wide
+pageClass: article-discovery-page
 tags:
   - "開発資料"
 ---
