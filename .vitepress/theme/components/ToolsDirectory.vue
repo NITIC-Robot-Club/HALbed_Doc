@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { withBase } from 'vitepress'
 
+const icons: Record<string, string> = {
+  mcu: 'M7 7h10v10H7z M10 10h4v4h-4z M9 3v4m6-4v4M9 17v4m6-4v4M3 9h4m-4 6h4m10-6h4m-4 6h4',
+  motor: 'M8 6h9v12H8z M5 9h3m-3 6h3m9-3h4M11 3v3m3-3v3 M11 10l3 2-3 2',
+  units: 'M4 7h15m-4-4 4 4-4 4 M20 17H5m4-4-4 4 4 4',
+}
+
 const groups = [
   {
     id: 'mcu',
@@ -44,7 +50,7 @@ const groups = [
         class="tools-directory__group"
         :aria-labelledby="`tools-${group.id}`"
       >
-        <h2 :id="`tools-${group.id}`">{{ group.label }}</h2>
+        <h2 :id="`tools-${group.id}`"><svg class="tools-directory__icon" aria-hidden="true" viewBox="0 0 24 24"><path :d="icons[group.id]" /></svg>{{ group.label }}</h2>
         <ul class="tools-directory__list">
           <li v-for="tool in group.tools" :key="tool.link">
             <a :href="withBase(tool.link)" class="tools-directory__item">
@@ -97,7 +103,9 @@ const groups = [
 
 .tools-directory__intro a {
   flex-shrink: 0;
-  padding: 8px 0;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--vp-c-brand-1);
   font-size: 14px;
   text-decoration: underline;
@@ -107,7 +115,7 @@ const groups = [
 .tools-directory__groups {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 32px;
+  gap: 40px;
 }
 
 .tools-directory__group {
@@ -115,22 +123,31 @@ const groups = [
 }
 
 .tools-directory__group h2 {
-  padding: 14px 0 10px;
-  border-top: 1px solid var(--vp-c-divider);
-  font-size: 17px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 0 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--vp-c-text-3);
+  font-size: 18px;
   line-height: 1.5;
+}
+
+.tools-directory__icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  color: var(--vp-c-brand-1);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .tools-directory__list {
   list-style: none;
-}
-
-.tools-directory__list li {
-  border-top: 1px solid var(--vp-c-divider);
-}
-
-.tools-directory__list li:last-child {
-  border-bottom: 1px solid var(--vp-c-divider);
 }
 
 .tools-directory__item {
@@ -140,16 +157,15 @@ const groups = [
   align-items: center;
   gap: 12px;
   min-height: 52px;
-  padding: 10px 4px;
-  color: var(--vp-c-brand-1);
+  padding: 12px 0;
+  color: var(--vp-c-text-1);
   font-size: 16px;
   line-height: 1.5;
   text-decoration: none;
 }
 
 .tools-directory__item:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  color: var(--vp-c-brand-1);
 }
 
 .tools-directory__item:focus-visible,
@@ -173,12 +189,13 @@ const groups = [
 }
 
 .tools-directory__arrow {
+  color: var(--vp-c-text-2);
   font-size: 18px;
 }
 
 @media (hover: hover) {
   .tools-directory__item:hover {
-    background: var(--vp-c-bg-soft);
+    background: var(--vp-c-brand-soft);
   }
 }
 
