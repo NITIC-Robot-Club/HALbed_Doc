@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 type Option = { value: string; label: string }
 
@@ -19,6 +19,8 @@ const trigger = ref<HTMLButtonElement | null>(null)
 const listbox = ref<HTMLElement | null>(null)
 const isOpen = ref(false)
 const activeIndex = ref(-1)
+const opensAbove = ref(false)
+const listboxMaxHeight = ref<number>()
 let typeahead = ''
 let typeaheadTimer: ReturnType<typeof setTimeout> | undefined
 
@@ -144,6 +146,36 @@ function handleOutsidePointer(event: PointerEvent) {
   if (isOpen.value && !root.value?.contains(event.target as Node)) closeList()
 }
 
+function updateListboxPlacement() {
+  const triggerRect = trigger.value?.getBoundingClientRect()
+  if (!triggerRect) return
+
+  const preferredMax = Math.min(320, window.innerHeight * 0.45)
+  const availableBelow = Math.max(0, window.innerHeight - triggerRect.bottom - 8)
+  const availableAbove = Math.max(0, triggerRect.top - 8)
+  opensAbove.value = availableBelow < preferredMax && availableAbove > availableBelow
+  listboxMaxHeight.value = Math.max(
+    0,
+    Math.min(preferredMax, opensAbove.value ? availableAbove : availableBelow),
+  )
+}
+
+watch(isOpen, async (open) => {
+  if (open) {
+    await nextTick()
+    if (!isOpen.value) return
+    updateListboxPlacement()
+    window.addEventListener('resize', updateListboxPlacement)
+    window.addEventListener('scroll', updateListboxPlacement, true)
+    return
+  }
+
+  window.removeEventListener('resize', updateListboxPlacement)
+  window.removeEventListener('scroll', updateListboxPlacement, true)
+  opensAbove.value = false
+  listboxMaxHeight.value = undefined
+})
+
 function handleFocusOut(event: FocusEvent) {
   if (isOpen.value && !root.value?.contains(event.relatedTarget as Node | null)) closeList(true)
 }
@@ -161,7 +193,7 @@ watch(
   },
 )
 
-watch([isOpen, activeIndex], () => {
+watch([isOpen, activeIndex, listboxMaxHeight], () => {
   const panel = listbox.value
   const option = panel?.children[activeIndex.value] as HTMLElement | undefined
   if (!panel || !option) return
@@ -174,6 +206,8 @@ watch([isOpen, activeIndex], () => {
 onMounted(() => document.addEventListener('pointerdown', handleOutsidePointer))
 onBeforeUnmount(() => {
   document.removeEventListener('pointerdown', handleOutsidePointer)
+  window.removeEventListener('resize', updateListboxPlacement)
+  window.removeEventListener('scroll', updateListboxPlacement, true)
   clearTypeahead()
 })
 </script>
@@ -205,6 +239,8 @@ onBeforeUnmount(() => {
       ref="listbox"
       :id="listboxId"
       class="directory-select__listbox"
+      :class="{ 'is-above': opensAbove }"
+      :style="{ maxHeight: listboxMaxHeight === undefined ? undefined : `${listboxMaxHeight}px` }"
       role="listbox"
       :aria-label="label"
     >
@@ -302,6 +338,11 @@ onBeforeUnmount(() => {
   border-radius: 6px;
   background: var(--vp-c-bg);
   box-shadow: 0 4px 12px rgb(0 0 0 / 12%);
+}
+
+.directory-select__listbox.is-above {
+  top: auto;
+  bottom: calc(100% + 2px);
 }
 
 .directory-select__option {

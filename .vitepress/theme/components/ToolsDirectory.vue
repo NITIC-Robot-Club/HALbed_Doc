@@ -158,7 +158,7 @@ const groups = [
   gap: 12px;
   min-height: 52px;
   padding: 12px 0;
-  color: var(--vp-c-text-1);
+  color: var(--vp-c-brand-1);
   font-size: 16px;
   line-height: 1.5;
   text-decoration: none;
@@ -166,6 +166,8 @@ const groups = [
 
 .tools-directory__item:hover {
   color: var(--vp-c-brand-1);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .tools-directory__item:focus-visible,
@@ -185,7 +187,7 @@ const groups = [
 
 .tools-directory__item-label small {
   color: var(--vp-c-text-2);
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .tools-directory__arrow {
@@ -195,7 +197,7 @@ const groups = [
 
 @media (hover: hover) {
   .tools-directory__item:hover {
-    background: var(--vp-c-brand-soft);
+    background: var(--vp-c-bg-soft);
   }
 }
 

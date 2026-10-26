@@ -48,7 +48,7 @@ const resultHeading = ref<HTMLHeadingElement>()
 const normalize = (value: string) => value.normalize('NFKC').toLocaleLowerCase('ja').trim()
 const terms = computed(() => normalize(query.value).split(/\s+/).filter(Boolean))
 const filtered = computed(() => Boolean(query.value.trim() || category.value || tag.value))
-const active = computed(() => filtered.value || showAll.value)
+const active = computed(() => filtered.value || showAll.value || sort.value === 'title')
 const tags = computed(() => [...new Set(entries.flatMap(a => a.tags))].filter(t => t !== '開発資料').sort((a,b) => a.localeCompare(b, 'ja')))
 const categoryOptions = computed(() => [{ value: '', label: 'すべての分野' }, ...groups.value.map(group => ({ value: group.id, label: group.title }))])
 const tagOptions = computed(() => [{ value: '', label: 'すべてのタグ' }, ...tags.value.map(item => ({ value: item, label: item }))])
@@ -116,7 +116,7 @@ watch([query, category, tag, sort, showAll], () => {
 
     <section class="discovery__content" aria-labelledby="article-heading">
       <div class="discovery__toolbar">
-        <h2 id="article-heading" ref="resultHeading" tabindex="-1" :class="{ 'sr-only': !active }">{{ filtered ? '検索結果' : showAll ? 'すべての記事' : '分野別の記事' }}<span v-if="active" role="status" aria-live="polite">{{ results.length }}件</span></h2>
+        <h2 id="article-heading" ref="resultHeading" tabindex="-1" :class="{ 'sr-only': !active }">{{ filtered ? '検索結果' : active ? 'すべての記事' : '分野別の記事' }}<span v-if="active" role="status" aria-live="polite">{{ results.length }}件</span></h2>
         <button v-if="!active" @click="listAll">すべての記事 →</button>
         <button v-else @click="reset">{{ filtered ? '条件をクリア' : '分野別に戻る' }}</button>
       </div>
@@ -169,7 +169,7 @@ watch([query, category, tag, sort, showAll], () => {
 .discovery__toolbar h2 { font-size: 18px; line-height: 1.6; }
 .discovery__toolbar h2 span { margin-left: 10px; color: var(--vp-c-text-2); font-size: 13px; font-weight: 400; }
 .discovery__toolbar > button { margin-left: auto; }
-.discovery button { min-height: 44px; color: var(--vp-c-brand-1); font-size: 13px; text-align: left; }
+.discovery button { min-height: 44px; color: var(--vp-c-brand-1); font-size: 14px; text-align: left; }
 #article-heading { scroll-margin-top: 88px; }
 .discovery__groups { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 40px 48px; }
 .discovery__group { min-width: 0; }
@@ -180,14 +180,15 @@ watch([query, category, tag, sort, showAll], () => {
 .discovery .discovery__group li a { padding-inline: 0; border-bottom: 0; }
 .discovery__group > header button { flex-shrink: 0; }
 .discovery ul { list-style: none; }
-.discovery li a { display: flex; align-items: center; gap: 16px; min-height: 52px; padding: 12px 0; border-bottom: 1px solid var(--vp-c-divider); font-size: 16px; line-height: 1.65; overflow-wrap: anywhere; }
+.discovery li a { display: flex; align-items: center; gap: 16px; min-height: 52px; padding: 12px 0; border-bottom: 1px solid var(--vp-c-divider); color: var(--vp-c-brand-1); font-size: 16px; line-height: 1.65; overflow-wrap: anywhere; }
+.discovery li a:focus-visible { text-decoration: underline; text-underline-offset: 4px; }
 .discovery li a > span[aria-hidden] { margin-left: auto; flex-shrink: 0; color: var(--vp-c-text-2); }
-.discovery__results a > small { margin-left: auto; flex-shrink: 0; color: var(--vp-c-text-2); font-size: 12px; }
+.discovery__results a > small { margin-left: auto; flex-shrink: 0; color: var(--vp-c-text-2); font-size: 13px; }
 .discovery__results a > small + span { margin-left: 0; }
 .discovery__empty { padding: 24px 0; }
 .discovery__empty p { color: var(--vp-c-text-2); margin-bottom: 8px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-@media (hover:hover) { .discovery li a:hover { color: var(--vp-c-brand-1); background: var(--vp-c-brand-soft); } .discovery button:hover { text-decoration: underline; } }
+@media (hover:hover) { .discovery li a:hover { text-decoration: underline; text-underline-offset: 4px; background: var(--vp-c-bg-soft); } .discovery button:hover { text-decoration: underline; } }
 @media (max-width: 700px) { .discovery { padding: 28px 24px 48px; } .discovery__header { align-items: start; } .discovery__header > a { font-size: 13px; } .discovery__groups { grid-template-columns: 1fr; gap: 24px; } .discovery__finder form { flex-basis: 100%; } .discovery__category { flex: 1 1 150px; } .discovery__option-fields { grid-template-columns: repeat(2,minmax(0,1fr)); } .discovery__results a { flex-wrap: wrap; gap: 2px 12px; } .discovery__results a > span:first-child { flex: 1 1 calc(100% - 32px); } .discovery__results a > small { order: 2; flex-basis: 100%; margin: 0; } }
 @media (max-width: 380px) { .discovery__header { flex-wrap: wrap; gap: 4px; } }
 @media (max-width: 700px) {
@@ -195,7 +196,7 @@ watch([query, category, tag, sort, showAll], () => {
   .discovery__category { flex-basis: 140px; }
   .discovery__group h3 { gap: 8px; font-size: 16px; }
   .discovery__group > header { gap: 8px; }
-  .discovery__group > header button { font-size: 12px; }
+  .discovery__group > header button { font-size: 14px; }
   .discovery__results a > small { flex-basis: auto; }
 }
 </style>
