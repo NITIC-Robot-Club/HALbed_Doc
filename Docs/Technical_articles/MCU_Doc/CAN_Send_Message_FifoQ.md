@@ -61,8 +61,6 @@ hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
 hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_QUEUE_OPERATION;
 ```
 
-を設定します。
-
 | モード | 特徴 |
 |---|---|
 | `FDCAN_TX_FIFO_OPERATION` | 入れた順番で送信する |
