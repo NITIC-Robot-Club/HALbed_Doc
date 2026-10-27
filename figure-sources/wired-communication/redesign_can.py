@@ -78,8 +78,8 @@ def arbitration(mobile=False):
 
 
 def stuffing(mobile=False):
-    s=Scene(400 if mobile else 840,350)
-    s.text(24,20,'同じ値が5 bit続いたら\n反対値を挿入' if mobile else '同じ値が5 bit続いたら反対値を挿入',19,bold=True)
+    s=Scene(400 if mobile else 840,340)
+    s.text(24,20,'ビットスタッフィング',21,bold=True)
     bits=[1,0,0,0,0,0,1,1,0,1]
     x0,step=(28,34) if mobile else (94,68)
     for i,v in enumerate(bits):
@@ -87,14 +87,15 @@ def stuffing(mobile=False):
         if i==6:s.rect(x-5,91,step-7,58,BLUE_TINT,BLUE)
         s.text(x,101,str(v),24 if not mobile else 22,BLUE if i==6 else INK,width=step)
     s.line(x0+step,161,x0+step*6-12,161,INK,1.5)
-    s.text(24,194,'0が5つ続く → スタッフビット1を挿入',17)
-    s.text(24,239,'受信側は挿入したビットを取り除く。',18)
-    s.text(24,288,'Classical CANの動的スタッフィング例',17,MUTED)
+    s.text(x0+step*6-4,75,'挿入',15,BLUE,width=step)
+    s.text(24,194,'送信側：0が5つ続くと、反対の値を1 bit挿入',17)
+    s.text(24,239,'受信側：挿入された1 bitを取り除いて読む',17)
+    s.text(24,284,'元のデータ　1 0 0 0 0 0 1 0 1',16,MUTED)
     return s
 
 
 def fields(mobile=False,fd=False):
-    s=Scene(400 if mobile else 840,670 if mobile else 345)
+    s=Scene(400 if mobile else 840,548 if mobile else 372)
     s.text(24,20,'CAN FD データフレーム' if fd else 'Classical CAN データフレーム',21,bold=True)
     data=[('SOF','開始'),('調停','ID・RRS' if fd else 'ID・RTR'),('制御','FDF・BRS・DLC' if fd else 'DLC等'),('データ','0–64 byte' if fd else '0–8 byte'),('CRC','誤り検出'),('ACK','受信の応答'),('EOF','終了')]
     if mobile:
@@ -104,17 +105,17 @@ def fields(mobile=False,fd=False):
             s.text(60,y,label,19,bold=True,width=90)
             s.text(168,y,value,18,width=208)
             s.line(24,y+48,376,y+48,GRID,1)
-        s.text(24,579,'上から送信順。フィールド幅は模式的。',17,MUTED)
-        if fd:s.text(24,616,'CAN FDにはリモートフレームはない。',17)
     else:
         widths=[48,126,106,260,86,80,86];x=24
+        meanings=['開始','IDの優先順位','形式・長さ','データ本体','誤り検査','受信確認','終了']
         for i,((label,value),w) in enumerate(zip(data,widths)):
             s.rect(x,102,w,70,BLUE_TINT if label=='データ' else 'white',INK,1.2)
             s.text(x+6,123,label,17,bold=label=='データ',width=w-10)
+            s.line(x,183,x,194,GRID,1)
+            s.text(x+2,204,meanings[i],15,MUTED,width=w-4)
             x+=w
-        s.arrow(24,203,816,203,INK,1.6)
-        s.text(24,225,'左から送信順。幅は実際のビット長を示さない。',18,MUTED)
-        s.text(24,277,'IDとRRSで調停。BRSはデータフェーズの速度切替を指示。' if fd else '標準IDは11 bit、拡張IDは29 bit。データ部は最大8 byte。',18)
+        s.arrow(24,82,816,82,INK,1.6)
+        s.text(24,270,'IDとRRSで調停。BRSはデータフェーズの速度切替を指示。' if fd else '標準IDは11 bit、拡張IDは29 bit。データ部は最大8 byte。',18)
     return s
 
 
