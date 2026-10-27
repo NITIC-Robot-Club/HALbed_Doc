@@ -2,9 +2,13 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { withBase } from 'vitepress'
 import { useTags } from '../composables/useTags'
+import ArticleCard from './ArticleCard.vue'
+import ArticleDisplayModeToggle from './ArticleDisplayModeToggle.vue'
 import DirectorySelect from './DirectorySelect.vue'
+import { useArticleDisplayMode } from '../composables/useArticleDisplayMode'
 
 const { articles } = useTags()
+const { mode, isDetailMode } = useArticleDisplayMode()
 // Directory pages are navigation, not reading material.
 const entries = articles.filter(a => /Technical_articles\/(MCU_Doc|Tutorials_articles|Other_Articles|Wired_communication|Wireless_communication|Control_Libraries)\//.test(a.relativePath) || a.relativePath.endsWith('/Sensor_Selection.md'))
 const topics = [
@@ -104,8 +108,11 @@ watch([query, category, tag, sort, showAll], () => {
     <section class="discovery__content" aria-labelledby="article-heading">
       <div class="discovery__toolbar">
         <h2 id="article-heading" ref="resultHeading" tabindex="-1" :class="{ 'sr-only': !active }">{{ filtered ? '検索結果' : active ? 'すべての記事' : '分野別の記事' }}<span v-if="active" role="status" aria-live="polite">{{ results.length }}件</span></h2>
-        <button v-if="!active" @click="listAll">すべての記事 →</button>
-        <button v-else @click="reset">{{ filtered ? '条件をクリア' : '分野別に戻る' }}</button>
+        <div class="discovery__toolbar-actions">
+          <ArticleDisplayModeToggle v-if="active && results.length" v-model="mode" />
+          <button v-if="!active" @click="listAll">すべての記事 →</button>
+          <button v-else @click="reset">{{ filtered ? '条件をクリア' : '分野別に戻る' }}</button>
+        </div>
       </div>
 
       <div v-if="!active" class="discovery__overview" aria-label="開発資料の概要">
@@ -134,11 +141,9 @@ watch([query, category, tag, sort, showAll], () => {
         <button @click="listAll">記事一覧を開く <span>→</span></button>
       </section>
 
-      <ul v-else-if="results.length" class="discovery__results">
-        <li v-for="article in results" :key="article.relativePath">
-          <a :href="withBase(article.link)"><span>{{ article.title }}</span><small v-if="!category">{{ topics.find(t => t.id === topicOf(article.relativePath))?.title }}</small><span aria-hidden="true">→</span></a>
-        </li>
-      </ul>
+      <div v-else-if="results.length" class="discovery__card-results" :class="{ 'is-detail': isDetailMode }">
+        <ArticleCard v-for="article in results" :key="article.relativePath" :article="article" :displayMode="mode" />
+      </div>
       <div v-else class="discovery__empty"><p>条件に合う記事がありません。</p><button @click="reset">条件をクリア</button></div>
     </section>
   </div>
@@ -172,9 +177,11 @@ watch([query, category, tag, sort, showAll], () => {
 .discovery__toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; min-height: 44px; margin-bottom: 16px; }
 .discovery__toolbar h2 { font-size: 18px; line-height: 1.6; }
 .discovery__toolbar h2 span { margin-left: 10px; color: var(--vp-c-text-2); font-size: 13px; font-weight: 400; }
-.discovery__toolbar > button { margin-left: auto; }
+.discovery__toolbar-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; margin-left: auto; }
 .discovery button { min-height: 44px; color: var(--vp-c-brand-1); font-size: 14px; text-align: left; }
 #article-heading { scroll-margin-top: 88px; }
+.discovery__card-results { display: grid; align-items: start; gap: 1.15rem; grid-template-columns: repeat(auto-fit,minmax(min(100%,16rem),1fr)); }
+.discovery__card-results.is-detail { grid-template-columns: minmax(0,1fr); }
 .discovery__overview { display: flex; align-items: center; gap: 1.3rem; padding: 1.1rem 0 2rem; border-bottom: 1px solid var(--vp-c-divider); }
 .discovery__overview div { display: inline-flex; align-items: baseline; gap: .35rem; padding-right: 1.3rem; border-right: 1px solid var(--vp-c-divider); }
 .discovery__overview div:last-child { border-right: 0; }
