@@ -23,34 +23,58 @@ function topicOf(path: string) { return topics.find(t => t.matches(path))?.id ??
 const groups = computed(() => topics.map(t => ({ ...t, entries: entries.filter(a => topicOf(a.relativePath) === t.id).sort((a,b) => a.order - b.order || a.title.localeCompare(b.title, 'ja')) })).filter(t => t.entries.length))
 const query = ref('')
 const category = ref('')
-const tag = ref('')
+const selectedTags = ref<string[]>([])
+const tagSearch = ref('')
 const sort = ref('recommended')
+const optionsOpen = ref(false)
 const showAll = ref(false)
 const ready = ref(false)
 const searchInput = ref<HTMLInputElement>()
 const resultHeading = ref<HTMLHeadingElement>()
 const normalize = (value: string) => value.normalize('NFKC').toLocaleLowerCase('ja').trim()
 const terms = computed(() => normalize(query.value).split(/\s+/).filter(Boolean))
-const filtered = computed(() => Boolean(query.value.trim() || category.value || tag.value))
+const filtered = computed(() => Boolean(query.value.trim() || category.value || selectedTags.value.length))
 const active = computed(() => filtered.value || showAll.value || sort.value === 'title')
 const tags = computed(() => [...new Set(entries.flatMap(a => a.tags))].filter(t => t !== '開発資料').sort((a,b) => a.localeCompare(b, 'ja')))
 const popularTags = computed(() => tags.value.map(tag => ({ tag, count: entries.filter(article => article.tags.includes(tag)).length })).sort((a,b) => b.count - a.count || a.tag.localeCompare(b.tag, 'ja')).slice(0, 8))
 const categoryOptions = computed(() => [{ value: '', label: 'すべての分野' }, ...groups.value.map(group => ({ value: group.id, label: group.title }))])
-const tagOptions = computed(() => [{ value: '', label: 'すべてのタグ' }, ...tags.value.map(item => ({ value: item, label: item }))])
+const tagOptions = computed(() => tags.value.map(tag => ({
+  tag,
+  count: entries.filter(article => article.tags.includes(tag)
+    && (!category.value || topicOf(article.relativePath) === category.value)
+    && terms.value.every(term => normalize([article.title, article.description, ...article.tags].join(' ')).includes(term))
+    && selectedTags.value.every(selected => selected === tag || article.tags.includes(selected))).length,
+})))
+const visibleTagOptions = computed(() => {
+  const normalized = normalize(tagSearch.value)
+  return normalized ? tagOptions.value.filter(item => normalize(item.tag).includes(normalized)) : tagOptions.value
+})
 const sortOptions = [{ value: 'recommended', label: '分野順' }, { value: 'title', label: 'タイトル順' }]
 const results = computed(() => entries.filter(a => {
   const text = normalize([a.title, a.description, ...a.tags].join(' '))
-  return (!category.value || topicOf(a.relativePath) === category.value) && (!tag.value || a.tags.includes(tag.value)) && terms.value.every(term => text.includes(term))
+  return (!category.value || topicOf(a.relativePath) === category.value) && selectedTags.value.every(tag => a.tags.includes(tag)) && terms.value.every(term => text.includes(term))
 }).sort((a,b) => sort.value === 'title' ? a.title.localeCompare(b.title, 'ja') : topics.findIndex(t => t.id === topicOf(a.relativePath)) - topics.findIndex(t => t.id === topicOf(b.relativePath)) || a.order - b.order || a.title.localeCompare(b.title, 'ja')))
 function readUrl() {
   const params = new URLSearchParams(location.search)
   query.value = params.get('q') ?? ''
   category.value = groups.value.some(t => t.id === params.get('category')) ? params.get('category')! : ''
-  tag.value = tags.value.includes(params.get('tag') ?? '') ? params.get('tag')! : ''
+  const requestedTags = params.get('tags') ?? params.get('tag') ?? ''
+  selectedTags.value = [...new Set(requestedTags.split(',').map(tag => tag.trim()).filter(Boolean))]
+    .filter(tag => tags.value.includes(tag))
   sort.value = params.get('sort') === 'title' ? 'title' : 'recommended'
+  optionsOpen.value = selectedTags.value.length > 0 || sort.value === 'title'
   showAll.value = params.get('view') === 'all'
 }
-function reset() { query.value = ''; category.value = ''; tag.value = ''; sort.value = 'recommended'; showAll.value = false; searchInput.value?.focus() }
+function reset() { query.value = ''; category.value = ''; selectedTags.value = []; tagSearch.value = ''; sort.value = 'recommended'; showAll.value = false; searchInput.value?.focus() }
+function toggleTag(tag: string) {
+  const nextTags = new Set(selectedTags.value)
+  if (nextTags.has(tag)) nextTags.delete(tag)
+  else nextTags.add(tag)
+  selectedTags.value = [...nextTags]
+}
+function syncOptionsOpen(event: Event) {
+  optionsOpen.value = (event.currentTarget as HTMLDetailsElement).open
+}
 async function showGroup(id: string) {
   category.value = id
   await nextTick()
@@ -58,7 +82,7 @@ async function showGroup(id: string) {
   resultHeading.value?.scrollIntoView({ block: 'start' })
 }
 async function showTag(value: string) {
-  tag.value = value
+  toggleTag(value)
   await nextTick()
   resultHeading.value?.focus({ preventScroll: true })
   resultHeading.value?.scrollIntoView({ block: 'start' })
@@ -70,10 +94,10 @@ async function listAll() {
 }
 onMounted(() => { readUrl(); ready.value = true; window.addEventListener('popstate', readUrl) })
 onUnmounted(() => window.removeEventListener('popstate', readUrl))
-watch([query, category, tag, sort, showAll], () => {
+watch([query, category, selectedTags, sort, showAll], () => {
   if (!ready.value) return
   const url = new URL(location.href)
-  for (const [key,value] of [['q',query.value],['category',category.value],['tag',tag.value],['sort',sort.value === 'title' ? 'title' : ''],['view',showAll.value ? 'all' : '']]) {
+  for (const [key,value] of [['q',query.value],['category',category.value],['tags',selectedTags.value.join(',')],['tag',''],['sort',sort.value === 'title' ? 'title' : ''],['view',showAll.value ? 'all' : '']]) {
     if (value) url.searchParams.set(key,value); else url.searchParams.delete(key)
   }
   window.history.replaceState(window.history.state, '', url)
@@ -96,10 +120,30 @@ watch([query, category, tag, sort, showAll], () => {
         </div>
       </form>
       <DirectorySelect id="article-category" v-model="category" class="discovery__category" label="分野" :options="categoryOptions" />
-      <details class="discovery__options" :open="Boolean(tag) || sort === 'title'">
-        <summary>タグ・並び順{{ tag || sort === 'title' ? '（適用中）' : '' }}</summary>
+      <details class="discovery__options" :open="optionsOpen" @toggle="syncOptionsOpen">
+        <summary>タグ・並び順{{ selectedTags.length || sort === 'title' ? '（適用中）' : '' }}</summary>
         <div class="discovery__option-fields">
-          <div class="discovery__option-field"><span>タグ</span><DirectorySelect id="article-tag" v-model="tag" label="タグ" :options="tagOptions" /></div>
+          <fieldset class="discovery__option-field discovery__option-field--tags">
+            <legend>タグ <span>複数選択</span></legend>
+            <label class="discovery__tag-search">
+              <span class="sr-only">タグ名で候補を絞り込む</span>
+              <input v-model="tagSearch" type="search" placeholder="タグ名で候補を絞り込む" />
+            </label>
+            <div class="discovery__tag-options" role="group" aria-label="絞り込むタグ">
+              <label
+                v-for="item in visibleTagOptions"
+                :key="item.tag"
+                class="discovery__tag-option"
+                :class="{ 'is-selected': selectedTags.includes(item.tag) }"
+              >
+                <input type="checkbox" :checked="selectedTags.includes(item.tag)" @change="toggleTag(item.tag)" />
+                <span>{{ item.tag }}</span>
+                <small>{{ item.count }}件</small>
+              </label>
+              <p v-if="!visibleTagOptions.length" class="discovery__tag-empty">一致するタグがありません。</p>
+            </div>
+            <p class="discovery__tag-help">選択したすべてのタグを含む記事に絞り込みます。</p>
+          </fieldset>
           <div class="discovery__option-field"><span>並び順</span><DirectorySelect id="article-sort" v-model="sort" label="並び順" :options="sortOptions" /></div>
         </div>
       </details>
@@ -113,6 +157,19 @@ watch([query, category, tag, sort, showAll], () => {
           <button v-if="!active" @click="listAll">すべての記事 →</button>
           <button v-else @click="reset">{{ filtered ? '条件をクリア' : '分野別に戻る' }}</button>
         </div>
+      </div>
+
+      <div v-if="selectedTags.length" class="discovery__active-tags" aria-label="選択中のタグ">
+        <span>タグ:</span>
+        <button
+          v-for="tag in selectedTags"
+          :key="tag"
+          type="button"
+          :aria-label="`${tag} を解除`"
+          @click="toggleTag(tag)"
+        >
+          {{ tag }} ×
+        </button>
       </div>
 
       <div v-if="!active" class="discovery__overview" aria-label="開発資料の概要">
@@ -171,8 +228,23 @@ watch([query, category, tag, sort, showAll], () => {
 .discovery__category { flex: 0 1 190px; min-width: 0; }
 .discovery__options summary { min-height: 46px; padding: 11px 4px; color: var(--vp-c-text-2); font-size: 14px; cursor: pointer; }
 .discovery__options[open] { flex-basis: 100%; }
-.discovery__option-fields { display: grid; grid-template-columns: minmax(0,230px) minmax(0,180px); gap: 12px; padding-top: 8px; }
+.discovery__option-fields { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,190px); align-items: start; gap: 16px; padding: 16px; border: 1px solid var(--vp-c-divider); border-radius: 8px; background: #f3f4f6; }
 .discovery__option-field { display: grid; gap: 6px; color: var(--vp-c-text-2); font-size: 13px; }
+.discovery__option-field--tags { min-width: 0; margin: 0; padding: 0; border: 0; }
+.discovery__option-field--tags legend { margin-bottom: 8px; color: var(--vp-c-text-1); font-size: 14px; font-weight: 600; }
+.discovery__option-field--tags legend span { margin-left: 8px; color: var(--vp-c-text-2); font-size: 12px; font-weight: 400; }
+.discovery__tag-search { display: block; }
+.discovery .discovery__tag-search input { height: 40px; padding: 0 10px; border: 1px solid var(--vp-c-divider); border-radius: 6px; background: var(--vp-c-bg); font-size: 14px; }
+.discovery__tag-options { display: grid; grid-template-columns: repeat(auto-fill,minmax(min(100%,180px),1fr)); gap: 6px; max-height: 220px; margin-top: 8px; padding: 6px; overflow-y: auto; border: 1px solid var(--vp-c-divider); border-radius: 6px; background: var(--vp-c-bg); }
+.discovery__tag-option { display: flex; align-items: center; gap: 8px; min-width: 0; min-height: 40px; padding: 0 9px; border: 1px solid transparent; border-radius: 5px; color: var(--vp-c-text-1); cursor: pointer; }
+.discovery__tag-option:hover,.discovery__tag-option.is-selected { border-color: var(--vp-c-divider); background: #f3f4f6; }
+.discovery .discovery__tag-option input { flex: 0 0 16px; width: 16px; height: 16px; margin: 0; accent-color: var(--vp-c-text-2); }
+.discovery__tag-option span { min-width: 0; overflow-wrap: anywhere; font-size: 13px; }
+.discovery__tag-option small { margin-left: auto; flex-shrink: 0; color: var(--vp-c-text-2); font-size: 11px; }
+.discovery__tag-help,.discovery__tag-empty { margin-top: 8px !important; color: var(--vp-c-text-2); font-size: 12px; }
+.discovery__active-tags { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: -4px 0 16px; color: var(--vp-c-text-2); font-size: 13px; }
+.discovery__active-tags button { min-height: 34px; padding: 4px 10px; border: 1px solid var(--vp-c-divider); border-radius: 999px; background: #f3f4f6; color: var(--vp-c-text-1); font-size: 13px; }
+:global(html.dark) .discovery__option-fields,:global(html.dark) .discovery__tag-option:hover,:global(html.dark) .discovery__tag-option.is-selected,:global(html.dark) .discovery__active-tags button { background: #252a32; }
 .discovery__content { margin-top: 20px; }
 .discovery__toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; min-height: 44px; margin-bottom: 16px; }
 .discovery__toolbar h2 { font-size: 18px; line-height: 1.6; }
@@ -213,7 +285,7 @@ watch([query, category, tag, sort, showAll], () => {
 .discovery__empty p { color: var(--vp-c-text-2); margin-bottom: 8px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 @media (hover:hover) { .discovery li a:hover { text-decoration: underline; text-underline-offset: 4px; background: var(--vp-c-bg-soft); } .discovery button:hover { text-decoration: underline; } }
-@media (max-width: 700px) { .discovery { padding: 28px 24px 48px; } .discovery__header { align-items: start; } .discovery__header > a { font-size: 13px; } .discovery__finder form { flex-basis: 100%; } .discovery__category { flex: 1 1 150px; } .discovery__option-fields { grid-template-columns: repeat(2,minmax(0,1fr)); } .discovery__results a { flex-wrap: wrap; gap: 2px 12px; } .discovery__results a > span:first-child { flex: 1 1 calc(100% - 32px); } .discovery__results a > small { order: 2; flex-basis: 100%; margin: 0; } .discovery__topic { grid-template-columns: 2rem minmax(0,1fr) auto; gap: .65rem; } .discovery__topic small,.discovery__topic-count { grid-column: 2 / -1; } .discovery__tag-row { grid-template-columns: 1fr; gap: .75rem; } .discovery__tags { grid-template-columns: 1fr; } .discovery__archive-cta { align-items: start; flex-direction: column; } }
+@media (max-width: 700px) { .discovery { padding: 28px 24px 48px; } .discovery__header { align-items: start; } .discovery__header > a { font-size: 13px; } .discovery__finder form { flex-basis: 100%; } .discovery__category { flex: 1 1 150px; } .discovery__option-fields { grid-template-columns: 1fr; padding: 12px; } .discovery__tag-options { grid-template-columns: 1fr; max-height: 190px; } .discovery__results a { flex-wrap: wrap; gap: 2px 12px; } .discovery__results a > span:first-child { flex: 1 1 calc(100% - 32px); } .discovery__results a > small { order: 2; flex-basis: 100%; margin: 0; } .discovery__topic { grid-template-columns: 2rem minmax(0,1fr) auto; gap: .65rem; } .discovery__topic small,.discovery__topic-count { grid-column: 2 / -1; } .discovery__tag-row { grid-template-columns: 1fr; gap: .75rem; } .discovery__tags { grid-template-columns: 1fr; } .discovery__archive-cta { align-items: start; flex-direction: column; } }
 @media (max-width: 380px) { .discovery__header { flex-wrap: wrap; gap: 4px; } }
 @media (max-width: 700px) {
   .discovery__finder { gap: 10px; }
