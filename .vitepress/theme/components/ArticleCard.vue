@@ -21,10 +21,9 @@ function getTagHref(tag: string): string {
     />
 
     <div class="article-card__body">
-      <div class="article-card__header">
+      <div v-if="props.article.date" class="article-card__header">
         <p class="article-card__meta">
           <time
-            v-if="props.article.date"
             class="article-card__date"
             :datetime="props.article.date"
           >
@@ -38,7 +37,11 @@ function getTagHref(tag: string): string {
           {{ props.article.title }}
         </h3>
 
-        <p v-if="props.displayMode === 'detail' && props.article.description" class="article-card__description">
+        <p
+          v-if="props.article.description"
+          class="article-card__description"
+          :class="{ 'is-clamped': props.displayMode !== 'detail' }"
+        >
           {{ props.article.description }}
         </p>
 
@@ -62,7 +65,10 @@ function getTagHref(tag: string): string {
 <style scoped>
 .article-card {
   position: relative;
+  display: flex;
   overflow: hidden;
+  height: 100%;
+  box-sizing: border-box;
   border: 1px solid var(--vp-c-divider);
   border-radius: 1rem;
   background: var(--vp-c-bg);
@@ -99,9 +105,12 @@ function getTagHref(tag: string): string {
 .article-card__body {
   position: relative;
   z-index: 0;
-  display: grid;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   gap: 0.85rem;
-  padding: 1rem 1.05rem 1rem 1.1rem;
+  min-width: 0;
+  padding: 1.2rem 1.25rem 1.15rem;
   box-sizing: border-box;
 }
 
@@ -122,18 +131,20 @@ function getTagHref(tag: string): string {
 }
 
 .article-card__content {
-  display: grid;
-  gap: 0.75rem;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.7rem;
 }
 
 .article-card:not(.is-detail) .article-card__content {
-  gap: 0.45rem;
+  gap: 0.6rem;
 }
 
 .article-card__title {
   margin: 0;
-  line-height: 1.45;
-  font-size: 1.18rem;
+  line-height: 1.4;
+  font-size: 1.24rem;
   letter-spacing: -0.02em;
 }
 
@@ -144,6 +155,13 @@ function getTagHref(tag: string): string {
   font-size: 0.96rem;
 }
 
+.article-card__description.is-clamped {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
 .article-card.is-detail .article-card__description {
   max-width: 68ch;
 }
@@ -151,6 +169,8 @@ function getTagHref(tag: string): string {
 .article-card__footer {
   display: grid;
   gap: 0.55rem;
+  margin-top: auto;
+  padding-top: 0.25rem;
 }
 
 .article-card__tags {
@@ -166,11 +186,11 @@ function getTagHref(tag: string): string {
   align-items: center;
   border: 1px solid var(--vp-c-divider);
   border-radius: 9999px;
-  padding: 0.22rem 0.62rem;
+  padding: 0.28rem 0.68rem;
   color: var(--vp-c-text-2);
   background: color-mix(in srgb, var(--vp-c-text-1) 6%, var(--vp-c-bg));
-  font-size: 0.72rem;
-  line-height: 1.2;
+  font-size: 0.76rem;
+  line-height: 1.25;
   text-decoration: none;
   position: relative;
   z-index: 2;
@@ -190,11 +210,11 @@ function getTagHref(tag: string): string {
 
 @media (min-width: 768px) {
   .article-card__body {
-    padding: 1.05rem 1.15rem 1rem 1.1rem;
+    padding: 1.25rem 1.3rem 1.2rem;
   }
 
   .article-card.is-detail .article-card__body {
-    padding: 1.15rem 1.2rem 1.1rem 1.2rem;
+    padding: 1.35rem 1.4rem 1.3rem;
   }
 }
 </style>

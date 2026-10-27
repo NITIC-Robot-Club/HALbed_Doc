@@ -101,7 +101,7 @@ function getBackHref(): string {
   display: grid;
   align-items: stretch;
   gap: 1.15rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
 }
 
 .tag-page__grid.is-detail {

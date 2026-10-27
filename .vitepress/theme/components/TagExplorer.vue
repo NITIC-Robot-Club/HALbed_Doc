@@ -458,7 +458,7 @@ onMounted(() => {
   display: grid;
   align-items: stretch;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
 }
 
 .tag-explorer__grid :deep(.article-card) {

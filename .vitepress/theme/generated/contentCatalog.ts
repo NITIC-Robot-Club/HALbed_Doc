@@ -837,7 +837,7 @@ export default {
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/03-network-basics.md": {
     "title": "CAN / CAN FD入門 第1編",
-    "description": "複数のマイコンに、同じセンサー値を届けたい。",
+    "description": "複数のマイコンに同じセンサーの値を届けるには、どうすればよいでしょうか。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/03-network-basics.md",
     "frontmatter": {
       "tags": [
@@ -851,7 +851,7 @@ export default {
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/04-differential-signaling.md": {
     "title": "CAN / CAN FD入門 第2編",
-    "description": "CANの論理値は、1本の線の電圧だけでは決まりません。",
+    "description": "CANの信号は、1本の線の電圧だけを見て決めるわけではありません。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/04-differential-signaling.md",
     "frontmatter": {
       "tags": [
@@ -864,7 +864,7 @@ export default {
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/05-frame-format.md": {
     "title": "CAN / CAN FD入門 第3編",
-    "description": "オシロスコープでCANバスを見ると、0と1が連続しているだけに見えます。",
+    "description": "オシロスコープでCANバスを見ると、0と1が続いているように見えます。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/05-frame-format.md",
     "frontmatter": {
       "tags": [
@@ -879,7 +879,7 @@ export default {
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/06-arbitration-and-errors.md": {
     "title": "CAN / CAN FD入門 第4編",
-    "description": "CANでは、複数ノードが同じ瞬間に送信を始めても構いません。",
+    "description": "CANでは、複数のノードが同時に送信を始めることがあります。普通なら信号がぶつかって通信が壊れそうですが、CANでは送信中にどのフレームを先に流すか決めています。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/06-arbitration-and-errors.md",
     "frontmatter": {
       "tags": [
@@ -892,7 +892,7 @@ export default {
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/07-can-fd-overview.md": {
     "title": "CAN / CAN FD入門 第5編",
-    "description": "Classical CANは信頼性の高い通信ですが、一つのフレームで送れるデータは最大8 byteです。",
+    "description": "Classical CANでは、1フレームに最大8 byteまでしか載せられません。ソフトウェア更新や診断データのように大きなデータを送ると、何度もフレームに分けることになります。分割すれば、その分IDやCRC、ACKなどの領域も必要です。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/07-can-fd-overview.md",
     "frontmatter": {
       "tags": [
@@ -905,7 +905,7 @@ export default {
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/08-can-debugging.md": {
     "title": "CAN / CAN FD入門 第6編",
-    "description": "CANが動かないとき、原因はソフトウェアとは限りません。",
+    "description": "CANが動かないとき、どこから調べればよいでしょうか。ソフトウェアの設定だけでなく、ビットレートやピン、トランシーバ、終端抵抗など、原因はいくつも考えられます。まずは確認する順番を決めて、一つずつ切り分けます。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/08-can-debugging.md",
     "frontmatter": {
       "tags": [
@@ -918,7 +918,7 @@ export default {
   },
   "/Docs/Technical_articles/Other_Articles/Wired_communication/09-can-fd-frame.md": {
     "title": "CAN / CAN FD入門 第7編",
-    "description": "CAN FDは「データを64 byteまで増やしたCAN」と説明されることがあります。",
+    "description": "CAN FDは「データを64 byteまで増やしたCAN」と説明されることがあります。では、データ部分を長くしただけなのでしょうか。",
     "relativePath": "Docs/Technical_articles/Other_Articles/Wired_communication/09-can-fd-frame.md",
     "frontmatter": {
       "tags": [

@@ -180,7 +180,7 @@ watch([query, category, tag, sort, showAll], () => {
 .discovery__toolbar-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 12px; margin-left: auto; }
 .discovery button { min-height: 44px; color: var(--vp-c-brand-1); font-size: 14px; text-align: left; }
 #article-heading { scroll-margin-top: 88px; }
-.discovery__card-results { display: grid; align-items: stretch; gap: 1.15rem; grid-template-columns: repeat(auto-fit,minmax(min(100%,16rem),1fr)); }
+.discovery__card-results { display: grid; align-items: stretch; gap: 1.15rem; grid-template-columns: repeat(auto-fit,minmax(min(100%,18rem),1fr)); }
 .discovery__card-results.is-detail { grid-template-columns: minmax(0,1fr); }
 .discovery__overview { display: flex; align-items: center; gap: 1.3rem; padding: 1.1rem 0 2rem; border-bottom: 1px solid var(--vp-c-divider); }
 .discovery__overview div { display: inline-flex; align-items: baseline; gap: .35rem; padding-right: 1.3rem; border-right: 1px solid var(--vp-c-divider); }
