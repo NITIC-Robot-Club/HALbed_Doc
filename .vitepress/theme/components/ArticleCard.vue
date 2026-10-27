@@ -168,7 +168,7 @@ function getTagHref(tag: string): string {
   border-radius: 9999px;
   padding: 0.22rem 0.62rem;
   color: var(--vp-c-text-2);
-  background: var(--vp-c-bg-soft);
+  background: color-mix(in srgb, var(--vp-c-text-1) 6%, var(--vp-c-bg));
   font-size: 0.72rem;
   line-height: 1.2;
   text-decoration: none;
@@ -182,9 +182,9 @@ function getTagHref(tag: string): string {
 
 @media (hover: hover) {
   .article-card__tag:hover {
-    border-color: var(--vp-c-brand-1);
-    color: var(--vp-c-brand-1);
-    background: var(--vp-c-brand-soft);
+    border-color: var(--vp-c-divider);
+    color: var(--vp-c-text-1);
+    background: color-mix(in srgb, var(--vp-c-text-1) 10%, var(--vp-c-bg));
   }
 }
 

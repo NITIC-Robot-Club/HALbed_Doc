@@ -257,6 +257,7 @@ const sortedArticles = computed(() => {
 
 .article-search-list__grid {
   display: grid;
+  align-items: stretch;
   gap: 0.85rem;
   padding-top: 1rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -291,17 +292,21 @@ const sortedArticles = computed(() => {
   border-bottom: 1px solid var(--vp-c-divider);
   border-radius: 0;
   padding: 0.12rem 0;
-  background: transparent;
+  background: color-mix(in srgb, var(--vp-c-text-1) 6%, var(--vp-c-bg));
 }
 
 .article-search-list__grid:not(.is-detail) :deep(.article-card) {
   border: 1px solid var(--vp-c-divider);
   border-radius: 0.45rem;
   background: var(--vp-c-bg);
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .article-search-list__grid:not(.is-detail) :deep(.article-card__body) {
   padding: 1rem;
+  height: 100%;
+  align-content: start;
 }
 
 @media (min-width: 1100px) {

@@ -146,7 +146,7 @@ function handleClick(event: MouseEvent, mode: ArticleDisplayMode) {
   border: 1px solid var(--vp-c-divider);
   border-radius: 9999px;
   cursor: grab;
-  background: var(--vp-c-bg-soft);
+  background: color-mix(in srgb, var(--vp-c-text-1) 6%, var(--vp-c-bg));
   box-shadow: inset 0 1px 0 color-mix(in srgb, var(--vp-c-bg) 65%, transparent);
   touch-action: pan-y;
   user-select: none;

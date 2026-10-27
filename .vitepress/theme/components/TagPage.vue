@@ -99,7 +99,7 @@ function getBackHref(): string {
 
 .tag-page__grid {
   display: grid;
-  align-items: start;
+  align-items: stretch;
   gap: 1.15rem;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
 }
